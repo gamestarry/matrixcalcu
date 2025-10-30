@@ -1,0 +1,24 @@
+已经把邮箱地址更改为 info@matrixcalcu.com
+如何修改邮箱地址
+要修改邮箱地址，您需要编辑以下部分：
+
+在HTML中：
+
+找到第942行的 <a href="mailto:abc123@gmail.com" class="contact-email" id="contact-email">abc123@gmail.com</a>
+
+将 href="mailto:abc123@gmail.com" 中的 abc123@gmail.com 替换为您的邮箱
+
+将标签中间的文本 abc123@gmail.com 也替换为您的邮箱
+
+在JavaScript中（如果需要动态更新）：
+
+虽然当前代码没有在JavaScript中硬编码邮箱地址，但如果您想通过JavaScript动态设置，可以添加以下代码：
+
+javascript
+document.getElementById('contact-email').href = 'mailto:your-email@example.com';
+document.getElementById('contact-email').textContent = 'your-email@example.com';
+现在，您有了一个完整的联系我们部分，用户可以直接点击邮箱链接给您发送邮件。这个部分也支持多语言，并且与网站的整体设计风格保持一致。
+
+
+最上面的微缩图标的代码部分
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='10' width='80' height='80' fill='none' stroke='%233498db' stroke-width='8'/><path stroke='%233498db' stroke-width='3' d='M30 10v80M50 10v80M70 10v80M10 30h80M10 50h80M10 70h80'/></svg>">
