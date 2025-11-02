@@ -1,0 +1,37 @@
+# llms.txt for https://matrixcalcu.com/
+# This file defines permissions for AI crawlers and LLMs (Large Language Models).
+# Strategy: allow AI to index calculator tools, but block non-tool pages (about, blog, etc.)
+# Goal: maximize visibility while protecting original text content.
+
+# --- OpenAI (ChatGPT) ---
+User-agent: OpenAI
+Disallow: /about/
+Disallow: /blog/
+Allow: /
+
+# --- Anthropic (Claude) ---
+User-agent: Anthropic-AI
+Disallow: /about/
+Disallow: /blog/
+Allow: /
+
+# --- Perplexity ---
+User-agent: Perplexity-AI
+Disallow: /about/
+Disallow: /blog/
+Allow: /
+
+# --- Google (Gemini, Search-Extended) ---
+User-agent: Google-Extended
+Allow: /
+
+# --- Others ---
+User-agent: *
+Disallow: /about/
+Disallow: /blog/
+Allow: /
+
+# Notes:
+# - 允许 AI 访问核心功能页（例如 /matrix-multiplication、/inverse-matrix 等）
+# - 禁止访问介绍页、品牌页、文章内容页，防止内容被训练或复用
+# - 保留对 Google-Extended 的完全允许，以确保搜索曝光和 AI 推荐效果

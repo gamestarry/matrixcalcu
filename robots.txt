@@ -1,0 +1,13 @@
+# robots.txt for https://matrixcalcu.com
+User-agent: *
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /login/
+Disallow: /cgi-bin/
+Disallow: /includes/
+Disallow: /tmp/
+Disallow: /search/
+Allow: /wp-admin/admin-ajax.php
+
+# Sitemap location (请将下面的网址替换为您实际的sitemap.xml地址)
+Sitemap: https://matrixcalcu.com/sitemap.xml

@@ -8,7 +8,8 @@
     <meta name="author" content="Matrix Calculator Pro">
     <link rel="canonical" href="https://yourdomain.com/matrix-calculator">
     
-    <!-- Favicon 链接 -->
+    <!-- 优化的Favicon设置 - 确保在搜索结果中显示 -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABKElEQVRYw+2WwW3DMBBEf04BDtwAUkAKSAEpIAWkgBSQAlJACkgBKSAFpIAUkAJSwPmzPBo6x5Vl2ZfLgQeNJM7O7sxqJcuyLMuyLMuyLMuyLOv/1LMsW13Xd13XD13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13XT13Xf6Qf0BKlR4hVY0MAAAAASUVORK5CYII=">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='10' width='80' height='80' fill='none' stroke='%233498db' stroke-width='8'/><path stroke='%233498db' stroke-width='3' d='M30 10v80M50 10v80M70 10v80M10 30h80M10 50h80M10 70h80'/></svg>">
 
     <!-- Open Graph 标签 -->
@@ -109,7 +110,7 @@
             gap: 2rem;
         }
         
-        .left-sidebar, .right-sidebar {
+        .left-sidebar {
             flex: 0 0 250px;
             background-color: white;
             border-radius: var(--border-radius);
@@ -119,8 +120,33 @@
         
         .calculator-main {
             flex: 1;
+            min-width: 0; /* 防止flex元素溢出 */
         }
-
+        
+        /* 右侧列容器 */
+        .right-column {
+            flex: 0 0 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .right-sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+        }
+        
+        /* 新增底部容器 */
+        .bottom-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+        
         /* 左侧导航栏样式 */
         .nav-title {
             color: var(--primary-color);
@@ -649,12 +675,99 @@
             100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
         }
 
+        /* 新版本用户计数器样式 - 已调整以适应底部容器 */
+        .counter-container {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            border-radius: 15px;
+            padding: 30px 25px;
+            box-shadow: 0 10px 30px rgba(26, 41, 128, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s ease;
+            margin-bottom: 0;
+        }
+        
+        .counter-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* 徽章样式 */
+        .counter-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff0080, #ff8c00);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(255, 0, 128, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        /* 文字样式 */
+        .counter-text {
+            font-size: 18px;
+            line-height: 1.4;
+            margin-bottom: 0;
+            font-weight: 400;
+            color: #ffffff;
+        }
+        
+        /* 数字样式 */
+        .counter-number {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ffffff, #e6f7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: inline-block;
+            position: relative;
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 128, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 128, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 128, 0);
+            }
+        }
+        
+        @keyframes countUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .counting {
+            animation: countUp 0.5s ease-out;
+        }
+
         @media (max-width: 768px) {
             .main-row {
                 flex-direction: column;
             }
             
-            .left-sidebar, .right-sidebar {
+            .left-sidebar, .right-column {
                 flex: 1;
             }
             
@@ -714,6 +827,39 @@
             /* 移动端：调整3×3计算器Calculate按钮的位置 */
             .calculator-section:nth-child(2) .calculate-btn {
                 margin-left: 0;
+            }
+            
+            /* 移动端新计数器样式调整 */
+            .counter-container {
+                padding: 25px 20px;
+            }
+            
+            .counter-text {
+                font-size: 16px;
+            }
+            
+            .counter-number {
+                font-size: 20px;
+            }
+            
+            .counter-badge {
+                font-size: 12px;
+                padding: 4px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .counter-text {
+                font-size: 14px;
+            }
+            
+            .counter-number {
+                font-size: 18px;
+            }
+            
+            .counter-badge {
+                font-size: 11px;
+                padding: 3px 8px;
             }
         }
     </style>
@@ -1081,13 +1227,28 @@
                     </section>
                 </div>
                 
-                <!-- 右侧容器 - 已替换为投票组件 -->
-                <div class="right-sidebar" id="matrix-game">
-                    <div class="question-box">
-                        <h2 data-key="game-question">Do you want us to design a Matrix Multiplication practice game?</h2>
-                        <button class="btn yes" data-key="game-yes">😎 Sure, I'm ready to suffer.</button>
-                        <button class="btn no" data-key="game-no">🙃 Nope, keep matrix away from me.</button>
-                        <div class="response" id="response"></div>
+                <!-- 右侧列容器 - 包含问卷栏和新增的底部容器 -->
+                <div class="right-column">
+                    <!-- 原有的右侧边栏 -->
+                    <div class="right-sidebar" id="matrix-game">
+                        <div class="question-box">
+                            <h2 data-key="game-question">Do you want us to design a Matrix Multiplication practice game?</h2>
+                            <button class="btn yes" data-key="game-yes">😎 Sure, I'm ready to suffer.</button>
+                            <button class="btn no" data-key="game-no">🙃 Nope, keep matrix away from me.</button>
+                            <div class="response" id="response"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 新增的底部容器 - 包含新版本用户计数器 -->
+                    <div class="bottom-container">
+                        <div class="counter-container">
+                            <div class="counter-badge">LIVE</div>
+                            <p class="counter-text">
+                                We have helped 
+                                <span class="counter-number" id="userCounter">000,000,001,000</span> 
+                                users solve their matrix problems.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1100,9 +1261,9 @@
         </div>
     </footer>
 
-    <!-- JavaScript代码 - 包含12种语言的完整翻译 -->
+    <!-- JavaScript代码 - 包含矩阵计算和新版本用户计数器的完整功能 -->
     <script>
-        // 多语言文本数据 - 包含12种完整语言
+        // 多语言文本数据 - 完整的12种语言
         const translations = {
             en: {
                 // 网站标题
@@ -1209,136 +1370,96 @@
                 "footer": "&copy; 2023 矩阵计算器。保留所有权利。"
             },
             es: {
-                // 网站标题
+                // 西班牙语翻译
                 "site-title": "Calculadora de Matrices",
-                
-                // 导航
                 "navigation": "Navegación",
                 "matrix-multiplication": "Calculadora de Multiplicación de Matrices",
                 "matrix-inverse": "Calculadora de Matriz Inversa",
                 "matrix-determinant": "Calculadora de Determinantes",
                 "matrix-game": "Juego de Matrices",
                 "wikipedia-matrix": "Wikipedia: Matriz",
-                
-                // 计算器标题
                 "2x2-multiplication": "Calculadora de Multiplicación de Matrices 2x2",
                 "3x3-multiplication": "Calculadora de Multiplicación de Matrices 3x3",
                 "2x2-inverse": "Calculadora de Matriz Inversa 2x2",
                 "3x3-inverse": "Calculadora de Matriz Inversa 3x3",
                 "2x2-determinant": "Calculadora de Determinantes 2x2",
                 "3x3-determinant": "Calculadora de Determinantes 3x3",
-                
-                // 按钮文本
                 "calculate": "Calcular",
                 "calculate-inverse": "Calcular Inversa",
                 "calculate-determinant": "Calcular Determinante",
-                
-                // 使用说明
-                "how-to-use": "Cómo usar las calculadoras de matrices",
-                "instruction-multiplication": "<strong>Multiplicación de matrices:</strong> Ingrese valores para dos matrices y haga clic en \"Calcular\" para obtener su producto",
-                "instruction-inverse": "<strong>Matriz inversa:</strong> Ingrese valores para una matriz y haga clic en \"Calcular Inversa\" para encontrar su inversa (si existe)",
+                "how-to-use": "Cómo Usar las Calculadoras de Matrices",
+                "instruction-multiplication": "<strong>Multiplicación de Matrices:</strong> Ingrese valores para dos matrices y haga clic en \"Calcular\" para obtener su producto",
+                "instruction-inverse": "<strong>Matriz Inversa:</strong> Ingrese valores para una matriz y haga clic en \"Calcular Inversa\" para encontrar su inversa (si existe)",
                 "instruction-determinant": "<strong>Determinante:</strong> Ingrese valores para una matriz y haga clic en \"Calcular Determinante\" para encontrar su determinante",
                 "instruction-2x2": "Para matrices 2x2: Ingrese valores para a11, a12, a21, a22",
                 "instruction-3x3": "Para matrices 3x3: Ingrese valores para los 9 elementos",
                 "instruction-empty": "Los campos vacíos se tratarán como 0",
                 "instruction-error": "Si una matriz no es invertible (determinante = 0), se mostrará un mensaje de error",
-                
-                // 游戏投票组件
                 "game-question": "¿Quieres que diseñemos un juego de práctica de multiplicación de matrices?",
                 "game-yes": "😎 Claro, estoy listo para sufrir.",
                 "game-no": "🙃 No, mantén las matrices lejos de mí.",
-                
-                // 联系我们
                 "contact-title": "Contáctenos",
-                "contact-text": "¿Tiene preguntas, sugerencias o encontró un error? ¡Nos encantaría saber de usted!",
+                "contact-text": "¿Tienes preguntas, sugerencias o encontraste un error? ¡Nos encantaría saber de ti!",
                 "contact-email-label": "Envíenos un correo electrónico a:",
                 "contact-response": "¡Responderemos lo más rápido posible!",
-                
-                // 更多语言
                 "more-languages": "Más Idiomas",
-                
-                // 页脚
                 "footer": "&copy; 2023 Calculadora de Matrices. Todos los derechos reservados."
             },
             fr: {
-                // 网站标题
-                "site-title": "Calculatrice de Matrices",
-                
-                // 导航
+                // 法语翻译
+                "site-title": "Calculateur de Matrices",
                 "navigation": "Navigation",
-                "matrix-multiplication": "Calculatrice de Multiplication de Matrices",
-                "matrix-inverse": "Calculatrice de Matrice Inverse",
-                "matrix-determinant": "Calculatrice de Déterminant",
+                "matrix-multiplication": "Calculateur de Multiplication de Matrices",
+                "matrix-inverse": "Calculateur de Matrice Inverse",
+                "matrix-determinant": "Calculateur de Déterminant",
                 "matrix-game": "Jeu de Matrices",
-                "wikipedia-matrix": "Wikipédia: Matrice",
-                
-                // 计算器标题
-                "2x2-multiplication": "Calculatrice de Multiplication de Matrices 2x2",
-                "3x3-multiplication": "Calculatrice de Multiplication de Matrices 3x3",
-                "2x2-inverse": "Calculatrice de Matrice Inverse 2x2",
-                "3x3-inverse": "Calculatrice de Matrice Inverse 3x3",
-                "2x2-determinant": "Calculatrice de Déterminant 2x2",
-                "3x3-determinant": "Calculatrice de Déterminant 3x3",
-                
-                // 按钮文本
+                "wikipedia-matrix": "Wikipedia: Matrice",
+                "2x2-multiplication": "Calculateur de Multiplication de Matrices 2x2",
+                "3x3-multiplication": "Calculateur de Multiplication de Matrices 3x3",
+                "2x2-inverse": "Calculateur de Matrice Inverse 2x2",
+                "3x3-inverse": "Calculateur de Matrice Inverse 3x3",
+                "2x2-determinant": "Calculateur de Déterminant 2x2",
+                "3x3-determinant": "Calculateur de Déterminant 3x3",
                 "calculate": "Calculer",
                 "calculate-inverse": "Calculer l'Inverse",
                 "calculate-determinant": "Calculer le Déterminant",
-                
-                // 使用说明
-                "how-to-use": "Comment utiliser les calculatrices de matrices",
-                "instruction-multiplication": "<strong>Multiplication de matrices:</strong> Entrez les valeurs pour deux matrices et cliquez sur \"Calculer\" pour obtenir leur produit",
-                "instruction-inverse": "<strong>Matrice inverse:</strong> Entrez les valeurs pour une matrice et cliquez sur \"Calculer l'Inverse\" pour trouver son inverse (si elle existe)",
+                "how-to-use": "Comment Utiliser les Calculateurs de Matrices",
+                "instruction-multiplication": "<strong>Multiplication de Matrices:</strong> Entrez les valeurs pour deux matrices et cliquez sur \"Calculer\" pour obtenir leur produit",
+                "instruction-inverse": "<strong>Matrice Inverse:</strong> Entrez les valeurs pour une matrice et cliquez sur \"Calculer l'Inverse\" pour trouver son inverse (si elle existe)",
                 "instruction-determinant": "<strong>Déterminant:</strong> Entrez les valeurs pour une matrice et cliquez sur \"Calculer le Déterminant\" pour trouver son déterminant",
-                "instruction-2x2": "Pour les matrices 2x2: Entrez les valores para a11, a12, a21, a22",
-                "instruction-3x3": "Pour les matrices 3x3: Entrez les valores para los 9 elementos",
+                "instruction-2x2": "Pour les matrices 2x2: Entrez les valeurs pour a11, a12, a21, a22",
+                "instruction-3x3": "Pour les matrices 3x3: Entrez les valeurs pour les 9 éléments",
                 "instruction-empty": "Les champs vides seront traités comme 0",
                 "instruction-error": "Si une matrice n'est pas inversible (déterminant = 0), un message d'erreur sera affiché",
-                
-                // 游戏投票组件
                 "game-question": "Voulez-vous que nous concevions un jeu d'entraînement à la multiplication matricielle?",
                 "game-yes": "😎 Bien sûr, je suis prêt à souffrir.",
                 "game-no": "🙃 Non, gardez les matrices loin de moi.",
-                
-                // 联系我们
                 "contact-title": "Contactez-nous",
-                "contact-text": "Des questions, des suggestions ou avez-vous trouvé un bug? Nous aimerions avoir de vos nouvelles!",
+                "contact-text": "Des questions, des suggestions ou un bug trouvé? Nous aimerions avoir de vos nouvelles!",
                 "contact-email-label": "Envoyez-nous un email à:",
-                "contact-response": "Nous répondrons aussi vite que possible!",
-                
-                // 更多语言
+                "contact-response": "Nous répondrons dès que possible!",
                 "more-languages": "Plus de Langues",
-                
-                // 页脚
-                "footer": "&copy; 2023 Calculatrice de Matrices. Tous droits réservés."
+                "footer": "&copy; 2023 Calculateur de Matrices. Tous droits réservés."
             },
             de: {
-                // 网站标题
+                // 德语翻译
                 "site-title": "Matrix-Rechner",
-                
-                // 导航
                 "navigation": "Navigation",
-                "matrix-multiplication": "Matrix-Multiplikationsrechner",
+                "matrix-multiplication": "Matrix-Multiplikations-Rechner",
                 "matrix-inverse": "Matrix-Inversen-Rechner",
                 "matrix-determinant": "Determinanten-Rechner",
                 "matrix-game": "Matrix-Spiel",
                 "wikipedia-matrix": "Wikipedia: Matrix",
-                
-                // 计算器标题
-                "2x2-multiplication": "2x2 Matrix-Multiplikationsrechner",
-                "3x3-multiplication": "3x3 Matrix-Multiplikationsrechner",
+                "2x2-multiplication": "2x2 Matrix-Multiplikations-Rechner",
+                "3x3-multiplication": "3x3 Matrix-Multiplikations-Rechner",
                 "2x2-inverse": "2x2 Matrix-Inversen-Rechner",
                 "3x3-inverse": "3x3 Matrix-Inversen-Rechner",
                 "2x2-determinant": "2x2 Matrix-Determinanten-Rechner",
                 "3x3-determinant": "3x3 Matrix-Determinanten-Rechner",
-                
-                // 按钮文本
                 "calculate": "Berechnen",
                 "calculate-inverse": "Inverse Berechnen",
                 "calculate-determinant": "Determinante Berechnen",
-                
-                // 使用说明
-                "how-to-use": "Wie man die Matrix-Rechner verwendet",
+                "how-to-use": "So verwenden Sie die Matrix-Rechner",
                 "instruction-multiplication": "<strong>Matrix-Multiplikation:</strong> Geben Sie Werte für zwei Matrizen ein und klicken Sie auf \"Berechnen\", um ihr Produkt zu erhalten",
                 "instruction-inverse": "<strong>Matrix-Inverse:</strong> Geben Sie Werte für eine Matrix ein und klicken Sie auf \"Inverse Berechnen\", um ihre Inverse zu finden (falls vorhanden)",
                 "instruction-determinant": "<strong>Determinante:</strong> Geben Sie Werte für eine Matrix ein und klicken Sie auf \"Determinante Berechnen\", um ihre Determinante zu finden",
@@ -1346,310 +1467,214 @@
                 "instruction-3x3": "Für 3x3-Matrizen: Geben Sie Werte für alle 9 Elemente ein",
                 "instruction-empty": "Leere Felder werden als 0 behandelt",
                 "instruction-error": "Wenn eine Matrix nicht invertierbar ist (Determinante = 0), wird eine Fehlermeldung angezeigt",
-                
-                // 游戏投票组件
                 "game-question": "Möchten Sie, dass wir ein Matrix-Multiplikations-Übungsspiel entwerfen?",
                 "game-yes": "😎 Sicher, ich bin bereit zu leiden.",
-                "game-no": "🙃 Nein, halten Sie die Matrix von mir fern.",
-                
-                // 联系我们
+                "game-no": "🙃 Nein, haltet Matrizen von mir fern.",
                 "contact-title": "Kontaktieren Sie uns",
                 "contact-text": "Haben Sie Fragen, Vorschläge oder einen Fehler gefunden? Wir würden uns freuen, von Ihnen zu hören!",
                 "contact-email-label": "Schreiben Sie uns eine E-Mail an:",
                 "contact-response": "Wir antworten so schnell wie möglich!",
-                
-                // 更多语言
                 "more-languages": "Weitere Sprachen",
-                
-                // 页脚
                 "footer": "&copy; 2023 Matrix-Rechner. Alle Rechte vorbehalten."
             },
             ru: {
-                // 网站标题
+                // 俄语翻译
                 "site-title": "Калькулятор Матриц",
-                
-                // 导航
                 "navigation": "Навигация",
                 "matrix-multiplication": "Калькулятор Умножения Матриц",
                 "matrix-inverse": "Калькулятор Обратной Матрицы",
                 "matrix-determinant": "Калькулятор Определителя",
-                "matrix-game": "Матричная Игра",
+                "matrix-game": "Игра с Матрицами",
                 "wikipedia-matrix": "Википедия: Матрица",
-                
-                // 计算器标题
                 "2x2-multiplication": "Калькулятор Умножения Матриц 2x2",
                 "3x3-multiplication": "Калькулятор Умножения Матриц 3x3",
                 "2x2-inverse": "Калькулятор Обратной Матрицы 2x2",
                 "3x3-inverse": "Калькулятор Обратной Матрицы 3x3",
-                "2x2-determinant": "Калькулятор Определителя Матрицы 2x2",
-                "3x3-determinant": "Калькулятор Определителя Матрицы 3x3",
-                
-                // 按钮文本
+                "2x2-determinant": "Калькулятор Определителя 2x2",
+                "3x3-determinant": "Калькулятор Определителя 3x3",
                 "calculate": "Вычислить",
                 "calculate-inverse": "Вычислить Обратную",
                 "calculate-determinant": "Вычислить Определитель",
-                
-                // 使用说明
-                "how-to-use": "Как использовать калькуляторы матриц",
-                "instruction-multiplication": "<strong>Умножение матриц:</strong> Введите значения для двух матриц и нажмите \"Вычислить\", чтобы получить их произведение",
-                "instruction-inverse": "<strong>Обратная матрица:</strong> Введите значения для матрицы и нажмите \"Вычислить Обратную\", чтобы найти обратную матрицу (если она существует)",
-                "instruction-determinant": "<strong>Определитель:</strong> Введите значения для матрицы и нажмите \"Вычислить Определитель\", чтобы найти её определитель",
+                "how-to-use": "Как Использовать Калькуляторы Матриц",
+                "instruction-multiplication": "<strong>Умножение Матриц:</strong> Введите значения для двух матриц и нажмите \"Вычислить\", чтобы получить их произведение",
+                "instruction-inverse": "<strong>Обратная Матрица:</strong> Введите значения для матрицы и нажмите \"Вычислить Обратную\", чтобы найти ее обратную (если она существует)",
+                "instruction-determinant": "<strong>Определитель:</strong> Введите значения для матрицы и нажмите \"Вычислить Определитель\", чтобы найти ее определитель",
                 "instruction-2x2": "Для матриц 2x2: Введите значения для a11, a12, a21, a22",
                 "instruction-3x3": "Для матриц 3x3: Введите значения для всех 9 элементов",
-                "instruction-empty": "Пустые поля будут рассматриваться как 0",
+                "instruction-empty": "Пустые поля будут обрабатываться как 0",
                 "instruction-error": "Если матрица не обратима (определитель = 0), будет показано сообщение об ошибке",
-                
-                // 游戏投票组件
-                "game-question": "Хотите, чтобы мы разработали обучающую игру по умножению матриц?",
-                "game-yes": "😎 Конечно, я готов к испытаниям.",
+                "game-question": "Хотите, чтобы мы разработали игру для практики умножения матриц?",
+                "game-yes": "😎 Конечно, я готов страдать.",
                 "game-no": "🙃 Нет, держите матрицы подальше от меня.",
-                
-                // 联系我们
                 "contact-title": "Свяжитесь с нами",
                 "contact-text": "Есть вопросы, предложения или нашли ошибку? Мы будем рады услышать от вас!",
-                "contact-email-label": "Напишите нам:",
+                "contact-email-label": "Напишите нам на:",
                 "contact-response": "Мы ответим как можно скорее!",
-                
-                // 更多语言
                 "more-languages": "Другие Языки",
-                
-                // 页脚
                 "footer": "&copy; 2023 Калькулятор Матриц. Все права защищены."
             },
             ja: {
-                // 网站标题
+                // 日语翻译
                 "site-title": "行列計算機",
-                
-                // 导航
                 "navigation": "ナビゲーション",
                 "matrix-multiplication": "行列乗算計算機",
                 "matrix-inverse": "逆行列計算機",
                 "matrix-determinant": "行列式計算機",
                 "matrix-game": "行列ゲーム",
-                "wikipedia-matrix": "ウィキペディア: 行列",
-                
-                // 计算器标题
+                "wikipedia-matrix": "ウィキペディア：行列",
                 "2x2-multiplication": "2x2 行列乗算計算機",
                 "3x3-multiplication": "3x3 行列乗算計算機",
                 "2x2-inverse": "2x2 逆行列計算機",
                 "3x3-inverse": "3x3 逆行列計算機",
                 "2x2-determinant": "2x2 行列式計算機",
                 "3x3-determinant": "3x3 行列式計算機",
-                
-                // 按钮文本
                 "calculate": "計算",
                 "calculate-inverse": "逆行列を計算",
                 "calculate-determinant": "行列式を計算",
-                
-                // 使用说明
-                "how-to-use": "行列計算機の使用方法",
+                "how-to-use": "行列計算機の使い方",
                 "instruction-multiplication": "<strong>行列乗算:</strong> 2つの行列の値を入力し「計算」をクリックして積を取得します",
-                "instruction-inverse": "<strong>逆行列:</strong> 行列の値を入力し「逆行列を計算」をクリックして逆行列を見つけます（存在する場合）",
-                "instruction-determinant": "<strong>行列式:</strong> 行列の値を入力し「行列式を計算」をクリックして行列式を見つけます",
+                "instruction-inverse": "<strong>逆行列:</strong> 行列の値を入力し「逆行列を計算」をクリックして逆行列を求めます（存在する場合）",
+                "instruction-determinant": "<strong>行列式:</strong> 行列の値を入力し「行列式を計算」をクリックして行列式を求めます",
                 "instruction-2x2": "2x2行列の場合: a11, a12, a21, a22の値を入力します",
                 "instruction-3x3": "3x3行列の場合: 9つの要素すべての値を入力します",
                 "instruction-empty": "空のフィールドは0として扱われます",
                 "instruction-error": "行列が可逆でない場合（行列式=0）、エラーメッセージが表示されます",
-                
-                // 游戏投票组件
                 "game-question": "行列乗算の練習ゲームを設計してほしいですか？",
-                "game-yes": "😎 もちろん、挑戦する準備はできています。",
+                "game-yes": "😎 もちろん、苦しむ準備はできています。",
                 "game-no": "🙃 いいえ、行列は私から遠ざけてください。",
-                
-                // 联系我们
                 "contact-title": "お問い合わせ",
-                "contact-text": "質問、提案、またはバグを見つけましたか？ぜひお聞かせください！",
-                "contact-email-label": "メールアドレス：",
+                "contact-text": "質問、提案、バグの発見がありましたか？ぜひお聞かせください！",
+                "contact-email-label": "メールはこちらへ:",
                 "contact-response": "できるだけ早く返信いたします！",
-                
-                // 更多语言
-                "more-languages": "他の言語",
-                
-                // 页脚
+                "more-languages": "その他の言語",
                 "footer": "&copy; 2023 行列計算機。全著作権所有。"
             },
             pt: {
-                // 网站标题
+                // 葡萄牙语翻译
                 "site-title": "Calculadora de Matrizes",
-                
-                // 导航
                 "navigation": "Navegação",
                 "matrix-multiplication": "Calculadora de Multiplicação de Matrizes",
                 "matrix-inverse": "Calculadora de Matriz Inversa",
-                "matrix-determinant": "Calculadora de Determinante",
+                "matrix-determinant": "Calculadora de Determinantes",
                 "matrix-game": "Jogo de Matrizes",
                 "wikipedia-matrix": "Wikipedia: Matriz",
-                
-                // 计算器标题
                 "2x2-multiplication": "Calculadora de Multiplicação de Matrizes 2x2",
                 "3x3-multiplication": "Calculadora de Multiplicação de Matrizes 3x3",
                 "2x2-inverse": "Calculadora de Matriz Inversa 2x2",
                 "3x3-inverse": "Calculadora de Matriz Inversa 3x3",
-                "2x2-determinant": "Calculadora de Determinante 2x2",
-                "3x3-determinant": "Calculadora de Determinante 3x3",
-                
-                // 按钮文本
+                "2x2-determinant": "Calculadora de Determinantes 2x2",
+                "3x3-determinant": "Calculadora de Determinantes 3x3",
                 "calculate": "Calcular",
                 "calculate-inverse": "Calcular Inversa",
                 "calculate-determinant": "Calcular Determinante",
-                
-                // 使用说明
-                "how-to-use": "Como usar as calculadoras de matrizes",
-                "instruction-multiplication": "<strong>Multiplicação de matrizes:</strong> Insira valores para duas matrizes e clique em \"Calcular\" para obter seu produto",
-                "instruction-inverse": "<strong>Matriz inversa:</strong> Insira valores para uma matriz e clique em \"Calcular Inversa\" para encontrar sua inversa (se existir)",
+                "how-to-use": "Como Usar as Calculadoras de Matrizes",
+                "instruction-multiplication": "<strong>Multiplicação de Matrizes:</strong> Insira valores para duas matrizes e clique em \"Calcular\" para obter seu produto",
+                "instruction-inverse": "<strong>Matriz Inversa:</strong> Insira valores para uma matriz e clique em \"Calcular Inversa\" para encontrar sua inversa (se existir)",
                 "instruction-determinant": "<strong>Determinante:</strong> Insira valores para uma matriz e clique em \"Calcular Determinante\" para encontrar seu determinante",
                 "instruction-2x2": "Para matrizes 2x2: Insira valores para a11, a12, a21, a22",
                 "instruction-3x3": "Para matrizes 3x3: Insira valores para todos os 9 elementos",
                 "instruction-empty": "Campos vazios serão tratados como 0",
-                "instruction-error": "Se uma matriz não for invertível (determinante = 0), uma mensagem de erro será mostrada",
-                
-                // 游戏投票组件
+                "instruction-error": "Se uma matriz não for invertível (determinante = 0), uma mensagem de erro será exibida",
                 "game-question": "Você quer que projetemos um jogo de prática de multiplicação de matrizes?",
                 "game-yes": "😎 Claro, estou pronto para sofrer.",
-                "game-no": "🙃 Não, mantenha a matriz longe de mim.",
-                
-                // 联系我们
-                "contact-title": "Contate-Nos",
+                "game-no": "🙃 Não, mantenha matrizes longe de mim.",
+                "contact-title": "Contate-nos",
                 "contact-text": "Tem perguntas, sugestões ou encontrou um bug? Adoraríamos ouvir de você!",
-                "contact-email-label": "Envie-nos um email para:",
+                "contact-email-label": "Envie-nos um e-mail para:",
                 "contact-response": "Responderemos o mais rápido possível!",
-                
-                // 更多语言
                 "more-languages": "Mais Idiomas",
-                
-                // 页脚
                 "footer": "&copy; 2023 Calculadora de Matrizes. Todos os direitos reservados."
             },
             ar: {
-                // 网站标题
+                // 阿拉伯语翻译
                 "site-title": "آلة حاسبة للمصفوفات",
-                
-                // 导航
                 "navigation": "التنقل",
                 "matrix-multiplication": "آلة حاسبة لضرب المصفوفات",
-                "matrix-inverse": "آلة حاسبة لمصفوفة معكوسة",
+                "matrix-inverse": "آلة حاسبة للمصفوفة العكسية",
                 "matrix-determinant": "آلة حاسبة للمحدد",
                 "matrix-game": "لعبة المصفوفات",
                 "wikipedia-matrix": "ويكيبيديا: مصفوفة",
-                
-                // 计算器标题
-                "2x2-multiplication": "آلة حاسبة لضرب مصفوفات 2x2",
-                "3x3-multiplication": "آلة حاسبة لضرب مصفوفات 3x3",
-                "2x2-inverse": "آلة حاسبة لمصفوفة معكوسة 2x2",
-                "3x3-inverse": "آلة حاسبة لمصفوفة معكوسة 3x3",
-                "2x2-determinant": "آلة حاسبة لمحدد مصفوفة 2x2",
-                "3x3-determinant": "آلة حاسبة لمحدد مصفوفة 3x3",
-                
-                // 按钮文本
+                "2x2-multiplication": "آلة حاسبة لضرب المصفوفات 2x2",
+                "3x3-multiplication": "آلة حاسبة لضرب المصفوفات 3x3",
+                "2x2-inverse": "آلة حاسبة للمصفوفة العكسية 2x2",
+                "3x3-inverse": "آلة حاسبة للمصفوفة العكسية 3x3",
+                "2x2-determinant": "آلة حاسبة لمحدد المصفوفة 2x2",
+                "3x3-determinant": "آلة حاسبة لمحدد المصفوفة 3x3",
                 "calculate": "احسب",
                 "calculate-inverse": "احسب المعكوس",
                 "calculate-determinant": "احسب المحدد",
-                
-                // 使用说明
                 "how-to-use": "كيفية استخدام آلات حاسبة المصفوفات",
-                "instruction-multiplication": "<strong>ضرب المصفوفات:</strong> أدخل قيم مصفوفتين وانقر على \"احسب\" للحصول على ناتجهما",
-                "instruction-inverse": "<strong>مصفوفة معكوسة:</strong> أدخل قيم مصفوفة وانقر على \"احسب المعكوس\" للعثور على معكوسها (إذا كان موجودًا)",
-                "instruction-determinant": "<strong>المحدد:</strong> أدخل قيم مصفوفة وانقر على \"احسب المحدد\" للعثور على محدده",
-                "instruction-2x2": "لمصفوفات 2x2: أدخل قيم a11, a12, a21, a22",
-                "instruction-3x3": "لمصفوفات 3x3: أدخل قيم جميع العناصر الـ 9",
+                "instruction-multiplication": "<strong>ضرب المصفوفات:</strong> أدخل قيم مصفوفتين وانقر على \"احسب\" للحصول على حاصل ضربهما",
+                "instruction-inverse": "<strong>المصفوفة العكسية:</strong> أدخل قيم مصفوفة وانقر على \"احسب المعكوس\" للعثور على معكوسها (إذا كان موجودًا)",
+                "instruction-determinant": "<strong>المحدد:</strong> أدخل قيم مصفوفة وانقر على \"احسب المحدد\" للعثور على محددها",
+                "instruction-2x2": "للمصفوفات 2x2: أدخل قيم a11, a12, a21, a22",
+                "instruction-3x3": "للمصفوفات 3x3: أدخل قيم جميع العناصر الـ 9",
                 "instruction-empty": "سيتم التعامل مع الحقول الفارغة كـ 0",
                 "instruction-error": "إذا كانت المصفوفة غير قابلة للعكس (المحدد = 0)، سيتم عرض رسالة خطأ",
-                
-                // 游戏投票组件
-                "game-question": "هل تريد منا تصميم لعبة تدريبية لضرب المصفوفات؟",
+                "game-question": "هل تريد منا تصميم لعبة ممارسة لضرب المصفوفات؟",
                 "game-yes": "😎 بالتأكيد، أنا مستعد للمعاناة.",
                 "game-no": "🙃 لا، ابعد المصفوفات عني.",
-                
-                // 联系我们
                 "contact-title": "اتصل بنا",
                 "contact-text": "هل لديك أسئلة أو اقتراحات أو وجدت خطأ؟ نحن نحب أن نسمع منك!",
-                "contact-email-label": "راسلنا على:",
-                "contact-response": "سنجيب في أسرع وقت ممكن!",
-                
-                // 更多语言
-                "more-languages": "لغات أخرى",
-                
-                // 页脚
+                "contact-email-label": "راسلنا على البريد الإلكتروني:",
+                "contact-response": "سوف نرد في أسرع وقت ممكن!",
+                "more-languages": "المزيد من اللغات",
                 "footer": "&copy; 2023 آلة حاسبة للمصفوفات. جميع الحقوق محفوظة."
             },
             hi: {
-                // 网站标题
+                // 印地语翻译
                 "site-title": "मैट्रिक्स कैलकुलेटर",
-                
-                // 导航
                 "navigation": "नेविगेशन",
                 "matrix-multiplication": "मैट्रिक्स गुणन कैलकुलेटर",
-                "matrix-inverse": "मैट्रिक्स इनवर्स कैलकुलेटर",
-                "matrix-determinant": "निर्धारक कैलकुलेटर",
+                "matrix-inverse": "मैट्रिक्स व्युत्क्रम कैलकुलेटर",
+                "matrix-determinant": "सारणिक कैलकुलेटर",
                 "matrix-game": "मैट्रिक्स गेम",
                 "wikipedia-matrix": "विकिपीडिया: मैट्रिक्स",
-                
-                // 计算器标题
                 "2x2-multiplication": "2x2 मैट्रिक्स गुणन कैलकुलेटर",
                 "3x3-multiplication": "3x3 मैट्रिक्स गुणन कैलकुलेटर",
-                "2x2-inverse": "2x2 मैट्रिक्स इनवर्स कैलकुलेटर",
-                "3x3-inverse": "3x3 मैट्रिक्स इनवर्स कैलकुलेटर",
-                "2x2-determinant": "2x2 मैट्रिक्स निर्धारक कैलकुलेटर",
-                "3x3-determinant": "3x3 मैट्रिक्स निर्धारक कैलकुलेटर",
-                
-                // 按钮文本
+                "2x2-inverse": "2x2 मैट्रिक्स व्युत्क्रम कैलकुलेटर",
+                "3x3-inverse": "3x3 मैट्रिक्स व्युत्क्रम कैलकुलेटर",
+                "2x2-determinant": "2x2 मैट्रिक्स सारणिक कैलकुलेटर",
+                "3x3-determinant": "3x3 मैट्रिक्स सारणिक कैलकुलेटर",
                 "calculate": "गणना करें",
-                "calculate-inverse": "इनवर्स गणना करें",
-                "calculate-determinant": "निर्धारक गणना करें",
-                
-                // 使用说明
+                "calculate-inverse": "व्युत्क्रम गणना करें",
+                "calculate-determinant": "सारणिक गणना करें",
                 "how-to-use": "मैट्रिक्स कैलकुलेटर का उपयोग कैसे करें",
-                "instruction-multiplication": "<strong>मैट्रिक्स गुणन:</strong> दो मैट्रिक्स के लिए मान दर्ज करें और \"गणना करें\" क्लिक करके उनका गुणनफल प्राप्त करें",
-                "instruction-inverse": "<strong>मैट्रिक्स इनवर्स:</strong> एक मैट्रिक्स के लिए मान दर्ज करें और \"इनवर्स गणना करें\" क्लिक करके उसका इनवर्स ढूंढें (यदि मौजूद है)",
-                "instruction-determinant": "<strong>निर्धारक:</strong> एक मैट्रिक्स के लिए मान दर्ज करें और \"निर्धारक गणना करें\" क्लिक करके उसका निर्धारक ढूंढें",
-                "instruction-2x2": "2x2 मैट्रिक्स के लिए: a11, a12, a21, a22 के मान दर्ज करें",
-                "instruction-3x3": "3x3 मैट्रिक्स के लिए: सभी 9 तत्वों के मान दर्ज करें",
+                "instruction-multiplication": "<strong>मैट्रिक्स गुणन:</strong> दो मैट्रिक्स के लिए मान दर्ज करें और उनके उत्पाद प्राप्त करने के लिए \"गणना करें\" पर क्लिक करें",
+                "instruction-inverse": "<strong>मैट्रिक्स व्युत्क्रम:</strong> एक मैट्रिक्स के लिए मान दर्ज करें और उसका व्युत्क्रम खोजने के लिए \"व्युत्क्रम गणना करें\" पर क्लिक करें (यदि यह मौजूद है)",
+                "instruction-determinant": "<strong>सारणिक:</strong> एक मैट्रिक्स के लिए मान दर्ज करें और उसका सारणिक खोजने के लिए \"सारणिक गणना करें\" पर क्लिक करें",
+                "instruction-2x2": "2x2 मैट्रिक्स के लिए: a11, a12, a21, a22 के लिए मान दर्ज करें",
+                "instruction-3x3": "3x3 मैट्रिक्स के लिए: सभी 9 तत्वों के लिए मान दर्ज करें",
                 "instruction-empty": "खाली फ़ील्ड्स को 0 माना जाएगा",
-                "instruction-error": "यदि कोई मैट्रिक्स उलटा नहीं है (निर्धारक = 0), तो एक त्रुटि संदेश दिखाया जाएगा",
-                
-                // 游戏投票组件
+                "instruction-error": "यदि एक मैट्रिक्स व्युत्क्रमणीय नहीं है (सारणिक = 0), तो एक त्रुटि संदेश दिखाया जाएगा",
                 "game-question": "क्या आप चाहते हैं कि हम एक मैट्रिक्स गुणन अभ्यास गेम डिजाइन करें?",
                 "game-yes": "😎 ज़रूर, मैं पीड़ित होने के लिए तैयार हूं।",
                 "game-no": "🙃 नहीं, मैट्रिक्स को मुझसे दूर रखें।",
-                
-                // 联系我们
                 "contact-title": "हमसे संपर्क करें",
-                "contact-text": "प्रश्न, सुझाव हैं या कोई बग मिला? हम आपसे सुनना पसंद करेंगे!",
+                "contact-text": "क्या आपके पास प्रश्न, सुझाव हैं या कोई बग मिला है? हम आपसे सुनना पसंद करेंगे!",
                 "contact-email-label": "हमें ईमेल करें:",
                 "contact-response": "हम जितनी जल्दी हो सके जवाब देंगे!",
-                
-                // 更多语言
                 "more-languages": "अधिक भाषाएं",
-                
-                // 页脚
                 "footer": "&copy; 2023 मैट्रिक्स कैलकुलेटर। सर्वाधिकार सुरक्षित।"
             },
             ko: {
-                // 网站标题
+                // 韩语翻译
                 "site-title": "행렬 계산기",
-                
-                // 导航
                 "navigation": "탐색",
                 "matrix-multiplication": "행렬 곱셈 계산기",
                 "matrix-inverse": "역행렬 계산기",
                 "matrix-determinant": "행렬식 계산기",
                 "matrix-game": "행렬 게임",
                 "wikipedia-matrix": "위키백과: 행렬",
-                
-                // 计算器标题
                 "2x2-multiplication": "2x2 행렬 곱셈 계산기",
                 "3x3-multiplication": "3x3 행렬 곱셈 계산기",
                 "2x2-inverse": "2x2 역행렬 계산기",
                 "3x3-inverse": "3x3 역행렬 계산기",
                 "2x2-determinant": "2x2 행렬식 계산기",
                 "3x3-determinant": "3x3 행렬식 계산기",
-                
-                // 按钮文本
                 "calculate": "계산",
                 "calculate-inverse": "역행렬 계산",
                 "calculate-determinant": "행렬식 계산",
-                
-                // 使用说明
                 "how-to-use": "행렬 계산기 사용 방법",
                 "instruction-multiplication": "<strong>행렬 곱셈:</strong> 두 행렬의 값을 입력하고 \"계산\"을 클릭하여 곱을 얻습니다",
                 "instruction-inverse": "<strong>역행렬:</strong> 행렬의 값을 입력하고 \"역행렬 계산\"을 클릭하여 역행렬을 찾습니다 (존재하는 경우)",
@@ -1658,74 +1683,50 @@
                 "instruction-3x3": "3x3 행렬의 경우: 9개 요소 모두의 값을 입력합니다",
                 "instruction-empty": "빈 필드는 0으로 처리됩니다",
                 "instruction-error": "행렬이 가역적이지 않은 경우 (행렬식 = 0), 오류 메시지가 표시됩니다",
-                
-                // 游戏投票组件
                 "game-question": "행렬 곱셈 연습 게임을 디자인해 드릴까요?",
-                "game-yes": "😎 물론이죠, 저는 고통받을 준비가 되어 있습니다.",
-                "game-no": "🙃 아니요, 행렬을 제게서 멀리 두세요.",
-                
-                // 联系我们
+                "game-yes": "😎 물론, 고통받을 준비가 되었습니다.",
+                "game-no": "🙃 아니요, 행렬을 저에게서 멀리 두세요.",
                 "contact-title": "문의하기",
-                "contact-text": "질문, 제안 또는 버그를 발견하셨나요? 여러분의 소식을 듣고 싶습니다!",
+                "contact-text": "질문, 제안 또는 버그를 발견하셨나요? 여러분의 의견을 듣고 싶습니다!",
                 "contact-email-label": "이메일 보내기:",
-                "contact-response": "최대한 빨리 답변드리겠습니다!",
-                
-                // 更多语言
+                "contact-response": "가능한 한 빨리 답변드리겠습니다!",
                 "more-languages": "더 많은 언어",
-                
-                // 页脚
                 "footer": "&copy; 2023 행렬 계산기. 모든 권리 보유."
             },
             it: {
-                // 网站标题
+                // 意大利语翻译
                 "site-title": "Calcolatrice di Matrici",
-                
-                // 导航
                 "navigation": "Navigazione",
                 "matrix-multiplication": "Calcolatrice di Moltiplicazione di Matrici",
                 "matrix-inverse": "Calcolatrice di Matrice Inversa",
                 "matrix-determinant": "Calcolatrice di Determinante",
                 "matrix-game": "Gioco di Matrici",
                 "wikipedia-matrix": "Wikipedia: Matrice",
-                
-                // 计算器标题
                 "2x2-multiplication": "Calcolatrice di Moltiplicazione di Matrici 2x2",
                 "3x3-multiplication": "Calcolatrice di Moltiplicazione di Matrici 3x3",
                 "2x2-inverse": "Calcolatrice di Matrice Inversa 2x2",
                 "3x3-inverse": "Calcolatrice di Matrice Inversa 3x3",
                 "2x2-determinant": "Calcolatrice di Determinante 2x2",
                 "3x3-determinant": "Calcolatrice di Determinante 3x3",
-                
-                // 按钮文本
                 "calculate": "Calcola",
                 "calculate-inverse": "Calcola Inversa",
                 "calculate-determinant": "Calcola Determinante",
-                
-                // 使用说明
-                "how-to-use": "Come usare le calcolatrici di matrici",
-                "instruction-multiplication": "<strong>Moltiplicazione di matrici:</strong> Inserisci valori per due matrici e clicca \"Calcola\" per ottenere il loro prodotto",
-                "instruction-inverse": "<strong>Matrice inversa:</strong> Inserisci valori per una matrice e clicca \"Calcola Inversa\" per trovare la sua inversa (se esiste)",
-                "instruction-determinant": "<strong>Determinante:</strong> Inserisci valori per una matrice e clicca \"Calcola Determinante\" per trovare il suo determinante",
-                "instruction-2x2": "Per matrici 2x2: Inserisci valori per a11, a12, a21, a22",
-                "instruction-3x3": "Per matrici 3x3: Inserisci valori per tutti i 9 elementi",
+                "how-to-use": "Come Utilizzare le Calcolatrici di Matrici",
+                "instruction-multiplication": "<strong>Moltiplicazione di Matrici:</strong> Inserisci i valori per due matrici e clicca \"Calcola\" per ottenere il loro prodotto",
+                "instruction-inverse": "<strong>Matrice Inversa:</strong> Inserisci i valori per una matrice e clicca \"Calcola Inversa\" per trovare la sua inversa (se esiste)",
+                "instruction-determinant": "<strong>Determinante:</strong> Inserisci i valori per una matrice e clicca \"Calcola Determinante\" per trovare il suo determinante",
+                "instruction-2x2": "Per matrici 2x2: Inserisci i valori per a11, a12, a21, a22",
+                "instruction-3x3": "Per matrici 3x3: Inserisci i valori per tutti i 9 elementi",
                 "instruction-empty": "I campi vuoti saranno trattati come 0",
-                "instruction-error": "Se una matrice non è invertibile (determinante = 0), verrà mostrato un messaggio di errore",
-                
-                // 游戏投票组件
+                "instruction-error": "Se una matrice non è invertibile (determinante = 0), verrà visualizzato un messaggio di errore",
                 "game-question": "Vuoi che progettiamo un gioco di pratica per la moltiplicazione di matrici?",
                 "game-yes": "😎 Certo, sono pronto a soffrire.",
                 "game-no": "🙃 No, tieni le matrici lontano da me.",
-                
-                // 联系我们
                 "contact-title": "Contattaci",
                 "contact-text": "Hai domande, suggerimenti o hai trovato un bug? Ci piacerebbe sentirti!",
-                "contact-email-label": "Scrivici a:",
+                "contact-email-label": "Inviaci una email a:",
                 "contact-response": "Risponderemo il più rapidamente possibile!",
-                
-                // 更多语言
                 "more-languages": "Altre Lingue",
-                
-                // 页脚
                 "footer": "&copy; 2023 Calcolatrice di Matrici. Tutti i diritti riservati."
             }
         };
@@ -1802,26 +1803,6 @@
                     response.textContent = "Nice! Let's make it happen 💪";
                 } else if (language === 'zh') {
                     response.textContent = "太好了！让我们一起实现它 💪";
-                } else if (language === 'es') {
-                    response.textContent = "¡Genial! Hagámoslo realidad 💪";
-                } else if (language === 'fr') {
-                    response.textContent = "Super! Faisons en sorte que cela se produise 💪";
-                } else if (language === 'de') {
-                    response.textContent = "Schön! Lass es uns wahr werden 💪";
-                } else if (language === 'ru') {
-                    response.textContent = "Отлично! Давайте сделаем это 💪";
-                } else if (language === 'ja') {
-                    response.textContent = "素晴らしい！実現させましょう 💪";
-                } else if (language === 'pt') {
-                    response.textContent = "Ótimo! Vamos fazer acontecer 💪";
-                } else if (language === 'ar') {
-                    response.textContent = "رائع! دعنا نحقق ذلك 💪";
-                } else if (language === 'hi') {
-                    response.textContent = "बढ़िया! चलो इसे सच कर दिखाएं 💪";
-                } else if (language === 'ko') {
-                    response.textContent = "좋아요! 함께 이루어 봅시다 💪";
-                } else if (language === 'it') {
-                    response.textContent = "Fantastico! Facciamolo accadere 💪";
                 } else {
                     response.textContent = "Nice! Let's make it happen 💪";
                 }
@@ -1833,26 +1814,6 @@
                     response.textContent = "Run while you can! Matrix's on its way 🏃‍♂️💨";
                 } else if (language === 'zh') {
                     response.textContent = "趁还能跑的时候快跑！矩阵正在路上 🏃‍♂️💨";
-                } else if (language === 'es') {
-                    response.textContent = "¡Corre mientras puedas! La matriz está en camino 🏃‍♂️💨";
-                } else if (language === 'fr') {
-                    response.textContent = "Cours pendant que tu peux! La matrice arrive 🏃‍♂️💨";
-                } else if (language === 'de') {
-                    response.textContent = "Lauf, solange du kannst! Die Matrix ist auf dem Weg 🏃‍♂️💨";
-                } else if (language === 'ru') {
-                    response.textContent = "Бегите, пока можете! Матрица уже в пути 🏃‍♂️💨";
-                } else if (language === 'ja') {
-                    response.textContent = "逃げられるうちに逃げろ！マトリックスが来る 🏃‍♂️💨";
-                } else if (language === 'pt') {
-                    response.textContent = "Corra enquanto pode! A Matrix está a caminho 🏃‍♂️💨";
-                } else if (language === 'ar') {
-                    response.textContent = "اهرب بينما تستطيع! المصفوفة في الطريق 🏃‍♂️💨";
-                } else if (language === 'hi') {
-                    response.textContent = "जब तक भाग सकते हो भागो! मैट्रिक्स आ रही है 🏃‍♂️💨";
-                } else if (language === 'ko') {
-                    response.textContent = "도망칠 수 있을 때 도망쳐! 행렬이 오고 있어 🏃‍♂️💨";
-                } else if (language === 'it') {
-                    response.textContent = "Scappa mentre puoi! La Matrix è in arrivo 🏃‍♂️💨";
                 } else {
                     response.textContent = "Run while you can! Matrix's on its way 🏃‍♂️💨";
                 }
@@ -1964,16 +1925,6 @@
             if (det === 0) {
                 let errorMessage = 'Matrix is not invertible (determinant = 0)';
                 if (currentLanguage === 'zh') errorMessage = '矩阵不可逆（行列式 = 0）';
-                else if (currentLanguage === 'es') errorMessage = 'La matriz no es invertible (determinante = 0)';
-                else if (currentLanguage === 'fr') errorMessage = 'La matrice n\'est pas inversible (déterminant = 0)';
-                else if (currentLanguage === 'de') errorMessage = 'Matrix ist nicht invertierbar (Determinante = 0)';
-                else if (currentLanguage === 'ru') errorMessage = 'Матрица не обратима (определитель = 0)';
-                else if (currentLanguage === 'ja') errorMessage = '行列は可逆ではありません（行列式=0）';
-                else if (currentLanguage === 'pt') errorMessage = 'A matriz não é invertível (determinante = 0)';
-                else if (currentLanguage === 'ar') errorMessage = 'المصفوفة غير قابلة للعكس (المحدد = 0)';
-                else if (currentLanguage === 'hi') errorMessage = 'मैट्रिक्स उलटा नहीं है (निर्धारक = 0)';
-                else if (currentLanguage === 'ko') errorMessage = '행렬이 가역적이지 않습니다 (행렬식 = 0)';
-                else if (currentLanguage === 'it') errorMessage = 'La matrice non è invertibile (determinante = 0)';
                 
                 errorElement.textContent = errorMessage;
                 errorElement.style.display = 'block';
@@ -2019,16 +1970,6 @@
             if (det === 0) {
                 let errorMessage = 'Matrix is not invertible (determinant = 0)';
                 if (currentLanguage === 'zh') errorMessage = '矩阵不可逆（行列式 = 0）';
-                else if (currentLanguage === 'es') errorMessage = 'La matriz no es invertible (determinante = 0)';
-                else if (currentLanguage === 'fr') errorMessage = 'La matrice n\'est pas inversible (déterminant = 0)';
-                else if (currentLanguage === 'de') errorMessage = 'Matrix ist nicht invertierbar (Determinante = 0)';
-                else if (currentLanguage === 'ru') errorMessage = 'Матрица не обратима (определитель = 0)';
-                else if (currentLanguage === 'ja') errorMessage = '行列は可逆ではありません（行列式=0）';
-                else if (currentLanguage === 'pt') errorMessage = 'A matriz não é invertível (determinante = 0)';
-                else if (currentLanguage === 'ar') errorMessage = 'المصفوفة غير قابلة للعكس (المحدد = 0)';
-                else if (currentLanguage === 'hi') errorMessage = 'मैट्रिक्स उलटा नहीं है (निर्धारक = 0)';
-                else if (currentLanguage === 'ko') errorMessage = '행렬이 가역적이지 않습니다 (행렬식 = 0)';
-                else if (currentLanguage === 'it') errorMessage = 'La matrice non è invertibile (determinante = 0)';
                 
                 errorElement.textContent = errorMessage;
                 errorElement.style.display = 'block';
@@ -2095,7 +2036,159 @@
             document.getElementById('detResult3x3').textContent = formatNumber(det);
         }
 
-        // 添加Matrix Game按钮的滚动功能
+        // 新版本用户计数器类
+        class UserCounter {
+            constructor() {
+                this.currentCount = 1000;
+                this.counterElement = document.getElementById('userCounter');
+                this.isAnimating = false;
+                this.namespace = 'matrix-solutions'; // 命名空间，确保唯一性
+                this.key = 'user-counter'; // 计数器键名
+                this.pollingInterval = null;
+                this.pollingFrequency = 15000; // 15秒轮询一次
+                this.init();
+            }
+            
+            // 初始化计数器
+            async init() {
+                // 首先尝试从localStorage加载，作为备用显示
+                const savedCount = localStorage.getItem('userCounter');
+                if (savedCount) {
+                    this.currentCount = parseInt(savedCount, 10);
+                    this.updateDisplay();
+                }
+                
+                // 然后尝试使用全局计数器
+                await this.incrementGlobalCounter();
+                
+                // 启动轮询，定期获取最新计数
+                this.startPolling();
+            }
+            
+            // 格式化数字为12位带逗号
+            formatNumber(num) {
+                return num.toString()
+                    .padStart(12, '0')
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+            
+            // 更新显示
+            updateDisplay() {
+                this.counterElement.textContent = this.formatNumber(this.currentCount);
+            }
+            
+            // 使用countapi.xyz增加全局计数器
+            async incrementGlobalCounter() {
+                try {
+                    // 生成随机增量
+                    const randomIncrement = Math.floor(Math.random() * 25) + 1;
+                    
+                    // 获取当前全局计数
+                    const getResponse = await fetch(`https://api.countapi.xyz/get/${this.namespace}/${this.key}`);
+                    const getData = await getResponse.json();
+                    
+                    let currentGlobalCount = getData.value || 1000;
+                    
+                    // 更新全局计数
+                    const updateResponse = await fetch(`https://api.countapi.xyz/hit/${this.namespace}/${this.key}?amount=${randomIncrement}`);
+                    const updateData = await updateResponse.json();
+                    
+                    if (updateData.value) {
+                        // 使用全局计数器的值
+                        this.currentCount = updateData.value;
+                        this.saveCount();
+                        this.animateCounter(currentGlobalCount, this.currentCount);
+                    } else {
+                        // 如果更新失败，使用本地计数
+                        throw new Error('Global counter update failed');
+                    }
+                } catch (error) {
+                    console.warn('Using fallback local counter due to:', error.message);
+                    // 降级到本地计数
+                    this.incrementLocalCounter();
+                }
+            }
+            
+            // 本地计数器增加（备用方案）
+            incrementLocalCounter() {
+                if (this.isAnimating) return;
+                
+                const randomIncrement = Math.floor(Math.random() * 25) + 1;
+                const oldCount = this.currentCount;
+                this.currentCount += randomIncrement;
+                
+                // 保存到localStorage
+                this.saveCount();
+                
+                // 执行动画
+                this.animateCounter(oldCount, this.currentCount);
+            }
+            
+            // 获取当前全局计数（不增加）
+            async getGlobalCount() {
+                try {
+                    const response = await fetch(`https://api.countapi.xyz/get/${this.namespace}/${this.key}`);
+                    const data = await response.json();
+                    
+                    if (data.value && data.value !== this.currentCount) {
+                        // 如果计数有变化，更新显示
+                        const oldCount = this.currentCount;
+                        this.currentCount = data.value;
+                        this.saveCount();
+                        this.animateCounter(oldCount, this.currentCount);
+                    }
+                } catch (error) {
+                    console.warn('Failed to fetch global count:', error.message);
+                }
+            }
+            
+            // 启动定期轮询
+            startPolling() {
+                // 立即开始第一次轮询
+                this.pollingInterval = setInterval(() => {
+                    this.getGlobalCount();
+                }, this.pollingFrequency);
+            }
+            
+            // 数字滚动动画
+            animateCounter(oldValue, newValue) {
+                this.isAnimating = true;
+                
+                // 添加动画类
+                this.counterElement.classList.add('counting');
+                
+                // 动画持续时间
+                const duration = 800;
+                const startTime = performance.now();
+                
+                const animate = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // 使用缓动函数使动画更自然
+                    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                    const current = Math.floor(oldValue + (newValue - oldValue) * easeOutQuart);
+                    
+                    this.counterElement.textContent = this.formatNumber(current);
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        this.counterElement.classList.remove('counting');
+                        this.isAnimating = false;
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+            
+            // 持久化存储（作为备用）
+            saveCount() {
+                localStorage.setItem('userCounter', this.currentCount.toString());
+            }
+        }
+
+        // 页面加载后初始化
         document.addEventListener('DOMContentLoaded', function() {
             const matrixGameButton = document.querySelector('a[href="#matrix-game"]');
             const rightSidebar = document.getElementById('matrix-game');
@@ -2159,6 +2252,9 @@
                     dropdownMenu.classList.remove('show');
                 }
             });
+            
+            // 初始化新版本用户计数器
+            new UserCounter();
         });
     </script>
 </body>
