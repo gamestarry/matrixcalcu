@@ -1,11 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
+  <!-- Root Home Page (Auto Language Redirect) -->
   <url>
     <loc>https://matrixcalcu.com/</loc>
-    <lastmod>2025-11-01</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/>
   </url>
+
+  <!-- English Homepage -->
+  <url>
+    <loc>https://matrixcalcu.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/>
+  </url>
+
+  <!-- Function Pages Below -->
+  <url><loc>https://matrixcalcu.com/en/matrix-addition-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-addition-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-adjoint-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-adjoint-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-arccosine-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arccosine-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-arcsine-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arcsine-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-arctangent-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arctangent-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-augmented-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-augmented-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-cholesky-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-cholesky-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-cosine-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-cosine-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-determinant-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-determinant-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-diagonal-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-diagonal-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-eigenvalues-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-eigenvalues-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-eigenvectors-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-eigenvectors-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-exponential-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-exponential-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-hermite-normal-form-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-hermite-normal-form-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-inverse-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-inverse-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-jordan-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-jordan-calculator"/><xhtml:link rel="alternate" hrefl="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-kronecker-product-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-kronecker-product-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-lll-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-lll-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-logarithm-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-logarithm-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-lu-decomposition-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-lu-decomposition-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-multiplication-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-multiplication-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-power-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-power-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-pseudo-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-pseudo-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-qr-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-qr-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-qr-decomposition-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-qr-decomposition-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-rank-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-rank-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-rref-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-rref-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-scalar-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-scalar-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-sine-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-sine-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-square-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-square-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-subtraction-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-subtraction-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-svd-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-svd-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-tangent-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-tangent-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-trace-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-trace-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-transpose-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-transpose-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-upper-triangular-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-upper-triangular-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
 
 </urlset>
