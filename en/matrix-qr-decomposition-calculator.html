@@ -22,13 +22,10 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- MathJax for mathematical equations -->
+    <!-- MathJax for mathematical formulas -->
     <script>
         window.MathJax = {
-            tex: { 
-                inlineMath: [['$', '$'], ['\\(', '\\)']], 
-                displayMath: [['$$','$$'], ['\\[','\\]']] 
-            }
+          tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }
         };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
@@ -172,26 +169,109 @@
             width: 100%;
         }
 
-        .seo-articles-container h2 {
+        /* SEO内容样式 - 与现有页面兼容 */
+        .seo-content {
+            font-family: Inter, 'Segoe UI', Roboto, Arial, Helvetica, sans-serif;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 26px;
+            color: #111827;
+            background: #fff;
+            line-height: 1.6;
+        }
+
+        .seo-content h1 {
             color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--light-color);
-        }
-
-        .seo-articles-container p {
-            color: var(--dark-color);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .seo-placeholder {
+            font-size: 28px;
+            margin: 0 0 20px 0;
             text-align: center;
-            color: #7f8c8d;
+        }
+
+        .seo-content h2 {
+            color: #0f172a;
+            margin-top: 26px;
+            font-size: 22px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .seo-content h3 {
+            margin-top: 20px;
+            color: #0f172a;
+            font-size: 18px;
+        }
+
+        .seo-content p {
+            margin: 15px 0;
+            color: #333;
+        }
+
+        .seo-content .matrix {
+            margin: 18px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .seo-content .note {
+            color: #6b7280;
+            font-size: .95rem;
             font-style: italic;
-            padding: 2rem;
-            border: 2px dashed #ddd;
+        }
+
+        .seo-content .step {
+            background: #fbfbfb;
+            border: 1px solid #eee;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        .seo-content details {
+            background: #fbfbfb;
+            border: 1px solid #e6e6e6;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .seo-content summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        .seo-content ul {
+            margin-left: 18px;
+            margin-bottom: 15px;
+        }
+
+        .seo-content li {
+            margin-bottom: 8px;
+        }
+
+        .seo-content footer {
+            margin-top: 30px;
+            color: #6b7280;
+            font-size: .95rem;
+            padding: 20px;
+            background-color: #f8f9fa; /* 浅灰色背景 */
             border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .seo-content hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 30px 0;
+        }
+
+        .seo-content section {
+            margin-bottom: 30px;
+        }
+
+        .seo-content strong {
+            color: var(--primary-color);
         }
 
         /* 左侧导航栏样式 */
@@ -978,6 +1058,19 @@
                 margin-bottom: 10px;
             }
             
+            /* SEO内容移动端适配 */
+            .seo-content {
+                padding: 15px;
+            }
+            
+            .seo-content h2 {
+                font-size: 20px;
+            }
+            
+            .seo-content h3 {
+                font-size: 16px;
+            }
+            
             /* 移动端显示简化结果 */
             .mobile-result-view {
                 display: block;
@@ -1065,120 +1158,10 @@
                 font-size: 0.9em;
                 padding: 8px;
             }
-        }
-
-        /* SEO内容样式 */
-        .seo-content {
-            font-family: Inter, "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
-            color: #111827;
-            background: #fff;
-            line-height: 1.6;
-            padding: 26px;
-            width: 100%;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .seo-content h2 {
-            color: var(--primary-color);
-            margin-top: 26px;
-            font-size: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--light-color);
-        }
-
-        .seo-content h3 {
-            color: #2c3e50;
-            margin-top: 20px;
-            font-size: 1.2rem;
-        }
-
-        .seo-content p {
-            margin: 12px 0;
-            color: #111827;
-        }
-
-        .seo-content .note {
-            color: #6b7280;
-            font-size: 0.95rem;
-            font-style: italic;
-        }
-
-        .seo-content .matrix {
-            margin: 18px 0;
-            text-align: center;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-
-        .seo-content .step {
-            background: #f8f9fa;
-            border: 1px solid #e6e6e6;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 12px 0;
-        }
-
-        .seo-content details {
-            background: #f8f9fa;
-            border: 1px solid #e6e6e6;
-            padding: 12px 14px;
-            border-radius: 8px;
-            margin-top: 10px;
-        }
-
-        .seo-content summary {
-            font-weight: 600;
-            cursor: pointer;
-            color: var(--secondary-color);
-        }
-
-        .seo-content ul {
-            margin-left: 24px;
-            margin-bottom: 16px;
-        }
-
-        .seo-content li {
-            margin-bottom: 8px;
-            color: #111827;
-        }
-
-        .seo-content footer {
-            margin-top: 30px;
-            color: #6b7280;
-            font-size: 0.95rem;
-            padding: 20px;
-            background-color: #f8f9fa; /* 按照要求设置为浅灰色 */
-            border-radius: 8px;
-            border-top: 1px solid #e6e6e6;
-        }
-
-        .seo-content hr {
-            border: none;
-            border-top: 1px solid #e6e6e6;
-            margin: 30px 0;
-        }
-
-        .seo-content strong {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .seo-content ol {
-            margin-left: 24px;
-            margin-bottom: 16px;
-        }
-
-        .seo-content ol li {
-            margin-bottom: 8px;
-        }
-
-        .seo-content .meta {
-            font-size: 0.9rem;
-            color: #6b7280;
-            margin-top: 5px;
+            
+            .seo-content {
+                padding: 10px;
+            }
         }
 
         /* 问答栏样式 */
@@ -1469,7 +1452,6 @@
                     <!-- SEO文章容器 - 现在包含完整的SEO文章 -->
                     <div class="seo-articles-container">
                         <div class="seo-content">
-                            <!-- 开始：从您的SEO文章中复制的内容 -->
                             <section>
                                 <h2>1. What is QR decomposition?</h2>
                                 <p>
@@ -1633,6 +1615,7 @@
                                     </div>
                                     <p class="note">(Columns scaled and orthogonalized; verify \(Q^{T}Q=I\) and \(R=Q^{T}A\).)</p>
                                 </details>
+
                             </section>
 
                             <hr />
@@ -1640,7 +1623,6 @@
                             <footer>
                                 <p>Copyright Notice: This article is original content from the Matrix Calculator website. Please credit the source when sharing or reproducing it. For more matrix computation tools, visit matrixcalcu.com.</p>
                             </footer>
-                            <!-- 结束：从您的SEO文章中复制的内容 -->
                         </div>
                     </div>
                 </div>

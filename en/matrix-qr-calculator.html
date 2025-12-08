@@ -22,6 +22,14 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
+    <!-- MathJax for mathematical formulas -->
+    <script>
+        window.MathJax = {
+          tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
     <!-- Schema.org 结构化数据 -->
     <script type="application/ld+json">
     {
@@ -161,26 +169,109 @@
             width: 100%;
         }
 
-        .seo-articles-container h2 {
+        /* SEO内容样式 - 与现有页面兼容 */
+        .seo-content {
+            font-family: Inter, 'Segoe UI', Roboto, Arial, Helvetica, sans-serif;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 26px;
+            color: #111827;
+            background: #fff;
+            line-height: 1.6;
+        }
+
+        .seo-content h1 {
             color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--light-color);
-        }
-
-        .seo-articles-container p {
-            color: var(--dark-color);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .seo-placeholder {
+            font-size: 28px;
+            margin: 0 0 20px 0;
             text-align: center;
-            color: #7f8c8d;
+        }
+
+        .seo-content h2 {
+            color: #0f172a;
+            margin-top: 26px;
+            font-size: 22px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .seo-content h3 {
+            margin-top: 20px;
+            color: #0f172a;
+            font-size: 18px;
+        }
+
+        .seo-content p {
+            margin: 15px 0;
+            color: #333;
+        }
+
+        .seo-content .matrix {
+            margin: 18px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .seo-content .note {
+            color: #6b7280;
+            font-size: .95rem;
             font-style: italic;
-            padding: 2rem;
-            border: 2px dashed #ddd;
+        }
+
+        .seo-content .step {
+            background: #fbfbfb;
+            border: 1px solid #eee;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        .seo-content details {
+            background: #fbfbfb;
+            border: 1px solid #e6e6e6;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .seo-content summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        .seo-content ul {
+            margin-left: 18px;
+            margin-bottom: 15px;
+        }
+
+        .seo-content li {
+            margin-bottom: 8px;
+        }
+
+        .seo-content footer {
+            margin-top: 30px;
+            color: #6b7280;
+            font-size: .95rem;
+            padding: 20px;
+            background-color: #f8f9fa; /* 浅灰色背景 */
             border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .seo-content hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 30px 0;
+        }
+
+        .seo-content section {
+            margin-bottom: 30px;
+        }
+
+        .seo-content strong {
+            color: var(--primary-color);
         }
 
         /* 左侧导航栏样式 */
@@ -967,6 +1058,19 @@
                 margin-bottom: 10px;
             }
             
+            /* SEO内容移动端适配 */
+            .seo-content {
+                padding: 15px;
+            }
+            
+            .seo-content h2 {
+                font-size: 20px;
+            }
+            
+            .seo-content h3 {
+                font-size: 16px;
+            }
+            
             /* 移动端显示简化结果 */
             .mobile-result-view {
                 display: block;
@@ -1054,137 +1158,9 @@
                 font-size: 0.9em;
                 padding: 8px;
             }
-        }
-
-        /* SEO内容样式 */
-        .seo-content {
-            --blue: #0b69ff;
-            --muted: #6b7280;
-            --card-bg: #f8fafc;
-            --max-w: 980px;
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            line-height: 1.6;
-            color: #0f172a;
-            background: #ffffff;
-            padding: 28px;
-        }
-
-        .seo-content header {
-            background: linear-gradient(90deg, #f3f8ff, #ffffff);
-            border-bottom: 1px solid #e6eefc;
-            margin: -28px -28px 28px -28px;
-            padding: 28px;
-        }
-
-        .seo-content .container {
-            max-width: var(--max-w);
-            margin: 0 auto;
-        }
-
-        .seo-content h1 {
-            font-size: 28px;
-            margin: 6px 0;
-            color: var(--blue);
-            border-bottom: none;
-            text-shadow: none;
-        }
-
-        .seo-content h2 {
-            font-size: 20px;
-            margin: 18px 0 8px;
-            color: #0f172a;
-        }
-
-        .seo-content p {
-            margin: 8px 0;
-            color: #0f172a;
-        }
-
-        .seo-content .lead {
-            color: var(--muted);
-            font-size: 15px;
-        }
-
-        .seo-content .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .seo-content .card {
-            background: var(--card-bg);
-            padding: 14px;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(11, 105, 255, 0.06);
-        }
-
-        .seo-content .cta {
-            display: inline-block;
-            background: var(--blue);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            margin-top: 16px;
-            box-shadow: 0 4px 12px rgba(11, 105, 255, 0.3);
-        }
-
-        .seo-content footer {
-            padding: 22px 0;
-            color: var(--muted);
-            font-size: 14px;
-            border-top: 1px solid #eef2ff;
-            margin-top: 28px;
-        }
-
-        .seo-content pre {
-            background: #0b1220;
-            color: #e6f0ff;
-            padding: 12px;
-            border-radius: 8px;
-            overflow: auto;
-            font-family: monospace;
-        }
-
-        .seo-content .meta {
-            font-size: 13px;
-            color: var(--muted);
-        }
-
-        .seo-content dt {
-            font-weight: 600;
-            margin-top: 10px;
-            color: #1e293b;
-        }
-
-        .seo-content dd {
-            margin-left: 0;
-            padding-left: 10px;
-            border-left: 2px solid var(--blue);
-        }
-
-        .seo-content ul, .seo-content ol {
-            margin: 8px 0;
-            padding-left: 20px;
-        }
-
-        .seo-content li {
-            margin-bottom: 8px;
-        }
-
-        .seo-content section {
-            margin-bottom: 28px;
-        }
-
-        .seo-content strong {
-            font-weight: 600;
-        }
-
-        @media (max-width: 560px) {
-            .seo-content h1 {
-                font-size: 22px;
+            
+            .seo-content {
+                padding: 10px;
             }
         }
 
@@ -1473,9 +1449,181 @@
                         </div>
                     </div>
                     
-                    <!-- SEO文章容器 - 现在为空容器备用 -->
+                    <!-- SEO文章容器 - 现在包含完整的SEO文章 -->
                     <div class="seo-articles-container">
-                        <!-- 空容器，备用 -->
+                        <div class="seo-content">
+                            <section>
+                                <h2>1. What is QR decomposition?</h2>
+                                <p>
+                                    The <strong>QR decomposition</strong> factors a matrix \(A\) into \(A=QR\) where
+                                </p>
+                                <ul>
+                                    <li>\(Q\) has orthonormal columns (for real matrices \(Q^{T}Q = I\)) — an orthogonal matrix when square;</li>
+                                    <li>\(R\) is upper triangular.</li>
+                                </ul>
+                                <p class="note">QR is widely used for solving least-squares problems, numerical algorithms and computing orthonormal bases.</p>
+                            </section>
+
+                            <section>
+                                <h2>2. Formula / Gram–Schmidt procedure (brief)</h2>
+                                <p>
+                                    Given column vectors \(a_1,a_2,\dots,a_n\) of \(A\), classical Gram–Schmidt constructs orthonormal vectors \(q_1,\dots,q_n\):
+                                </p>
+
+                                <div class="step">
+                                    <ol>
+                                        <li>\(u_1 = a_1,\quad q_1 = u_1 / \|u_1\|\).</li>
+                                        <li>For \(k\ge2\): \(u_k = a_k - \sum_{j=1}^{k-1} \operatorname{proj}_{q_j}(a_k)\), where \(\operatorname{proj}_{q_j}(a_k) = (q_j^{T}a_k)q_j.\)</li>
+                                        <li>\(q_k = u_k / \|u_k\|\).</li>
+                                    </ol>
+                                </div>
+
+                                <p>Finally \(Q=[q_1\ \cdots\ q_n]\) and \(R = Q^{T}A\). For numerical stability prefer Modified Gram–Schmidt or Householder reflections for production code.</p>
+                            </section>
+
+                            <section>
+                                <h2>3. Worked examples</h2>
+
+                                <h3>Example 1</h3>
+                                <p>Find QR for</p>
+                                <div class="matrix">
+                                    \[
+                                    A = \begin{bmatrix}1 & 1\\[4pt]1 & -1\end{bmatrix}
+                                    \]
+                                </div>
+
+                                <div class="step">
+                                    <p><strong>Step 1.</strong> \(u_1 = [1,1]^T,\ \|u_1\|=\sqrt{2},\ q_1=\frac{1}{\sqrt2}[1,1]^T.\)</p>
+                                    <p><strong>Step 2.</strong> \(q_1^{T}a_2 = \frac{1}{\sqrt2}[1,1]\cdot[1,-1] = 0\Rightarrow u_2=a_2.\)</p>
+                                    <p>\(q_2=\frac{1}{\sqrt2}[1,-1]^T.\)</p>
+                                    <p><strong>Result:</strong></p>
+                                    <div class="matrix">
+                                        \[
+                                        Q=\frac{1}{\sqrt2}\begin{bmatrix}1 & 1\\[4pt]1 & -1\end{bmatrix},\quad
+                                        R=\begin{bmatrix}\sqrt2 & 0\\[4pt]0 & \sqrt2\end{bmatrix}.
+                                        \]
+                                    </div>
+                                </div>
+
+                                <h3>Example 2</h3>
+                                <p>Find QR for</p>
+                                <div class="matrix">
+                                    \[
+                                    A = \begin{bmatrix}2 & 1\\[4pt]0 & 2\end{bmatrix}
+                                    \]
+                                </div>
+
+                                <div class="step">
+                                    <p>\(u_1=[2,0]^T,\ \|u_1\|=2,\ q_1=[1,0]^T.\)</p>
+                                    <p>\(q_1^{T}a_2 = [1,0]\cdot[1,2]=1,\ u_2=a_2 - (q_1^{T}a_2)q_1 = [0,2]^T,\ q_2=[0,1]^T.\)</p>
+                                    <p><strong>Result:</strong></p>
+                                    <div class="matrix">
+                                        \[
+                                        Q=\begin{bmatrix}1 & 0\\[4pt]0 & 1\end{bmatrix},\quad
+                                        R=\begin{bmatrix}2 & 1\\[4pt]0 & 2\end{bmatrix}.
+                                        \]
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h2>4. Common mistakes</h2>
+                                <ul>
+                                    <li>Not normalizing the orthogonal vectors — forgetting the \(\|u_k\|\) step.</li>
+                                    <li>Using classical Gram–Schmidt for ill-conditioned matrices — it can be numerically unstable.</li>
+                                    <li>Mixing up order: \(R = Q^{T}A\), not \(AQ^{T}\).</li>
+                                    <li>Assuming \(Q\) must be square — for tall matrices \(Q\) has orthonormal columns (m×n) and \(R\) is n×n.</li>
+                                    <li>Forgetting to handle linear dependence among columns (zero or near-zero \(u_k\)).</li>
+                                </ul>
+                            </section>
+
+                            <section>
+                                <h2>5. Practice problems (answers hidden)</h2>
+                                <p>Try these by hand or with your QR calculator. Click <em>Show Answer</em> to reveal one valid QR (answers may differ by signs or ordering of orthonormal vectors).</p>
+
+                                <h3>Exercise 1</h3>
+                                <div class="matrix">
+                                    \[
+                                    A=\begin{bmatrix}1 & 2\\[4pt]0 & 2\end{bmatrix}
+                                    \]
+                                </div>
+                                <details>
+                                    <summary>Show Answer</summary>
+                                    <div class="matrix">
+                                        \[
+                                        Q=\begin{bmatrix}1 & 0\\[4pt]0 & 1\end{bmatrix},\quad
+                                        R=\begin{bmatrix}1 & 2\\[4pt]0 & 2\end{bmatrix}
+                                        \]
+                                    </div>
+                                    <p class="note">(Here first column already unit; second column orthogonalized gives [0,1].)</p>
+                                </details>
+
+                                <h3>Exercise 2</h3>
+                                <div class="matrix">
+                                    \[
+                                    A=\begin{bmatrix}3 & 1\\[4pt]4 & 2\end{bmatrix}
+                                    \]
+                                </div>
+                                <details>
+                                    <summary>Show Answer</summary>
+                                    <div class="matrix">
+                                        <!-- One valid QR produced by Gram-Schmidt -->
+                                        \[
+                                        Q=\begin{bmatrix}
+                                        \tfrac{3}{5} & \tfrac{1}{5} \\[6pt]
+                                        \tfrac{4}{5} & -\tfrac{4}{5}
+                                        \end{bmatrix},\quad
+                                        R=\begin{bmatrix}
+                                        5 & \tfrac{11}{5} \\[6pt]
+                                        0 & \tfrac{6}{5}
+                                        \end{bmatrix}
+                                        \]
+                                    </div>
+                                    <p class="note">(Signs or exact fractions may vary; \(R=Q^{T}A\) should hold.)</p>
+                                </details>
+
+                                <h3>Exercise 3</h3>
+                                <div class="matrix">
+                                    \[
+                                    A=\begin{bmatrix}1 & 0\\[4pt]1 & 1\end{bmatrix}
+                                    \]
+                                </div>
+                                <details>
+                                    <summary>Show Answer</summary>
+                                    <div class="matrix">
+                                        \[
+                                        Q=\begin{bmatrix}\tfrac{1}{\sqrt2} & -\tfrac{1}{\sqrt2}\\[6pt] \tfrac{1}{\sqrt2} & \tfrac{1}{\sqrt2}\end{bmatrix},\quad
+                                        R=\begin{bmatrix}\sqrt2 & \tfrac{1}{\sqrt2}\\[6pt]0 & \tfrac{1}{\sqrt2}\end{bmatrix}
+                                        \]
+                                    </div>
+                                    <p class="note">(One valid orthonormal basis; equivalent alternatives differ by column signs.)</p>
+                                </details>
+
+                                <h3>Exercise 4</h3>
+                                <div class="matrix">
+                                    \[
+                                    A=\begin{bmatrix}2 & 2\\[4pt]2 & -2\end{bmatrix}
+                                    \]
+                                </div>
+                                <details>
+                                    <summary>Show Answer</summary>
+                                    <div class="matrix">
+                                        \[
+                                        Q=\frac{1}{\sqrt2}\begin{bmatrix}1 & 1\\[6pt]1 & -1\end{bmatrix},\quad
+                                        R=\begin{bmatrix}2\sqrt2 & 0\\[6pt]0 & 2\sqrt2\end{bmatrix}
+                                        \]
+                                    </div>
+                                    <p class="note">(Columns scaled and orthogonalized; verify \(Q^{T}Q=I\) and \(R=Q^{T}A\).)</p>
+                                </details>
+
+                            </section>
+
+                            <hr />
+
+                            <footer>
+                                <p>Copyright Notice: This article is original content from the Matrix Calculator website. Please credit the source when sharing or reproducing it. For more matrix computation tools, visit matrixcalcu.com.</p>
+                            </footer>
+                        </div>
                     </div>
                 </div>
                 
