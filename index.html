@@ -6,85 +6,184 @@
 <title>Matrix Calculator - Redirecting...</title>
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
+<!-- 关键：添加基础URL避免路径问题 -->
+<base href="/">
+
+<!-- 关键：防止重复执行的标记 -->
 <script>
-(function() {
-  const defaultLang = 'en';
-
-  const languageMap = {
-    'zh': '/zh/index.html',
-    'es': '/es/index.html',
-    'fr': '/fr/index.html',
-    'de': '/de/index.html',
-    'ja': '/ja/index.html',
-    'ru': '/ru/index.html',
-    'pt': '/pt/index.html',
-    'ar': '/ar/index.html',
-    'hi': '/hi/index.html',
-    'bn': '/bn/index.html',
-    'it': '/it/index.html',
-    'ko': '/ko/index.html',
-    'tr': '/tr/index.html',
-    'vi': '/vi/index.html',
-    'th': '/th/index.html',
-    'nl': '/nl/index.html',
-    'pl': '/pl/index.html'
-  };
-
-  const userLang = (navigator.language || navigator.userLanguage || defaultLang).toLowerCase();
-  const mainLang = userLang.split('-')[0];
-  const target = languageMap[mainLang] || `/en/index.html`;
-
-  // 检查目标文件是否存在
-  fetch(target, { method: 'HEAD' })
-    .then(res => {
-      if (res.ok) {
-        window.location.replace(target);
-      } else {
-        window.location.replace(`/en/index.html`);
+  // 设置一个标记，防止重复重定向
+  if (!window.hasRedirected) {
+    window.hasRedirected = true;
+    
+    (function() {
+      // 默认语言
+      const defaultLang = 'en';
+      
+      // 使用更简单的路径格式，避免index.html后缀问题
+      const languageMap = {
+        'zh': '/zh/',
+        'es': '/es/',
+        'fr': '/fr/',
+        'de': '/de/',
+        'ja': '/ja/',
+        'ru': '/ru/',
+        'pt': '/pt/',
+        'ar': '/ar/',
+        'hi': '/hi/',
+        'bn': '/bn/',
+        'it': '/it/',
+        'ko': '/ko/',
+        'tr': '/tr/',
+        'vi': '/vi/',
+        'th': '/th/',
+        'nl': '/nl/',
+        'pl': '/pl/'
+      };
+      
+      // 获取用户语言
+      const userLang = (navigator.language || navigator.userLanguage || defaultLang).toLowerCase();
+      const mainLang = userLang.split('-')[0];
+      
+      // 确定目标路径
+      const targetPath = languageMap[mainLang] || `/${defaultLang}/`;
+      
+      console.log('Detected language:', userLang, 'Main language:', mainLang, 'Target path:', targetPath);
+      
+      // 改进的检查方法：使用图片加载检查，更可靠
+      function checkResourceExists(url) {
+        return new Promise((resolve) => {
+          // 创建一个图片来测试资源是否存在
+          const img = new Image();
+          img.onload = function() {
+            resolve(true);
+          };
+          img.onerror = function() {
+            resolve(false);
+          };
+          
+          // 设置超时
+          setTimeout(() => {
+            resolve(false);
+          }, 2000);
+          
+          // 尝试加载一个已知存在的文件，比如favicon
+          img.src = url + 'favicon.ico?v=' + Date.now();
+        });
       }
-    })
-    .catch(() => {
-      window.location.replace(`/en/index.html`);
-    });
-
-})();
+      
+      // 主重定向逻辑
+      async function redirect() {
+        // 如果是英文，直接跳转（假设英文肯定存在）
+        if (mainLang === defaultLang) {
+          console.log('Using default language, redirecting to:', `/${defaultLang}/`);
+          window.location.replace(`/${defaultLang}/`);
+          return;
+        }
+        
+        // 检查目标语言是否存在
+        try {
+          const exists = await checkResourceExists(targetPath);
+          
+          if (exists) {
+            console.log('Language exists, redirecting to:', targetPath);
+            window.location.replace(targetPath);
+          } else {
+            console.log('Language not found, using default:', defaultLang);
+            window.location.replace(`/${defaultLang}/`);
+          }
+        } catch (error) {
+          console.error('Error checking language:', error);
+          window.location.replace(`/${defaultLang}/`);
+        }
+      }
+      
+      // 延迟执行，避免快速跳转的闪烁
+      setTimeout(redirect, 100);
+      
+      // 添加手动重定向的备选方案
+      window.addEventListener('load', function() {
+        // 如果3秒后还没跳转，显示手动选择
+        setTimeout(function() {
+          const message = document.querySelector('p');
+          if (message && !window.hasJumped) {
+            message.innerHTML = 'Taking longer than expected. Please select your language:';
+            const selector = document.createElement('div');
+            selector.innerHTML = `
+              <div style="margin-top: 20px;">
+                <a href="/en/" style="margin: 5px; padding: 8px 16px; background: #007bff; color: white; text-decoration: none; border-radius: 4px;">English</a>
+                <a href="/zh/" style="margin: 5px; padding: 8px 16px; background: #28a745; color: white; text-decoration: none; border-radius: 4px;">中文</a>
+                <a href="/es/" style="margin: 5px; padding: 8px 16px; background: #dc3545; color: white; text-decoration: none; border-radius: 4px;">Español</a>
+              </div>
+            `;
+            message.parentNode.insertBefore(selector, message.nextSibling);
+          }
+        }, 3000);
+      });
+      
+      // 标记跳转状态
+      window.hasJumped = false;
+      window.addEventListener('beforeunload', function() {
+        window.hasJumped = true;
+      });
+      
+    })();
+  }
 </script>
 
 <style>
-body {
-  margin: 0;
-  padding: 40px;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background: #f5f7fa;
-}
-.spinner {
-  border: 4px solid rgba(0,0,0,0.1);
-  border-radius: 50%;
-  border-top: 4px solid #3498db;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+  /* 添加一些基本样式 */
+  body {
+    margin: 0;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    max-width: 600px;
+    padding: 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 </style>
 </head>
 <body>
-  <div>
+  <div class="container">
     <div class="spinner"></div>
     <p>Redirecting to your preferred language...</p>
-
+    
+    <!-- 无JavaScript支持时的降级方案 -->
     <noscript>
-      <p>Please enable JavaScript or select your language manually:</p>
-      <ul>
-        <li><a href="/en/">English</a></li>
-        <li><a href="/zh/">中文</a></li>
-        <li><a href="/es/">Español</a></li>
-      </ul>
+      <div style="background: #f8f9fa; padding: 20px; border-radius: 5px; margin-top: 20px;">
+        <h3>JavaScript is required for automatic redirection</h3>
+        <p>Please enable JavaScript or manually select your language:</p>
+        <div>
+          <a href="/en/" style="display: inline-block; margin: 5px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">English</a>
+          <a href="/zh/" style="display: inline-block; margin: 5px; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 5px;">中文</a>
+          <a href="/es/" style="display: inline-block; margin: 5px; padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px;">Español</a>
+        </div>
+      </div>
     </noscript>
   </div>
 </body>
