@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix Calculator - Redirecting...</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <script>
-  (function() {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrix Calculator - Redirecting...</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    const languageMap = {
+<script>
+(function() {
+  const defaultLang = 'en';
+
+  const languageMap = {
     'zh': '/zh/index.html',
     'es': '/es/index.html',
     'fr': '/fr/index.html',
@@ -28,35 +30,62 @@
     'pl': '/pl/index.html'
   };
 
-  const userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+  const userLang = (navigator.language || navigator.userLanguage || defaultLang).toLowerCase();
   const mainLang = userLang.split('-')[0];
-  const langFile = languageMap[mainLang] || '/en/index.html';
+  const target = languageMap[mainLang] || `/en/index.html`;
 
-  fetch(langFile, { method: 'HEAD' })
+  // 检查目标文件是否存在
+  fetch(target, { method: 'HEAD' })
     .then(res => {
       if (res.ok) {
-        window.location.href = langFile;
+        window.location.replace(target);
       } else {
-        window.location.href = '/en/index.html';
+        window.location.replace(`/en/index.html`);
       }
     })
     .catch(() => {
-      window.location.href = '/en/index.html';
+      window.location.replace(`/en/index.html`);
     });
 
 })();
 </script>
 
+<style>
+body {
+  margin: 0;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f5f7fa;
+}
+.spinner {
+  border: 4px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
 </head>
 <body>
-  <p>Redirecting to your preferred language...</p>
-  <noscript>
-    <p>Please enable JavaScript or select your language manually:</p>
-    <ul>
-      <li><a href="/en/">English</a></li>
-      <li><a href="/zh/">中文</a></li>
-      <li><a href="/es/">Español</a></li>
-    </ul>
-  </noscript>
+  <div>
+    <div class="spinner"></div>
+    <p>Redirecting to your preferred language...</p>
+
+    <noscript>
+      <p>Please enable JavaScript or select your language manually:</p>
+      <ul>
+        <li><a href="/en/">English</a></li>
+        <li><a href="/zh/">中文</a></li>
+        <li><a href="/es/">Español</a></li>
+      </ul>
+    </noscript>
+  </div>
 </body>
 </html>
