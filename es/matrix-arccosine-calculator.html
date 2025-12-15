@@ -1,0 +1,2612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculadora gratuita de arco coseno matricial online. Calcula arccos(A) para matrices 2x2, 3x3 y hasta 9x9. Calcula el coseno inverso de los elementos de la matriz de forma rápida y sencilla.">
+    <meta name="keywords" content="arco coseno matricial, matriz arccos, matriz coseno inverso, matriz coseno inverso, calculadora arccos, calculadora de matrices, herramientas de álgebra lineal">
+    <meta name="author" content="Matrix Calculator Pro">
+    <!-- Canonical标签 -->
+    <link rel="canonical" href="https://matrixcalcu.com/es/matrix-arccosine-calculator" />
+    
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="Calculadora de Arco Coseno Matricial - arccos(A) para Matrices 2x2, 3x3">
+    <meta property="og:description" content="Calcula arccos(A) para matrices cuadradas al instante. Calcula el coseno inverso de cada elemento de la matriz. Válido para valores en el rango [-1, 1].">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <!-- Open Graph URL -->
+    <meta property="og:url" content="https://matrixcalcu.com/es/matrix-arccosine-calculator" />
+
+    
+    <title>Calculadora de Arco Coseno Matricial - arccos(A) para Matrices 2x2 y 3x3</title>
+
+    <!-- ========== HREFLANG 标签（西语计算器页面）========== -->
+    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-arccosine-calculator" />
+    <link rel="alternate" hreflang="es-ES" href="https://matrixcalcu.com/es/matrix-arccosine-calculator" />
+    <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arccosine-calculator" />
+    <link rel="alternate" hreflang="en-US" href="https://matrixcalcu.com/en/matrix-arccosine-calculator" />
+    <link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/" />
+
+    
+    <!-- MathJax para fórmulas matemáticas -->
+    <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" defer></script>
+    
+    <!-- Enlace del Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Datos estructurados Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Calculadora de Arco Coseno Matricial - arccos(A)",
+      "description": "Calculadora online gratuita de arco coseno matricial para calcular arccos(A) de matrices cuadradas. Calcula el coseno inverso de cada elemento de la matriz.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "permissions": "none",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Math Tools Pro"
+      }
+    }
+    </script>
+    
+    <style>
+        /* Todos los estilos CSS se mantienen exactamente iguales */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #8a2be2; /* Cambiado a azul violeta */
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Contenedor principal de la fila */
+        .main-row-container {
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 0 0 2rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Contenedor ancho para albergar tres secciones en fila */
+        .wide-container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Diseño de la fila principal */
+        .main-row {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .left-sidebar, .right-sidebar {
+            flex: 0 0 250px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .calculator-main {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Estilos del nuevo contenedor de contenido dinámico */
+        .dynamic-content-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 0;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .dynamic-content-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .dynamic-content-container p {
+            color: var(--dark-color);
+            text-align: center;
+            max-width: 600px;
+            margin-bottom: 1.5rem;
+        }
+
+        .placeholder-content {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 2rem;
+        }
+
+        /* Estilos del contenedor de artículos SEO */
+        .seo-articles-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 28px;
+            margin-bottom: 2rem;
+            width: 100%;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            color: #222;
+        }
+
+        .seo-articles-container h1, 
+        .seo-articles-container h2, 
+        .seo-articles-container h3 {
+            color: #003366;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .seo-articles-container h1 {
+            font-size: 28px;
+            margin-top: 0;
+        }
+        
+        .seo-articles-container h2 {
+            font-size: 22px;
+            border-bottom: 1px solid #e6e6e6;
+            padding-bottom: 8px;
+            margin-top: 28px;
+        }
+        
+        .seo-articles-container h3 {
+            font-size: 18px;
+        }
+
+        .seo-articles-container p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        
+        .seo-articles-container .small {
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        .seo-articles-container hr {
+            border: none;
+            border-top: 1px solid #e6e6e6;
+            margin: 20px 0;
+        }
+        
+        .seo-articles-container table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .seo-articles-container table, 
+        .seo-articles-container th, 
+        .seo-articles-container td {
+            border: 1px solid #e6e6e6;
+        }
+        
+        .seo-articles-container th, 
+        .seo-articles-container td {
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .seo-articles-container th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .seo-articles-container .exercise {
+            margin: 16px 0;
+            padding: 14px;
+            border: 1px solid #e6e6e6;
+            border-radius: 6px;
+            background-color: #fbfcff;
+        }
+        
+        .seo-articles-container details {
+            margin-top: 10px;
+        }
+        
+        .seo-articles-container summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #0066cc;
+            outline: none;
+            padding: 6px 0;
+        }
+        
+        .seo-articles-container .answer {
+            margin-top: 10px;
+            background: #fff;
+            border-left: 4px solid #e6e6e6;
+            padding: 12px;
+            border-radius: 4px;
+        }
+        
+        .seo-articles-container .footer {
+            margin-top: 32px;
+            padding: 16px;
+            color: #555;
+            font-size: 14px;
+            background-color: #f8f9fa; /* Fondo gris claro */
+            border-radius: 6px;
+            border-top: 1px solid #e6e6e6;
+            text-align: center;
+        }
+        
+        .seo-articles-container strong {
+            font-weight: 600;
+        }
+        
+        .seo-articles-container ol, 
+        .seo-articles-container ul {
+            margin: 10px 0 10px 20px;
+        }
+        
+        .seo-articles-container li {
+            margin-bottom: 8px;
+        }
+        
+        .seo-articles-container code.math-inline {
+            font-family: "Latin Modern Math", "STIXGeneral", serif;
+        }
+
+        /* Estilos de la barra de navegación izquierda */
+        .nav-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+            text-align: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .nav-button {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: 2px solid var(--secondary-color);
+            padding: 0.45rem 1rem;
+            font-size: 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-color: var(--secondary-color);
+        }
+
+        .nav-button:active {
+            transform: translateY(0);
+        }
+
+        /* Añadir indicador de enlace externo a los botones */
+        .nav-button.external {
+            position: relative;
+            padding-right: 2.5rem;
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .nav-button.external::after {
+            content: "↗";
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-button.external:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .nav-button.external:hover::after {
+            transform: translateY(-50%) translateX(2px) translateY(-2px);
+        }
+
+        /* Estilos del encabezado */
+        header {
+            background: linear-gradient(135deg, #00447F 0%, #0066AA 100%);
+            color: white;
+            padding: 0.25rem 0;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: visible;
+            display: flex;
+            align-items: center;
+            min-height: 70px;
+            z-index: 1000;
+        }
+
+        /* Añadir un sutil efecto de textura */
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 0.5rem 0;
+            margin-top: 3rem;
+        }
+
+        /* Estilos de la barra lateral derecha - ahora contiene la encuesta */
+        .right-sidebar {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            min-height: 200px;
+            padding: 1.5rem;
+        }
+
+        .right-sidebar-placeholder {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        /* Añadir estilo de resaltado para la barra lateral derecha */
+        .right-sidebar.highlight {
+            animation: highlight 2s ease;
+            box-shadow: 0 0 0 4px #3498db;
+        }
+
+        /* Estilos del selector de idioma */
+        .language-selector {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+
+        .language-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .language-toggle::after {
+            content: "▼";
+            margin-left: 5px;
+            font-size: 0.7rem;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 107px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1002;
+        }
+
+        .language-dropdown.active {
+            display: block;
+        }
+
+        .language-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+            font-size: 0.85rem;
+            color: #333;
+        }
+
+        .language-option:hover {
+            background: #f5f5f5;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option.active {
+            background: #e6f2ff;
+            color: #0066cc;
+            font-weight: 500;
+        }
+
+        .globe-icon {
+            margin-right: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* Estilos de la calculadora matricial */
+        .matrix-calculator {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 5px;
+            background-color: #f4f4f9;
+            width: 100%;
+        }
+
+        .matrix-calculator .main-calculator-container {
+            display: flex;
+            align-items: flex-start; 
+            gap: 20px; 
+            margin-bottom: 0px; 
+        }
+        
+        .matrix-calculator .matrix-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 400px; 
+        }
+        
+        .matrix-calculator .controls {
+            display: flex;
+            align-items: center; 
+            gap: 15px; 
+            margin-bottom: 10px;
+            padding: 0 10px;
+            width: 100%; 
+            box-sizing: border-box;
+        }
+
+        .matrix-calculator .matrix-label {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin-right: 15px;
+        }
+        
+        .matrix-calculator .size-controls {
+            display: flex;
+            gap: 5px; 
+            border-right: 1px solid #ccc;
+            padding-right: 15px;
+        }
+
+        .matrix-calculator .random-controls {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-right: 1px solid #ccc;
+            padding-right: 15px;
+        }
+
+        .matrix-calculator .random-options {
+            display: flex; 
+            flex-direction: column; 
+            position: absolute; 
+            top: 45px; 
+            left: 0;
+            background-color: #f8f9fa; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            padding: 5px; 
+            z-index: 1000; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .matrix-calculator .operation-buttons {
+            display: flex;
+            flex-direction: column; 
+            margin-top: 250px;
+            gap: 5px; 
+            justify-content: center;
+        }
+        
+        .matrix-calculator .operation-btn {
+            background-color: #6c757d; 
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em; 
+            width: 100px; 
+            height: 50px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box; 
+            transition: background-color 0.2s;
+        }
+        
+        .matrix-calculator .operation-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .matrix-calculator .operation-btn:active {
+            background-color: #545b62;
+            transform: translateY(1px);
+        }
+        
+        .matrix-calculator #swap-ab-btn {
+            background-color: #ffc107;
+            color: #343a40;
+            font-size: 1.2em; 
+        }
+        
+        .matrix-calculator #swap-ab-btn:hover {
+            background-color: #e0a800;
+        }
+        
+        .matrix-calculator #swap-ab-btn:active {
+            background-color: #d39e00;
+        }
+        
+        .matrix-calculator .single-ops-container {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #ddd; 
+            width: 110%; 
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+        }
+
+        .matrix-calculator .op-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+            margin-bottom: 10px;
+            width: 100%; 
+            padding: 0 10px; 
+            box-sizing: border-box;
+        }
+
+        .matrix-calculator .single-op-btn {
+            background-color: #ADD8E6; 
+            color: #333;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            text-align: center;
+            white-space: nowrap;
+            height: 32px; 
+            width: 100%; 
+        }
+        .matrix-calculator .single-op-btn:hover { background-color: #87CEEB; }
+        
+        .matrix-calculator .op-with-input {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: 100%;
+        }
+        .matrix-calculator .op-with-input .single-op-btn {
+            flex-grow: 1; 
+        }
+        .matrix-calculator .op-input {
+            width: 40px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            font-size: 0.9em;
+            height: 40px;
+            box-sizing: border-box;
+        }
+
+        .matrix-calculator .matrix-container {
+            border: 2px solid #333;
+            border-radius: 5px;
+            padding: 10px; 
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px; 
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            width: 380px; 
+        }
+
+        .matrix-calculator .matrix { 
+            display: grid; 
+            gap: 5px; 
+        } 
+        
+        .matrix-calculator .matrix input {
+            width: 45px; 
+            height: 45px; 
+            text-align: center;
+            font-size: 14px; 
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        
+        /* Ocultar controles de entrada numérica */
+        .matrix-calculator .matrix input[type=number]::-webkit-inner-spin-button, 
+        .matrix-calculator .matrix input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        .matrix-calculator .matrix input[type=number] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+        
+        /* --- Estilos de salida de resultados proporcionados --- */
+        #result-container {
+            margin-top: 0px; 
+            width: 90%; 
+            max-width: 1200px; 
+            background-color: white;
+            border: 2px solid #aaa; 
+            border-radius: 8px;
+            padding: 0; 
+            display: flex;
+            flex-direction: column; 
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px;
+            border-bottom: 1px solid #e0e0e0;
+            background-color: #f8f9fa;
+        }
+        
+        .result-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+        
+        .clear-all-btn {
+            background-color: var(--accent-color); /* Usar azul violeta */
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+        
+        .clear-all-btn:hover {
+            background-color: #7b1fa2; /* Azul violeta más oscuro */
+        }
+        
+        .result-history {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .result-block {
+            padding: 15px 10px;
+            border-bottom: 1px solid #e0e0e0; 
+            position: relative;
+        }
+
+        .result-block:last-child {
+            border-bottom: none; 
+        }
+        
+        .result-expression-row {
+            display: flex;
+            flex-wrap: wrap; /* Modificación clave: permite envolver */
+            align-items: center;
+            justify-content: flex-start;
+            gap: 15px; 
+            padding: 10px 0;
+            overflow-x: visible; /* Eliminar desplazamiento horizontal */
+        }
+        
+        .result-op, .result-eq {
+            font-size: 2em;
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* Estilos de la matriz de resultados */
+        .result-matrix-grid {
+            display: grid;
+            gap: 5px;
+            padding: 5px 0; 
+            border: none; 
+            border-left: 3px solid #333; 
+            border-right: 3px solid #333; 
+            border-radius: 0;
+            box-sizing: content-box; 
+        }
+        
+        .result-cell {
+            min-width: 45px; 
+            height: 45px; 
+            text-align: center;
+            font-size: 14px;
+            line-height: 45px; 
+            border: 1px solid #ddd;
+            background-color: #f0f8ff; 
+            border-radius: 3px;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            font-weight: bold;
+        }
+
+        .process-matrix {
+            border-left: 3px solid orange; 
+            border-right: 3px solid orange;
+        }
+
+        .process-matrix .result-cell {
+            background-color: #fff3e0; 
+            font-size: 12px;
+            line-height: normal;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: auto; 
+            height: auto; 
+            padding: 5px; 
+            white-space: normal; 
+        }
+
+        .action-buttons {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .action-buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #6c757d;
+            transition: color 0.2s;
+        }
+
+        .action-buttons button:hover {
+            color: #000;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 1em;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #ffeaea;
+            border-radius: 4px;
+        }
+        
+        /* Estilos del menú desplegable de compartir */
+        .share-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .share-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+            min-width: 150px;
+        }
+        
+        .share-menu.active {
+            display: block;
+        }
+        
+        .share-option {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .share-option:hover {
+            background: #f5f5f5;
+        }
+        
+          
+        /* --- Diseño responsivo para dispositivos móviles --- */
+        @media (max-width: 1200px) {
+            .matrix-calculator .main-calculator-container {
+                gap: 20px;
+            }
+            
+            .matrix-calculator .matrix-area {
+                width: 350px;
+            }
+            
+            .matrix-calculator .matrix-container {
+                width: 330px;
+            }
+            
+            .matrix-calculator .matrix input {
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .matrix-calculator .main-calculator-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+            
+            .matrix-calculator .operation-buttons {
+                flex-direction: row;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                order: 3;
+            }
+            
+            .matrix-calculator .operation-btn {
+                width: 80px;
+                height: 45px;
+                font-size: 1em;
+            }
+            
+            .matrix-calculator .matrix-area {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .matrix-calculator .matrix-container {
+                width: 100%;
+                max-width: 480px;
+            }
+            
+            .matrix-calculator .controls {
+                justify-content: center;
+            }
+            
+            /* Ajustes responsivos del contenedor de artículos SEO en tablets */
+            .seo-articles-container {
+                padding: 20px;
+            }
+            
+            .seo-articles-container h1 {
+                font-size: 24px;
+            }
+            
+            .seo-articles-container h2 {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .matrix-calculator body {
+                padding: 5px 10px;
+            }
+            
+            .matrix-calculator .matrix-label {
+                font-size: 2em;
+            }
+            
+            .matrix-calculator .controls {
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .matrix-calculator .size-controls, .matrix-calculator .random-controls {
+                border-right: none;
+                padding-right: 0;
+            }
+            
+            .matrix-calculator .single-ops-container {
+                margin-top: 15px;
+            }
+            
+            .matrix-calculator .op-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .matrix-calculator .matrix input {
+                width: 35px;
+                height: 35px;
+                font-size: 12px;
+            }
+            
+            .result-expression-row {
+                flex-direction: column;
+                gap: 10px;
+                overflow-x: visible;
+            }
+            
+            .result-op, .result-eq {
+                font-size: 1.5em;
+            }
+            
+            .result-cell {
+                min-width: 35px;
+                height: 35px;
+                font-size: 12px;
+                line-height: 35px;
+            }
+            
+            .process-matrix .result-cell {
+                min-width: 100px;
+                font-size: 10px;
+            }
+            
+            #result-container {
+                width: 100%;
+            }
+            
+            .main-row {
+                flex-direction: column;
+            }
+            
+            .left-sidebar, .right-sidebar {
+                flex: 1;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .language-selector {
+                position: relative;
+                top: auto;
+                right: auto;
+                transform: none;
+                margin-top: 10px;
+                text-align: center;
+            }
+            
+            .language-dropdown {
+                left: 0;
+                right: 0;
+                width: auto;
+                margin: 0 auto;
+            }
+            
+            header {
+                flex-direction: column;
+                padding: 0.5rem 0;
+            }
+            
+            .result-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .action-buttons {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+            
+            /* Ajustes responsivos del contenedor de artículos SEO en móviles */
+            .seo-articles-container {
+                padding: 16px;
+            }
+            
+            .seo-articles-container h1 {
+                font-size: 22px;
+            }
+            
+            .seo-articles-container h2 {
+                font-size: 18px;
+            }
+            
+            .seo-articles-container h3 {
+                font-size: 16px;
+            }
+            
+            .seo-articles-container table {
+                font-size: 14px;
+            }
+            
+            .seo-articles-container th,
+            .seo-articles-container td {
+                padding: 8px 6px;
+            }
+            
+            .seo-articles-container .exercise {
+                padding: 12px;
+            }
+            
+            .seo-articles-container .footer {
+                padding: 12px;
+                font-size: 13px;
+            }
+            
+            /* Vista simplificada de resultados para móviles */
+            .mobile-result-view {
+                display: block;
+            }
+            
+            
+        }
+
+        @media (max-width: 768px) {
+
+             /* 1. Reducir ancho del contenedor de matrices para que se ajuste mejor a la pantalla */
+             .matrix-calculator .matrix-container {
+                 width: 100%;
+                 max-width: 260px; /* Puedes probar con 250/280/300 */
+                 padding: 5px;
+             }
+
+             /* 2. Reducir celdas de matriz (resultados y entradas) */
+             .result-cell,
+             .matrix-cell,
+             .input-matrix .matrix-cell input {
+                 min-width: 26px !important;
+                 height: 26px !important;
+                 padding: 2px !important;
+                 font-size: 12px !important;
+                 line-height: 1.1 !important;
+             }
+
+             /* 3. Reducir matrices de proceso (que eran muy grandes) */
+             .process-matrix .result-cell {
+                 min-width: 24px !important;
+                 height: 24px !important;
+                 font-size: 11px !important;
+                 padding: 1px !important;
+             }
+
+             /* 4. Reducir símbolos, como más, por, igual */
+            .matrix-operator {
+                font-size: 20px !important;
+                margin: 0 4px !important;
+             }
+
+            /* 5. Reducir espaciado entre bloques de matrices */
+            .matrix-wrapper {
+                margin: 4px 0 !important;
+              }
+         }
+        
+        @media (max-width: 480px) {
+            .matrix-calculator .matrix input {
+                width: 30px;
+                height: 30px;
+                font-size: 11px;
+            }
+            
+            .matrix-calculator .matrix-container {
+                padding: 5px;
+            }
+            
+            .matrix-calculator .operation-btn {
+                width: 70px;
+                height: 40px;
+                font-size: 0.9em;
+                padding: 5px 10px;
+            }
+            
+            .matrix-calculator .single-op-btn {
+                font-size: 0.8em;
+                height: 35px;
+            }
+            
+            .matrix-calculator .op-input {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .result-cell {
+                min-width: 30px;
+                height: 30px;
+                font-size: 11px;
+                line-height: 30px;
+            }
+            
+            .simplified-matrix {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+        }
+
+        /* Estilos específicos para arco coseno */
+        .arccos-operator {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #8a2be2;
+        }
+        
+        .warning-message {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        
+        .warning-message i {
+            color: #ffc107;
+            margin-right: 5px;
+        }
+
+        @keyframes highlight {
+            0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+        }
+
+        /* Estilos de la encuesta */
+        .question-box {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            padding: 1.5em;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: "Poppins", "Nunito", sans-serif;
+        }
+
+        .question-box h2 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5em;
+            color: #333;
+        }
+
+        .question-box .btn {
+            display: block;
+            width: 100%;
+            padding: 0.8em 1em;
+            margin-bottom: 0.8em;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .question-box .yes {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+        }
+
+        .question-box .yes:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(120,100,255,0.3);
+        }
+
+        .question-box .no {
+            background: #ffe7e7;
+            color: #ff4b4b;
+        }
+
+        .question-box .no:hover {
+            transform: rotate(-2deg) scale(1.05);
+            box-shadow: 0 4px 10px rgba(255,75,75,0.2);
+        }
+
+        .question-box .response {
+            margin-top: 1.5em;
+            font-size: 1rem;
+            color: #555;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .question-box .response.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Calculadora de Arco Coseno Matricial</h1>
+            
+            <!-- Selector de idioma -->
+            <div class="language-selector">
+                <div class="language-toggle">
+                    <span class="globe-icon">🌐</span> Español
+                </div>
+                <div class="language-dropdown">
+                    <div class="language-option" data-lang="en" onclick="switchLanguage('en')">English</div>
+                    <div class="language-option" data-lang="zh" onclick="switchLanguage('zh')">中文</div>
+                    <div class="language-option active" data-lang="es" onclick="switchLanguage('es')">Español</div>
+                    <div class="language-option" data-lang="fr" onclick="switchLanguage('fr')">Français</div>
+                    <div class="language-option" data-lang="de" onclick="switchLanguage('de')">Deutsch</div>
+                    <div class="language-option" data-lang="ja" onclick="switchLanguage('ja')">日本語</div>
+                    <div class="language-option" data-lang="ru" onclick="switchLanguage('ru')">Русский</div>
+                    <div class="language-option" data-lang="pt" onclick="switchLanguage('pt')">Português</div>
+                    <div class="language-option" data-lang="ar" onclick="switchLanguage('ar')">العربية</div>
+                    <div class="language-option" data-lang="hi" onclick="switchLanguage('hi')">हिन्दी</div>
+                    <div class="language-option" data-lang="bn" onclick="switchLanguage('bn')">বাংলা</div>
+                    <div class="language-option" data-lang="it" onclick="switchLanguage('it')">Italiano</div>
+                    <div class="language-option" data-lang="ko" onclick="switchLanguage('ko')">한국어</div>
+                    <div class="language-option" data-lang="tr" onclick="switchLanguage('tr')">Türkçe</div>
+                    <div class="language-option" data-lang="vi" onclick="switchLanguage('vi')">Tiếng Việt</div>
+                    <div class="language-option" data-lang="th" onclick="switchLanguage('th')">ไทย</div>
+                    <div class="language-option" data-lang="nl" onclick="switchLanguage('nl')">Nederlands</div>
+                    <div class="language-option" data-lang="pl" onclick="switchLanguage('pl')">Polski</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Contenedor de la fila principal, incluye contenedor izquierdo, calculadora y contenedor derecho -->
+    <div class="main-row-container">
+        <div class="wide-container">
+            <div class="main-row">
+                <!-- Contenedor izquierdo - ahora con botones de navegación -->
+                <div class="left-sidebar">
+                    <h3 class="nav-title">Navegación</h3>
+                    <div class="nav-buttons">
+                        <a href="#matrix-multiplication-operation" class="nav-button">Calculadora de Multiplicación de Matrices</a>
+                        <a href="#matrix-game" class="nav-button">Juego de Multiplicación de Matrices</a>
+                        <a href="matrix-equations-calculator.html" class="nav-button">Calculadora de Sistemas de Ecuaciones</a>
+                        <a href="https://es.wikipedia.org/wiki/Matriz_(matem%C3%A1tica)" target="_blank" class="nav-button external">Wikipedia: Matriz</a>
+                    </div>
+                </div>
+                
+                <!-- Sección principal de la calculadora - reemplazada por la calculadora matricial -->
+                <div class="calculator-main">
+                    <!-- Contenedor de contenido dinámico - ahora contiene la calculadora matricial -->
+                    <div class="dynamic-content-container" id="dynamic-content">
+                        <div class="matrix-calculator">
+                            <div class="main-calculator-container">
+
+                                <div class="matrix-area">
+                                    
+                                    <div class="controls" id="controls-a">
+                                        <div class="matrix-label">A</div>
+                                        <div class="size-controls">
+                                            <button id="decrease-btn-a" class="control-btn" title="Reducir Tamaño A"><i class="fas fa-minus"></i></button>
+                                            <button id="increase-btn-a" class="control-btn" title="Aumentar Tamaño A"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                        <div class="random-controls" id="random-controls-main-a">
+                                            <button id="toggle-random-btn-a" class="control-btn" title="Generar Matriz Aleatoria A"><i class="fas fa-dice"></i></button>
+                                            <div id="random-options-a" class="random-options" style="display: none;">
+                                                <button class="random-option-btn" data-type="pos_int" data-target="A">Enteros Positivos (0 ~ 9)</button>
+                                                <button class="random-option-btn" data-type="signed_int" data-target="A">Enteros (-10 ~ 10)</button>
+                                                <button class="random-option-btn" data-type="float" data-target="A">Decimales (-1.0 ~ 1.0)</button>
+                                            </div>
+                                        </div>
+                                        <button id="clear-btn-a" class="control-btn" title="Borrar Valores A"><i class="fas fa-trash-alt"></i></button>
+                                    </div>
+
+                                    <div class="matrix-container" id="matrix-container-a"></div>
+
+                                    <!-- Botones para la matriz A - con ruta añadida -->
+                                    <div class="single-ops-container">
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-determinant')" class="single-op-btn">Determinante</button>
+                                            <button onclick="goTo('matrix-inverse')" class="single-op-btn">Inversa</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-upper-triangular')" class="single-op-btn">Triangular Superior</button>
+                                            <button onclick="goTo('matrix-rref')" class="single-op-btn">RREF</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-eigenvectors')" class="single-op-btn">Vectores Propios</button>
+                                            <button onclick="goTo('matrix-eigenvalues')" class="single-op-btn">Valores Propios</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-transpose')" class="single-op-btn">Transpuesta</button>
+                                            <button onclick="goTo('matrix-rank')" class="single-op-btn">Rango</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <div class="op-with-input">
+                                                <button onclick="goTo('matrix-scalar-multiplication')" class="single-op-btn">Multiplicar Por</button>
+                                                <input type="number" class="op-input" placeholder="k" value="2" id="mBy-a-val">
+                                            </div>
+                                            <div class="op-with-input">
+                                                <button onclick="goTo('matrix-power')" class="single-op-btn">Potencia</button>
+                                                <input type="number" class="op-input" placeholder="n" value="2" id="pow-a-val">
+                                            </div>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-trace')" class="single-op-btn">Traza</button>
+                                            <button onclick="goTo('matrix-diagonal')" class="single-op-btn">Matriz Diagonal</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-lu-decomposition')" class="single-op-btn">Descomposición LU</button>
+                                            <button onclick="goTo('matrix-cholesky')" class="single-op-btn">Descomposición de Cholesky</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-pseudo-inverse')" class="single-op-btn">Pseudoinversa</button>
+                                            <button onclick="goTo('matrix-qr-decomposition')" class="single-op-btn">Descomposición QR</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-svd')" class="single-op-btn">SVD</button>
+                                            <button onclick="goTo('matrix-augmented')" class="single-op-btn">Matriz Aumentada</button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="operation-buttons">
+                                    <button id="swap-ab-btn" class="operation-btn" title="Intercambiar Matrices A y B"><i class="fas fa-exchange-alt"></i> INTERCAMBIAR</button>
+                                    <div id="matrix-multiplication-operation">
+                                        <!-- Modificación: botón de multiplicación redirige -->
+                                        <button onclick="goTo('matrix-multiplication')" class="operation-btn" title="Calcular A * B">A × B</button>
+                                    </div>
+                                    <!-- Modificación: botones de suma y resta redirigen -->
+                                    <button onclick="goTo('matrix-addition')" class="operation-btn" title="Calcular A + B">A + B</button>
+                                    <button onclick="goTo('matrix-subtraction')" class="operation-btn" title="Calcular A - B">A - B</button>
+                                </div>
+
+
+                                <div class="matrix-area">
+                                    
+                                    <div class="controls" id="controls-b">
+                                        <div class="matrix-label">B</div>
+                                        <div class="size-controls">
+                                            <button id="decrease-btn-b" class="control-btn" title="Reducir Tamaño B"><i class="fas fa-minus"></i></button>
+                                            <button id="increase-btn-b" class="control-btn" title="Aumentar Tamaño B"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                        <div class="random-controls" id="random-controls-main-b">
+                                            <button id="toggle-random-btn-b" class="control-btn" title="Generar Matriz Aleatoria B"><i class="fas fa-dice"></i></button>
+                                            <div id="random-options-b" class="random-options" style="display: none;">
+                                                <button class="random-option-btn" data-type="pos_int" data-target="B">Enteros Positivos (0 ~ 9)</button>
+                                                <button class="random-option-btn" data-type="signed_int" data-target="B">Enteros (-10 ~ 10)</button>
+                                                <button class="random-option-btn" data-type="float" data-target="B">Decimales (-1.0 ~ 1.0)</button>
+                                            </div>
+                                        </div>
+                                        <button id="clear-btn-b" class="control-btn" title="Borrar Valores B"><i class="fas fa-trash-alt"></i></button>
+                                    </div>
+
+                                    <div class="matrix-container" id="matrix-container-b"></div>
+
+                                    <!-- Botones para la matriz B - con ruta añadida -->
+                                    <div class="single-ops-container">
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-qr')" class="single-op-btn">qr(A)</button>
+                                            <button onclick="goTo('matrix-svd')" class="single-op-btn">svd(A)</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-exponential')" class="single-op-btn">exp(A)</button>
+                                            <button onclick="goTo('matrix-pseudo-inverse')" class="single-op-btn">pinv(A)</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-square-root')" class="single-op-btn">√(A)</button>
+                                            <button onclick="goTo('matrix-augmented')" class="single-op-btn">(A | B)</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-kronecker-product')" class="single-op-btn">A ⊗ B</button>
+                                            <button onclick="goTo('matrix-cosine')" class="single-op-btn">cos[A]</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-sine')" class="single-op-btn">sin[A]</button>
+                                            <button onclick="goTo('matrix-logarithm')" class="single-op-btn">log[A]</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-tangent')" class="single-op-btn">tan[A]</button>
+                                            <button onclick="goTo('matrix-adjoint')" class="single-op-btn">adj(A)</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-jordan')" class="single-op-btn">jordan(A)</button>
+                                            <button onclick="goTo('matrix-arctangent')" class="single-op-btn">arctan[A]</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-arcsine')" class="single-op-btn">arcsin[A]</button>
+                                            <!-- Modificación: botón arccos cambia a cálculo local -->
+                                            <button onclick="calculateArccosine()" class="single-op-btn">arccos[A]</button>
+                                        </div>
+                                        <div class="op-row">
+                                            <button onclick="goTo('matrix-hermite-normal-form')" class="single-op-btn">HNF(A)</button>
+                                            <button onclick="goTo('matrix-lll')" class="single-op-btn">LLL(A)</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            <!-- Usando la estructura de salida de resultados proporcionada -->
+                            <div id="result-container">
+                                <div class="result-header">
+                                    <h3>Resultados del Cálculo de Arco Coseno</h3>
+                                    <button id="clear-all-results" class="clear-all-btn">Borrar Todo</button>
+                                </div>
+                                <div class="result-history" id="result-history">
+                                    <!-- Los resultados se añadirán dinámicamente aquí -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contenedor de artículos SEO - ahora contiene el artículo SEO completo -->
+                    <div class="seo-articles-container">
+                        <h1>Arco Coseno Matricial: Definición, Fórmulas, Ejemplos y Práctica</h1>
+
+                        <p class="small">
+                            Este artículo explica la función arco coseno matricial <code class="math-inline">\(\arccos(A)\)</code>, muestra definiciones y fórmulas prácticas, incluye dos ejemplos desarrollados, enumera errores comunes y proporciona cuatro problemas de práctica con respuestas plegables. Está diseñado como contenido complementario para una Calculadora de Arco Coseno Matricial.
+                        </p>
+
+                        <hr />
+
+                        <h2>Definición y Fórmula</h2>
+
+                        <p>
+                            El <strong>arco coseno matricial</strong> de una matriz cuadrada \(A\), denotado \(\arccos(A)\), es una función matricial que actúa como un inverso (local) del coseno matricial:
+                        </p>
+
+                        <p style="text-align: center;">
+                            \(\cos(\arccos(A)) = A\)
+                        </p>
+
+                        <p>
+                            Una relación conveniente es:
+                        </p>
+
+                        <p style="text-align: center;">
+                            \(\arccos(A) \;=\; \tfrac{\pi}{2}I \;-\; \arcsin(A),\)
+                        </p>
+
+                        <p>
+                            por lo que se puede calcular \(\arccos(A)\) calculando \(\arcsin(A)\) (para una rama elegida) y restando de \(\tfrac{\pi}{2}I\). El arco seno matricial admite la serie de Taylor (para \(\|A\|\) pequeña):
+                        </p>
+
+                        <p style="text-align: center;">
+                            \(\arcsin(A) = A + \tfrac{1}{6}A^{3} + \tfrac{3}{40}A^{5} + \tfrac{5}{112}A^{7} + \cdots,\)
+                        </p>
+
+                        <p>
+                            así
+                        </p>
+
+                        <p style="text-align: center;">
+                            \(\arccos(A) = \tfrac{\pi}{2}I - \Big(A + \tfrac{1}{6}A^{3} + \tfrac{3}{40}A^{5} + \cdots\Big).\)
+                        </p>
+
+                        <p>
+                            En la práctica, los métodos numéricos y estables utilizan diagonalización, descomposiciones de Jordan/Schur o rutinas de funciones matriciales específicas en lugar de truncar la serie de manera ingenua.
+                        </p>
+
+                        <hr />
+
+                        <h2>Ejemplo Desarrollado 1 (Matriz escalar diagonal)</h2>
+
+                        <p>Sea</p>
+
+                        <p style="text-align: center;">
+                            \(A = \begin{pmatrix} 0.2 & 0 \\[6pt] 0 & 0.2 \end{pmatrix}.\)
+                        </p>
+
+                        <p>Como \(A = 0.2 I\), aplicar arccos escalar elemento a elemento:</p>
+
+                        <p style="text-align: center;">
+                            \(\arccos(A) = \arccos(0.2)\, I.\)
+                        </p>
+
+                        <p>Numéricamente, \(\arccos(0.2)\approx 1.369438\) (radianes), así que</p>
+
+                        <p style="text-align: center;">
+                            \(\arccos(A) \approx 1.369438 \begin{pmatrix}1 & 0\\[6pt]0 & 1\end{pmatrix}.\)
+                        </p>
+
+                        <hr />
+
+                        <h2>Ejemplo Desarrollado 2 (Matriz nilpotente — truncamiento de serie)</h2>
+
+                        <p>Sea</p>
+
+                        <p style="text-align: center;">
+                            \(B = \begin{pmatrix}0 & 1\\[6pt]0 & 0\end{pmatrix}.\)
+                        </p>
+
+                        <p>Nótese que \(B^2 = 0\). Usando la relación \(\arccos(B)=\tfrac{\pi}{2}I-\arcsin(B)\) y el hecho \(\arcsin(B)=B\) (la serie se trunca porque \(B^3=0\)), obtenemos:</p>
+
+                        <p style="text-align: center;">
+                            \(\arccos(B) = \tfrac{\pi}{2}I - B
+                            = \begin{pmatrix}\tfrac{\pi}{2} & -1\\[6pt]0 & \tfrac{\pi}{2}\end{pmatrix}.\)
+                        </p>
+
+                        <hr />
+
+                        <h2>Errores Comunes y Consejos</h2>
+
+                        <table>
+                            <thead>
+                                <tr><th>Error común</th><th>Consejo / enfoque correcto</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Aplicar arccos escalar elemento a elemento a una matriz no diagonal</td>
+                                    <td>Solo es válido para matrices diagonales o después de una diagonalización/transformación de similitud que diagonalice A.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ignorar las elecciones de rama de las funciones trigonométricas inversas</td>
+                                    <td>Sea explícito sobre qué rama de \(\arccos\) (valor principal) usa; los valores propios cerca de cortes de rama requieren cuidado.</td>
+                                </tr>
+                                <tr>
+                                    <td>Truncar ingenuamente la serie para matrices con norma grande</td>
+                                    <td>Use métodos de Schur o diagonalización para mayor estabilidad, o enfoques de escalado y elevación al cuadrado.</td>
+                                </tr>
+                                <tr>
+                                    <td>Asumir que \(\arccos(A)\) siempre existe</td>
+                                    <td>La función inversa matricial existe solo cuando la matriz está en el rango de \(\cos\) en el dominio elegido; verifique el espectro y la convergencia.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <hr />
+
+                        <h2>Problemas de Práctica (Calcular \(\arccos(A)\))</h2>
+                        <p>Los ejercicios a continuación son adecuados para cálculo manual cuando sea posible o para usar con su Calculadora de Arco Coseno Matricial. Las matrices son visibles; haga clic en "Mostrar Respuesta" para ver las soluciones.</p>
+
+                        <div class="exercise">
+                            <p><strong>Ejercicio 1 (diagonal con valor pequeño)</strong></p>
+                            <p style="text-align: center;">
+                                \(A_1 = \begin{pmatrix}0.1 & 0\\[6pt]0 & 0.1\end{pmatrix}\)
+                            </p>
+                            <details>
+                                <summary>Mostrar Respuesta</summary>
+                                <div class="answer">
+                                    <p>Como \(A_1 = 0.1I\):</p>
+                                    <p style="text-align: center;">
+                                        \(\arccos(A_1)=\arccos(0.1)\,I.\)
+                                    </p>
+                                    <p>Numéricamente \(\arccos(0.1)\approx 1.4706289\) (radianes).</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="exercise">
+                            <p><strong>Ejercicio 2 (diagonal más grande pero dentro del radio)</strong></p>
+                            <p style="text-align: center;">
+                                \(A_2 = \begin{pmatrix}0.6 & 0\\[6pt]0 & 0.6\end{pmatrix}\)
+                            </p>
+                            <details>
+                                <summary>Mostrar Respuesta</summary>
+                                <div class="answer">
+                                    <p>Como \(A_2 = 0.6I\):</p>
+                                    <p style="text-align: center;">
+                                        \(\arccos(A_2)=\arccos(0.6)\,I.\)
+                                    </p>
+                                    <p>Numéricamente \(\arccos(0.6)\approx 0.9272952\) (radianes).</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="exercise">
+                            <p><strong>Ejercicio 3 (nilpotente)</strong></p>
+                            <p style="text-align: center;">
+                                \(A_3 = \begin{pmatrix}0 & 1\\[6pt]0 & 0\end{pmatrix}\)
+                            </p>
+                            <details>
+                                <summary>Mostrar Respuesta</summary>
+                                <div class="answer">
+                                    <p>Como \(A_3^2=0\), la serie para \(\arcsin\) se trunca en el término lineal: \(\arcsin(A_3)=A_3\). Por lo tanto</p>
+                                    <p style="text-align: center;">
+                                        \(\arccos(A_3)=\tfrac{\pi}{2}I - A_3 = \begin{pmatrix}\tfrac{\pi}{2} & -1\\[6pt]0 & \tfrac{\pi}{2}\end{pmatrix}.\)
+                                    </p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="exercise">
+                            <p><strong>Ejercicio 4 (no diagonal, norma pequeña — método de series)</strong></p>
+                            <p style="text-align: center;">
+                                \(A_4 = \begin{pmatrix}0.2 & 0.3\\[6pt]0 & 0.2\end{pmatrix}\)
+                            </p>
+                            <details>
+                                <summary>Mostrar Respuesta</summary>
+                                <div class="answer">
+                                    <p>Enfoque 1 (series): calcular \(\arcsin(A_4)=A_4 + \tfrac{1}{6}A_4^3 + \cdots\) y luego \(\arccos(A_4)=\tfrac{\pi}{2}I-\arcsin(A_4)\). Como \(\|A_4\|<1\) la serie converge.</p>
+                                    <p>Primera aproximación (solo el primer término):</p>
+                                    <p style="text-align: center;">
+                                        \(\arccos(A_4) \approx \tfrac{\pi}{2}I - A_4
+                                        = \begin{pmatrix}\tfrac{\pi}{2}-0.2 & -0.3\\[6pt]0 & \tfrac{\pi}{2}-0.2\end{pmatrix}.\)
+                                    </p>
+                                    <p>Para mayor precisión, calcule \(A_4^3\) y añada la corrección \(\tfrac{1}{6}A_4^3\) a \(\arcsin(A_4)\) antes de restar de \(\tfrac{\pi}{2}I\), o use una rutina de función matricial basada en Schur en la calculadora.</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <hr />
+
+                        <div class="footer">
+                            Aviso de Copyright: Este artículo es contenido original del sitio web Matrix Calculator. Por favor, cite la fuente al compartir o reproducirlo. Para más herramientas de cálculo matricial, visite <strong>matrixcalcu.com</strong>.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenedor derecho - ahora contiene la encuesta -->
+                <div class="right-sidebar" id="matrix-game">
+                    <div class="question-box">
+                        <h2>¿Quieres que diseñemos un juego de práctica de Multiplicación de Matrices?</h2>
+                        <button class="btn yes">😎 Claro, estoy listo para sufrir.</button>
+                        <button class="btn no">🙃 No, mantén las matrices lejos de mí.</button>
+                        <div class="response" id="response"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Calculadora de Arco Coseno Matricial. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Código JavaScript -->
+    <script>
+        // Función de navegación global - con funcionalidad añadida para pasar parámetros en URL
+        function goTo(pageName) {
+            const pathParts = window.location.pathname.split('/');
+            const lang = pathParts[1] || 'es'; // Español por defecto
+            
+            // Obtener datos de las matrices A y B
+            const matrixAData = getMatrixData('A');
+            const matrixBData = getMatrixData('B');
+            
+            // Crear parámetros URL
+            const params = new URLSearchParams();
+            params.append('sizeA', sizeA);
+            params.append('sizeB', sizeB);
+            params.append('matrixA', JSON.stringify(matrixAData));
+            params.append('matrixB', JSON.stringify(matrixBData));
+            
+            // Añadir marca de tiempo para evitar caché
+            params.append('t', Date.now());
+            
+            window.location.href = `/${lang}/${pageName}-calculator.html?${params.toString()}`;
+        }
+
+        // Función para obtener datos de una matriz
+        function getMatrixData(matrixId) {
+            const container = matrixId === 'A' ? containerA : containerB;
+            const size = matrixId === 'A' ? sizeA : sizeB;
+            const inputs = container.querySelectorAll('.matrix input');
+            const data = [];
+            
+            for (let i = 0; i < size; i++) {
+                const row = [];
+                for (let j = 0; j < size; j++) {
+                    const index = i * size + j;
+                    row.push(inputs[index].value || '0'); // Valores vacíos por defecto a 0
+                }
+                data.push(row);
+            }
+            return data;
+        }
+
+        // Función para cambiar idioma
+        function switchLanguage(lang) {
+            let path = window.location.pathname;
+            let parts = path.split("/").filter(part => part !== "");
+            
+            // Si estamos en la raíz, redirigir a la página principal del idioma objetivo
+            if (parts.length === 0) {
+                window.location.href = `/${lang}/index.html`;
+                return;
+            }
+            
+            // Caso normal: reemplazar el código de idioma
+            parts[0] = lang;
+            let newPath = "/" + parts.join("/");
+            window.location.href = newPath;
+        }
+
+        // Funcionalidad de la calculadora matricial
+        let sizeA = 3;
+        let sizeB = 3; 
+        const minSize = 2;
+        const maxSize = 9; 
+        
+        const containerA = document.getElementById('matrix-container-a');
+        const containerB = document.getElementById('matrix-container-b');
+        const resultContainer = document.getElementById('result-container');
+        const resultHistory = document.getElementById('result-history');
+        
+        const increaseBtnA = document.getElementById('increase-btn-a');
+        const decreaseBtnA = document.getElementById('decrease-btn-a');
+        const increaseBtnB = document.getElementById('increase-btn-b');
+        const decreaseBtnB = document.getElementById('decrease-btn-b');
+        
+        const randomOptionsA = document.getElementById('random-options-a');
+        const randomOptionsB = document.getElementById('random-options-b');
+        const swapBtn = document.getElementById('swap-ab-btn');
+        const clearAllResultsBtn = document.getElementById('clear-all-results');
+
+        // Usando la función de visualización de resultados proporcionada
+        function renderResultMatrix(matrix, container, isProcess = false) {
+            const size = matrix.length;
+            const gridDiv = document.createElement('div');
+            gridDiv.classList.add('result-matrix-grid');
+            if (isProcess) gridDiv.classList.add('process-matrix');
+            
+            const cols = matrix[0] ? matrix[0].length : size; 
+            gridDiv.style.gridTemplateColumns = `repeat(${cols}, auto)`; 
+            
+            matrix.forEach(row => {
+                row.forEach(val => {
+                    const cell = document.createElement('div');
+                    cell.classList.add('result-cell');
+                    
+                    // Manejar valores NaN
+                    if (val === 'NaN' || (typeof val === 'number' && isNaN(val))) {
+                        cell.textContent = 'NaN';
+                        cell.style.color = '#dc3545';
+                        cell.style.fontWeight = 'bold';
+                    } else if (isProcess) {
+                        cell.innerHTML = val;
+                    } else {
+                        const numVal = parseFloat(val);
+                        if (Number.isInteger(numVal)) {
+                            cell.textContent = numVal.toString(); 
+                        } else {
+                            if (Math.abs(numVal - Math.round(numVal)) < 1e-6) {
+                                cell.textContent = Math.round(numVal).toString();
+                            } else {
+                                // Para resultados de arco coseno, mostrar más decimales
+                                cell.textContent = numVal.toFixed(4);
+                            }
+                        }
+                    }
+                    gridDiv.appendChild(cell);
+                });
+            });
+            container.appendChild(gridDiv);
+        }
+
+       
+        function displayResult(operation, matrixA, matrixB, operator, processMatrix, resultMatrix, errorMessage = null) {
+            
+            const resultBlock = document.createElement('div');
+            resultBlock.classList.add('result-block');
+            resultBlock.id = 'result-' + Date.now(); 
+
+            // 1. Mostrar error si existe
+            if (errorMessage) {
+                resultBlock.innerHTML = `<div class="error-message">${errorMessage}</div>`;
+            } else {
+                
+                // 2. Botones de acción (alternar proceso, compartir, eliminar)
+                const actionButtons = document.createElement('div');
+                actionButtons.classList.add('action-buttons');
+                actionButtons.innerHTML = `
+                    <button class="toggle-process-btn" title="Ocultar Proceso de Cálculo"><i class="fas fa-eye-slash"></i></button>
+                    <div class="share-dropdown">
+                        <button class="share-btn" title="Compartir este cálculo"><i class="fas fa-share-alt"></i></button>
+                        <div class="share-menu">
+                            <button class="share-option copy-link">Copiar Enlace</button>
+                            <button class="share-option share-x">Compartir en X</button>
+                            <button class="share-option share-reddit">Compartir en Reddit</button>
+                            <button class="share-option share-email">Enviar por Email</button>
+                        </div>
+                    </div>
+                    <button class="delete-btn" title="Eliminar este registro"><i class="fas fa-times"></i></button>
+                `;
+                resultBlock.appendChild(actionButtons);
+                
+                // 3. Vista de escritorio completa
+                const desktopView = document.createElement('div');
+                desktopView.className = 'desktop-result-view';
+                
+                // Contenedor de la fila de expresión - usar flex-wrap para permitir envolver
+                const row = document.createElement('div');
+                row.classList.add('result-expression-row');
+                
+                // --- Matriz A ---
+                renderResultMatrix(matrixA, row);
+                
+                // --- Operador ---
+                row.innerHTML += `<span class="result-op">${operator}</span>`;
+                
+                // --- Matriz B ---
+                renderResultMatrix(matrixB, row);
+                
+                // --- Signo igual 1 ---
+                row.innerHTML += `<span class="result-eq">=</span>`;
+
+                // --- Contenedor de matriz de proceso y signo igual 2 (se puede alternar) ---
+                const processOnlyContainer = document.createElement('div');
+                processOnlyContainer.classList.add('process-only-container'); 
+                processOnlyContainer.style.display = 'flex';
+                processOnlyContainer.style.gap = '15px'; 
+                processOnlyContainer.style.alignItems = 'center';
+
+                // --- Matriz de proceso (expresión) ---
+                renderResultMatrix(processMatrix, processOnlyContainer, true);
+                
+                // --- Signo igual 2 ---
+                processOnlyContainer.innerHTML += `<span class="result-eq">=</span>`;
+
+                // --- Matriz de resultado final (siempre visible) ---
+                const finalResultContainer = document.createElement('div');
+                finalResultContainer.classList.add('final-result-container');
+                finalResultContainer.style.display = 'flex';
+                finalResultContainer.style.alignItems = 'center';
+
+                renderResultMatrix(resultMatrix, finalResultContainer);
+                
+                // Añadir la parte del proceso y el resultado final a la fila principal
+                row.appendChild(processOnlyContainer); 
+                row.appendChild(finalResultContainer); 
+                desktopView.appendChild(row);
+                resultBlock.appendChild(desktopView);
+                
+            }
+
+            // 5. Añadir bloque de resultado al principio (orden del historial)
+            resultHistory.prepend(resultBlock);
+            
+            // 6. Vincular funcionalidades
+            setupResultBlockFunctionality(resultBlock, matrixA, matrixB, resultMatrix, operation);
+        }
+
+        // Función específica para mostrar resultados de arco coseno
+        function displayArccosineResult(matrixA, resultMatrix, hasErrors = false) {
+            const operation = "arccos";
+            const operator = "arccos";
+            
+            // Crear bloque de resultado
+            const resultBlock = document.createElement('div');
+            resultBlock.classList.add('result-block');
+            resultBlock.id = 'result-' + Date.now();
+            
+            // Mensaje de error (si hay)
+            if (hasErrors) {
+                const warningDiv = document.createElement('div');
+                warningDiv.className = 'warning-message';
+                warningDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Advertencia: Algunos valores estaban fuera del rango [-1, 1] y devolvieron NaN.';
+                resultBlock.appendChild(warningDiv);
+            }
+            
+            // Botones de acción
+            const actionButtons = document.createElement('div');
+            actionButtons.classList.add('action-buttons');
+            actionButtons.innerHTML = `
+                <button class="toggle-process-btn" title="Ocultar Proceso de Cálculo" style="display:none;"><i class="fas fa-eye-slash"></i></button>
+                <div class="share-dropdown">
+                    <button class="share-btn" title="Compartir este cálculo"><i class="fas fa-share-alt"></i></button>
+                    <div class="share-menu">
+                        <button class="share-option copy-link">Copiar Enlace</button>
+                        <button class="share-option share-x">Compartir en X</button>
+                        <button class="share-option share-reddit">Compartir en Reddit</button>
+                        <button class="share-option share-email">Enviar por Email</button>
+                    </div>
+                </div>
+                <button class="delete-btn" title="Eliminar este registro"><i class="fas fa-times"></i></button>
+            `;
+            resultBlock.appendChild(actionButtons);
+            
+            // Vista de escritorio
+            const desktopView = document.createElement('div');
+            desktopView.className = 'desktop-result-view';
+            
+            // Fila de expresión
+            const row = document.createElement('div');
+            row.classList.add('result-expression-row');
+            
+            // Operador: arccos(
+            const operatorSpan = document.createElement('span');
+            operatorSpan.className = 'arccos-operator';
+            operatorSpan.textContent = 'arccos(';
+            row.appendChild(operatorSpan);
+            
+            // Matriz A
+            const matrixAContainer = document.createElement('div');
+            matrixAContainer.style.display = 'inline-block';
+            renderResultMatrix(matrixA, matrixAContainer);
+            row.appendChild(matrixAContainer);
+            
+            // Paréntesis de cierre y signo igual
+            const eqSpan = document.createElement('span');
+            eqSpan.className = 'result-eq';
+            eqSpan.textContent = ') =';
+            row.appendChild(eqSpan);
+            
+            // Matriz de resultado
+            const resultContainer = document.createElement('div');
+            resultContainer.style.display = 'inline-block';
+            renderResultMatrix(resultMatrix, resultContainer);
+            row.appendChild(resultContainer);
+            
+            desktopView.appendChild(row);
+            resultBlock.appendChild(desktopView);
+            
+            // Añadir al principio del historial
+            resultHistory.prepend(resultBlock);
+            
+            // Vincular funcionalidades
+            setupResultBlockFunctionality(resultBlock, matrixA, [], resultMatrix, operation);
+        }
+
+        function setupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, operation) {
+            // Eliminar resultado individual
+            const deleteBtn = resultBlock.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', () => {
+                    resultBlock.remove();
+                });
+            }
+            
+            // Mostrar/ocultar proceso de cálculo
+            const toggleProcessBtn = resultBlock.querySelector('.toggle-process-btn');
+            if (toggleProcessBtn) {
+                const processOnlyContainer = resultBlock.querySelector('.process-only-container');
+                toggleProcessBtn.addEventListener('click', () => {
+                    if (processOnlyContainer.style.display === 'none') {
+                        // Mostrar proceso
+                        processOnlyContainer.style.display = 'flex';
+                        toggleProcessBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                        toggleProcessBtn.title = 'Ocultar Proceso de Cálculo';
+                    } else {
+                        // Ocultar proceso
+                        processOnlyContainer.style.display = 'none';
+                        toggleProcessBtn.innerHTML = '<i class="fas fa-eye"></i>';
+                        toggleProcessBtn.title = 'Mostrar Proceso de Cálculo';
+                    }
+                });
+            }
+            
+            // Mostrar/ocultar detalles en móviles
+            const showDetailsBtn = resultBlock.querySelector('.show-details-btn');
+            if (showDetailsBtn) {
+                showDetailsBtn.addEventListener('click', () => {
+                    const desktopView = resultBlock.querySelector('.desktop-result-view');
+                    const mobileView = resultBlock.querySelector('.mobile-result-view');
+                    
+                    desktopView.style.display = 'block';
+                    mobileView.style.display = 'none';
+                    
+                    // Añadir botón de regreso
+                    const backBtn = document.createElement('button');
+                    backBtn.className = 'hide-details-btn';
+                    backBtn.textContent = 'Volver a Vista Simplificada';
+                    backBtn.addEventListener('click', () => {
+                        desktopView.style.display = 'none';
+                        mobileView.style.display = 'block';
+                        backBtn.remove();
+                    });
+                    
+                    resultBlock.insertBefore(backBtn, desktopView);
+                });
+            }
+            
+            // Funcionalidad de compartir
+            const shareBtn = resultBlock.querySelector('.share-btn');
+            const shareMenu = resultBlock.querySelector('.share-menu');
+            
+            if (shareBtn) {
+                shareBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    shareMenu.classList.toggle('active');
+                });
+                
+                // Copiar enlace
+                const copyLinkBtn = resultBlock.querySelector('.copy-link');
+                copyLinkBtn.addEventListener('click', () => {
+                    const shareURL = generateShareURL(matrixA, matrixB, operation);
+                    navigator.clipboard.writeText(shareURL).then(() => {
+                        alert('¡Enlace copiado al portapapeles!');
+                        shareMenu.classList.remove('active');
+                    });
+                });
+                
+                // Compartir en X
+                const shareXBtn = resultBlock.querySelector('.share-x');
+                shareXBtn.addEventListener('click', () => {
+                    const text = `¡Mira este cálculo de ${operation.toLowerCase()} matricial!`;
+                    const url = generateShareURL(matrixA, matrixB, operation);
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+                    shareMenu.classList.remove('active');
+                });
+                
+                // Compartir en Reddit
+                const shareRedditBtn = resultBlock.querySelector('.share-reddit');
+                shareRedditBtn.addEventListener('click', () => {
+                    const title = `Cálculo de ${operation} Matricial`;
+                    const url = generateShareURL(matrixA, matrixB, operation);
+                    window.open(`https://www.reddit.com/submit?title=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
+                    shareMenu.classList.remove('active');
+                });
+                
+                // Compartir por email
+                const shareEmailBtn = resultBlock.querySelector('.share-email');
+                shareEmailBtn.addEventListener('click', () => {
+                    const subject = `Cálculo Matricial - ${operation}`;
+                    const body = generateEmailBody(matrixA, matrixB, result, operation);
+                    window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+                    shareMenu.classList.remove('active');
+                });
+                
+                // Cerrar menú al hacer clic fuera
+                document.addEventListener('click', () => {
+                    shareMenu.classList.remove('active');
+                });
+            }
+        }
+
+        function generateShareURL(matrixA, matrixB, operation) {
+            const baseURL = window.location.origin + window.location.pathname;
+            const params = new URLSearchParams();
+            
+            params.append('sizeA', matrixA.length);
+            params.append('sizeB', matrixB.length);
+            params.append('matrixA', JSON.stringify(matrixA));
+            params.append('matrixB', JSON.stringify(matrixB));
+            params.append('operation', operation);
+            
+            return `${baseURL}?${params.toString()}`;
+        }
+
+        function generateEmailBody(matrixA, matrixB, result, operation) {
+            let body = `Matriz A:\n${matrixToString(matrixA)}\n\n`;
+            body += `Matriz B:\n${matrixToString(matrixB)}\n\n`;
+            body += `Operación: ${operation}\n\n`;
+            body += `Resultado:\n${matrixToString(result)}\n\n`;
+            body += `Ver cálculo completo: ${generateShareURL(matrixA, matrixB, operation)}`;
+            
+            return body;
+        }
+
+        function matrixToString(matrix) {
+            return matrix.map(row => '[' + row.join(', ') + ']').join('\n');
+        }
+
+        function showError(message) {
+            // Eliminar mensaje de error existente
+            const existingError = document.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = `❌ Error: ${message}`;
+            
+            // Añadir al principio del contenedor de resultados
+            resultHistory.insertBefore(errorDiv, resultHistory.firstChild);
+            
+            // Eliminar automáticamente después de 5 segundos
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Helper 1: Extraer valores de matriz de forma segura desde el DOM (versión corregida)
+        function getMatrixValues(container, size) {
+            const inputs = container.querySelectorAll('.matrix input');
+            const matrix = [];
+            let isValid = true;
+            
+            for (let i = 0; i < size; i++) {
+                const row = [];
+                for (let j = 0; j < size; j++) {
+                    const input = inputs[i * size + j];
+                    const inputValue = input.value.trim();
+                    
+                    // Manejar valores vacíos: si la entrada está vacía, se considera 0
+                    if (inputValue === '' || inputValue === null || inputValue === undefined) {
+                        row.push(0);
+                    } else {
+                        const value = parseFloat(inputValue);
+                        if (isNaN(value)) {
+                            isValid = false;
+                            row.push(0); // Entrada inválida también se considera 0
+                        } else {
+                            row.push(value);
+                        }
+                    }
+                }
+                matrix.push(row);
+            }
+            return { matrix, isValid };
+        }
+
+        // Helper 2: Generar números aleatorios
+        function generateRandomValue(type) {
+            let value;
+            switch (type) {
+                case 'pos_int': 
+                    value = Math.floor(Math.random() * 10);
+                    break;
+                case 'signed_int': 
+                    value = Math.floor(Math.random() * 21) - 10;
+                    break;
+                case 'float': 
+                    value = ((Math.random() * 2) - 1).toFixed(2); 
+                    break;
+                default:
+                    value = 0;
+            }
+            return value;
+        }
+
+        // Helper 3: Llenar matriz con valores aleatorios
+        function fillMatrix(target, type) {
+            const container = target === 'A' ? containerA : containerB;
+            const optionsDiv = target === 'A' ? randomOptionsA : randomOptionsB;
+            const inputs = container.querySelectorAll('.matrix input');
+            if (inputs.length === 0) return;
+            inputs.forEach(input => { input.value = generateRandomValue(type); });
+            optionsDiv.style.display = 'none';
+        }
+
+        // Helper 4: Renderizar matriz (lógica de ajuste de tamaño) - versión corregida
+        function renderMatrix(size, container, matrixId) {
+            const oldInputs = container.querySelectorAll('.matrix input');
+            const oldValues = Array.from(oldInputs).map(input => input.value);
+            const oldSize = matrixId === 'A' ? sizeA : sizeB;
+
+            container.innerHTML = ''; 
+            const newMatrixDiv = document.createElement('div');
+            newMatrixDiv.classList.add('matrix');
+            newMatrixDiv.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.placeholder = '0'; 
+                    
+                    // Preservar valores antiguos: solo llenar si la posición antigua tenía un valor no vacío
+                    if (r < oldSize && c < oldSize) {
+                        const oldIndex = r * oldSize + c;
+                        const oldValue = oldValues[oldIndex];
+                        // Solo llenar si el valor antiguo existe y no es una cadena vacía
+                        if (oldValue !== '' && oldValue !== undefined && oldValue !== null) {
+                            input.value = oldValue;
+                        } else {
+                            input.value = ''; // Mantener vacío
+                        }
+                    } else {
+                        input.value = ''; // Nueva posición se mantiene vacía
+                    }
+                    
+                    newMatrixDiv.appendChild(input);
+                }
+            }
+            container.appendChild(newMatrixDiv);
+            
+            if (matrixId === 'A') { sizeA = size; } else { sizeB = size; }
+            updateControlState();
+        }
+
+        // Helper 5: Actualizar estado de los botones de control
+        function updateControlState() {
+            decreaseBtnA.disabled = (sizeA === minSize);
+            increaseBtnA.disabled = (sizeA === maxSize);
+            decreaseBtnA.title = `Reducir Tamaño A (Actual: ${sizeA}x${sizeA})`;
+            increaseBtnA.title = `Aumentar Tamaño A (Actual: ${sizeA}x${sizeA})`;
+
+            decreaseBtnB.disabled = (sizeB === minSize);
+            increaseBtnB.disabled = (sizeB === maxSize);
+            decreaseBtnB.title = `Reducir Tamaño B (Actual: ${sizeB}x${sizeB})`;
+            increaseBtnB.title = `Aumentar Tamaño B (Actual: ${sizeB}x${sizeB})`;
+        }
+        
+        // Helper 6: Configurar controles de números aleatorios
+        const setupRandomControls = (target) => {
+            const toggleBtn = document.getElementById(`toggle-random-btn-${target.toLowerCase()}`);
+            const optionsDiv = document.getElementById(`random-options-${target.toLowerCase()}`);
+            const buttons = optionsDiv.querySelectorAll('.random-option-btn');
+
+            toggleBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                randomOptionsA.style.display = 'none'; 
+                randomOptionsB.style.display = 'none'; 
+                optionsDiv.style.display = 'flex';
+            });
+
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const type = button.getAttribute('data-type');
+                    fillMatrix(target, type);
+                });
+            });
+        };
+
+        // Función mejorada para llenar matriz desde datos
+        function fillMatrixFromData(target, data) {
+            const container = target === 'A' ? containerA : containerB;
+            const size = target === 'A' ? sizeA : sizeB;
+            const inputs = container.querySelectorAll('.matrix input');
+            
+            // Asegurar que los datos son un arreglo 2D válido
+            if (!Array.isArray(data) || data.length === 0) return;
+            
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    const index = i * size + j;
+                    if (inputs[index]) {
+                        // Si hay un valor correspondiente en data, usarlo; de lo contrario, establecer como cadena vacía
+                        if (data[i] && data[i][j] !== undefined && data[i][j] !== null) {
+                            inputs[index].value = data[i][j];
+                        } else {
+                            inputs[index].value = ''; // Establecer como vacío, será tratado como 0 por getMatrixValues
+                        }
+                    }
+                }
+            }
+        }
+
+        // Helper 7: Inicializar desde parámetros URL (versión corregida)
+        function initFromURLParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // 1. Primero obtener y actualizar tamaños de matriz (si hay parámetros en URL)
+            const urlSizeA = parseInt(urlParams.get('sizeA'));
+            const urlSizeB = parseInt(urlParams.get('sizeB'));
+            
+            console.log("Tamaño A en URL:", urlSizeA, "Tamaño B en URL:", urlSizeB);
+            console.log("Tamaño A actual:", sizeA, "Tamaño B actual:", sizeB);
+            
+            if (urlSizeA && urlSizeA >= minSize && urlSizeA <= maxSize) {
+                // Actualizar tamaño y volver a renderizar matriz A
+                sizeA = urlSizeA;
+                console.log("Renderizando matriz A con tamaño:", sizeA);
+                renderMatrix(sizeA, containerA, 'A');
+            }
+            
+            if (urlSizeB && urlSizeB >= minSize && urlSizeB <= maxSize) {
+                // Actualizar tamaño y volver a renderizar matriz B
+                sizeB = urlSizeB;
+                console.log("Renderizando matriz B con tamaño:", sizeB);
+                renderMatrix(sizeB, containerB, 'B');
+            }
+            
+            // 2. Luego obtener datos de matriz y llenar
+            try {
+                const matrixAData = JSON.parse(urlParams.get('matrixA') || '[]');
+                const matrixBData = JSON.parse(urlParams.get('matrixB') || '[]');
+                
+                console.log("Datos de matriz A desde URL:", matrixAData);
+                console.log("Datos de matriz B desde URL:", matrixBData);
+                
+                if (matrixAData.length > 0) {
+                    console.log("Llenando matriz A desde datos URL");
+                    fillMatrixFromData('A', matrixAData);
+                }
+                if (matrixBData.length > 0) {
+                    console.log("Llenando matriz B desde datos URL");
+                    fillMatrixFromData('B', matrixBData);
+                }
+                
+            } catch (e) {
+                console.warn('Datos de matriz inválidos en parámetros URL', e);
+            }
+            
+            // Actualizar estado de los botones de control
+            updateControlState();
+        }
+
+        // Función de cálculo de arco coseno matricial (versión corregida)
+        function calculateArccosine() {
+            console.log("Iniciando cálculo de arco coseno...");
+            
+            // Obtener valores de la matriz A
+            const { matrix: matrixA, isValid: isValidA } = getMatrixValues(containerA, sizeA);
+            
+            console.log("Valores de matriz A:", matrixA);
+            console.log("Tamaño de matriz:", sizeA);
+            
+            if (!isValidA) {
+                showError("La matriz A contiene valores inválidos. Por favor, introduzca números válidos.");
+                return;
+            }
+            
+            // Verificar que es una matriz cuadrada
+            if (matrixA.length !== matrixA[0].length) {
+                showError("La matriz A debe ser una matriz cuadrada (filas = columnas) para el cálculo de arco coseno.");
+                return;
+            }
+            
+            // Verificar que los valores están en el rango válido y calcular arco coseno
+            const size = matrixA.length;
+            const resultMatrix = [];
+            const errorIndices = [];
+            
+            for (let i = 0; i < size; i++) {
+                const row = [];
+                for (let j = 0; j < size; j++) {
+                    const value = matrixA[i][j];
+                    
+                    // Verificar si el valor está en el rango [-1, 1]
+                    if (value < -1 || value > 1) {
+                        errorIndices.push({row: i, col: j, value: value});
+                        row.push(NaN); // Marcar valor inválido
+                    } else {
+                        // Calcular arco coseno, resultado en radianes
+                        row.push(Math.acos(value));
+                    }
+                }
+                resultMatrix.push(row);
+            }
+            
+            // Si hay valores erróneos, mostrar error
+            if (errorIndices.length > 0) {
+                const errorDetails = errorIndices.map(e => 
+                    `A[${e.row+1},${e.col+1}] = ${e.value} no está en el rango [-1, 1]`
+                ).join(', ');
+                showError(`Algunos valores están fuera de rango: ${errorDetails}. arccos(x) requiere x ∈ [-1, 1].`);
+                
+                // Aún mostrar resultados parciales, pero marcar valores inválidos
+                const resultWithErrors = resultMatrix.map(row => 
+                    row.map(val => isNaN(val) ? 'NaN' : val)
+                );
+                displayArccosineResult(matrixA, resultWithErrors, true);
+            } else {
+                // Mostrar resultado completo
+                displayArccosineResult(matrixA, resultMatrix, false);
+            }
+        }
+
+        // Calcular arco coseno automáticamente (cuando hay datos de matriz A en la URL)
+        function autoCalculateArccosine() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasMatrixA = urlParams.has('matrixA');
+            
+            console.log("Calculando arco coseno automáticamente. ¿Hay matrizA en URL?", hasMatrixA);
+            
+            if (hasMatrixA) {
+                // Esperar a que la matriz se renderice antes de calcular
+                setTimeout(() => {
+                    console.log("Calculando arco coseno ahora...");
+                    calculateArccosine();
+                }, 500); // Aumentar retraso para asegurar que el DOM se actualice completamente
+            }
+        }
+
+        // --- Event Listeners ---
+
+        // Controles de tamaño
+        increaseBtnA.addEventListener('click', () => { renderMatrix(sizeA + 1, containerA, 'A'); });
+        decreaseBtnA.addEventListener('click', () => { renderMatrix(sizeA - 1, containerA, 'A'); });
+        increaseBtnB.addEventListener('click', () => { renderMatrix(sizeB + 1, containerB, 'B'); });
+        decreaseBtnB.addEventListener('click', () => { renderMatrix(sizeB - 1, containerB, 'B'); });
+
+        // Botón de intercambio (mantener funcionalidad)
+        swapBtn.addEventListener('click', () => {
+            if (sizeA !== sizeB) {
+                alert(`¡No se puede INTERCAMBIAR! La matriz A (${sizeA}x${sizeA}) y la matriz B (${sizeB}x${sizeB}) deben tener el mismo tamaño.`);
+                return;
+            }
+            const inputsA = containerA.querySelectorAll('.matrix input');
+            const inputsB = containerB.querySelectorAll('.matrix input');
+            const valuesA = Array.from(inputsA).map(input => input.value);
+            const valuesB = Array.from(inputsB).map(input => input.value);
+            inputsA.forEach((input, index) => { input.value = valuesB[index]; });
+            inputsB.forEach((input, index) => { input.value = valuesA[index]; });
+        });
+        
+        // Botones de borrar
+        document.getElementById('clear-btn-a').addEventListener('click', () => { containerA.querySelectorAll('.matrix input').forEach(input => { input.value = ''; }); });
+        document.getElementById('clear-btn-b').addEventListener('click', () => { containerB.querySelectorAll('.matrix input').forEach(input => { input.value = ''; }); });
+
+        // Botón de borrar todos los resultados
+        clearAllResultsBtn.addEventListener('click', () => {
+            resultHistory.innerHTML = '';
+        });
+
+        // Cierre global de opciones aleatorias
+        document.addEventListener('click', (event) => {
+            const isInsideA = document.getElementById('random-controls-main-a').contains(event.target);
+            const isInsideB = document.getElementById('random-controls-main-b').contains(event.target);
+            if (!isInsideA) randomOptionsA.style.display = 'none';
+            if (!isInsideB) randomOptionsB.style.display = 'none';
+        }, true); 
+
+        // Inicializar calculadora matricial
+        function initMatrixCalculator() {
+            renderMatrix(sizeA, containerA, 'A');
+            renderMatrix(sizeB, containerB, 'B');
+            setupRandomControls('A');
+            setupRandomControls('B');
+            updateControlState();
+            initFromURLParameters();
+        }
+
+        // Funcionalidad de la encuesta
+        function initPoll() {
+            const yesBtn = document.querySelector('.question-box .yes');
+            const noBtn = document.querySelector('.question-box .no');
+            const response = document.getElementById('response');
+
+            yesBtn.addEventListener('click', () => {
+                response.textContent = "¡Genial! Hagámoslo realidad 💪";
+                response.classList.add('show');
+            });
+
+            noBtn.addEventListener('click', () => {
+                response.textContent = "¡Corre mientras puedas! La matriz viene en camino 🏃‍♂️💨";
+                response.classList.add('show');
+            });
+        }
+
+        // Añadir funcionalidad de desplazamiento al botón Matrix Game
+        document.addEventListener('DOMContentLoaded', function() {
+            const matrixGameButton = document.querySelector('a[href="#matrix-game"]');
+            const rightSidebar = document.getElementById('matrix-game');
+            
+            matrixGameButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // En móviles, desplazar a la barra lateral derecha
+                if (window.innerWidth <= 768) {
+                    rightSidebar.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    // En escritorio, añadir efecto de resaltado para llamar la atención
+                    rightSidebar.classList.add('highlight');
+                    
+                    // Remover efecto de resaltado después de 2 segundos
+                    setTimeout(() => {
+                        rightSidebar.classList.remove('highlight');
+                    }, 2000);
+                }
+            });
+            
+            // Funcionalidad del selector de idioma
+            const languageToggle = document.querySelector('.language-toggle');
+            const languageDropdown = document.querySelector('.language-dropdown');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            // Alternar mostrar/ocultar menú desplegable
+            languageToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                languageDropdown.classList.toggle('active');
+            });
+            
+            // Actualizar visualización al seleccionar idioma
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    const selectedText = this.textContent;
+                    
+                    // Actualizar idioma mostrado actualmente
+                    languageToggle.innerHTML = `<span class="globe-icon">🌐</span> ${selectedText}`;
+                    
+                    // Actualizar estado activo
+                    languageOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Cerrar menú desplegable
+                    languageDropdown.classList.remove('active');
+                });
+            });
+            
+            // Cerrar menú desplegable al hacer clic fuera
+            document.addEventListener('click', function() {
+                languageDropdown.classList.remove('active');
+            });
+
+            // Inicializar calculadora matricial
+            initMatrixCalculator();
+
+            // Modificación: añadir cálculo automático de arco coseno
+            autoCalculateArccosine();
+
+            // Inicializar encuesta
+            initPoll();
+
+        });
+    </script>
+</body>
+</html>

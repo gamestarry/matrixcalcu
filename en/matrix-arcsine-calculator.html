@@ -3,20 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Matrix arcsine calculator. Calculate arcsin(A) for square matrices. Free online tool for matrix arcsin calculation with step-by-step results.">
-    <meta name="keywords" content="matrix arcsine, arcsin matrix, inverse sine matrix, matrix function, matrix calculator, linear algebra tools">
+    <meta name="description" content="Free online matrix calculator for multiplication, inverse matrices, and determinants. Calculate 2x2 and 3x3 matrices quickly and easily.">
+    <meta name="keywords" content="matrix multiplication, inverse matrix, determinant, 2x2 matrix calculator, 3x3 matrix calculator, linear algebra tools, matrix arcsine calculator">
     <meta name="author" content="Matrix Calculator Pro">
-    <link rel="canonical" href="https://yourdomain.com/matrix-arcsine-calculator">
+    <!-- Canonical标签 -->
+    <link rel="canonical" href="https://matrixcalcu.com/en/matrix-arcsine-calculator" />
+
     
     <!-- Open Graph 标签 -->
-    <meta property="og:title" content="Matrix Arcsine Calculator - arcsin(A) for Square Matrices">
-    <meta property="og:description" content="Calculate matrix arcsine (arcsin) function for 2x2, 3x3 and larger square matrices. Online matrix arcsine calculator with detailed results.">
+    <meta property="og:title" content="Free Matrix Calculator - Multiplication, Inverse & Determinant">
+    <meta property="og:description" content="Calculate matrix products, inverse matrices, and determinants instantly. Easy-to-use online calculator for 2x2 and 3x3 matrices.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
+    <!-- Open Graph URL -->
+    <meta property="og:url" content="https://matrixcalcu.com/en/matrix-arcsine-calculator" />
     
-    <title>Matrix Arcsine Calculator - Calculate arcsin(A) for Square Matrices</title>
+    <title>Matrix Calculator - Multiplication, Inverse & Determinant for 2x2 and 3x3 Matrices</title>
+
+    <!-- ========== HREFLANG 标签（英文计算器页面）========== -->
+    <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arcsine-calculator" />
+    <link rel="alternate" hreflang="en-US" href="https://matrixcalcu.com/en/matrix-arcsine-calculator" />
+    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-arcsine-calculator" />
+    <link rel="alternate" hreflang="es-ES" href="https://matrixcalcu.com/es/matrix-arcsine-calculator" />    
+    <link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/" />
+
     
-    <!-- MathJax for LaTeX rendering -->
+    <!-- MathJax for LaTeX rendering in SEO article -->
     <script>
     window.MathJax = {
       tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -31,16 +43,13 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- Math.js library for matrix calculations -->
-    <script src="/math.min.js"></script>
-    
     <!-- Schema.org 结构化数据 -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Matrix Arcsine Calculator - arcsin(A)",
-      "description": "Free online matrix arcsine calculator for calculating arcsin(A) for square matrices",
+      "name": "Matrix Calculator - Multiplication, Inverse & Determinant",
+      "description": "Free online matrix calculator for multiplication, inverse matrices, and determinants of 2x2 and 3x3 matrices",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "Any",
       "browserRequirements": "Requires JavaScript",
@@ -194,6 +203,129 @@
             padding: 2rem;
             border: 2px dashed #ddd;
             border-radius: var(--border-radius);
+        }
+
+        /* SEO文章内容特定样式 */
+        .seo-article {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            color: #222;
+            padding: 28px;
+            line-height: 1.6;
+        }
+
+        .seo-article h1, 
+        .seo-article h2, 
+        .seo-article h3 { 
+            color: var(--primary-color); 
+            margin-top: 24px; 
+            margin-bottom: 12px;
+            border-bottom: none;
+            text-shadow: none;
+        }
+        
+        .seo-article h1 {
+            font-size: 28px;
+            margin-top: 0;
+        }
+        
+        .seo-article h2 {
+            font-size: 22px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .seo-article p { 
+            margin: 14px 0; 
+        }
+        
+        .seo-article ol, 
+        .seo-article ul { 
+            margin: 14px 0 14px 24px; 
+        }
+        
+        .seo-article li {
+            margin-bottom: 8px;
+        }
+        
+        .seo-article table{ 
+            border-collapse:collapse; 
+            width:100%; 
+            margin: 16px 0 24px 0;
+            font-size: 0.95rem;
+        }
+        
+        .seo-article table, 
+        .seo-article th, 
+        .seo-article td{ 
+            border:1px solid #e0e0e0; 
+        }
+        
+        .seo-article th, 
+        .seo-article td{ 
+            padding: 10px 12px; 
+            text-align:left; 
+        }
+        
+        .seo-article th {
+            background-color: #f5f7fa;
+            font-weight: 600;
+        }
+        
+        .seo-article .exercise{ 
+            margin: 20px 0; 
+            padding: 16px; 
+            border:1px solid #e0e0e0; 
+            border-radius:8px; 
+            background:#fbfcff; 
+        }
+        
+        .seo-article summary{ 
+            cursor:pointer; 
+            font-weight:600; 
+            color: var(--secondary-color); 
+            outline:none; 
+            font-size: 1rem;
+        }
+        
+        .seo-article details{ 
+            margin-top: 12px; 
+        }
+        
+        .seo-article .answer{ 
+            margin-top: 12px; 
+            background:#fff; 
+            border-left:4px solid var(--secondary-color); 
+            padding: 14px; 
+            border-radius:6px; 
+            font-size: 0.95rem;
+        }
+        
+        .seo-article .footer{ 
+            margin-top: 32px; 
+            padding: 16px; 
+            color: #555; 
+            border-top: 1px solid #e0e0e0; 
+            font-size: 14px; 
+            background-color: #f8f9fa; /* 浅灰色背景 */
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+        
+        .seo-article .small{ 
+            font-size: 0.95rem; 
+            color: #666; 
+            font-style: italic;
+        }
+        
+        .seo-article hr {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 28px 0;
+        }
+        
+        .seo-article .math-container {
+            margin: 16px 0;
+            padding: 10px 0;
+            overflow-x: auto;
         }
 
         /* 左侧导航栏样式 */
@@ -778,15 +910,6 @@
             border-radius: 4px;
         }
         
-        .warning-message {
-            background-color: #fff3cd;
-            color: #856404;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
-            border: 1px solid #ffeaa7;
-        }
-        
         /* 分享下拉菜单样式 */
         .share-dropdown {
             position: relative;
@@ -878,6 +1001,23 @@
             
             .matrix-calculator .controls {
                 justify-content: center;
+            }
+            
+            /* SEO文章响应式调整 */
+            .seo-article {
+                padding: 20px;
+            }
+            
+            .seo-article h1 {
+                font-size: 24px;
+            }
+            
+            .seo-article h2 {
+                font-size: 20px;
+            }
+            
+            .seo-article table {
+                font-size: 0.9rem;
             }
         }
         
@@ -994,7 +1134,28 @@
                 display: block;
             }
             
+            /* SEO文章移动端调整 */
+            .seo-article {
+                padding: 16px;
+            }
             
+            .seo-article h1 {
+                font-size: 22px;
+            }
+            
+            .seo-article h2 {
+                font-size: 18px;
+            }
+            
+            .seo-article .exercise {
+                padding: 12px;
+            }
+            
+            .seo-article table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1076,159 +1237,19 @@
                 font-size: 0.9em;
                 padding: 8px;
             }
-        }
-
-        /* SEO内容样式 */
-        .seo-content {
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            color: #222;
-            background: #fff;
-            margin: 0;
-            padding: 28px;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-
-        .seo-content .container {
-            max-width: 960px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .seo-content h1, 
-        .seo-content h2, 
-        .seo-content h3 { 
-            color: #003366; 
-            margin-top: 24px; 
-            margin-bottom: 8px; 
-        }
-        
-        .seo-content h1 {
-            font-size: 28px;
-            border-bottom: none;
-            text-shadow: none;
-            margin-top: 0;
-        }
-        
-        .seo-content h2 {
-            font-size: 22px;
-        }
-        
-        .seo-content h3 {
-            font-size: 18px;
-        }
-        
-        .seo-content p { 
-            margin: 10px 0; 
-            line-height: 1.6;
-        }
-        
-        .seo-content ol, 
-        .seo-content ul { 
-            margin: 10px 0 10px 20px; 
-        }
-        
-        .seo-content table { 
-            border-collapse: collapse; 
-            width: 100%; 
-            margin-top: 12px; 
-        }
-        
-        .seo-content table, 
-        .seo-content th, 
-        .seo-content td { 
-            border: 1px solid #e0e0e0; 
-        }
-        
-        .seo-content th, 
-        .seo-content td { 
-            padding: 8px; 
-            text-align: left; 
-        }
-        
-        .seo-content th {
-            background-color: #f8f9fa;
-        }
-        
-        .seo-content .exercise { 
-            margin: 16px 0; 
-            padding: 12px; 
-            border: 1px solid #e0e0e0; 
-            border-radius: 6px; 
-            background: #fbfcff; 
-        }
-        
-        .seo-content summary { 
-            cursor: pointer; 
-            font-weight: 600; 
-            color: #0066cc; 
-            outline: none; 
-        }
-        
-        .seo-content details { 
-            margin-top: 8px; 
-        }
-        
-        .seo-content .answer { 
-            margin-top: 8px; 
-            background: #fff; 
-            border-left: 4px solid #e0e0e0; 
-            padding: 10px; 
-            border-radius: 4px; 
-        }
-        
-        .seo-content .footer { 
-            margin-top: 32px; 
-            padding: 20px 0;
-            color: #555;
-            border-top: 1px solid #e0e0e0; 
-            font-size: 14px; 
-            background-color: #f8f9fa; /* 按照要求设置为浅灰色 */
-            text-align: center;
-        }
-        
-        .seo-content .small { 
-            font-size: 0.95rem; 
-            color: #555; 
-        }
-        
-        .seo-content hr {
-            border: none;
-            border-top: 1px solid #e0e0e0;
-            margin: 24px 0;
-        }
-        
-        /* MathJax 公式样式 */
-        .seo-content mjx-container[jax="SVG"] {
-            display: inline-block;
-            margin: 8px 0;
-        }
-        
-        .seo-content .MathJax {
-            overflow: auto;
-        }
-        
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .seo-content {
-                padding: 20px;
+            
+            /* SEO文章更小屏幕调整 */
+            .seo-article {
+                padding: 12px;
             }
             
-            .seo-content h1 {
-                font-size: 24px;
-            }
-            
-            .seo-content h2 {
+            .seo-article h1 {
                 font-size: 20px;
             }
             
-            .seo-content table {
-                font-size: 14px;
-            }
-            
-            .seo-content th, 
-            .seo-content td {
-                padding: 6px;
+            .seo-article .footer {
+                padding: 12px;
+                font-size: 13px;
             }
         }
 
@@ -1306,7 +1327,7 @@
 <body>
     <header>
         <div class="container">
-            <h1>Matrix Arcsine Calculator</h1>
+            <h1>Matrix Calculator</h1>
             
             <!-- 多语言选择器 -->
             <div class="language-selector">
@@ -1347,6 +1368,7 @@
                     <div class="nav-buttons">
                         <a href="#matrix-multiplication-operation" class="nav-button">Matrix Multiplication Calculator</a>
                         <a href="#matrix-game" class="nav-button">Matrix Multiplication Game</a>
+                        <a href="matrix-equations-calculator.html" class="nav-button">System of Equations Calculator</a>
                         <a href="https://en.wikipedia.org/wiki/Matrix_(mathematics)" target="_blank" class="nav-button external">Wikipedia: Matrix</a>
                     </div>
                 </div>
@@ -1379,7 +1401,7 @@
 
                                     <div class="matrix-container" id="matrix-container-a"></div>
 
-                                    <!-- 矩阵A的按钮 - 已修改arcsin按钮 -->
+                                    <!-- 矩阵A的按钮 - 已添加路径 -->
                                     <div class="single-ops-container">
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-determinant')" class="single-op-btn">Determinant</button>
@@ -1460,7 +1482,7 @@
 
                                     <div class="matrix-container" id="matrix-container-b"></div>
 
-                                    <!-- 矩阵B的按钮 - 已修改arcsin按钮为本地计算 -->
+                                    <!-- 矩阵B的按钮 - 已修改arcsine按钮为本地计算 -->
                                     <div class="single-ops-container">
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-qr')" class="single-op-btn">qr(A)</button>
@@ -1491,8 +1513,8 @@
                                             <button onclick="goTo('matrix-arctangent')" class="single-op-btn">arctan[A]</button>
                                         </div>
                                         <div class="op-row">
-                                            <!-- 修改：arcsin按钮改为本地计算 -->
-                                            <button onclick="calculateArcsin()" class="single-op-btn">arcsin[A]</button>
+                                            <!-- 修改：将arcsine按钮改为本地计算 -->
+                                            <button onclick="calculateArcSine()" class="single-op-btn">arcsin[A]</button>
                                             <button onclick="goTo('matrix-arccosine')" class="single-op-btn">arccos[A]</button>
                                         </div>
                                         <div class="op-row">
@@ -1517,185 +1539,213 @@
                         </div>
                     </div>
                     
-                    <!-- SEO文章容器 - 现在包含完整的SEO文章 -->
+                    <!-- SEO文章容器 - 现在包含矩阵Arcsine文章 -->
                     <div class="seo-articles-container">
-                        <div class="seo-content">
-                            <div class="container">
-                                <h1>Matrix Arcsine: Definition, Examples, and Practice</h1>
-                                
-                                <p class="small">This article explains the matrix arcsine function (arcsin), gives formulas and worked examples, summarizes common mistakes, and provides practice problems with collapsible answers. Suitable as companion content for a Matrix Arcsine Calculator.</p>
-                                
-                                <hr />
-                                
-                                <h2>Definition and Formula</h2>
-                                <p>
-                                The <strong>matrix arcsine</strong> of a square matrix \(A\), denoted \(\arcsin(A)\), is the matrix function that serves as an inverse to the matrix sine on an appropriate domain:
-                                </p>
-                                
-                                $$
-                                \sin(\arcsin(A)) = A \quad \text{(for matrices in the domain of the inverse)}
-                                $$
-                                
-                                <p>
-                                One practical way to compute \(\arcsin(A)\) is via the power series (Taylor series) for the scalar arcsine applied to the matrix:
-                                </p>
-                                
-                                $$
-                                \arcsin(A) = A + \frac{1}{6}A^{3} + \frac{3}{40}A^{5} + \frac{5}{112}A^{7} + \cdots
-                                $$
-                                
-                                <p>
-                                The scalar series converges for \(|x| \le 1\) (with endpoint behavior), and for matrices the series converges if the chosen matrix norm satisfies \(\|A\| < 1\). In practice, numerical methods, diagonalization, Jordan decomposition or Schur-based methods may be used for stability and convergence.
-                                </p>
-                                
-                                <hr />
-                                
-                                <h2>Properties</h2>
-                                <ul>
-                                  <li>\(\arcsin(A)\) is defined only when a suitable inverse of \(\sin\) exists for that matrix (or on a chosen branch).</li>
-                                  <li>If \(A\) is diagonalizable with \(A = V \, \mathrm{diag}(\lambda_i)\, V^{-1}\), then \(\arcsin(A) = V \,\mathrm{diag}(\arcsin(\lambda_i))\, V^{-1}\) when each \(\lambda_i\) lies in the domain where scalar arcsin is defined.</li>
-                                  <li>If \(A\) is nilpotent (e.g. \(A^2=0\)), higher powers vanish and the series truncates.</li>
-                                </ul>
-                                
-                                <hr />
-                                
-                                <h2>Worked Example 1 (Diagonal scalar matrix)</h2>
-                                <p>Let</p>
-                                
-                                $$
-                                A = \begin{pmatrix} 0.2 & 0 \\[4pt] 0 & 0.2 \end{pmatrix}.
-                                $$
-                                
-                                <p>Because \(A = 0.2 I\), the arcsine is applied element-wise:</p>
-                                
-                                $$
-                                \arcsin(A) = \arcsin(0.2)\, I
-                                $$
-                                
-                                <p>So the result is:</p>
-                                
-                                $$
-                                \arcsin(A) = \arcsin(0.2)\begin{pmatrix}1 & 0\\[4pt]0 & 1\end{pmatrix}.
-                                $$
-                                
-                                <hr />
-                                
-                                <h2>Worked Example 2 (Nilpotent matrix)</h2>
-                                <p>Let</p>
-                                
-                                $$
-                                B = \begin{pmatrix}0 & 1\\[4pt]0 & 0\end{pmatrix}.
-                                $$
-                                
-                                <p>Note \(B^2 = 0\). Using the power series for \(\arcsin\), all terms beyond the linear term vanish, so</p>
-                                
-                                $$
-                                \arcsin(B) = B.
-                                $$
-                                
-                                <hr />
-                                
-                                <h2>Common Mistakes and Tips</h2>
-                                <table>
-                                  <thead>
-                                    <tr><th>Common mistake</th><th>Tip / correct approach</th></tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>Applying scalar arcsin element-wise to a non-diagonal matrix</td>
-                                      <td>Only valid for diagonal matrices or when matrix is brought to diagonal form via similarity transform.</td>
-                                    </tr>
-                                    <tr>
-                                      <td>Ignoring convergence conditions of the power series</td>
-                                      <td>Ensure \(\|A\|<1\) for safe use of the series, or use diagonalization/Schur methods for larger norms.</td>
-                                    </tr>
-                                    <tr>
-                                      <td>Truncating series too early for non-nilpotent matrices</td>
-                                      <td>Keep enough terms for desired accuracy or use a library routine that adapts truncation.</td>
-                                    </tr>
-                                    <tr>
-                                      <td>Forgetting branch choices for inverse trig functions</td>
-                                      <td>Be explicit about which branch of arcsin is used when eigenvalues are near branch cuts.</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                                
-                                <hr />
-                                
-                                <h2>Practice Problems (Compute \(\arcsin(A)\))</h2>
-                                <p>The exercises below are designed for calculator use or hand computation. Matrix expressions are shown; click "Show Answer" to reveal the solution.</p>
-                                
-                                <div class="exercise">
-                                  <p><strong>Exercise 1 (diagonal, small value)</strong></p>
+                        <div class="seo-article">
+                            <h1>Matrix Arcsine: Definition, Examples, and Practice</h1>
+                            
+                            <p class="small">This article explains the matrix arcsine function (&#x1D54;arcsin&#x1D54;), gives formulas and worked examples, summarizes common mistakes, and provides practice problems with collapsible answers. Suitable as companion content for a Matrix Arcsine Calculator.</p>
+                            
+                            <hr />
+                            
+                            <h2>Definition and Formula</h2>
+                            <p>
+                            The <strong>matrix arcsine</strong> of a square matrix \(A\), denoted \(\arcsin(A)\), is the matrix function that serves as an inverse to the matrix sine on an appropriate domain:
+                            </p>
+                            
+                            <div class="math-container">
+                            $$
+                            \sin(\arcsin(A)) = A \quad \text{(for matrices in the domain of the inverse)}
+                            $$
+                            </div>
+                            
+                            <p>
+                            One practical way to compute \(\arcsin(A)\) is via the power series (Taylor series) for the scalar arcsine applied to the matrix:
+                            </p>
+                            
+                            <div class="math-container">
+                            $$
+                            \arcsin(A) = A + \frac{1}{6}A^{3} + \frac{3}{40}A^{5} + \frac{5}{112}A^{7} + \cdots
+                            $$
+                            </div>
+                            
+                            <p>
+                            The scalar series converges for \(|x| \le 1\) (with endpoint behavior), and for matrices the series converges if the chosen matrix norm satisfies \(\|A\| < 1\). In practice, numerical methods, diagonalization, Jordan decomposition or Schur-based methods may be used for stability and convergence.
+                            </p>
+                            
+                            <hr />
+                            
+                            <h2>Properties </h2>
+                            <ul>
+                              <li>\(\arcsin(A)\) is defined only when a suitable inverse of \(\sin\) exists for that matrix (or on a chosen branch).</li>
+                              <li>If \(A\) is diagonalizable with \(A = V \, \mathrm{diag}(\lambda_i)\, V^{-1}\), then \(\arcsin(A) = V \,\mathrm{diag}(\arcsin(\lambda_i))\, V^{-1}\) when each \(\lambda_i\) lies in the domain where scalar arcsin is defined.</li>
+                              <li>If \(A\) is nilpotent (e.g. \(A^2=0\)), higher powers vanish and the series truncates.</li>
+                            </ul>
+                            
+                            <hr />
+                            
+                            <h2>Worked Example 1 (Diagonal scalar matrix)</h2>
+                            <p>Let</p>
+                            
+                            <div class="math-container">
+                            $$
+                            A = \begin{pmatrix} 0.2 & 0 \\[4pt] 0 & 0.2 \end{pmatrix}.
+                            $$
+                            </div>
+                            
+                            <p>Because \(A = 0.2 I\), the arcsine is applied element-wise:</p>
+                            
+                            <div class="math-container">
+                            $$
+                            \arcsin(A) = \arcsin(0.2)\, I
+                            $$
+                            </div>
+                            
+                            <p>So the result is:</p>
+                            
+                            <div class="math-container">
+                            $$
+                            \arcsin(A) = \arcsin(0.2)\begin{pmatrix}1 & 0\\[4pt]0 & 1\end{pmatrix}.
+                            $$
+                            </div>
+                            
+                            <hr />
+                            
+                            <h2>Worked Example 2 (Nilpotent matrix)</h2>
+                            <p>Let</p>
+                            
+                            <div class="math-container">
+                            $$
+                            B = \begin{pmatrix}0 & 1\\[4pt]0 & 0\end{pmatrix}.
+                            $$
+                            </div>
+                            
+                            <p>Note \(B^2 = 0\). Using the power series for \(\arcsin\), all terms beyond the linear term vanish, so</p>
+                            
+                            <div class="math-container">
+                            $$
+                            \arcsin(B) = B.
+                            $$
+                            </div>
+                            
+                            <hr />
+                            
+                            <h2>Common Mistakes and Tips</h2>
+                            <table>
+                              <thead>
+                                <tr><th>Common mistake</th><th>Tip / correct approach</th></tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Applying scalar arcsin element-wise to a non-diagonal matrix</td>
+                                  <td>Only valid for diagonal matrices or when matrix is brought to diagonal form via similarity transform.</td>
+                                </tr>
+                                <tr>
+                                  <td>Ignoring convergence conditions of the power series</td>
+                                  <td>Ensure \(\|A\|<1\) for safe use of the series, or use diagonalization/Schur methods for larger norms.</td>
+                                </tr>
+                                <tr>
+                                  <td>Truncating series too early for non-nilpotent matrices</td>
+                                  <td>Keep enough terms for desired accuracy or use a library routine that adapts truncation.</td>
+                                </tr>
+                                <tr>
+                                  <td>Forgetting branch choices for inverse trig functions</td>
+                                  <td>Be explicit about which branch of arcsin is used when eigenvalues are near branch cuts.</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            
+                            <hr />
+                            
+                            <h2>Practice Problems (Compute \(\arcsin(A)\))</h2>
+                            <p>The exercises below are designed for calculator use or hand computation. Matrix expressions are shown; click "Show Answer" to reveal the solution.</p>
+                            
+                            <div class="exercise">
+                              <p><strong>Exercise 1 (diagonal, small value)</strong></p>
+                              <div class="math-container">
+                              $$
+                              A_1 = \begin{pmatrix}0.1 & 0\\[4pt]0 & 0.1\end{pmatrix}
+                              $$
+                              </div>
+                              <details>
+                                <summary>Show Answer</summary>
+                                <div class="answer">
+                                  <p>Since \(A_1 = 0.1 I\):</p>
+                                  <div class="math-container">
                                   $$
-                                  A_1 = \begin{pmatrix}0.1 & 0\\[4pt]0 & 0.1\end{pmatrix}
+                                  \arcsin(A_1)=\arcsin(0.1)\,I.
                                   $$
-                                  <details>
-                                    <summary>Show Answer</summary>
-                                    <div class="answer">
-                                      <p>Since \(A_1 = 0.1 I\):</p>
-                                      $$
-                                      \arcsin(A_1)=\arcsin(0.1)\,I.
-                                      $$
-                                    </div>
-                                  </details>
+                                  </div>
                                 </div>
-                                
-                                <div class="exercise">
-                                  <p><strong>Exercise 2 (diagonal, larger but within radius)</strong></p>
+                              </details>
+                            </div>
+                            
+                            <div class="exercise">
+                              <p><strong>Exercise 2 (diagonal, larger but within radius)</strong></p>
+                              <div class="math-container">
+                              $$
+                              A_2 = \begin{pmatrix}0.6 & 0\\[4pt]0 & 0.6\end{pmatrix}
+                              $$
+                              </div>
+                              <details>
+                                <summary>Show Answer</summary>
+                                <div class="answer">
+                                  <p>Since \(A_2 = 0.6 I\):</p>
+                                  <div class="math-container">
                                   $$
-                                  A_2 = \begin{pmatrix}0.6 & 0\\[4pt]0 & 0.6\end{pmatrix}
+                                  \arcsin(A_2)=\arcsin(0.6)\,I.
                                   $$
-                                  <details>
-                                    <summary>Show Answer</summary>
-                                    <div class="answer">
-                                      <p>Since \(A_2 = 0.6 I\):</p>
-                                      $$
-                                      \arcsin(A_2)=\arcsin(0.6)\,I.
-                                      $$
-                                      <p>Numerically \(\arcsin(0.6)\approx 0.6435\) (rounded).</p>
-                                    </div>
-                                  </details>
+                                  </div>
+                                  <p>Numerically \(\arcsin(0.6)\approx 0.6435\) (rounded).</p>
                                 </div>
-                                
-                                <div class="exercise">
-                                  <p><strong>Exercise 3 (nilpotent)</strong></p>
+                              </details>
+                            </div>
+                            
+                            <div class="exercise">
+                              <p><strong>Exercise 3 (nilpotent)</strong></p>
+                              <div class="math-container">
+                              $$
+                              A_3 = \begin{pmatrix}0 & 1\\[4pt]0 & 0\end{pmatrix}
+                              $$
+                              </div>
+                              <details>
+                                <summary>Show Answer</summary>
+                                <div class="answer">
+                                  <p>Because \(A_3^2 = 0\), all higher odd powers vanish after the linear term. Thus</p>
+                                  <div class="math-container">
                                   $$
-                                  A_3 = \begin{pmatrix}0 & 1\\[4pt]0 & 0\end{pmatrix}
+                                  \arcsin(A_3) = A_3 = \begin{pmatrix}0 & 1\\[4pt]0 & 0\end{pmatrix}.
                                   $$
-                                  <details>
-                                    <summary>Show Answer</summary>
-                                    <div class="answer">
-                                      <p>Because \(A_3^2 = 0\), all higher odd powers vanish after the linear term. Thus</p>
-                                      $$
-                                      \arcsin(A_3) = A_3 = \begin{pmatrix}0 & 1\\[4pt]0 & 0\end{pmatrix}.
-                                      $$
-                                    </div>
-                                  </details>
+                                  </div>
                                 </div>
-                                
-                                <div class="exercise">
-                                  <p><strong>Exercise 4 (non-diagonal, small norm)</strong></p>
+                              </details>
+                            </div>
+                            
+                            <div class="exercise">
+                              <p><strong>Exercise 4 (non-diagonal, small norm)</strong></p>
+                              <div class="math-container">
+                              $$
+                              A_4 = \begin{pmatrix}0.2 & 0.5\\[4pt]0 & 0.2\end{pmatrix}
+                              $$
+                              </div>
+                              <details>
+                                <summary>Show Answer</summary>
+                                <div class="answer">
+                                  <p>Compute via series or by using similarity/Jordan methods. The series expansion gives the first terms:</p>
+                                  <div class="math-container">
                                   $$
-                                  A_4 = \begin{pmatrix}0.2 & 0.5\\[4pt]0 & 0.2\end{pmatrix}
+                                  \arcsin(A_4) \approx A_4 + \tfrac{1}{6}A_4^{3} + \tfrac{3}{40}A_4^{5} + \cdots
                                   $$
-                                  <details>
-                                    <summary>Show Answer</summary>
-                                    <div class="answer">
-                                      <p>Compute via series or by using similarity/Jordan methods. The series expansion gives the first terms:</p>
-                                      $$
-                                      \arcsin(A_4) \approx A_4 + \tfrac{1}{6}A_4^{3} + \tfrac{3}{40}A_4^{5} + \cdots
-                                      $$
-                                      <p>Practical approach for the calculator: either evaluate the series to required accuracy (check \(\|A_4\|\!<\!1\)) or compute a Schur decomposition and apply scalar arcsin to triangular blocks.</p>
-                                    </div>
-                                  </details>
+                                  </div>
+                                  <p>Practical approach for the calculator: either evaluate the series to required accuracy (check \(\|A_4\|\!<\!1\)) or compute a Schur decomposition and apply scalar arcsin to triangular blocks.</p>
                                 </div>
-                                
-                                <hr />
-                                
-                                <div class="footer">
-                                Copyright Notice: This article is original content from the Matrix Calculator website. Please credit the source when sharing or reproducing it. For more matrix computation tools, visit <strong>matrixcalcu.com</strong>.
-                                </div>
+                              </details>
+                            </div>
+                            
+                            <hr />
+                            
+                            <div class="footer">
+                            Copyright Notice: This article is original content from the Matrix Calculator website. Please credit the source when sharing or reproducing it. For more matrix computation tools, visit <strong>matrixcalcu.com</strong>.
                             </div>
                         </div>
                     </div>
@@ -1722,7 +1772,7 @@
 
     <!-- JavaScript代码 -->
     <script>
-        // 全局导航函数 - 已添加URL参数传递功能
+        // 全局导航函数 - 修复版：确保arcsine跳转到当前页面并自动计算
         function goTo(pageName) {
             const pathParts = window.location.pathname.split('/');
             const lang = pathParts[1] || 'en'; // 默认英语
@@ -1741,7 +1791,18 @@
             // 添加时间戳防止缓存
             params.append('t', Date.now());
             
-            window.location.href = `/${lang}/${pageName}-calculator.html?${params.toString()}`;
+            // 确定目标页面
+            let targetPage;
+            if (pageName === 'matrix-arcsine') {
+                // 对于arcsine，跳转到当前页面（matrix-calculator.html）
+                targetPage = 'matrix-calculator';
+                params.append('operation', 'arcsine');
+            } else {
+                targetPage = pageName;
+            }
+            
+            // 跳转
+            window.location.href = `/${lang}/${targetPage}-calculator.html?${params.toString()}`;
         }
 
         // 获取矩阵数据的函数
@@ -1755,9 +1816,8 @@
                 const row = [];
                 for (let j = 0; j < size; j++) {
                     const index = i * size + j;
-                    const value = inputs[index].value.trim();
-                    // 空值处理为0
-                    row.push(value === '' ? '0' : value);
+                    // 使用统一的空值处理
+                    row.push(parseMatrixValue(inputs[index].value));
                 }
                 data.push(row);
             }
@@ -1802,6 +1862,15 @@
         const swapBtn = document.getElementById('swap-ab-btn');
         const clearAllResultsBtn = document.getElementById('clear-all-results');
 
+        // 统一的空值处理函数
+        function parseMatrixValue(value) {
+            if (value === '' || value === null || value === undefined) {
+                return 0;
+            }
+            const parsed = parseFloat(value);
+            return isNaN(parsed) ? 0 : parsed;
+        }
+
         // 使用您提供的结果显示函数
         function renderResultMatrix(matrix, container, isProcess = false) {
             const size = matrix.length;
@@ -1827,7 +1896,7 @@
                             if (Math.abs(numVal - Math.round(numVal)) < 1e-6) {
                                 cell.textContent = Math.round(numVal).toString();
                             } else {
-                                cell.textContent = numVal.toFixed(4); // 增加小数位数显示精度
+                                cell.textContent = numVal.toFixed(4); // arcsine结果通常需要更多小数位
                             }
                         }
                     }
@@ -1919,16 +1988,16 @@
             // 5. 将结果块添加到顶部 (历史记录顺序)
             resultHistory.prepend(resultBlock);
             
-            // 6. 绑定功能
-            setupResultBlockFunctionality(resultBlock, matrixA, matrixB, resultMatrix, operation);
+            // 6. 绑定功能 - 使用安全的绑定函数
+            safeSetupResultBlockFunctionality(resultBlock, matrixA, matrixB, resultMatrix, operation);
         }
 
-        // 单矩阵结果显示函数
-        function displaySingleMatrixResult(operation, matrixA, operator, processMatrix, resultMatrix) {
+        // 矩阵arcsine计算结果显示函数 - 修复版
+        function displayArcSineResult(inputMatrix, processMatrix, resultMatrix) {
             const resultBlock = document.createElement('div');
             resultBlock.classList.add('result-block');
             resultBlock.id = 'result-' + Date.now();
-            
+
             // 操作按钮
             const actionButtons = document.createElement('div');
             actionButtons.classList.add('action-buttons');
@@ -1939,75 +2008,64 @@
                     <div class="share-menu">
                         <button class="share-option copy-link">Copy Link</button>
                         <button class="share-option share-x">Share to X</button>
+                        <button class="share-option share-reddit">Share to Reddit</button>
                     </div>
                 </div>
                 <button class="delete-btn" title="Delete this record"><i class="fas fa-times"></i></button>
             `;
             resultBlock.appendChild(actionButtons);
             
-            // 创建结果行
+            // 桌面视图
+            const desktopView = document.createElement('div');
+            desktopView.className = 'desktop-result-view';
+            
+            // 表达式行
             const row = document.createElement('div');
             row.classList.add('result-expression-row');
             
-            // 添加操作符
-            const opSpan = document.createElement('span');
-            opSpan.classList.add('result-op');
-            opSpan.textContent = operator + '(';
-            row.appendChild(opSpan);
+            // 输入矩阵
+            renderResultMatrix(inputMatrix, row);
             
-            // 添加矩阵A
-            renderResultMatrix(matrixA, row);
+            // arcsine符号
+            row.innerHTML += `<span class="result-op" style="font-size:1.5em;">arcsin</span>`;
             
-            // 添加闭合括号
-            const closeSpan = document.createElement('span');
-            closeSpan.classList.add('result-op');
-            closeSpan.textContent = ')';
-            row.appendChild(closeSpan);
+            // 等号
+            row.innerHTML += `<span class="result-eq">=</span>`;
             
-            // 添加等号
-            const eqSpan = document.createElement('span');
-            eqSpan.classList.add('result-eq');
-            eqSpan.textContent = '=';
-            row.appendChild(eqSpan);
+            // 过程矩阵（可切换）
+            const processOnlyContainer = document.createElement('div');
+            processOnlyContainer.classList.add('process-only-container');
+            processOnlyContainer.style.display = 'flex';
+            processOnlyContainer.style.gap = '15px';
+            processOnlyContainer.style.alignItems = 'center';
             
-            // 添加过程矩阵
-            const processContainer = document.createElement('div');
-            processContainer.classList.add('process-only-container');
-            processContainer.style.display = 'flex';
-            processContainer.style.gap = '15px';
-            processContainer.style.alignItems = 'center';
+            // 这里显示计算过程
+            renderResultMatrix(processMatrix, processOnlyContainer, true);
             
-            renderResultMatrix(processMatrix, processContainer, true);
+            // 第二个等号
+            processOnlyContainer.innerHTML += `<span class="result-eq">=</span>`;
             
-            // 添加第二个等号
-            const eqSpan2 = document.createElement('span');
-            eqSpan2.classList.add('result-eq');
-            eqSpan2.textContent = '=';
-            processContainer.appendChild(eqSpan2);
+            // 最终结果
+            const finalResultContainer = document.createElement('div');
+            finalResultContainer.classList.add('final-result-container');
+            renderResultMatrix(resultMatrix, finalResultContainer);
             
-            row.appendChild(processContainer);
+            // 组装
+            row.appendChild(processOnlyContainer);
+            row.appendChild(finalResultContainer);
+            desktopView.appendChild(row);
+            resultBlock.appendChild(desktopView);
             
-            // 添加结果矩阵
-            const resultContainer = document.createElement('div');
-            resultContainer.classList.add('final-result-container');
-            resultContainer.style.display = 'flex';
-            resultContainer.style.alignItems = 'center';
-            
-            renderResultMatrix(resultMatrix, resultContainer);
-            row.appendChild(resultContainer);
-            
-            // 添加到结果块
-            resultBlock.appendChild(row);
-            
-            // 添加到结果历史顶部
+            // 添加到历史记录顶部
             resultHistory.prepend(resultBlock);
             
-            // 绑定功能
-            setupResultBlockFunctionality(resultBlock, matrixA, [[]], resultMatrix, operation);
+            // 使用安全的绑定函数
+            safeSetupResultBlockFunctionality(resultBlock, inputMatrix, inputMatrix, resultMatrix, 'arcsine');
         }
 
-        function setupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, operation) {
-            // 删除单个结果
+        // 安全的结果块功能设置函数 - 修复null错误
+        function safeSetupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, operation) {
+            // 删除单个结果 - 安全检查
             const deleteBtn = resultBlock.querySelector('.delete-btn');
             if (deleteBtn) {
                 deleteBtn.addEventListener('click', () => {
@@ -2015,7 +2073,7 @@
                 });
             }
             
-            // 显示/隐藏计算过程
+            // 显示/隐藏计算过程 - 安全检查
             const toggleProcessBtn = resultBlock.querySelector('.toggle-process-btn');
             if (toggleProcessBtn) {
                 const processOnlyContainer = resultBlock.querySelector('.process-only-container');
@@ -2036,31 +2094,7 @@
                 }
             }
             
-            // 移动端显示/隐藏详情
-            const showDetailsBtn = resultBlock.querySelector('.show-details-btn');
-            if (showDetailsBtn) {
-                showDetailsBtn.addEventListener('click', () => {
-                    const desktopView = resultBlock.querySelector('.desktop-result-view');
-                    const mobileView = resultBlock.querySelector('.mobile-result-view');
-                    
-                    desktopView.style.display = 'block';
-                    mobileView.style.display = 'none';
-                    
-                    // 添加返回按钮
-                    const backBtn = document.createElement('button');
-                    backBtn.className = 'hide-details-btn';
-                    backBtn.textContent = 'Back to Simplified View';
-                    backBtn.addEventListener('click', () => {
-                        desktopView.style.display = 'none';
-                        mobileView.style.display = 'block';
-                        backBtn.remove();
-                    });
-                    
-                    resultBlock.insertBefore(backBtn, desktopView);
-                });
-            }
-            
-            // 分享功能
+            // 分享功能 - 安全检查
             const shareBtn = resultBlock.querySelector('.share-btn');
             const shareMenu = resultBlock.querySelector('.share-menu');
             
@@ -2120,6 +2154,38 @@
                     shareMenu.classList.remove('active');
                 });
             }
+            
+            // 移动端显示/隐藏详情
+            const showDetailsBtn = resultBlock.querySelector('.show-details-btn');
+            if (showDetailsBtn) {
+                showDetailsBtn.addEventListener('click', () => {
+                    const desktopView = resultBlock.querySelector('.desktop-result-view');
+                    const mobileView = resultBlock.querySelector('.mobile-result-view');
+                    
+                    if (desktopView && mobileView) {
+                        desktopView.style.display = 'block';
+                        mobileView.style.display = 'none';
+                        
+                        // 添加返回按钮
+                        const backBtn = document.createElement('button');
+                        backBtn.className = 'hide-details-btn';
+                        backBtn.textContent = 'Back to Simplified View';
+                        backBtn.addEventListener('click', () => {
+                            desktopView.style.display = 'none';
+                            mobileView.style.display = 'block';
+                            backBtn.remove();
+                        });
+                        
+                        resultBlock.insertBefore(backBtn, desktopView);
+                    }
+                });
+            }
+        }
+
+        // 原来的setupResultBlockFunctionality函数作为备用
+        function setupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, operation) {
+            // 调用安全版本
+            safeSetupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, operation);
         }
 
         function generateShareURL(matrixA, matrixB, operation) {
@@ -2127,13 +2193,9 @@
             const params = new URLSearchParams();
             
             params.append('sizeA', matrixA.length);
-            if (matrixB.length > 0 && matrixB[0].length > 0) {
-                params.append('sizeB', matrixB.length);
-            }
+            params.append('sizeB', matrixB.length);
             params.append('matrixA', JSON.stringify(matrixA));
-            if (matrixB.length > 0 && matrixB[0].length > 0) {
-                params.append('matrixB', JSON.stringify(matrixB));
-            }
+            params.append('matrixB', JSON.stringify(matrixB));
             params.append('operation', operation);
             
             return `${baseURL}?${params.toString()}`;
@@ -2141,9 +2203,7 @@
 
         function generateEmailBody(matrixA, matrixB, result, operation) {
             let body = `Matrix A:\n${matrixToString(matrixA)}\n\n`;
-            if (matrixB.length > 0 && matrixB[0].length > 0) {
-                body += `Matrix B:\n${matrixToString(matrixB)}\n\n`;
-            }
+            body += `Matrix B:\n${matrixToString(matrixB)}\n\n`;
             body += `Operation: ${operation}\n\n`;
             body += `Result:\n${matrixToString(result)}\n\n`;
             body += `View full calculation: ${generateShareURL(matrixA, matrixB, operation)}`;
@@ -2167,7 +2227,9 @@
             errorDiv.textContent = `❌ Error: ${message}`;
             
             // 添加到结果容器的顶部
-            resultHistory.insertBefore(errorDiv, resultHistory.firstChild);
+            if (resultHistory) {
+                resultHistory.insertBefore(errorDiv, resultHistory.firstChild);
+            }
             
             // 3秒后自动移除错误消息
             setTimeout(() => {
@@ -2177,35 +2239,7 @@
             }, 5000);
         }
 
-        function showWarning(message) {
-            const warningDiv = document.createElement('div');
-            warningDiv.className = 'warning-message';
-            warningDiv.innerHTML = `⚠️ ${message}`;
-            warningDiv.style.cssText = `
-                background-color: #fff3cd;
-                color: #856404;
-                padding: 10px;
-                margin: 10px 0;
-                border-radius: 4px;
-                border: 1px solid #ffeaa7;
-            `;
-            
-            // 添加到结果容器的顶部
-            if (resultHistory.firstChild) {
-                resultHistory.insertBefore(warningDiv, resultHistory.firstChild);
-            } else {
-                resultHistory.appendChild(warningDiv);
-            }
-            
-            // 5秒后自动移除
-            setTimeout(() => {
-                if (warningDiv.parentNode) {
-                    warningDiv.remove();
-                }
-            }, 5000);
-        }
-
-        // Helper 1: Safely extract matrix values from DOM with empty value handling
+        // Helper 1: Safely extract matrix values from DOM
         function getMatrixValues(container, size) {
             const inputs = container.querySelectorAll('.matrix input');
             const matrix = [];
@@ -2214,24 +2248,8 @@
             for (let i = 0; i < size; i++) {
                 const row = [];
                 for (let j = 0; j < size; j++) {
-                    const index = i * size + j;
-                    const input = inputs[index];
-                    let value = input.value.trim();
-                    
-                    // 关键修改：空值处理
-                    if (value === '' || value === null || value === undefined) {
-                        value = '0'; // 设置为0
-                        input.value = '0'; // 同时更新输入框显示
-                    }
-                    
-                    const numValue = parseFloat(value);
-                    if (isNaN(numValue)) {
-                        isValid = false;
-                        row.push(0);
-                        input.value = '0'; // 无效值也设为0
-                    } else {
-                        row.push(numValue);
-                    }
+                    const value = parseMatrixValue(inputs[i * size + j].value);
+                    row.push(value);
                 }
                 matrix.push(row);
             }
@@ -2267,7 +2285,7 @@
             optionsDiv.style.display = 'none';
         }
 
-        // Helper 4: Render matrix (size adjustment logic) with empty value handling
+        // Helper 4: Render matrix (size adjustment logic)
         function renderMatrix(size, container, matrixId) {
             const oldInputs = container.querySelectorAll('.matrix input');
             const oldValues = Array.from(oldInputs).map(input => input.value);
@@ -2283,20 +2301,28 @@
                     const input = document.createElement('input');
                     input.type = 'number';
                     input.placeholder = '0';
+                    input.step = 'any'; // 允许任何数值
                     
-                    // 关键修改：确保所有输入框都有默认值0
+                    // 设置空值处理
                     if (r < oldSize && c < oldSize) {
                         const oldIndex = r * oldSize + c;
                         const oldValue = oldValues[oldIndex];
-                        input.value = (oldValue === '' || oldValue === null || oldValue === undefined) ? '0' : oldValue;
+                        input.value = parseMatrixValue(oldValue); // 统一处理
                     } else {
-                        input.value = '0'; // 新单元格默认0
+                        input.value = 0; // 默认设为0而不是空
                     }
                     
-                    // 添加输入监听，确保空值自动转为0
+                    // 添加输入事件，自动将空值转为0
+                    input.addEventListener('input', function() {
+                        if (this.value === '') {
+                            this.value = 0;
+                        }
+                    });
+                    
+                    // 添加失去焦点事件，确保空值被处理
                     input.addEventListener('blur', function() {
-                        if (this.value.trim() === '') {
-                            this.value = '0';
+                        if (this.value === '') {
+                            this.value = 0;
                         }
                     });
                     
@@ -2305,25 +2331,21 @@
             }
             container.appendChild(newMatrixDiv);
             
-            if (matrixId === 'A') { 
-                sizeA = size; 
-            } else { 
-                sizeB = size; 
-            }
+            if (matrixId === 'A') { sizeA = size; } else { sizeB = size; }
             updateControlState();
         }
 
         // Helper 5: Update control button state
         function updateControlState() {
-            if (decreaseBtnA) decreaseBtnA.disabled = (sizeA === minSize);
-            if (increaseBtnA) increaseBtnA.disabled = (sizeA === maxSize);
-            if (decreaseBtnA) decreaseBtnA.title = `Decrease Size A (Current: ${sizeA}x${sizeA})`;
-            if (increaseBtnA) increaseBtnA.title = `Increase Size A (Current: ${sizeA}x${sizeA})`;
+            decreaseBtnA.disabled = (sizeA === minSize);
+            increaseBtnA.disabled = (sizeA === maxSize);
+            decreaseBtnA.title = `Decrease Size A (Current: ${sizeA}x${sizeA})`;
+            increaseBtnA.title = `Increase Size A (Current: ${sizeA}x${sizeA})`;
 
-            if (decreaseBtnB) decreaseBtnB.disabled = (sizeB === minSize);
-            if (increaseBtnB) increaseBtnB.disabled = (sizeB === maxSize);
-            if (decreaseBtnB) decreaseBtnB.title = `Decrease Size B (Current: ${sizeB}x${sizeB})`;
-            if (increaseBtnB) increaseBtnB.title = `Increase Size B (Current: ${sizeB}x${sizeB})`;
+            decreaseBtnB.disabled = (sizeB === minSize);
+            increaseBtnB.disabled = (sizeB === maxSize);
+            decreaseBtnB.title = `Decrease Size B (Current: ${sizeB}x${sizeB})`;
+            increaseBtnB.title = `Increase Size B (Current: ${sizeB}x${sizeB})`;
         }
         
         // Helper 6: Setup random number controls
@@ -2332,300 +2354,260 @@
             const optionsDiv = document.getElementById(`random-options-${target.toLowerCase()}`);
             const buttons = optionsDiv.querySelectorAll('.random-option-btn');
 
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    if (randomOptionsA) randomOptionsA.style.display = 'none'; 
-                    if (randomOptionsB) randomOptionsB.style.display = 'none'; 
-                    if (optionsDiv) optionsDiv.style.display = 'flex';
-                });
-            }
+            toggleBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                randomOptionsA.style.display = 'none'; 
+                randomOptionsB.style.display = 'none'; 
+                optionsDiv.style.display = 'flex';
+            });
 
-            if (buttons) {
-                buttons.forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        const type = button.getAttribute('data-type');
-                        fillMatrix(target, type);
-                    });
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const type = button.getAttribute('data-type');
+                    fillMatrix(target, type);
                 });
-            }
+            });
         };
 
-        // Helper 7: Initialize from URL parameters with size and data handling
+        // 等待矩阵数据完全就绪的函数
+        function waitForMatrixDataReady() {
+            return new Promise((resolve, reject) => {
+                let attempts = 0;
+                const maxAttempts = 50; // 最多尝试5秒（50 * 100ms）
+                
+                function check() {
+                    attempts++;
+                    
+                    // 检查矩阵A是否有有效的输入框
+                    const inputsA = containerA.querySelectorAll('.matrix input');
+                    
+                    if (inputsA.length === 0) {
+                        // 矩阵还没有渲染
+                        if (attempts < maxAttempts) {
+                            setTimeout(check, 100);
+                            return;
+                        } else {
+                            reject(new Error('Matrix A not rendered after 5 seconds'));
+                            return;
+                        }
+                    }
+                    
+                    // 检查是否有实际的数据（非零）
+                    let hasData = false;
+                    for (const input of inputsA) {
+                        const value = parseMatrixValue(input.value);
+                        if (value !== 0) {
+                            hasData = true;
+                            break;
+                        }
+                    }
+                    
+                    if (hasData || attempts >= maxAttempts) {
+                        // 有数据或超时，都继续执行
+                        resolve();
+                    } else {
+                        // 没有数据，继续等待
+                        setTimeout(check, 100);
+                    }
+                }
+                
+                check();
+            });
+        }
+
+        // 清除URL参数
+        function cleanURLParameter(paramName) {
+            if (window.history.replaceState) {
+                const url = new URL(window.location);
+                url.searchParams.delete(paramName);
+                window.history.replaceState({}, document.title, url.toString());
+            }
+        }
+
+        // Helper 7: Initialize from URL parameters (修复版，确保自动计算)
         function initFromURLParameters() {
             const urlParams = new URLSearchParams(window.location.search);
             
-            // 1. 优先处理矩阵尺寸
+            // 获取矩阵大小
             const urlSizeA = parseInt(urlParams.get('sizeA'));
             const urlSizeB = parseInt(urlParams.get('sizeB'));
             
-            // 如果URL中有尺寸参数，先更新尺寸
-            if (!isNaN(urlSizeA) && urlSizeA >= minSize && urlSizeA <= maxSize) {
+            // 优先使用URL中的尺寸
+            if (urlSizeA && urlSizeA >= minSize && urlSizeA <= maxSize) {
                 sizeA = urlSizeA;
-                // 立即重新渲染矩阵A
-                renderMatrix(sizeA, containerA, 'A');
             }
-            
-            if (!isNaN(urlSizeB) && urlSizeB >= minSize && urlSizeB <= maxSize) {
+            if (urlSizeB && urlSizeB >= minSize && urlSizeB <= maxSize) {
                 sizeB = urlSizeB;
-                // 立即重新渲染矩阵B
-                renderMatrix(sizeB, containerB, 'B');
             }
             
-            // 2. 获取矩阵数据
+            // 先重新渲染矩阵（用新尺寸）
+            renderMatrix(sizeA, containerA, 'A');
+            renderMatrix(sizeB, containerB, 'B');
+            
+            // 然后获取矩阵数据
             try {
                 const matrixAData = JSON.parse(urlParams.get('matrixA') || '[]');
                 const matrixBData = JSON.parse(urlParams.get('matrixB') || '[]');
                 
-                // 3. 填充数据
-                if (matrixAData.length > 0) {
-                    // 确保数据尺寸与当前矩阵尺寸匹配
-                    fillMatrixFromData('A', matrixAData);
-                }
-                
-                if (matrixBData.length > 0) {
-                    fillMatrixFromData('B', matrixBData);
-                }
-                
-                // 4. 检查是否需要自动计算
-                // 对于arcsin专门页面，只要有矩阵A数据就自动计算
-                if (matrixAData.length > 0) {
-                    // 延迟一点时间确保DOM完全渲染
-                    setTimeout(() => {
-                        calculateArcsin();
-                    }, 50);
-                }
-                
+                if (matrixAData.length > 0) fillMatrixFromData('A', matrixAData);
+                if (matrixBData.length > 0) fillMatrixFromData('B', matrixBData);
             } catch (e) {
                 console.warn('Invalid matrix data in URL parameters:', e);
             }
+              
+            updateControlState();
+            updateControlState();
+    
+                 // 关键修改：检查页面URL，如果是arcsine计算页面，自动计算
+                 const currentPage = window.location.pathname.toLowerCase();
+    
+                  // 检查当前页面是否是matrix-arcsine-calculator.html
+                  if (currentPage.includes('matrix-arcsine-calculator')) {
+                        console.log('Arcsine calculator page detected, checking for matrix data...');
+        
+                        // 等待矩阵完全就绪，然后自动计算arcsine
+                        waitForMatrixDataReady().then(() => {
+                                  // 检查矩阵A是否有数据（不仅仅是零）
+                                  const { matrix: matrixA } = getMatrixValues(containerA, sizeA);
+                                  let hasNonZeroData = false;
+            
+                                   for (let i = 0; i < matrixA.length; i++) {
+                                           for (let j = 0; j < matrixA[i].length; j++) {
+                                                   if (Math.abs(matrixA[i][j]) > 1e-10) {
+                                                         hasNonZeroData = true;
+                                                         break;
+                                                   }
+                                           }
+                                           if (hasNonZeroData) break;
+                                   }
+            
+                                   if (hasNonZeroData) {
+                                         console.log('Matrix A has data, automatically calculating arcsine...');
+                                         calculateArcSine();
+                                  } else {
+                                        console.log('Matrix A is empty or all zeros, waiting for user input...');
+                                  }
+                          }).catch(error => {
+                                  console.error('Failed to check matrix data:', error);
+                          });
+                   }
         }
 
-        // Helper 8: Fill matrix from data with empty value handling
+        // Helper 8: 从URL数据填充矩阵 (已修改)
         function fillMatrixFromData(target, data) {
             const container = target === 'A' ? containerA : containerB;
             const size = target === 'A' ? sizeA : sizeB;
             const inputs = container.querySelectorAll('.matrix input');
             
-            // 确保数据尺寸匹配
+            // 确保矩阵尺寸匹配
+            const matrixSize = data.length;
+            if (matrixSize !== size) {
+                console.warn(`Matrix size mismatch: URL has ${matrixSize}x${matrixSize}, but container is ${size}x${size}`);
+                return;
+            }
+            
             for (let i = 0; i < size; i++) {
                 for (let j = 0; j < size; j++) {
                     const index = i * size + j;
-                    if (data[i] && data[i][j] !== undefined && data[i][j] !== null) {
-                        inputs[index].value = data[i][j].toString();
+                    if (data[i] && data[i][j] !== undefined) {
+                        const value = parseMatrixValue(data[i][j]);
+                        inputs[index].value = value;
                     } else {
-                        inputs[index].value = '0'; // 空值设为0
+                        inputs[index].value = 0;
                     }
                 }
             }
-        }
-
-        // --- 矩阵arcsin计算函数 ---
-        
-        // 矩阵arcsin计算函数
-        function calculateArcsin() {
-            try {
-                // 获取矩阵A数据
-                const matrixData = getMatrixValues(containerA, sizeA);
-                if (!matrixData.isValid) {
-                    showError('Matrix A contains invalid values');
-                    return;
-                }
-                
-                const matrixA = matrixData.matrix;
-                
-                // 检查矩阵是否适合计算arcsin
-                const { canCalculate, warning } = checkMatrixForArcsin(matrixA);
-                
-                if (!canCalculate) {
-                    showError(warning);
-                    return;
-                }
-                
-                if (warning) {
-                    // 显示警告但仍继续计算
-                    showWarning(warning);
-                }
-                
-                // 使用math.js计算矩阵arcsin
-                const resultMatrix = computeMatrixArcsin(matrixA);
-                
-                // 创建过程矩阵显示
-                const processMatrix = createArcsinProcessMatrix(matrixA);
-                
-                // 显示结果
-                displaySingleMatrixResult(
-                    'arcsin', 
-                    matrixA, 
-                    'arcsin', 
-                    processMatrix, 
-                    resultMatrix
-                );
-                
-            } catch (error) {
-                console.error('Error calculating arcsin:', error);
-                showError('Calculation failed: ' + error.message);
-            }
-        }
-
-        // 矩阵arcsin计算（使用math.map逐元素计算）
-        function computeMatrixArcsin(matrix) {
-            try {
-                // 使用math.map对矩阵的每个元素应用asin函数
-                const mathMatrix = math.matrix(matrix);
-                // 使用map对矩阵的每个元素应用asin
-                const result = math.map(mathMatrix, math.asin);
-                return result.toArray();
-            } catch (error) {
-                // 如果失败，使用幂级数展开
-                console.warn('math.asin failed, using power series:', error);
-                return computeArcsinByPowerSeries(matrix);
-            }
-        }
-
-        // 幂级数展开法
-        function computeArcsinByPowerSeries(matrix) {
-            const size = matrix.length;
-            const maxIterations = 100;
-            const tolerance = 1e-10;
-            
-            // 转换为math.js矩阵
-            const X = math.matrix(matrix);
-            let result = X;
-            let term = X;
-            
-            for (let n = 1; n <= maxIterations; n++) {
-                // 计算X^(2n+1): X^(2n-1) * X²
-                term = math.multiply(term, math.multiply(X, X));
-                
-                // 计算系数: (2n-1)!! / (2n)!! * 1/(2n+1)
-                let coefficient = 1;
-                for (let i = 1; i <= n; i++) {
-                    coefficient *= (2 * i - 1) / (2 * i);
-                }
-                coefficient /= (2 * n + 1);
-                
-                // 添加到结果
-                const termScaled = math.multiply(coefficient, term);
-                result = math.add(result, termScaled);
-                
-                // 检查收敛
-                const norm = math.norm(termScaled);
-                if (norm < tolerance) {
-                    break;
-                }
-            }
-            
-            return result.toArray();
-        }
-
-        // 检查矩阵是否适合计算arcsin
-        function checkMatrixForArcsin(matrix) {
-            const size = matrix.length;
-            const outOfRange = [];
-            
-            // 检查每个元素是否在[-1,1]范围内
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    const val = matrix[i][j];
-                    if (val < -1 || val > 1) {
-                        outOfRange.push({
-                            row: i+1,
-                            col: j+1,
-                            value: val
-                        });
-                    }
-                }
-            }
-            
-            if (outOfRange.length > 0) {
-                // 找到第一个超出范围的元素
-                const firstError = outOfRange[0];
-                return {
-                    canCalculate: false,
-                    warning: `Element at position (${firstError.row},${firstError.col}) = ${firstError.value.toFixed(4)} is outside the valid range [-1, 1] for real-valued arcsin.`
-                };
-            }
-            
-            return { canCalculate: true, warning: '' };
-        }
-
-        // 创建过程矩阵
-        function createArcsinProcessMatrix(matrix) {
-            const size = matrix.length;
-            const process = [];
-            
-            for (let i = 0; i < size; i++) {
-                const row = [];
-                for (let j = 0; j < size; j++) {
-                    const val = matrix[i][j];
-                    // 简化显示
-                    row.push(`arcsin(${val.toFixed(2)})`);
-                }
-                process.push(row);
-            }
-            
-            return process;
         }
 
         // --- Event Listeners ---
 
-        // Size controls - 添加安全检查
-        if (increaseBtnA) increaseBtnA.addEventListener('click', () => { renderMatrix(sizeA + 1, containerA, 'A'); });
-        if (decreaseBtnA) decreaseBtnA.addEventListener('click', () => { renderMatrix(sizeA - 1, containerA, 'A'); });
-        if (increaseBtnB) increaseBtnB.addEventListener('click', () => { renderMatrix(sizeB + 1, containerB, 'B'); });
-        if (decreaseBtnB) decreaseBtnB.addEventListener('click', () => { renderMatrix(sizeB - 1, containerB, 'B'); });
+        // Size controls
+        increaseBtnA.addEventListener('click', () => { renderMatrix(sizeA + 1, containerA, 'A'); });
+        decreaseBtnA.addEventListener('click', () => { renderMatrix(sizeA - 1, containerA, 'A'); });
+        increaseBtnB.addEventListener('click', () => { renderMatrix(sizeB + 1, containerB, 'B'); });
+        decreaseBtnB.addEventListener('click', () => { renderMatrix(sizeB - 1, containerB, 'B'); });
 
         // Swap button (保留功能)
-        if (swapBtn) {
-            swapBtn.addEventListener('click', () => {
-                if (sizeA !== sizeB) {
-                    alert(`Cannot SWAP! Matrix A (${sizeA}x${sizeA}) and Matrix B (${sizeB}x${sizeB}) must be the same size.`);
-                    return;
-                }
-                const inputsA = containerA.querySelectorAll('.matrix input');
-                const inputsB = containerB.querySelectorAll('.matrix input');
-                const valuesA = Array.from(inputsA).map(input => input.value);
-                const valuesB = Array.from(inputsB).map(input => input.value);
-                inputsA.forEach((input, index) => { input.value = valuesB[index]; });
-                inputsB.forEach((input, index) => { input.value = valuesA[index]; });
-            });
-        }
+        swapBtn.addEventListener('click', () => {
+            if (sizeA !== sizeB) {
+                alert(`Cannot SWAP! Matrix A (${sizeA}x${sizeA}) and Matrix B (${sizeB}x${sizeB}) must be the same size.`);
+                return;
+            }
+            const inputsA = containerA.querySelectorAll('.matrix input');
+            const inputsB = containerB.querySelectorAll('.matrix input');
+            const valuesA = Array.from(inputsA).map(input => input.value);
+            const valuesB = Array.from(inputsB).map(input => input.value);
+            inputsA.forEach((input, index) => { input.value = valuesB[index]; });
+            inputsB.forEach((input, index) => { input.value = valuesA[index]; });
+        });
         
-        // Clear buttons - 修改为清空时设为0
-        const clearBtnA = document.getElementById('clear-btn-a');
-        if (clearBtnA) {
-            clearBtnA.addEventListener('click', () => { 
-                containerA.querySelectorAll('.matrix input').forEach(input => { 
-                    input.value = '0'; // 改为0而不是空
-                }); 
+        // Clear buttons (已修改)
+        document.getElementById('clear-btn-a').addEventListener('click', () => {
+            containerA.querySelectorAll('.matrix input').forEach(input => {
+                input.value = 0; // 设为0而不是空
             });
-        }
+        });
         
-        const clearBtnB = document.getElementById('clear-btn-b');
-        if (clearBtnB) {
-            clearBtnB.addEventListener('click', () => { 
-                containerB.querySelectorAll('.matrix input').forEach(input => { 
-                    input.value = '0'; // 改为0而不是空
-                }); 
+        document.getElementById('clear-btn-b').addEventListener('click', () => {
+            containerB.querySelectorAll('.matrix input').forEach(input => {
+                input.value = 0; // 设为0而不是空
             });
-        }
+        });
 
         // Clear all results button
-        if (clearAllResultsBtn) {
-            clearAllResultsBtn.addEventListener('click', () => {
-                resultHistory.innerHTML = '';
-            });
-        }
+        clearAllResultsBtn.addEventListener('click', () => {
+            resultHistory.innerHTML = '';
+        });
 
         // Random options global close
         document.addEventListener('click', (event) => {
-            const isInsideA = document.getElementById('random-controls-main-a')?.contains(event.target);
-            const isInsideB = document.getElementById('random-controls-main-b')?.contains(event.target);
-            if (!isInsideA && randomOptionsA) randomOptionsA.style.display = 'none';
-            if (!isInsideB && randomOptionsB) randomOptionsB.style.display = 'none';
+            const isInsideA = document.getElementById('random-controls-main-a').contains(event.target);
+            const isInsideB = document.getElementById('random-controls-main-b').contains(event.target);
+            if (!isInsideA) randomOptionsA.style.display = 'none';
+            if (!isInsideB) randomOptionsB.style.display = 'none';
         }, true); 
+
+        // 矩阵arcsine计算函数
+        function calculateArcSine() {
+            const { matrix: matrixA } = getMatrixValues(containerA, sizeA);
+            
+            try {
+                // 检查矩阵是否在arcsine定义域内
+                for (let i = 0; i < matrixA.length; i++) {
+                    for (let j = 0; j < matrixA[i].length; j++) {
+                        const value = matrixA[i][j];
+                        if (value < -1 || value > 1) {
+                            showError(`Matrix element at position (${i+1},${j+1}) = ${value} is outside arcsine domain [-1, 1]`);
+                            return;
+                        }
+                    }
+                }
+                
+                // 计算arcsine（逐元素计算）
+                const resultMatrix = [];
+                const processMatrix = []; // 显示计算过程
+                
+                for (let i = 0; i < matrixA.length; i++) {
+                    const resultRow = [];
+                    const processRow = [];
+                    for (let j = 0; j < matrixA[i].length; j++) {
+                        const value = matrixA[i][j];
+                        const result = Math.asin(value);
+                        resultRow.push(result);
+                        processRow.push(`asin(${value.toFixed(2)}) = ${result.toFixed(4)}`);
+                    }
+                    resultMatrix.push(resultRow);
+                    processMatrix.push(processRow);
+                }
+                
+                // 显示结果
+                displayArcSineResult(matrixA, processMatrix, resultMatrix);
+                
+            } catch (error) {
+                showError(`Arcsine calculation failed: ${error.message}`);
+            }
+        }
 
         // 初始化矩阵计算器
         function initMatrixCalculator() {
@@ -2643,21 +2625,15 @@
             const noBtn = document.querySelector('.question-box .no');
             const response = document.getElementById('response');
 
-            if (yesBtn) {
+            if (yesBtn && noBtn && response) {
                 yesBtn.addEventListener('click', () => {
-                    if (response) {
-                        response.textContent = "Nice! Let's make it happen 💪";
-                        response.classList.add('show');
-                    }
+                    response.textContent = "Nice! Let's make it happen 💪";
+                    response.classList.add('show');
                 });
-            }
 
-            if (noBtn) {
                 noBtn.addEventListener('click', () => {
-                    if (response) {
-                        response.textContent = "Run while you can! Matrix's on its way 🏃‍♂️💨";
-                        response.classList.add('show');
-                    }
+                    response.textContent = "Run while you can! Matrix's on its way 🏃‍♂️💨";
+                    response.classList.add('show');
                 });
             }
         }
@@ -2692,12 +2668,10 @@
             const languageOptions = document.querySelectorAll('.language-option');
             
             // 切换下拉菜单显示/隐藏
-            if (languageToggle) {
+            if (languageToggle && languageDropdown) {
                 languageToggle.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    if (languageDropdown) {
-                        languageDropdown.classList.toggle('active');
-                    }
+                    languageDropdown.classList.toggle('active');
                 });
             }
             

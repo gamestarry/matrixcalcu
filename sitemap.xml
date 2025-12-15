@@ -2,55 +2,653 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- Root Home Page (Auto Language Redirect) -->
-  <url>
-    <loc>https://matrixcalcu.com/</loc>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/>
-  </url>
+    <url>
+        <loc>https://matrixcalcu.com/</loc>
+        <lastmod>2025-12-12</lastmod> 
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/index.html" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/es/index.html</loc>
+        <lastmod>2025-12-12</lastmod> 
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/index.html" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-addition-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-addition-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-addition-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-addition-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-addition-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-addition-calculator" />
+    </url>
 
-  <!-- English Homepage -->
-  <url>
-    <loc>https://matrixcalcu.com/en/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/>
-  </url>
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-adjoint-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-adjoint-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-adjoint-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-adjoint-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-adjoint-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-adjoint-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-arccosine-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arccosine-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-arccosine-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-arccosine-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arccosine-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-arccosine-calculator" />
+    </url>
 
-  <!-- Function Pages Below -->
-  <url><loc>https://matrixcalcu.com/en/matrix-addition-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-addition-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-adjoint-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-adjoint-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-arccosine-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arccosine-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-arcsine-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arcsine-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-arctangent-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arctangent-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-augmented-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-augmented-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-cholesky-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-cholesky-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-cosine-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-cosine-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-determinant-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-determinant-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-diagonal-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-diagonal-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-eigenvalues-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-eigenvalues-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-eigenvectors-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-eigenvectors-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-exponential-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-exponential-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-hermite-normal-form-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-hermite-normal-form-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-inverse-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-inverse-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-jordan-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-jordan-calculator"/><xhtml:link rel="alternate" hrefl="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-kronecker-product-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-kronecker-product-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-lll-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-lll-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-logarithm-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-logarithm-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-lu-decomposition-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-lu-decomposition-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-multiplication-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-multiplication-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-power-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-power-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-pseudo-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-pseudo-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-qr-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-qr-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-qr-decomposition-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-qr-decomposition-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-rank-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-rank-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-rref-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-rref-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-scalar-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-scalar-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-sine-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-sine-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-square-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-square-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-subtraction-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-subtraction-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-svd-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-svd-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-tangent-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-tangent-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-trace-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-trace-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-transpose-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-transpose-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
-  <url><loc>https://matrixcalcu.com/en/matrix-upper-triangular-calculator</loc><xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-upper-triangular-calculator"/><xhtml:link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/"/></url>
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-arcsine-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arcsine-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-arcsine-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-arcsine-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arcsine-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-arcsine-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-arctangent-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arctangent-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-arctangent-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-arctangent-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-arctangent-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-arctangent-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-augmented-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-augmented-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-augmented-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-augmented-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-augmented-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-augmented-calculator" />
+    </url>
+
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-cholesky-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-cholesky-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-cholesky-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-cholesky-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-cholesky-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-cholesky-calculator" />
+    </url>
+
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-cosine-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-cosine-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-cosine-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-cosine-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-cosine-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-cosine-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-determinant-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-determinant-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-determinant-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-determinant-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-determinant-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-determinant-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-diagonal-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-diagonal-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-diagonal-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-diagonal-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-diagonal-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-diagonal-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-eigenvalues-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-eigenvalues-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-eigenvalues-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-eigenvalues-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-eigenvalues-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-eigenvalues-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-eigenvectors-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-eigenvectors-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-eigenvectors-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-eigenvectors-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-eigenvectors-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-eigenvectors-calculator" />
+    </url>
+
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-equations-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-equations-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-equations-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-equations-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-equations-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-equations-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-exponential-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-exponential-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-exponential-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-exponential-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-exponential-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-exponential-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-hermite-normal-form-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-hermite-normal-form-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-hermite-normal-form-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-hermite-normal-form-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-hermite-normal-form-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-hermite-normal-form-calculator" />
+    </url>
+
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-inverse-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-inverse-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-inverse-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-inverse-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-inverse-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-inverse-calculator" />
+    </url>
+
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-jordan-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-jordan-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-jordan-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-jordan-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-jordan-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-jordan-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-kronecker-product-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-kronecker-product-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-kronecker-product-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-kronecker-product-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-kronecker-product-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-kronecker-product-calculator" />
+    </url>
+
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-lll-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-lll-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-lll-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-lll-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-lll-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-lll-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-logarithm-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-logarithm-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-logarithm-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-logarithm-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-logarithm-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-logarithm-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-lu-decomposition-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-lu-decomposition-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-lu-decomposition-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-lu-decomposition-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-lu-decomposition-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-lu-decomposition-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-multiplication-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-multiplication-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-multiplication-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-multiplication-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-multiplication-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-multiplication-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-power-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-power-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-power-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-power-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-power-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-power-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-pseudo-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-pseudo-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-pseudo-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-pseudo-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-pseudo-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-pseudo-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-qr-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-qr-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-qr-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-qr-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-qr-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-qr-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-qr-decomposition-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-qr-decomposition-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-qr-decomposition-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-qr-decomposition-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-qr-decomposition-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-qr-decomposition-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-rank-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-rank-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-rank-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-rank-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-rank-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-rank-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-rref-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-rref-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-rref-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-rref-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-rref-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-rref-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-scalar-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-scalar-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-scalar-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-scalar-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-scalar-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-scalar-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-sine-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-sine-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-sine-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-sine-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-sine-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-sine-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-square-root-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-square-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-square-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-square-root-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-square-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-square-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-subtraction-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-subtraction-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-subtraction-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-subtraction-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-subtraction-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-subtraction-calculator" />
+    </url>
+
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-svd-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-svd-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-svd-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-svd-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-svd-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-svd-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-tangent-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-tangent-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-tangent-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-tangent-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-tangent-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-tangent-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-trace-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-trace-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-trace-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-trace-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-trace-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-trace-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-transpose-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-transpose-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-transpose-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-transpose-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-transpose-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-transpose-calculator" />
+    </url>
+    
+    <url>
+        <loc>https://matrixcalcu.com/en/matrix-upper-triangular-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-upper-triangular-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-upper-triangular-calculator" />
+    </url>
+    <url>
+        <loc>https://matrixcalcu.com/es/matrix-upper-triangular-calculator</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-upper-triangular-calculator" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-upper-triangular-calculator" />
+    </url>
 
 </urlset>

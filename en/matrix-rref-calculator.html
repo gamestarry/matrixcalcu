@@ -3,18 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online matrix RREF calculator. Calculate reduced row echelon form of matrices instantly with step-by-step solutions.">
-    <meta name="keywords" content="matrix RREF, reduced row echelon form, matrix calculator, linear algebra tools, step-by-step solution">
+    <meta name="description" content="Free online matrix RREF calculator with step-by-step solutions. Calculate reduced row echelon form for matrices and linear equations.">
+    <meta name="keywords" content="RREF calculator, reduced row echelon form, matrix RREF, linear equations solver, Gauss-Jordan elimination">
     <meta name="author" content="Matrix Calculator Pro">
-    <link rel="canonical" href="https://yourdomain.com/matrix-rref-calculator">
+    <!-- Canonical标签 -->
+    <link rel="canonical" href="https://matrixcalcu.com/en/matrix-rref-calculator" />  
     
     <!-- Open Graph 标签 -->
-    <meta property="og:title" content="Free Matrix RREF Calculator - Reduced Row Echelon Form">
-    <meta property="og:description" content="Calculate reduced row echelon form (RREF) of matrices instantly. Easy-to-use online calculator for any matrix size with step-by-step solutions.">
+    <meta property="og:title" content="Free Matrix RREF Calculator - Reduced Row Echelon Form with Steps">
+    <meta property="og:description" content="Calculate RREF (reduced row echelon form) of matrices and linear equations instantly with detailed step-by-step solutions.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
+     <!-- Open Graph URL -->
+    <meta property="og:url" content="https://matrixcalcu.com/en/matrix-rref-calculator" />  
     
-    <title>Matrix RREF Calculator - Reduced Row Echelon Form with Steps</title>
+    <title>Matrix RREF Calculator - Reduced Row Echelon Form with Step-by-Step Solutions</title>
+     
+    <!-- ========== HREFLANG 标签（英文计算器页面）========== -->
+    <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-rref-calculator" />
+    <link rel="alternate" hreflang="en-US" href="https://matrixcalcu.com/en/matrix-rref-calculator" />
+    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-rref-calculator" />
+    <link rel="alternate" hreflang="es-ES" href="https://matrixcalcu.com/es/matrix-rref-calculator" />
+    <link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/" />
     
     <!-- Favicon 链接 -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -22,13 +32,14 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- MathJax -->
-    <script>
-        MathJax = {
-            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
-        };
+    <!-- Math.js library -->
+    <script src="/math.min.js"></script>
+    
+    <!-- MathJax for LaTeX equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <!-- Schema.org 结构化数据 -->
     <script type="application/ld+json">
@@ -36,7 +47,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Matrix RREF Calculator - Reduced Row Echelon Form",
-      "description": "Free online matrix calculator for reduced row echelon form (RREF) of matrices with step-by-step solutions",
+      "description": "Free online RREF calculator for reduced row echelon form of matrices and linear equations with step-by-step solutions",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "Any",
       "browserRequirements": "Requires JavaScript",
@@ -57,7 +68,7 @@
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
-            --accent-color: #8a2be2;
+            --accent-color: #8a2be2; /* 改为蓝紫色 */
             --light-color: #ecf0f1;
             --dark-color: #2c3e50;
             --success-color: #2ecc71;
@@ -84,6 +95,7 @@
             padding: 0 20px;
         }
 
+        /* 主行布局容器 */
         .main-row-container {
             width: 100%;
             background-color: #f9f9f9;
@@ -92,12 +104,14 @@
             z-index: 1;
         }
         
+        /* 更宽的容器，用于容纳三个并排的部分 */
         .wide-container {
             max-width: 1800px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
+        /* 主行布局 */
         .main-row {
             display: flex;
             gap: 2rem;
@@ -119,6 +133,7 @@
             z-index: 1;
         }
 
+        /* 新的动态内容容器样式 */
         .dynamic-content-container {
             background-color: white;
             border-radius: var(--border-radius);
@@ -133,63 +148,61 @@
             overflow: hidden;
         }
 
+        .dynamic-content-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .dynamic-content-container p {
+            color: var(--dark-color);
+            text-align: center;
+            max-width: 600px;
+            margin-bottom: 1.5rem;
+        }
+
+        .placeholder-content {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 2rem;
+        }
+
+        /* SEO文章容器样式 */
         .seo-articles-container {
             background-color: white;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            padding: 2rem;
+            padding: 0;
             margin-bottom: 2rem;
             width: 100%;
         }
-        
-        /* SEO文章内容样式 */
-        .seo-article-content {
-            font-family: Arial, Helvetica, sans-serif;
-            line-height: 1.6;
-            color: #222;
-            background: #fff;
-        }
-        
-        .seo-article-content h1, 
-        .seo-article-content h2, 
-        .seo-article-content h3 { 
-            margin-top: 28px; 
+
+        .seo-articles-container h2 {
             color: var(--primary-color);
-        }
-        
-        .seo-article-content details {
-            background: #f9f9f9;
-            padding: 12px 16px;
-            border-radius: 6px;
-            margin-top: 10px;
-            border: 1px solid #e6e6e6;
-        }
-        
-        .seo-article-content summary { 
-            font-weight: 600; 
-            cursor: pointer; 
-        }
-        
-        .seo-article-content .matrix-block { 
-            margin: 18px 0; 
-            text-align: center; 
-        }
-        
-        .seo-article-content ul { 
-            margin-left: 18px; 
-        }
-        
-        .seo-article-content .note { 
-            color: #555; 
-            font-size: 0.95rem; 
-        }
-        
-        .seo-article-content footer { 
-            margin-top: 30px; 
-            font-size: 14px; 
-            color: #555; 
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
         }
 
+        .seo-articles-container p {
+            color: var(--dark-color);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .seo-placeholder {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 2rem;
+            border: 2px dashed #ddd;
+            border-radius: var(--border-radius);
+        }
+
+        /* 左侧导航栏样式 */
         .nav-title {
             color: var(--primary-color);
             margin-bottom: 1.5rem;
@@ -227,6 +240,41 @@
             border-color: var(--secondary-color);
         }
 
+        .nav-button:active {
+            transform: translateY(0);
+        }
+
+        /* 为外部链接按钮添加外链标志 */
+        .nav-button.external {
+            position: relative;
+            padding-right: 2.5rem;
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .nav-button.external::after {
+            content: "↗";
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-button.external:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .nav-button.external:hover::after {
+            transform: translateY(-50%) translateX(2px) translateY(-2px);
+        }
+
+        /* 头部样式 */
         header {
             background: linear-gradient(135deg, #00447F 0%, #0066AA 100%);
             color: white;
@@ -243,6 +291,18 @@
             z-index: 1000;
         }
 
+        /* 添加微妙的纹理效果 */
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 0;
@@ -251,13 +311,14 @@
         }
 
         footer {
-            background-color: var(--light-color);
-            color: var(--dark-color);
+            background-color: var(--primary-color);
+            color: white;
             text-align: center;
             padding: 0.5rem 0;
             margin-top: 3rem;
         }
 
+        /* 右侧边栏样式 - 现在包含问答栏 */
         .right-sidebar {
             display: flex;
             align-items: flex-start;
@@ -266,6 +327,19 @@
             padding: 1.5rem;
         }
 
+        .right-sidebar-placeholder {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        /* 添加右侧边栏高亮样式 */
+        .right-sidebar.highlight {
+            animation: highlight 2s ease;
+            box-shadow: 0 0 0 4px #3498db;
+        }
+
+        /* 多语言选择器样式 */
         .language-selector {
             position: absolute;
             top: 50%;
@@ -444,6 +518,11 @@
             background-color: #5a6268;
         }
         
+        .matrix-calculator .operation-btn:active {
+            background-color: #545b62;
+            transform: translateY(1px);
+        }
+        
         .matrix-calculator #swap-ab-btn {
             background-color: #ffc107;
             color: #343a40;
@@ -452,6 +531,10 @@
         
         .matrix-calculator #swap-ab-btn:hover {
             background-color: #e0a800;
+        }
+        
+        .matrix-calculator #swap-ab-btn:active {
+            background-color: #d39e00;
         }
         
         .matrix-calculator .single-ops-container {
@@ -552,7 +635,7 @@
             -moz-appearance: textfield; /* Firefox */
         }
         
-        /* 结果输出样式 */
+        /* --- 您提供的结果输出样式 --- */
         #result-container {
             margin-top: 0px; 
             width: 90%; 
@@ -580,7 +663,7 @@
         }
         
         .clear-all-btn {
-            background-color: var(--accent-color);
+            background-color: var(--accent-color); /* 使用蓝紫色 */
             color: white;
             border: none;
             padding: 4px 10px;
@@ -591,7 +674,7 @@
         }
         
         .clear-all-btn:hover {
-            background-color: #7b1fa2;
+            background-color: #7b1fa2; /* 深一点的蓝紫色 */
         }
         
         .result-history {
@@ -611,12 +694,12 @@
         
         .result-expression-row {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* 关键修改：允许换行 */
             align-items: center;
             justify-content: flex-start;
             gap: 15px; 
             padding: 10px 0;
-            overflow-x: visible;
+            overflow-x: visible; /* 移除横向滚动 */
         }
         
         .result-op, .result-eq {
@@ -738,77 +821,7 @@
         .share-option:hover {
             background: #f5f5f5;
         }
-
-        /* 问答栏样式 */
-        .question-box {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            padding: 1.5em;
-            width: 100%;
-            transition: all 0.3s ease;
-            font-family: "Poppins", "Nunito", sans-serif;
-        }
-
-        .question-box h2 {
-            font-size: 1.1rem;
-            margin-bottom: 1.5em;
-            color: #333;
-        }
-
-        .question-box .btn {
-            display: block;
-            width: 100%;
-            padding: 0.8em 1em;
-            margin-bottom: 0.8em;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-        }
-
-        .question-box .yes {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            color: white;
-        }
-
-        .question-box .yes:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(120,100,255,0.3);
-        }
-
-        .question-box .no {
-            background: #ffe7e7;
-            color: #ff4b4b;
-        }
-
-        .question-box .no:hover {
-            transform: rotate(-2deg) scale(1.05);
-            box-shadow: 0 4px 10px rgba(255,75,75,0.2);
-        }
-
-        .question-box .response {
-            margin-top: 1.5em;
-            font-size: 1rem;
-            color: #555;
-            font-weight: 500;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .question-box .response.show {
-            opacity: 1;
-        }
-
-        @keyframes highlight {
-            0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
-        }
-
+        
         /* 新增：计算过程样式 */
         .calculation-steps {
             margin-top: 15px;
@@ -904,8 +917,43 @@
             background-color: #d1ecf1 !important;
             border: 1px solid #bee5eb !important;
         }
-
-        /* 响应式设计 */
+        
+        /* 新增：计算状态样式 */
+        .calculating-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+        }
+        
+        .calculating-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .calculating-text {
+            color: white;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+          
+        /* --- 移动端响应式设计 --- */
         @media (max-width: 1200px) {
             .matrix-calculator .main-calculator-container {
                 gap: 20px;
@@ -955,6 +1003,72 @@
                 max-width: 480px;
             }
             
+            .matrix-calculator .controls {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .matrix-calculator body {
+                padding: 5px 10px;
+            }
+            
+            .matrix-calculator .matrix-label {
+                font-size: 2em;
+            }
+            
+            .matrix-calculator .controls {
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .matrix-calculator .size-controls, .matrix-calculator .random-controls {
+                border-right: none;
+                padding-right: 0;
+            }
+            
+            .matrix-calculator .single-ops-container {
+                margin-top: 15px;
+            }
+            
+            .matrix-calculator .op-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .matrix-calculator .matrix input {
+                width: 35px;
+                height: 35px;
+                font-size: 12px;
+            }
+            
+            .result-expression-row {
+                flex-direction: column;
+                gap: 10px;
+                overflow-x: visible;
+            }
+            
+            .result-op, .result-eq {
+                font-size: 1.5em;
+            }
+            
+            .result-cell {
+                min-width: 35px;
+                height: 35px;
+                font-size: 12px;
+                line-height: 35px;
+            }
+            
+            .process-matrix .result-cell {
+                min-width: 100px;
+                font-size: 10px;
+            }
+            
+            #result-container {
+                width: 100%;
+            }
+            
             .main-row {
                 flex-direction: column;
             }
@@ -962,9 +1076,7 @@
             .left-sidebar, .right-sidebar {
                 flex: 1;
             }
-        }
-        
-        @media (max-width: 768px) {
+            
             h1 {
                 font-size: 2rem;
             }
@@ -978,21 +1090,481 @@
                 text-align: center;
             }
             
+            .language-dropdown {
+                left: 0;
+                right: 0;
+                width: auto;
+                margin: 0 auto;
+            }
+            
             header {
                 flex-direction: column;
                 padding: 0.5rem 0;
             }
             
-            .steps-container {
-                max-height: 300px;
+            .result-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
             }
             
-            .step-matrix {
-                overflow-x: auto;
+            .action-buttons {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 10px;
             }
             
-            .seo-articles-container {
+            /* 移动端显示简化结果 */
+            .mobile-result-view {
+                display: block;
+            }
+            
+            
+        }
+
+        @media (max-width: 768px) {
+
+             /* 1. 缩小矩阵容器宽度，让它更适配屏幕 */
+             .matrix-calculator .matrix-container {
+                 width: 100%;
+                 max-width: 260px; /* 你可以改成 250/280/300 试试效果 */
+                 padding: 5px;
+             }
+
+             /* 2. 缩小矩阵单元格（结果矩阵 & 输入矩阵通用） */
+             .result-cell,
+             .matrix-cell,
+             .input-matrix .matrix-cell input {
+                 min-width: 26px !important;
+                 height: 26px !important;
+                 padding: 2px !important;
+                 font-size: 12px !important;
+                 line-height: 1.1 !important;
+             }
+
+             /* 3. 缩小过程矩阵（你的过程矩阵本来特别大，所以单独缩小） */
+             .process-matrix .result-cell {
+                 min-width: 24px !important;
+                 height: 24px !important;
+                 font-size: 11px !important;
+                 padding: 1px !important;
+             }
+
+             /* 4. 缩小符号，例如加号、乘号、等号 */
+            .matrix-operator {
+                font-size: 20px !important;
+                margin: 0 4px !important;
+             }
+
+            /* 5. 缩小矩阵块与块之间的间距 */
+            .matrix-wrapper {
+                margin: 4px 0 !important;
+              }
+         }
+        
+        @media (max-width: 480px) {
+            .matrix-calculator .matrix input {
+                width: 30px;
+                height: 30px;
+                font-size: 11px;
+            }
+            
+            .matrix-calculator .matrix-container {
+                padding: 5px;
+            }
+            
+            .matrix-calculator .operation-btn {
+                width: 70px;
+                height: 40px;
+                font-size: 0.9em;
+                padding: 5px 10px;
+            }
+            
+            .matrix-calculator .single-op-btn {
+                font-size: 0.8em;
+                height: 35px;
+            }
+            
+            .matrix-calculator .op-input {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .result-cell {
+                min-width: 30px;
+                height: 30px;
+                font-size: 11px;
+                line-height: 30px;
+            }
+            
+            .simplified-matrix {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+        }
+
+        /* SEO内容样式 - 重新设计以匹配文章 */
+        .seo-article-content {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            padding: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .seo-article-content h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            text-shadow: none;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        .seo-article-content h2 {
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 5px;
+        }
+
+        .seo-article-content h3 {
+            font-size: 1.4rem;
+            margin-top: 1.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+        }
+
+        .seo-article-content p {
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+        }
+
+        .seo-article-content strong {
+            color: var(--accent-color);
+        }
+
+        .seo-article-content hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 2px dashed #e0e0e0;
+        }
+
+        .seo-article-content ul {
+            margin: 1rem 0 1.5rem 1.5rem;
+            padding-left: 1rem;
+        }
+
+        .seo-article-content li {
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+        }
+
+        .seo-article-content details {
+            margin: 1.2rem 0;
+            padding: 1.2rem;
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .seo-article-content details:hover {
+            background-color: #f0f7ff;
+            border-color: var(--secondary-color);
+        }
+
+        .seo-article-content details summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            padding: 5px 0;
+            outline: none;
+        }
+
+        .seo-article-content details summary:hover {
+            color: var(--accent-color);
+        }
+
+        .seo-article-content details[open] {
+            background-color: #f0f7ff;
+        }
+
+        .seo-article-content details[open] summary {
+            margin-bottom: 10px;
+        }
+
+        /* Copyright部分样式 - 按要求设置为浅灰色背景 */
+        .copyright-notice {
+            background-color: #f8f9fa; /* 浅灰色背景 */
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 2.5rem;
+            border-left: 4px solid var(--secondary-color);
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* 数学公式样式 */
+        .seo-article-content .MathJax {
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .seo-article-content {
+                padding: 20px;
+            }
+            
+            .seo-article-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .seo-article-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .seo-article-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .seo-article-content p, 
+            .seo-article-content li {
+                font-size: 1rem;
+            }
+            
+            .seo-article-content details {
                 padding: 1rem;
+            }
+            
+            .copyright-notice {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 问答栏样式 */
+        .question-box {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            padding: 1.5em;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: "Poppins", "Nunito", sans-serif;
+        }
+
+        .question-box h2 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5em;
+            color: #333;
+        }
+
+        .question-box .btn {
+            display: block;
+            width: 100%;
+            padding: 0.8em 1em;
+            margin-bottom: 0.8em;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .question-box .yes {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+        }
+
+        .question-box .yes:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(120,100,255,0.3);
+        }
+
+        .question-box .no {
+            background: #ffe7e7;
+            color: #ff4b4b;
+        }
+
+        .question-box .no:hover {
+            transform: rotate(-2deg) scale(1.05);
+            box-shadow: 0 4px 10px rgba(255,75,75,0.2);
+        }
+
+        .question-box .response {
+            margin-top: 1.5em;
+            font-size: 1rem;
+            color: #555;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .question-box .response.show {
+            opacity: 1;
+        }
+
+        @keyframes highlight {
+            0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+        }
+
+        /* =========== 新增：方程式输入样式 =========== */
+        .equation-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .equation-label {
+            font-weight: bold;
+            min-width: 80px;
+            color: var(--primary-color);
+        }
+
+        .equation-input {
+            width: 60px;
+            height: 35px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .equation-input.coeff {
+            background-color: #f0f8ff;
+        }
+
+        .equation-input.constant {
+            background-color: #f0fff0;
+            border-color: var(--success-color);
+        }
+
+        .equation-variable {
+            font-weight: bold;
+            margin: 0 5px;
+        }
+
+        .equation-operator {
+            margin: 0 2px;
+        }
+
+        /* =========== 新增：增广矩阵显示样式 =========== */
+        .augmented-matrix-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(to right, #f8f9fa 0%, #f0f8ff 100%);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            position: relative;
+        }
+
+        .augmented-title {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-align: center;
+            width: 100%;
+        }
+
+        .augmented-row {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            position: relative;
+        }
+
+        .matrix-bar {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0 15px;
+        }
+
+        .coefficient-cell, .constant-cell {
+            min-width: 50px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            padding: 5px 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.1em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .coefficient-cell {
+            background-color: #ffffff;
+        }
+
+        .constant-cell {
+            background-color: #e8f4f8;
+            border-color: var(--secondary-color);
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .augmented-separator {
+            width: 2px;
+            height: 40px;
+            background: var(--accent-color);
+            margin: 0 20px;
+            opacity: 0.7;
+        }
+
+        /* 移动端响应式调整 */
+        @media (max-width: 768px) {
+            .equation-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .equation-input {
+                width: 50px;
+                height: 30px;
+                font-size: 13px;
+            }
+            
+            .matrix-bar {
+                font-size: 1.5em;
+                margin: 0 8px;
+            }
+            
+            .coefficient-cell, .constant-cell {
+                min-width: 35px;
+                height: 35px;
+                font-size: 0.9em;
+                padding: 3px 5px;
+                margin: 0 3px;
+            }
+            
+            .augmented-row {
+                margin: 5px 0;
             }
         }
     </style>
@@ -1016,6 +1588,16 @@
                     <div class="language-option" data-lang="ja" onclick="switchLanguage('ja')">日本語</div>
                     <div class="language-option" data-lang="ru" onclick="switchLanguage('ru')">Русский</div>
                     <div class="language-option" data-lang="pt" onclick="switchLanguage('pt')">Português</div>
+                    <div class="language-option" data-lang="ar" onclick="switchLanguage('ar')">العربية</div>
+                    <div class="language-option" data-lang="hi" onclick="switchLanguage('hi')">हिन्दी</div>
+                    <div class="language-option" data-lang="bn" onclick="switchLanguage('bn')">বাংলা</div>
+                    <div class="language-option" data-lang="it" onclick="switchLanguage('it')">Italiano</div>
+                    <div class="language-option" data-lang="ko" onclick="switchLanguage('ko')">한국어</div>
+                    <div class="language-option" data-lang="tr" onclick="switchLanguage('tr')">Türkçe</div>
+                    <div class="language-option" data-lang="vi" onclick="switchLanguage('vi')">Tiếng Việt</div>
+                    <div class="language-option" data-lang="th" onclick="switchLanguage('th')">ไทย</div>
+                    <div class="language-option" data-lang="nl" onclick="switchLanguage('nl')">Nederlands</div>
+                    <div class="language-option" data-lang="pl" onclick="switchLanguage('pl')">Polski</div>
                 </div>
             </div>
         </div>
@@ -1031,6 +1613,7 @@
                     <div class="nav-buttons">
                         <a href="#matrix-multiplication-operation" class="nav-button">Matrix Multiplication Calculator</a>
                         <a href="#matrix-game" class="nav-button">Matrix Multiplication Game</a>
+                        <a href="matrix-equations-calculator.html" class="nav-button">System of Equations Calculator</a>
                         <a href="https://en.wikipedia.org/wiki/Matrix_(mathematics)" target="_blank" class="nav-button external">Wikipedia: Matrix</a>
                     </div>
                 </div>
@@ -1063,7 +1646,7 @@
 
                                     <div class="matrix-container" id="matrix-container-a"></div>
 
-                                    <!-- 矩阵A的按钮 - 已修改RREF按钮为本地计算 -->
+                                    <!-- 矩阵A的按钮 - 已修改：Augmented Matrix改为跳转，RREF改为本地计算 -->
                                     <div class="single-ops-container">
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-determinant')" class="single-op-btn">Determinant</button>
@@ -1071,6 +1654,7 @@
                                         </div>
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-upper-triangular')" class="single-op-btn">Upper Triangular</button>
+                                            <!-- RREF改为本地计算 -->
                                             <button onclick="calculateRREF()" class="single-op-btn">RREF</button>
                                         </div>
                                         <div class="op-row">
@@ -1105,21 +1689,55 @@
                                         </div>
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-svd')" class="single-op-btn">SVD</button>
+                                            <!-- Augmented Matrix改为跳转 -->
                                             <button onclick="goTo('matrix-augmented')" class="single-op-btn">Augmented Matrix</button>
                                         </div>
                                     </div>
+                                    
+                                    <!-- =========== 方程式输入部分 =========== -->
+                                    <div class="equation-input-section" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #ddd;">
+                                        <div class="equation-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                            <h4 style="margin: 0; color: var(--primary-color);">Equation Input Mode</h4>
+                                            <div class="equation-controls" style="display: flex; align-items: center; gap: 10px;">
+                                                <button id="decrease-equation" class="control-btn" title="Remove Equation" style="padding: 5px 10px; font-size: 16px;">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <span id="equation-count" style="font-weight: bold;">3</span>
+                                                <button id="increase-equation" class="control-btn" title="Add Equation" style="padding: 5px 10px; font-size: 16px;">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                                <span style="font-size: 0.9em; color: #666;">(2-10 equations)</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div id="equation-container">
+                                            <!-- 方程式行将由JavaScript动态生成 -->
+                                        </div>
+                                        
+                                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                            <!-- 修改：按钮改为Calculate RREF -->
+                                            <button id="calculate-rref-from-equations" style="flex: 1; background-color: var(--accent-color); color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer;">
+                                                <i class="fas fa-calculator"></i> Calculate RREF
+                                            </button>
+                                            <button id="fill-matrix-from-equations" style="flex: 1; background-color: var(--secondary-color); color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer;">
+                                                <i class="fas fa-sync-alt"></i> Update Matrix Inputs
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- =========== 方程式输入部分结束 =========== -->
                                     
                                 </div>
 
                                 <div class="operation-buttons">
                                     <button id="swap-ab-btn" class="operation-btn" title="Swap A and B Matrices"><i class="fas fa-exchange-alt"></i> SWAP</button>
                                     <div id="matrix-multiplication-operation">
+                                        <!-- 修改：乘法按钮改为跳转 -->
                                         <button onclick="goTo('matrix-multiplication')" class="operation-btn" title="Calculate A * B">A × B</button>
                                     </div>
+                                    <!-- 修改：加法和减法按钮改为跳转 -->
                                     <button onclick="goTo('matrix-addition')" class="operation-btn" title="Calculate A + B">A + B</button>
                                     <button onclick="goTo('matrix-subtraction')" class="operation-btn" title="Calculate A - B">A - B</button>
                                 </div>
-
 
                                 <div class="matrix-area">
                                     
@@ -1142,7 +1760,7 @@
 
                                     <div class="matrix-container" id="matrix-container-b"></div>
 
-                                    <!-- 矩阵B的按钮 - 恢复所有按钮 -->
+                                    <!-- 矩阵B的按钮 - 已修改：(A | B)改为跳转 -->
                                     <div class="single-ops-container">
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-qr')" class="single-op-btn">qr(A)</button>
@@ -1154,6 +1772,7 @@
                                         </div>
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-square-root')" class="single-op-btn">√(A)</button>
+                                            <!-- (A | B)改为跳转 -->
                                             <button onclick="goTo('matrix-augmented')" class="single-op-btn">(A | B)</button>
                                         </div>
                                         <div class="op-row">
@@ -1181,6 +1800,34 @@
                                             <button onclick="goTo('matrix-lll')" class="single-op-btn">LLL(A)</button>
                                         </div>
                                     </div>
+                                    
+                                    <!-- =========== 使用说明栏 =========== -->
+                                    <div class="instructions-section" style="margin-top: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px; border: 1px solid #bde0fe;">
+                                        <h4 style="margin: 0 0 10px 0; color: var(--primary-color); border-bottom: 2px solid var(--secondary-color); padding-bottom: 5px;">
+                                            <i class="fas fa-info-circle"></i> How to Use
+                                        </h4>
+                                        <div style="font-size: 0.9em; line-height: 1.5;">
+                                            <p><strong>Matrix Input Mode:</strong></p>
+                                            <ul style="margin: 5px 0 10px 20px; color: #555;">
+                                                <li>Enter matrix values in <strong>Matrix A</strong></li>
+                                                <li>Click the <strong>RREF</strong> button to calculate reduced row echelon form</li>
+                                            </ul>
+                                            
+                                            <p><strong>Equation Input Mode:</strong></p>
+                                            <ul style="margin: 5px 0 0 20px; color: #555;">
+                                                <li>Use +/- buttons to adjust number of equations (2-10)</li>
+                                                <li>Enter coefficients for x, y, z variables</li>
+                                                <li>Enter constant after the equals sign</li>
+                                                <li>Click <strong>Calculate RREF</strong> button</li>
+                                            </ul>
+                                            
+                                            <p style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ccc; color: #666;">
+                                                <i class="fas fa-lightbulb"></i> Both modes will calculate the reduced row echelon form with detailed steps.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- =========== 使用说明栏结束 =========== -->
+                                    
                                 </div>
 
                             </div>
@@ -1188,7 +1835,7 @@
                             <!-- 使用您提供的结果输出结构 -->
                             <div id="result-container">
                                 <div class="result-header">
-                                    <h3>Calculation Results</h3>
+                                    <h3>RREF Calculation Results</h3>
                                     <button id="clear-all-results" class="clear-all-btn">Clear All</button>
                                 </div>
                                 <div class="result-history" id="result-history">
@@ -1198,204 +1845,250 @@
                         </div>
                     </div>
                     
-                    <!-- SEO文章容器 - 现在包含完整的SEO文章 -->
+                    <!-- SEO文章容器 - 现在包含RREF相关内容 -->
                     <div class="seo-articles-container">
                         <div class="seo-article-content">
-                            <h1>RREF (Reduced Row Echelon Form) Calculator – Quick Guide</h1>
+                            <h1>RREF (Reduced Row Echelon Form) Calculator – Complete Guide</h1>
+                            
+                            <p>
+                            <strong>Reduced Row Echelon Form (RREF)</strong> is the canonical form of a matrix obtained through Gauss-Jordan elimination. 
+                            It is widely used to solve systems of linear equations, find matrix rank, and determine linear independence.
+                            </p>
 
-                            <section>
-                                <h2>1. What Is RREF?</h2>
+                            <hr>
+
+                            <h2>1. What is RREF?</h2>
+
+                            <p>A matrix is in RREF when it satisfies these conditions:</p>
+
+                            <p>
+                            1. All nonzero rows are above any rows of all zeros.<br>
+                            2. The leading entry (pivot) of each nonzero row is 1.<br>
+                            3. Each pivot is the only nonzero entry in its column.<br>
+                            4. Each pivot is to the right of pivots in rows above it.
+                            </p>
+
+                            <p>For example, this matrix is in RREF:</p>
+
+                            <p>
+                            \[
+                            \left[
+                            \begin{array}{ccc|c}
+                            1 & 0 & 0 & 2 \\
+                            0 & 1 & 0 & -1 \\
+                            0 & 0 & 1 & 3 \\
+                            0 & 0 & 0 & 0
+                            \end{array}
+                            \right]
+                            \]
+                            </p>
+
+                            <hr>
+
+                            <h2>2. How to Compute RREF</h2>
+
+                            <h3>Step 1: Forward Elimination</h3>
+                            <p>Create zeros below each pivot using row operations.</p>
+
+                            <h3>Step 2: Normalize Pivots</h3>
+                            <p>Divide each row by its pivot value to make pivots equal to 1.</p>
+
+                            <h3>Step 3: Backward Elimination</h3>
+                            <p>Create zeros above each pivot using row operations.</p>
+
+                            <p>The standard row operations are:</p>
+                            <ul>
+                                <li>Swap two rows</li>
+                                <li>Multiply a row by a nonzero scalar</li>
+                                <li>Add a multiple of one row to another row</li>
+                            </ul>
+
+                            <hr>
+
+                            <h2>3. Example Problems</h2>
+
+                            <h3>Example 1: 2×3 Matrix (System of 2 Equations)</h3>
+
+                            <p>Find RREF of:</p>
+
+                            <p>
+                            \[
+                            \left[
+                            \begin{array}{cc|c}
+                            1 & 5 & 1 \\
+                            2 & 11 & 5
+                            \end{array}
+                            \right]
+                            \]
+                            </p>
+
+                            <details>
+                            <summary>Show Solution</summary>
+                            <p><strong>Step 1:</strong> \( R_2 = R_2 - 2R_1 \)</p>
+                            <p>
+                            \[
+                            \left[
+                            \begin{array}{cc|c}
+                            1 & 5 & 1 \\
+                            0 & 1 & 3
+                            \end{array}
+                            \right]
+                            \]
+                            </p>
+                            <p><strong>Step 2:</strong> \( R_1 = R_1 - 5R_2 \)</p>
+                            <p>
+                            \[
+                            \left[
+                            \begin{array}{cc|c}
+                            1 & 0 & -14 \\
+                            0 & 1 & 3
+                            \end{array}
+                            \right]
+                            \]
+                            </p>
+                            <p>The solution is \( x = -14, y = 3 \).</p>
+                            </details>
+
+                            <hr>
+
+                            <h3>Example 2: 3×3 Matrix</h3>
+
+                            <p>Find RREF of:</p>
+
+                            <p>
+                            \[
+                            \begin{bmatrix}
+                            1 & 2 & 3 \\
+                            4 & 5 & 6 \\
+                            7 & 8 & 9
+                            \end{bmatrix}
+                            \]
+                            </p>
+
+                            <details>
+                            <summary>Show Solution</summary>
+                            <p>After Gauss-Jordan elimination:</p>
+                            <p>
+                            \[
+                            \begin{bmatrix}
+                            1 & 0 & -1 \\
+                            0 & 1 & 2 \\
+                            0 & 0 & 0
+                            \end{bmatrix}
+                            \]
+                            </p>
+                            </details>
+
+                            <hr>
+
+                            <h2>4. Common Applications</h2>
+
+                            <ul>
+                            <li><strong>Solving Linear Systems:</strong> RREF directly gives the solution if it exists.</li>
+                            <li><strong>Finding Matrix Rank:</strong> Number of nonzero rows in RREF equals rank.</li>
+                            <li><strong>Determining Linear Independence:</strong> Columns with pivots form a basis.</li>
+                            <li><strong>Finding Inverse Matrix:</strong> RREF of [A|I] yields [I|A⁻¹].</li>
+                            <li><strong>Solving Homogeneous Systems:</strong> RREF reveals null space basis.</li>
+                            </ul>
+
+                            <hr>
+
+                            <h2>5. Practice Problems</h2>
+
+                            <h3>Problem 1</h3>
+                            <p>Find RREF of:</p>
+                            <p>
+                            \[
+                            \begin{bmatrix}
+                            2 & 4 & 6 \\
+                            1 & 2 & 3 \\
+                            3 & 6 & 9
+                            \end{bmatrix}
+                            \]
+                            </p>
+
+                            <details>
+                            <summary>Show Answer</summary>
+                            <p>
+                            \[
+                            \begin{bmatrix}
+                            1 & 2 & 3 \\
+                            0 & 0 & 0 \\
+                            0 & 0 & 0
+                            \end{bmatrix}
+                            \]
+                            </p>
+                            </details>
+
+                            <hr>
+
+                            <h3>Problem 2</h3>
+                            <p>Find RREF of the augmented matrix:</p>
+                            <p>
+                            \[
+                            \left[
+                            \begin{array}{ccc|c}
+                            1 & 1 & 1 & 6 \\
+                            2 & 3 & 1 & 11 \\
+                            3 & 2 & 2 & 13
+                            \end{array}
+                            \right]
+                            \]
+                            </p>
+
+                            <details>
+                            <summary>Show Answer</summary>
+                            <p>
+                            \[
+                            \left[
+                            \begin{array}{ccc|c}
+                            1 & 0 & 0 & 1 \\
+                            0 & 1 & 0 & 2 \\
+                            0 & 0 & 1 & 3
+                            \end{array}
+                            \right]
+                            \]
+                            </p>
+                            <p>Solution: \( x = 1, y = 2, z = 3 \).</p>
+                            </details>
+
+                            <hr>
+
+                            <h3>Problem 3</h3>
+                            <p>Find RREF of:</p>
+                            <p>
+                            \[
+                            \begin{bmatrix}
+                            0 & 1 & 2 \\
+                            1 & 0 & 3 \\
+                            2 & 3 & 0
+                            \end{bmatrix}
+                            \]
+                            </p>
+
+                            <details>
+                            <summary>Show Answer</summary>
+                            <p>
+                            \[
+                            \begin{bmatrix}
+                            1 & 0 & 0 \\
+                            0 & 1 & 0 \\
+                            0 & 0 & 1
+                            \end{bmatrix}
+                            \]
+                            </p>
+                            </details>
+
+                            <hr>
+
+                            <div class="copyright-notice">
+                                <h2>Copyright Notice</h2>
                                 <p>
-                                    The <strong>Reduced Row Echelon Form (RREF)</strong> of a matrix is a canonical form achieved
-                                    by performing elementary row operations (Gauss–Jordan elimination). A matrix is in RREF when it satisfies:
+                                This article is original content from the Matrix Calculator website.  
+                                Please credit the source when sharing or reproducing it.  
+                                For more matrix computation tools, visit matrixcalcu.com.
                                 </p>
-                                <ul>
-                                    <li>All nonzero rows are above any rows of all zeros.</li>
-                                    <li>The leading entry (pivot) of each nonzero row is <strong>1</strong>.</li>
-                                    <li>Each pivot is the only nonzero entry in its column.</li>
-                                    <li>Each pivot appears to the right of the pivot in the row above.</li>
-                                </ul>
-                                <p class="note">RREF is unique for every matrix and is widely used to solve linear systems, find the rank, and check independence.</p>
-                            </section>
-
-                            <section>
-                                <h2>2. How to Compute RREF (Method)</h2>
-                                <p>The RREF is computed using the <strong>Gauss–Jordan elimination</strong> algorithm. Typical steps:</p>
-                                <h3>Step 1: Forward elimination (create zeros below pivots)</h3>
-                                <p>Use row operations to eliminate entries below each pivot.</p>
-
-                                <h3>Step 2: Normalize pivot to 1</h3>
-                                <div class="matrix-block">
-                                    $$ R_i := \frac{1}{a_{ii}} R_i $$
-                                </div>
-
-                                <h3>Step 3: Backward elimination (clear above pivots)</h3>
-                                <div class="matrix-block">
-                                    $$ R_j := R_j - k R_i $$
-                                    $$ k = a_{ji} $$
-                                </div>
-
-                                <p>Repeat until every pivot is 1 and is the only nonzero element in its column.</p>
-                            </section>
-
-                            <section>
-                                <h2>3. Worked Examples</h2>
-
-                                <h3>Example 1</h3>
-                                <p>Compute RREF for:</p>
-                                <div class="matrix-block">
-                                    $$ A = \begin{bmatrix}
-                                    1 & 2 & -1 \\
-                                    2 & 3 & 1 \\
-                                    -1 & -1 & 2
-                                    \end{bmatrix} $$
-                                </div>
-
-                                <p>Perform row operations (summary):</p>
-                                <div class="matrix-block">
-                                    $$ R_2 := R_2 - 2R_1 = [0, -1, 3] $$
-                                    $$ R_3 := R_3 + R_1 = [0, 1, 1] $$
-                                    $$ R_2 := -R_2 = [0, 1, -3] $$
-                                    $$ R_3 := R_3 - R_2 = [0, 0, 4] $$
-                                    $$ R_3 := \tfrac{1}{4}R_3 = [0,0,1] $$
-                                    $$ R_2 := R_2 + 3R_3 = [0,1,0] $$
-                                    $$ R_1 := R_1 + R_3 = [1,2,0] $$
-                                </div>
-
-                                <p>Final RREF:</p>
-                                <div class="matrix-block">
-                                    $$ \mathrm{RREF}(A) = \begin{bmatrix}
-                                    1 & 0 & 0 \\
-                                    0 & 1 & 0 \\
-                                    0 & 0 & 1
-                                    \end{bmatrix} $$
-                                </div>
-
-                                <h3>Example 2</h3>
-                                <p>Compute RREF for:</p>
-                                <div class="matrix-block">
-                                    $$ A = \begin{bmatrix}
-                                    1 & 3 & 3 \\
-                                    2 & 6 & 9 \\
-                                    -1 & -3 & -3
-                                    \end{bmatrix} $$
-                                </div>
-
-                                <p>Note: rows are proportional. Steps (summary):</p>
-                                <div class="matrix-block">
-                                    $$ R_2 := R_2 - 2R_1 = [0,0,3] $$
-                                    $$ R_3 := R_3 + R_1 = [0,0,0] $$
-                                    $$ R_2 := \tfrac{1}{3}R_2 = [0,0,1] $$
-                                    $$ R_1 := R_1 - 3R_2 = [1,3,0] $$
-                                </div>
-
-                                <p>Final RREF:</p>
-                                <div class="matrix-block">
-                                    $$ \mathrm{RREF}(A) = \begin{bmatrix}
-                                    1 & 3 & 0 \\
-                                    0 & 0 & 1 \\
-                                    0 & 0 & 0
-                                    \end{bmatrix} $$
-                                </div>
-                            </section>
-
-                            <section>
-                                <h2>4. Common Mistakes</h2>
-                                <ul>
-                                    <li><strong>Forgetting to make pivots equal to 1:</strong> RREF requires pivots = 1.</li>
-                                    <li><strong>Only clearing below pivots:</strong> RREF requires clearing both above and below pivots.</li>
-                                    <li><strong>Not swapping when pivot = 0:</strong> Swap with a lower row that has a nonzero entry.</li>
-                                    <li><strong>Arithmetic/sign errors:</strong> Mistakes with fractions and signs break the process.</li>
-                                    <li><strong>Incorrectly treating non-square matrices:</strong> RREF applies to rectangular matrices too — it is not limited to square matrices.</li>
-                                </ul>
-                            </section>
-
-                            <section>
-                                <h2>5. Practice Problems</h2>
-                                <p>Try the problems below. Click "Show Answer" to reveal the RREF results.</p>
-
-                                <h3>Exercise 1</h3>
-                                <div class="matrix-block">
-                                    $$ \begin{bmatrix}
-                                    1 & 2 & 1 \\
-                                    3 & 6 & 3 \\
-                                    2 & 4 & 2
-                                    \end{bmatrix} $$
-                                </div>
-                                <details>
-                                    <summary>Show Answer</summary>
-                                    <div class="matrix-block">
-                                        $$ \mathrm{RREF} = \begin{bmatrix}
-                                        1 & 2 & 1 \\
-                                        0 & 0 & 0 \\
-                                        0 & 0 & 0
-                                        \end{bmatrix} $$
-                                    </div>
-                                </details>
-
-                                <h3>Exercise 2</h3>
-                                <div class="matrix-block">
-                                    $$ \begin{bmatrix}
-                                    2 & 1 & -1 \\
-                                    -3 & -1 & 2 \\
-                                    -2 & 1 & 2
-                                    \end{bmatrix} $$
-                                </div>
-                                <details>
-                                    <summary>Show Answer</summary>
-                                    <div class="matrix-block">
-                                        $$ \mathrm{RREF} = \begin{bmatrix}
-                                        1 & 0 & 0 \\
-                                        0 & 1 & 0 \\
-                                        0 & 0 & 1
-                                        \end{bmatrix} $$
-                                    </div>
-                                </details>
-
-                                <h3>Exercise 3</h3>
-                                <div class="matrix-block">
-                                    $$ \begin{bmatrix}
-                                    1 & 4 & 2 \\
-                                    2 & 5 & 3 \\
-                                    4 & 9 & 6
-                                    \end{bmatrix} $$
-                                </div>
-                                <details>
-                                    <summary>Show Answer</summary>
-                                    <div class="matrix-block">
-                                        $$ \mathrm{RREF} = \begin{bmatrix}
-                                        1 & 0 & 0 \\
-                                        0 & 1 & 0 \\
-                                        0 & 0 & 1
-                                        \end{bmatrix} $$
-                                    </div>
-                                </details>
-
-                                <h3>Exercise 4</h3>
-                                <div class="matrix-block">
-                                    $$ \begin{bmatrix}
-                                    1 & 3 & 1 \\
-                                    1 & 1 & -1 \\
-                                    3 & 11 & 5
-                                    \end{bmatrix} $$
-                                </div>
-                                <details>
-                                    <summary>Show Answer</summary>
-                                    <div class="matrix-block">
-                                        $$ \mathrm{RREF} = \begin{bmatrix}
-                                        1 & 0 & 0 \\
-                                        0 & 1 & 0 \\
-                                        0 & 0 & 1
-                                        \end{bmatrix} $$
-                                    </div>
-                                </details>
-                            </section>
-
-                            <hr />
-
-                            <footer>
-                            <p>Copyright Notice: This article is original content from the Matrix Calculator website. Please credit the source when sharing or reproducing it. For more matrix computation tools, visit matrixcalcu.com.</p>
-                            </footer>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1421,19 +2114,28 @@
 
     <!-- JavaScript代码 -->
     <script>
-        // 全局导航函数
-        function goTo(pageName) {
+        // 全局导航函数 - 已添加URL参数传递功能
+        function goTo(pageName, additionalParams = {}) {
             const pathParts = window.location.pathname.split('/');
-            const lang = pathParts[1] || 'en';
+            const lang = pathParts[1] || 'en'; // 默认英语
             
+            // 获取矩阵A和B的数据
             const matrixAData = getMatrixData('A');
             const matrixBData = getMatrixData('B');
             
+            // 创建URL参数
             const params = new URLSearchParams();
             params.append('sizeA', sizeA);
             params.append('sizeB', sizeB);
             params.append('matrixA', JSON.stringify(matrixAData));
             params.append('matrixB', JSON.stringify(matrixBData));
+            
+            // 添加额外参数
+            for (const [key, value] of Object.entries(additionalParams)) {
+                params.append(key, value);
+            }
+            
+            // 添加时间戳防止缓存
             params.append('t', Date.now());
             
             window.location.href = `/${lang}/${pageName}-calculator.html?${params.toString()}`;
@@ -1450,7 +2152,7 @@
                 const row = [];
                 for (let j = 0; j < size; j++) {
                     const index = i * size + j;
-                    row.push(inputs[index].value || '0');
+                    row.push(inputs[index].value || '0'); // 空值默认为0
                 }
                 data.push(row);
             }
@@ -1462,11 +2164,13 @@
             let path = window.location.pathname;
             let parts = path.split("/").filter(part => part !== "");
             
+            // 如果在根目录，跳转到目标语言的首页
             if (parts.length === 0) {
                 window.location.href = `/${lang}/index.html`;
                 return;
             }
             
+            // 正常情况：替换语言代码
             parts[0] = lang;
             let newPath = "/" + parts.join("/");
             window.location.href = newPath;
@@ -1493,9 +2197,24 @@
         const swapBtn = document.getElementById('swap-ab-btn');
         const clearAllResultsBtn = document.getElementById('clear-all-results');
 
-        // 简化的RREF计算函数 - 减少步骤数量，只显示关键步骤
+        // =========== RREF计算算法 ===========
+
+        // 检查math.js是否可用
+        function checkMathJSAvailable() {
+            if (typeof math === 'undefined') {
+                console.warn('math.js is not available. Using built-in RREF algorithm.');
+                return false;
+            }
+            console.log('math.js is available.');
+            return true;
+        }
+
+        // 完整的RREF计算算法
         function computeRREFWithSteps(matrix) {
+            const startTime = performance.now();
             let steps = [];
+            
+            // 深拷贝矩阵
             let rref = matrix.map(row => [...row]);
             const rows = rref.length;
             const cols = rref[0].length;
@@ -1508,72 +2227,81 @@
                 matrix: JSON.parse(JSON.stringify(rref)),
                 description: "Initial matrix",
                 pivotRow: -1,
-                pivotCol: -1
+                pivotCol: -1,
+                stepType: "initial"
             });
             
+            // 高斯-约旦消元法
             for (let r = 0; r < rows; r++) {
                 if (lead >= cols) break;
                 
+                // 寻找当前列的非零主元
                 let i = r;
-                while (Math.abs(rref[i][lead]) < tolerance) {
+                while (i < rows && Math.abs(rref[i][lead]) < tolerance) {
                     i++;
-                    if (i === rows) {
-                        i = r;
-                        lead++;
-                        if (lead === cols) break;
-                    }
                 }
                 
-                if (lead >= cols) break;
+                if (i === rows) {
+                    // 当前列没有非零主元，移动到下一列
+                    steps.push({
+                        matrix: JSON.parse(JSON.stringify(rref)),
+                        description: `Column ${lead+1}: No nonzero pivot found, moving to next column`,
+                        pivotRow: -1,
+                        pivotCol: lead,
+                        stepType: "info"
+                    });
+                    lead++;
+                    r--; // 保持在同一行
+                    continue;
+                }
                 
                 // 交换行（如果需要）
                 if (i !== r) {
                     [rref[r], rref[i]] = [rref[i], rref[r]];
                     steps.push({
                         matrix: JSON.parse(JSON.stringify(rref)),
-                        description: `Swap row ${i+1} and row ${r+1}`,
+                        description: `Swapped row ${i+1} with row ${r+1}`,
                         pivotRow: r,
-                        pivotCol: lead
+                        pivotCol: lead,
+                        stepType: "swap"
                     });
                 }
                 
                 // 归一化主元行
-                let val = rref[r][lead];
-                if (Math.abs(val) > tolerance) {
+                let pivot = rref[r][lead];
+                if (Math.abs(pivot) > tolerance && Math.abs(pivot - 1) > tolerance) {
                     for (let j = 0; j < cols; j++) {
-                        rref[r][j] /= val;
+                        rref[r][j] /= pivot;
                     }
+                    
                     steps.push({
                         matrix: JSON.parse(JSON.stringify(rref)),
-                        description: `Divide row ${r+1} by ${val.toFixed(4)} to make pivot 1`,
+                        description: `Row ${r+1} ÷ ${formatNumber(pivot)}`,
                         pivotRow: r,
-                        pivotCol: lead
+                        pivotCol: lead,
+                        stepType: "normalize"
                     });
                 }
                 
-                // 消元 - 只记录有实际变化的步骤
-                let eliminationSteps = [];
+                // 消去其他行的当前列
                 for (let i = 0; i < rows; i++) {
                     if (i !== r) {
-                        val = rref[i][lead];
-                        if (Math.abs(val) > tolerance) {
+                        let factor = rref[i][lead];
+                        if (Math.abs(factor) > tolerance) {
                             for (let j = 0; j < cols; j++) {
-                                rref[i][j] -= val * rref[r][j];
+                                rref[i][j] -= factor * rref[r][j];
                             }
-                            eliminationSteps.push({
+                            
+                            steps.push({
                                 matrix: JSON.parse(JSON.stringify(rref)),
-                                description: `Add ${-val.toFixed(4)} × row ${r+1} to row ${i+1}`,
+                                description: `Row ${i+1} - (${formatNumber(factor)}) × Row ${r+1}`,
                                 pivotRow: r,
                                 pivotCol: lead,
-                                operationRow: i
+                                operationRow: i,
+                                stepType: "eliminate"
                             });
                         }
                     }
-                }
-                
-                // 只添加最后一个消元步骤，避免步骤过多
-                if (eliminationSteps.length > 0) {
-                    steps.push(eliminationSteps[eliminationSteps.length - 1]);
                 }
                 
                 lead++;
@@ -1592,35 +2320,195 @@
                 }
             }
             
-            // 记录最终结果
             steps.push({
                 matrix: JSON.parse(JSON.stringify(rref)),
                 description: "Reduced Row Echelon Form (RREF)",
                 pivotRow: -1,
-                pivotCol: -1
+                pivotCol: -1,
+                stepType: "final"
             });
+            
+            const endTime = performance.now();
+            console.log(`RREF computation time: ${(endTime - startTime).toFixed(2)}ms`);
             
             return { result: rref, steps };
         }
 
-        // RREF计算函数
+        // 使用math.js计算RREF（如果可用）
+        function computeRREFWithMathJS(matrix) {
+            if (typeof math !== 'undefined' && typeof math.rref === 'function') {
+                try {
+                    const startTime = performance.now();
+                    const rref = math.rref(matrix);
+                    const endTime = performance.now();
+                    console.log(`math.js RREF computation time: ${(endTime - startTime).toFixed(2)}ms`);
+                    return rref;
+                } catch (error) {
+                    console.error('Error using math.js rref:', error);
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        // 格式化数字显示
+        function formatNumber(num) {
+            if (Math.abs(num) < 1e-10) return "0";
+            if (Math.abs(num - 1) < 1e-10) return "1";
+            if (Math.abs(num + 1) < 1e-10) return "-1";
+            
+            // 如果数字是整数或接近整数
+            const rounded = Math.round(num * 1000) / 1000;
+            if (Math.abs(rounded - Math.round(rounded)) < 0.001) {
+                return Math.round(rounded).toString();
+            }
+            
+            // 显示最多4位小数
+            return rounded.toFixed(4).replace(/\.?0+$/, '');
+        }
+
+        // 显示计算中的覆盖层
+        function showCalculatingOverlay() {
+            let overlay = document.getElementById('calculating-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'calculating-overlay';
+                overlay.className = 'calculating-overlay';
+                overlay.innerHTML = `
+                    <div class="calculating-spinner"></div>
+                    <div class="calculating-text">Calculating RREF...</div>
+                `;
+                document.body.appendChild(overlay);
+            }
+            overlay.style.display = 'flex';
+        }
+
+        // 隐藏计算中的覆盖层
+        function hideCalculatingOverlay() {
+            const overlay = document.getElementById('calculating-overlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+        }
+
+        // RREF计算函数（从矩阵输入）
         function calculateRREF() {
+            // 显示计算状态
+            showCalculatingOverlay();
+            
+            // 获取矩阵数据
             const { matrix: matrixA, isValid } = getMatrixValues(containerA, sizeA);
             
             if (!isValid) {
+                hideCalculatingOverlay();
                 showError("Please enter valid numbers in all matrix cells");
                 return;
             }
             
-            // 计算RREF并获取步骤
-            const { result: rrefResult, steps } = computeRREFWithSteps(matrixA);
-            
-            // 显示结果和步骤
-            displayRREFResult(matrixA, rrefResult, steps);
+            // 延迟执行以便显示加载动画
+            setTimeout(() => {
+                try {
+                    // 尝试使用math.js计算
+                    let rrefResult = computeRREFWithMathJS(matrixA);
+                    let steps = [];
+                    
+                    if (rrefResult === null) {
+                        // 如果math.js不可用或出错，使用自定义算法
+                        const computation = computeRREFWithSteps(matrixA);
+                        rrefResult = computation.result;
+                        steps = computation.steps;
+                    } else {
+                        // 如果使用math.js，创建简化步骤
+                        steps = createSimplifiedSteps(matrixA, rrefResult);
+                    }
+                    
+                    // 显示结果
+                    displayRREFResult(matrixA, rrefResult, steps, "Matrix Input");
+                    
+                } catch (error) {
+                    showError(`Calculation error: ${error.message}`);
+                    console.error('RREF calculation error:', error);
+                } finally {
+                    // 隐藏计算状态
+                    hideCalculatingOverlay();
+                }
+            }, 100);
         }
 
-        // 增强的显示RREF结果的函数 - 添加步骤展示
-        function displayRREFResult(originalMatrix, rrefResult, steps) {
+        // 从方程式计算RREF
+        function calculateRREFFromEquations() {
+            // 显示计算状态
+            showCalculatingOverlay();
+            
+            // 解析方程式为增广矩阵
+            const augmentedMatrix = parseEquationsToAugmented();
+            
+            if (!augmentedMatrix || augmentedMatrix.length === 0) {
+                hideCalculatingOverlay();
+                showError("Please enter valid equations");
+                return;
+            }
+            
+            // 延迟执行以便显示加载动画
+            setTimeout(() => {
+                try {
+                    // 尝试使用math.js计算
+                    let rrefResult = computeRREFWithMathJS(augmentedMatrix);
+                    let steps = [];
+                    
+                    if (rrefResult === null) {
+                        // 如果math.js不可用或出错，使用自定义算法
+                        const computation = computeRREFWithSteps(augmentedMatrix);
+                        rrefResult = computation.result;
+                        steps = computation.steps;
+                    } else {
+                        // 如果使用math.js，创建简化步骤
+                        steps = createSimplifiedSteps(augmentedMatrix, rrefResult);
+                    }
+                    
+                    // 显示结果
+                    displayRREFResult(augmentedMatrix, rrefResult, steps, "Equation Input");
+                    
+                } catch (error) {
+                    showError(`Calculation error: ${error.message}`);
+                    console.error('RREF calculation error:', error);
+                } finally {
+                    // 隐藏计算状态
+                    hideCalculatingOverlay();
+                }
+            }, 100);
+        }
+
+        // 创建简化步骤（当使用math.js时）
+        function createSimplifiedSteps(originalMatrix, rrefResult) {
+            const steps = [];
+            
+            // 初始矩阵
+            steps.push({
+                matrix: JSON.parse(JSON.stringify(originalMatrix)),
+                description: "Initial matrix",
+                stepType: "initial"
+            });
+            
+            // 中间步骤（简化版）
+            steps.push({
+                matrix: JSON.parse(JSON.stringify(originalMatrix)),
+                description: "Applying Gauss-Jordan elimination...",
+                stepType: "info"
+            });
+            
+            // 最终结果
+            steps.push({
+                matrix: JSON.parse(JSON.stringify(rrefResult)),
+                description: "Reduced Row Echelon Form (RREF)",
+                stepType: "final"
+            });
+            
+            return steps;
+        }
+
+        // 显示RREF结果的函数
+        function displayRREFResult(originalMatrix, rrefResult, steps, source = "Matrix Input") {
             const resultBlock = document.createElement('div');
             resultBlock.classList.add('result-block');
             resultBlock.id = 'result-' + Date.now();
@@ -1654,11 +2542,19 @@
             rrefLabel.style.marginRight = '15px';
             row.appendChild(rrefLabel);
             
+            // 渲染原始矩阵
             renderResultMatrix(originalMatrix, row);
             
             row.innerHTML += `<span class="result-eq">=</span>`;
             
+            // 渲染RREF结果
             renderResultMatrix(rrefResult, row);
+            
+            // 添加源信息
+            const sourceInfo = document.createElement('div');
+            sourceInfo.style.cssText = 'width: 100%; margin-top: 10px; font-size: 0.85em; color: #888; font-style: italic;';
+            sourceInfo.textContent = `Source: ${source}`;
+            row.appendChild(sourceInfo);
             
             desktopView.appendChild(row);
             resultBlock.appendChild(desktopView);
@@ -1669,9 +2565,23 @@
                 resultBlock.appendChild(stepsContainer);
             }
             
+            // 如果是增广矩阵，显示解的解释
+            if (originalMatrix[0] && originalMatrix[0].length > originalMatrix.length) {
+                // 可能是增广矩阵
+                const solutionExplanation = createSolutionExplanation(rrefResult);
+                if (solutionExplanation) {
+                    resultBlock.appendChild(solutionExplanation);
+                }
+            }
+            
             resultHistory.prepend(resultBlock);
             
             setupResultBlockFunctionality(resultBlock, originalMatrix, rrefResult, 'RREF');
+            
+            // 重新渲染MathJax以显示公式
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
         }
 
         // 创建计算过程展示
@@ -1737,6 +2647,76 @@
             return stepsSection;
         }
 
+        // 创建解的解释（针对增广矩阵）
+        function createSolutionExplanation(rrefResult) {
+            const rows = rrefResult.length;
+            const cols = rrefResult[0] ? rrefResult[0].length : 0;
+            
+            // 检查是否是增广矩阵形式
+            if (cols <= rows) return null;
+            
+            let explanation = "Solution: ";
+            const solutions = [];
+            const variableNames = ['x', 'y', 'z', 'w', 'v', 'u', 't', 's', 'r', 'q'];
+            
+            for (let i = 0; i < rows; i++) {
+                let pivotCol = -1;
+                for (let j = 0; j < cols - 1; j++) {
+                    if (Math.abs(rrefResult[i][j] - 1) < 1e-10) {
+                        pivotCol = j;
+                        break;
+                    }
+                }
+                
+                if (pivotCol >= 0 && pivotCol < cols - 1) {
+                    // 找到主元
+                    const value = rrefResult[i][cols - 1];
+                    solutions.push(`${variableNames[pivotCol]} = ${formatNumber(value)}`);
+                }
+            }
+            
+            if (solutions.length === 0) {
+                // 检查是否是零行（无解或无穷多解情况）
+                let allZero = true;
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < cols - 1; j++) {
+                        if (Math.abs(rrefResult[i][j]) > 1e-10) {
+                            allZero = false;
+                            break;
+                        }
+                    }
+                    if (!allZero) break;
+                }
+                
+                if (allZero) {
+                    explanation = "System has infinitely many solutions";
+                } else {
+                    // 检查矛盾情况
+                    for (let i = 0; i < rows; i++) {
+                        let allZeroCoeff = true;
+                        for (let j = 0; j < cols - 1; j++) {
+                            if (Math.abs(rrefResult[i][j]) > 1e-10) {
+                                allZeroCoeff = false;
+                                break;
+                            }
+                        }
+                        if (allZeroCoeff && Math.abs(rrefResult[i][cols - 1]) > 1e-10) {
+                            explanation = "System has no solution (contradiction)";
+                            break;
+                        }
+                    }
+                }
+            } else {
+                explanation += solutions.join(", ");
+            }
+            
+            const explanationDiv = document.createElement('div');
+            explanationDiv.style.cssText = 'margin-top: 15px; padding: 10px; background-color: #e8f5e9; border-radius: 5px; border-left: 4px solid #4caf50;';
+            explanationDiv.innerHTML = `<strong><i class="fas fa-lightbulb"></i> ${explanation}</strong>`;
+            
+            return explanationDiv;
+        }
+
         // 渲染步骤矩阵，高亮关键元素
         function renderStepMatrix(matrix, container, pivotRow, pivotCol, operationRow) {
             const rows = matrix.length;
@@ -1765,16 +2745,8 @@
                         cell.classList.add('step-highlight');
                     }
                     
-                    const numVal = parseFloat(val);
-                    if (Number.isInteger(numVal)) {
-                        cell.textContent = numVal.toString(); 
-                    } else {
-                        if (Math.abs(numVal - Math.round(numVal)) < 1e-6) {
-                            cell.textContent = Math.round(numVal).toString();
-                        } else {
-                            cell.textContent = numVal.toFixed(4); 
-                        }
-                    }
+                    const formattedVal = formatNumber(val);
+                    cell.textContent = formattedVal;
                     gridDiv.appendChild(cell);
                 });
             });
@@ -1799,16 +2771,8 @@
                     if (isProcess) {
                         cell.innerHTML = val;
                     } else {
-                        const numVal = parseFloat(val);
-                        if (Number.isInteger(numVal)) {
-                            cell.textContent = numVal.toString(); 
-                        } else {
-                            if (Math.abs(numVal - Math.round(numVal)) < 1e-6) {
-                                cell.textContent = Math.round(numVal).toString();
-                            } else {
-                                cell.textContent = numVal.toFixed(4); 
-                            }
-                        }
+                        const formattedVal = formatNumber(val);
+                        cell.textContent = formattedVal;
                     }
                     gridDiv.appendChild(cell);
                 });
@@ -1866,6 +2830,7 @@
         }
 
         function showError(message) {
+            // 移除现有的错误消息
             const existingError = document.querySelector('.error-message');
             if (existingError) {
                 existingError.remove();
@@ -1875,8 +2840,10 @@
             errorDiv.className = 'error-message';
             errorDiv.textContent = `❌ Error: ${message}`;
             
+            // 添加到结果容器的顶部
             resultHistory.insertBefore(errorDiv, resultHistory.firstChild);
             
+            // 3秒后自动移除错误消息
             setTimeout(() => {
                 if (errorDiv.parentNode) {
                     errorDiv.remove();
@@ -1917,7 +2884,7 @@
                     value = Math.floor(Math.random() * 21) - 10;
                     break;
                 case 'float': 
-                    value = ((Math.random() * 2) - 1).toFixed(2); 
+                    value = parseFloat(((Math.random() * 2) - 1).toFixed(2));
                     break;
                 default:
                     value = 0;
@@ -2001,50 +2968,29 @@
             });
         };
 
-        // 修复的URL参数处理函数
+        // Helper 7: Initialize from URL parameters
         function initFromURLParameters() {
             const urlParams = new URLSearchParams(window.location.search);
             
-            // 首先检查URL中的矩阵数据
+            // 获取矩阵大小
+            const urlSizeA = parseInt(urlParams.get('sizeA'));
+            const urlSizeB = parseInt(urlParams.get('sizeB'));
+            
+            if (urlSizeA && urlSizeB) {
+                sizeA = urlSizeA;
+                sizeB = urlSizeB;
+            }
+            
+            // 获取矩阵数据
             try {
                 const matrixAData = JSON.parse(urlParams.get('matrixA') || '[]');
+                const matrixBData = JSON.parse(urlParams.get('matrixB') || '[]');
                 
-                if (matrixAData.length > 0) {
-                    // 根据实际数据尺寸调整矩阵大小
-                    const actualSize = matrixAData.length;
-                    
-                    // 验证尺寸是否在允许范围内
-                    if (actualSize >= minSize && actualSize <= maxSize) {
-                        // 如果尺寸与当前不同，重新渲染矩阵
-                        if (actualSize !== sizeA) {
-                            sizeA = actualSize;
-                            renderMatrix(sizeA, containerA, 'A');
-                        }
-                        
-                        // 填充数据
-                        fillMatrixFromData('A', matrixAData);
-                        
-                        console.log(`Loaded ${actualSize}x${actualSize} matrix from URL`);
-                    } else {
-                        console.warn(`Matrix size ${actualSize} is out of range (${minSize}-${maxSize})`);
-                    }
-                } else {
-                    // 如果没有矩阵数据，尝试使用sizeA参数
-                    const urlSizeA = parseInt(urlParams.get('sizeA'));
-                    if (urlSizeA && urlSizeA >= minSize && urlSizeA <= maxSize && urlSizeA !== sizeA) {
-                        sizeA = urlSizeA;
-                        renderMatrix(sizeA, containerA, 'A');
-                    }
-                }
+                if (matrixAData.length > 0) fillMatrixFromData('A', matrixAData);
+                if (matrixBData.length > 0) fillMatrixFromData('B', matrixBData);
+                
             } catch (e) {
-                console.warn('Invalid matrix data in URL parameters:', e);
-                
-                // 如果解析失败，尝试使用sizeA参数
-                const urlSizeA = parseInt(urlParams.get('sizeA'));
-                if (urlSizeA && urlSizeA >= minSize && urlSizeA <= maxSize && urlSizeA !== sizeA) {
-                    sizeA = urlSizeA;
-                    renderMatrix(sizeA, containerA, 'A');
-                }
+                console.warn('Invalid matrix data in URL parameters');
             }
         }
 
@@ -2053,19 +2999,7 @@
             const size = target === 'A' ? sizeA : sizeB;
             const inputs = container.querySelectorAll('.matrix input');
             
-            // 确保数据尺寸与矩阵尺寸匹配
-            if (data.length !== size) {
-                console.warn(`Data size (${data.length}) doesn't match matrix size (${size})`);
-                return;
-            }
-            
             for (let i = 0; i < size; i++) {
-                // 检查每行的列数是否匹配
-                if (data[i].length !== size) {
-                    console.warn(`Row ${i} size (${data[i].length}) doesn't match matrix size (${size})`);
-                    continue;
-                }
-                
                 for (let j = 0; j < size; j++) {
                     const index = i * size + j;
                     if (data[i] && data[i][j] !== undefined) {
@@ -2083,7 +3017,7 @@
         increaseBtnB.addEventListener('click', () => { renderMatrix(sizeB + 1, containerB, 'B'); });
         decreaseBtnB.addEventListener('click', () => { renderMatrix(sizeB - 1, containerB, 'B'); });
 
-        // Swap button
+        // Swap button (保留功能)
         swapBtn.addEventListener('click', () => {
             if (sizeA !== sizeB) {
                 alert(`Cannot SWAP! Matrix A (${sizeA}x${sizeA}) and Matrix B (${sizeB}x${sizeB}) must be the same size.`);
@@ -2114,7 +3048,177 @@
             if (!isInsideB) randomOptionsB.style.display = 'none';
         }, true); 
 
-        // 初始化矩阵计算器
+        // =========== 方程式输入功能 ===========
+
+        // 默认变量名
+        const DEFAULT_VARIABLES = ['x', 'y', 'z', 'w', 'v', 'u', 't', 's', 'r', 'q'];
+        let equationCount = 3;
+        let variableCount = 3;
+
+        // 初始化方程式输入
+        function initEquationInput() {
+            const equationContainer = document.getElementById('equation-container');
+            if (!equationContainer) return;
+            
+            // 清空现有方程
+            equationContainer.innerHTML = '';
+            
+            // 创建方程式行
+            for (let i = 0; i < equationCount; i++) {
+                createEquationRow(i + 1);
+            }
+            
+            // 绑定按钮事件
+            document.getElementById('decrease-equation').addEventListener('click', decreaseEquationCount);
+            document.getElementById('increase-equation').addEventListener('click', increaseEquationCount);
+            // 修改：按钮改为calculate-rref-from-equations
+            document.getElementById('calculate-rref-from-equations').addEventListener('click', calculateRREFFromEquations);
+            document.getElementById('fill-matrix-from-equations').addEventListener('click', fillMatrixFromEquations);
+        }
+
+        // 创建单个方程式行
+        function createEquationRow(equationNumber) {
+            const container = document.getElementById('equation-container');
+            const row = document.createElement('div');
+            row.className = 'equation-row';
+            
+            let html = `<span class="equation-label">Equation ${equationNumber}:</span>`;
+            
+            // 添加变量输入框
+            for (let i = 0; i < variableCount; i++) {
+                if (i > 0) {
+                    html += `<span class="equation-operator">+</span>`;
+                }
+                
+                html += `
+                    <input type="number" class="equation-input coeff" placeholder="${i === 0 ? '2' : i === 1 ? '3' : '-1'}" 
+                           id="eq${equationNumber}_var${i}" step="any">
+                    <span class="equation-variable">${DEFAULT_VARIABLES[i]}</span>
+                `;
+            }
+            
+            html += `<span class="equation-operator">=</span>`;
+            html += `<input type="number" class="equation-input constant" placeholder="5" id="eq${equationNumber}_const" step="any">`;
+            
+            row.innerHTML = html;
+            container.appendChild(row);
+        }
+
+        // 增加方程数量
+        function increaseEquationCount() {
+            if (equationCount < 10) {
+                equationCount++;
+                document.getElementById('equation-count').textContent = equationCount;
+                
+                // 如果方程数量超过变量数量，增加变量
+                if (equationCount > variableCount && variableCount < 10) {
+                    variableCount = Math.min(equationCount, 10);
+                }
+                
+                initEquationInput();
+            }
+        }
+
+        // 减少方程数量
+        function decreaseEquationCount() {
+            if (equationCount > 2) {
+                equationCount--;
+                document.getElementById('equation-count').textContent = equationCount;
+                // ★ 新增：同步减少变量数量
+                       if (variableCount > equationCount) {
+                             variableCount = equationCount;
+                        }
+
+                initEquationInput();
+            }
+        }
+
+        // 解析方程式并生成增广矩阵
+        function parseEquationsToAugmented() {
+            const equationRows = document.querySelectorAll('.equation-row');
+            const augmentedMatrix = [];
+            
+            for (let i = 0; i < equationRows.length; i++) {
+                const rowIndex = i + 1;
+                const rowData = [];
+                
+                // 获取系数
+                for (let j = 0; j < variableCount; j++) {
+                    const input = document.getElementById(`eq${rowIndex}_var${j}`);
+                    const value = input.value === '' ? (j === 0 ? 2 : j === 1 ? 3 : -1) : parseFloat(input.value);
+                    rowData.push(isNaN(value) ? 0 : value);
+                }
+                
+                // 获取常数项
+                const constInput = document.getElementById(`eq${rowIndex}_const`);
+                const constValue = constInput.value === '' ? 5 : parseFloat(constInput.value);
+                rowData.push(isNaN(constValue) ? 0 : constValue);
+                
+                augmentedMatrix.push(rowData);
+            }
+            
+            return augmentedMatrix;
+        }
+
+        // 用方程式数据填充矩阵输入框
+        function fillMatrixFromEquations() {
+            const augmentedMatrix = parseEquationsToAugmented();
+            
+            if (augmentedMatrix.length === 0) return;
+            
+            // 分离系数矩阵和常数矩阵
+            const matrixA = augmentedMatrix.map(row => row.slice(0, -1));
+            const matrixB = augmentedMatrix.map(row => [row[row.length - 1]]);
+            
+            // 更新矩阵A和B的大小
+            const newSize = matrixA.length;
+            
+            // 更新矩阵A
+            if (newSize !== sizeA) {
+                sizeA = newSize;
+                renderMatrix(sizeA, containerA, 'A');
+            }
+            
+            // 更新矩阵B
+            if (newSize !== sizeB) {
+                sizeB = newSize;
+                renderMatrix(sizeB, containerB, 'B');
+            }
+            
+            // 填充矩阵A的数据
+            const inputsA = containerA.querySelectorAll('.matrix input');
+            for (let i = 0; i < newSize; i++) {
+                for (let j = 0; j < newSize; j++) {
+                    const index = i * newSize + j;
+                    if (inputsA[index] && matrixA[i] && matrixA[i][j] !== undefined) {
+                        inputsA[index].value = matrixA[i][j];
+                    }
+                }
+            }
+            
+            // 填充矩阵B的数据（只填充第一列）
+            const inputsB = containerB.querySelectorAll('.matrix input');
+            for (let i = 0; i < newSize; i++) {
+                const index = i * newSize; // 第一列
+                if (inputsB[index] && matrixB[i]) {
+                    inputsB[index].value = matrixB[i][0];
+                }
+                
+                // 其他列清空
+                for (let j = 1; j < newSize; j++) {
+                    const otherIndex = i * newSize + j;
+                    if (inputsB[otherIndex]) {
+                        inputsB[otherIndex].value = '';
+                    }
+                }
+            }
+            
+            updateControlState();
+        }
+
+        // =========== 初始化所有新功能 ===========
+
+        // 修改现有的initMatrixCalculator函数
         function initMatrixCalculator() {
             renderMatrix(sizeA, containerA, 'A');
             renderMatrix(sizeB, containerB, 'B');
@@ -2122,20 +3226,18 @@
             setupRandomControls('B');
             updateControlState();
             
-            // 修改后的初始化逻辑
-            const urlParams = new URLSearchParams(window.location.search);
-            const hasMatrixData = urlParams.get('matrixA');
+            // 新增：初始化方程式输入
+            initEquationInput();
             
+            // 检查math.js是否可用
+            const mathAvailable = checkMathJSAvailable();
+            
+            // 修复：从URL参数初始化后，不会自动计算
             initFromURLParameters();
-            
-            // URL有矩阵数据时自动计算RREF
-            if (hasMatrixData) {
-                setTimeout(() => {
-                    console.log("Auto-calculating RREF from URL data");
-                    calculateRREF();
-                }, 100);
-            }
         }
+
+        // 初始化矩阵计算器
+        initMatrixCalculator();
 
         // 问答栏功能
         function initPoll() {
@@ -2154,6 +3256,36 @@
             });
         }
 
+        // 检查URL中是否有分享的矩阵数据
+        function checkForSharedMatrix() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            if (urlParams.get('shared') === 'true' && urlParams.get('matrixData')) {
+                try {
+                    // 解码矩阵数据
+                    const encodedMatrix = urlParams.get('matrixData');
+                    const decoded = decodeURIComponent(encodedMatrix);
+                    const rows = decoded.split(';').map(row => 
+                        row.split(',').map(Number)
+                    );
+                    
+                    // 计算RREF
+                    const rrefResult = computeRREFWithMathJS(rows) || 
+                                     computeRREFWithSteps(rows).result;
+                    
+                    // 显示结果
+                    displayRREFResult(rows, rrefResult, [], "Shared Matrix");
+                    
+                    // 从URL中移除分享参数
+                    const newUrl = window.location.pathname;
+                    window.history.replaceState({}, document.title, newUrl);
+                    
+                } catch (e) {
+                    console.error('Failed to load shared matrix:', e);
+                }
+            }
+        }
+
         // 添加Matrix Game按钮的滚动功能
         document.addEventListener('DOMContentLoaded', function() {
             const matrixGameButton = document.querySelector('a[href="#matrix-game"]');
@@ -2162,11 +3294,14 @@
             matrixGameButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 
+                // 在移动端，滚动到右侧边栏
                 if (window.innerWidth <= 768) {
                     rightSidebar.scrollIntoView({ behavior: 'smooth' });
                 } else {
+                    // 在桌面端，添加高亮效果来吸引用户注意
                     rightSidebar.classList.add('highlight');
                     
+                    // 2秒后移除高亮效果
                     setTimeout(() => {
                         rightSidebar.classList.remove('highlight');
                     }, 2000);
@@ -2178,25 +3313,31 @@
             const languageDropdown = document.querySelector('.language-dropdown');
             const languageOptions = document.querySelectorAll('.language-option');
             
+            // 切换下拉菜单显示/隐藏
             languageToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
                 languageDropdown.classList.toggle('active');
             });
             
+            // 选择语言时更新显示
             languageOptions.forEach(option => {
                 option.addEventListener('click', function() {
                     const selectedLang = this.getAttribute('data-lang');
                     const selectedText = this.textContent;
                     
+                    // 更新当前显示的语言
                     languageToggle.innerHTML = `<span class="globe-icon">🌐</span> ${selectedText}`;
                     
+                    // 更新活动状态
                     languageOptions.forEach(opt => opt.classList.remove('active'));
                     this.classList.add('active');
                     
+                    // 关闭下拉菜单
                     languageDropdown.classList.remove('active');
                 });
             });
             
+            // 点击页面其他区域关闭下拉菜单
             document.addEventListener('click', function() {
                 languageDropdown.classList.remove('active');
             });
@@ -2206,6 +3347,44 @@
 
             // 初始化问答栏
             initPoll();
+            
+            // 检查URL中是否有分享的矩阵数据
+            checkForSharedMatrix();
+            
+            // =========== 落地页跳转自动计算RREF ===========
+            setTimeout(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const resultHistory = document.getElementById('result-history');
+
+                // 判断是否从落地页跳转（有矩阵数据参数）
+                // 注意：我们排除shared参数，因为已经被上面的函数处理了
+                const fromLandingPage = urlParams.has('sizeA') || 
+                                                       urlParams.has('matrixA');
+
+                if (fromLandingPage) {
+                    console.log('Detected landing page redirect with matrix data...');
+                    
+                    // 如果还没有结果，则自动计算RREF
+                    if (resultHistory && resultHistory.children.length === 0) {
+                        console.log('Auto-calculating RREF from URL data...');
+                        setTimeout(() => {
+                            calculateRREF();
+                        }, 200);
+                    }
+
+                    // 确保结果可见（如果已经有结果，就滚动到结果区域）
+                    const resultContainer = document.getElementById('result-container');
+                    if (resultContainer) {
+                        setTimeout(() => {
+                            resultContainer.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'start' 
+                            });
+                        }, 300);
+                    }
+                }
+            }, 100);
+            // =========== 落地页跳转自动计算结束 ===========
 
         });
     </script>
