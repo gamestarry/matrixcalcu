@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online matrix calculator for multiplication, inverse matrices, and determinants. Calculate 2x2 and 3x3 matrices quickly and easily.">
-    <meta name="keywords" content="matrix multiplication, inverse matrix, determinant, 2x2 matrix calculator, 3x3 matrix calculator, linear algebra tools">
+    <meta name="description" content="Free online matrix calculator for multiplication, inverse matrices, and determinants. Calculate matrices of any dimension quickly and easily.">
+    <meta name="keywords" content="matrix multiplication, inverse matrix, determinant, matrix calculator, linear algebra tools, non-square matrix multiplication">
     <meta name="author" content="Matrix Calculator Pro">
     <link rel="canonical" href="https://matrixcalcu.com/en/matrix-multiplication-calculator" />  
     
     <!-- Open Graph 标签 -->
     <meta property="og:title" content="Free Matrix Calculator - Multiplication, Inverse & Determinant">
-    <meta property="og:description" content="Calculate matrix products, inverse matrices, and determinants instantly. Easy-to-use online calculator for 2x2 and 3x3 matrices.">
+    <meta property="og:description" content="Calculate matrix products, inverse matrices, and determinants instantly. Easy-to-use online calculator for matrices of any dimension.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://matrixcalcu.com/en/matrix-multiplication-calculator" />  
     
-    <title>Matrix Calculator - Multiplication, Inverse & Determinant for 2x2 and 3x3 Matrices</title>
+    <title>Matrix Calculator - Multiplication, Inverse & Determinant for Matrices of Any Dimension</title>
     <!-- ========== HREFLANG 标签（英文计算器页面）========== -->
     <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-multiplication-calculator" />
     <link rel="alternate" hreflang="en-US" href="https://matrixcalcu.com/en/matrix-multiplication-calculator" />
@@ -32,13 +32,16 @@
     <!-- MathJax for rendering formulas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
     
+    <!-- 在现有的 MathJax 之后添加 -->
+    <script src="/math.min.js"></script>
+
     <!-- Schema.org 结构化数据 -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Matrix Calculator - Multiplication, Inverse & Determinant",
-      "description": "Free online matrix calculator for multiplication, inverse matrices, and determinants of 2x2 and 3x3 matrices",
+      "description": "Free online matrix calculator for multiplication, inverse matrices, and determinants of matrices of any dimension",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "Any",
       "browserRequirements": "Requires JavaScript",
@@ -435,26 +438,42 @@
         
         .matrix-calculator .controls {
             display: flex;
-            align-items: center; 
-            gap: 15px; 
+            flex-wrap: wrap;
+            align-items: baseline; 
+            gap: 8px; 
             margin-bottom: 10px;
-            padding: 0 10px;
+            padding: 0 8px;
             width: 100%; 
             box-sizing: border-box;
         }
 
         .matrix-calculator .matrix-label {
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: bold;
             color: #333;
             margin-right: 15px;
         }
         
+        .matrix-calculator .matrix-dimension {
+            font-size: 0.7em;
+            color: #666;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+        
         .matrix-calculator .size-controls {
             display: flex;
-            gap: 5px; 
-            border-right: 1px solid #ccc;
-            padding-right: 15px;
+            align-items: center;
+            gap: 2px; 
+            padding: 4px 6px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .matrix-calculator .size-controls .control-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-right: 3px;
         }
 
         .matrix-calculator .random-controls {
@@ -462,8 +481,9 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            border-right: 1px solid #ccc;
-            padding-right: 15px;
+            padding: 5px 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
         }
 
         .matrix-calculator .random-options {
@@ -626,6 +646,89 @@
             -moz-appearance: textfield; /* Firefox */
         }
         
+        /* 错误消息样式 */
+        .error-message {
+            background-color: #ffeaea;
+            border-left: 4px solid #ff4b4b;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            color: #d32f2f;
+            font-weight: 500;
+        }
+        
+        .error-message i {
+            margin-right: 8px;
+            color: #ff4b4b;
+        }
+        
+        /* 维度帮助样式 */
+        .dimension-help {
+            background-color: #fff8e1;
+            border: 1px solid #ffd54f;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .dimension-help .help-header {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: #ff8f00;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .dimension-help .help-header i {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        .dimension-help .help-content {
+            color: #5d4037;
+            line-height: 1.5;
+        }
+        
+        .dimension-help .help-content p {
+            margin-bottom: 8px;
+        }
+        
+        .dimension-help .help-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .dimension-help .fix-btn,
+        .dimension-help .help-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .dimension-help .fix-btn {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        .dimension-help .fix-btn:hover {
+            background-color: #3d8b40;
+        }
+        
+        .dimension-help .help-btn {
+            background-color: #2196f3;
+            color: white;
+        }
+        
+        .dimension-help .help-btn:hover {
+            background-color: #0b7dda;
+        }
+        
         /* --- 您提供的结果输出样式 --- */
         #result-container {
             margin-top: 0px; 
@@ -709,6 +812,20 @@
             border-right: 3px solid #333; 
             border-radius: 0;
             box-sizing: content-box; 
+            position: relative;
+        }
+        
+        .result-matrix-grid .matrix-dimension {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7em;
+            color: #666;
+            background-color: #f8f9fa;
+            padding: 0 5px;
+            border-radius: 3px;
+            white-space: nowrap;
         }
         
         .result-cell {
@@ -1455,11 +1572,24 @@
                                 <div class="matrix-area">
                                     
                                     <div class="controls" id="controls-a">
-                                        <div class="matrix-label">A</div>
+                                        <div class="matrix-label">A <span id="dim-a" class="matrix-dimension">(3×3)</span></div>
+                                        
+                                        <!-- 行控制 -->
                                         <div class="size-controls">
-                                            <button id="decrease-btn-a" class="control-btn" title="Decrease Size A"><i class="fas fa-minus"></i></button>
-                                            <button id="increase-btn-a" class="control-btn" title="Increase Size A"><i class="fas fa-plus"></i></button>
+                                            <span class="control-label">Rows:</span>
+                                            <button id="decrease-rows-a" class="control-btn" title="Decrease Rows"><i class="fas fa-minus"></i></button>
+                                            <span class="size-display" id="rows-a">3</span>
+                                            <button id="increase-rows-a" class="control-btn" title="Increase Rows"><i class="fas fa-plus"></i></button>
                                         </div>
+                                        
+                                        <!-- 列控制 -->
+                                        <div class="size-controls">
+                                            <span class="control-label">Cols:</span>
+                                            <button id="decrease-cols-a" class="control-btn" title="Decrease Columns"><i class="fas fa-minus"></i></button>
+                                            <span class="size-display" id="cols-a">3</span>
+                                            <button id="increase-cols-a" class="control-btn" title="Increase Columns"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                        
                                         <div class="random-controls" id="random-controls-main-a">
                                             <button id="toggle-random-btn-a" class="control-btn" title="Generate Random Matrix A"><i class="fas fa-dice"></i></button>
                                             <div id="random-options-a" class="random-options" style="display: none;">
@@ -1536,11 +1666,24 @@
                                 <div class="matrix-area">
                                     
                                     <div class="controls" id="controls-b">
-                                        <div class="matrix-label">B</div>
+                                        <div class="matrix-label">B <span id="dim-b" class="matrix-dimension">(3×3)</span></div>
+                                        
+                                        <!-- 行控制 -->
                                         <div class="size-controls">
-                                            <button id="decrease-btn-b" class="control-btn" title="Decrease Size B"><i class="fas fa-minus"></i></button>
-                                            <button id="increase-btn-b" class="control-btn" title="Increase Size B"><i class="fas fa-plus"></i></button>
+                                            <span class="control-label">Rows:</span>
+                                            <button id="decrease-rows-b" class="control-btn" title="Decrease Rows"><i class="fas fa-minus"></i></button>
+                                            <span class="size-display" id="rows-b">3</span>
+                                            <button id="increase-rows-b" class="control-btn" title="Increase Rows"><i class="fas fa-plus"></i></button>
                                         </div>
+                                        
+                                        <!-- 列控制 -->
+                                        <div class="size-controls">
+                                            <span class="control-label">Cols:</span>
+                                            <button id="decrease-cols-b" class="control-btn" title="Decrease Columns"><i class="fas fa-minus"></i></button>
+                                            <span class="size-display" id="cols-b">3</span>
+                                            <button id="increase-cols-b" class="control-btn" title="Increase Columns"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                        
                                         <div class="random-controls" id="random-controls-main-b">
                                             <button id="toggle-random-btn-b" class="control-btn" title="Generate Random Matrix B"><i class="fas fa-dice"></i></button>
                                             <div id="random-options-b" class="random-options" style="display: none;">
@@ -1924,6 +2067,49 @@
 
     <!-- JavaScript代码 -->
     <script>
+        // ========== 分数支持核心函数 ==========
+        // 解析输入值（支持分数和小数）
+        function parseMatrixInput(value) {
+            if (!value || value.trim() === '') return math.fraction(0);
+            
+            const str = value.trim();
+            
+            try {
+                // math.js 可以自动解析 "1/2", "-3/4", "0.5" 等格式
+                return math.fraction(str);
+            } catch (error) {
+                // 如果解析失败，返回0
+                console.warn('无法解析输入值:', str, '，使用0代替');
+                return math.fraction(0);
+            }
+        }
+
+        // 格式化显示数值（分数显示为分数，小数显示为小数）
+        function formatMatrixValue(value) {
+            if (math.isFraction(value)) {
+                const f = math.fraction(value);
+                // 检查是否是整数（分母为1）
+                if (math.compare(f.d, 1) === 0) {
+                    return (f.s * f.n).toString(); // 整数
+                } else {
+                    // 分数，保持原始格式
+                    return `${f.s * f.n}/${f.d}`;
+                }
+            }
+            
+            // 如果不是分数，按原逻辑处理
+            if (typeof value === 'number') {
+                if (Number.isInteger(value)) {
+                    return value.toString();
+                } else {
+                    // 保留2位小数
+                    return value.toFixed(2);
+                }
+            }
+            
+            return value.toString();
+        }
+
         // 全局导航函数 - 已添加URL参数传递功能
         function goTo(pageName) {
             const pathParts = window.location.pathname.split('/');
@@ -1935,8 +2121,10 @@
             
             // 创建URL参数
             const params = new URLSearchParams();
-            params.append('sizeA', sizeA);
-            params.append('sizeB', sizeB);
+            params.append('rowsA', matrices.A.rows);
+            params.append('colsA', matrices.A.cols);
+            params.append('rowsB', matrices.B.rows);
+            params.append('colsB', matrices.B.cols);
             params.append('matrixA', JSON.stringify(matrixAData));
             params.append('matrixB', JSON.stringify(matrixBData));
             
@@ -1949,38 +2137,45 @@
         // 获取矩阵数据的函数
         function getMatrixData(matrixId) {
             const container = matrixId === 'A' ? containerA : containerB;
-            const size = matrixId === 'A' ? sizeA : sizeB;
+            const matrix = matrices[matrixId];
             const inputs = container.querySelectorAll('.matrix input');
             const data = [];
             
-            for (let i = 0; i < size; i++) {
+            for (let i = 0; i < matrix.rows; i++) {
                 const row = [];
-                for (let j = 0; j < size; j++) {
-                    const index = i * size + j;
-                    row.push(inputs[index].value || '0'); // 空值默认为0
+                for (let j = 0; j < matrix.cols; j++) {
+                    const index = i * matrix.cols + j;
+                    row.push(inputs[index] ? inputs[index].value || '0' : '0'); // 空值默认为0
                 }
                 data.push(row);
             }
             return data;
         }
 
-        // 矩阵乘法计算函数
+        // 矩阵乘法计算函数 - 修改为支持不同维度
         function calculateMultiplication() {
             try {
                 // 获取矩阵A和B的值
-                const matrixA = getMatrixValues(containerA, sizeA).matrix;
-                const matrixB = getMatrixValues(containerB, sizeB).matrix;
+                const matrixA = getMatrixValues('A');
+                const matrixB = getMatrixValues('B');
                 
                 // 检查矩阵维度是否匹配
-                if (sizeA !== sizeB) {
-                    throw new Error(`Matrix dimensions must match for multiplication. A is ${sizeA}x${sizeA}, B is ${sizeB}x${sizeB}`);
+                if (matrices.A.cols !== matrices.B.rows) {
+                    showError(
+                        `Matrix multiplication not possible!<br>` +
+                        `Matrix A is ${matrices.A.rows}×${matrices.A.cols}, Matrix B is ${matrices.B.rows}×${matrices.B.cols}.<br>` +
+                        `Number of columns in A (${matrices.A.cols}) must equal number of rows in B (${matrices.B.rows}).`
+                    );
+                    return;
                 }
                 
                 // 执行矩阵乘法
-                const result = multiplyMatrices(matrixA, matrixB);
+                const result = multiplyMatrices(matrixA, matrices.A.rows, matrices.A.cols, 
+                                               matrixB, matrices.B.rows, matrices.B.cols);
                 
                 // 生成过程矩阵（显示计算过程）
-                const processMatrix = generateProcessMatrix(matrixA, matrixB);
+                const processMatrix = generateProcessMatrix(matrixA, matrices.A.rows, matrices.A.cols,
+                                                          matrixB, matrices.B.rows, matrices.B.cols);
                 
                 // 显示结果
                 displayResult(
@@ -1997,17 +2192,20 @@
             }
         }
 
-        // 矩阵乘法算法
-        function multiplyMatrices(matrixA, matrixB) {
-            const size = matrixA.length;
+        // 矩阵乘法算法 - 支持不同维度，使用math.js的分数运算
+        function multiplyMatrices(matrixA, rowsA, colsA, matrixB, rowsB, colsB) {
+            const resultRows = rowsA;
+            const resultCols = colsB;
             const result = [];
             
-            for (let i = 0; i < size; i++) {
+            for (let i = 0; i < resultRows; i++) {
                 result[i] = [];
-                for (let j = 0; j < size; j++) {
-                    let sum = 0;
-                    for (let k = 0; k < size; k++) {
-                        sum += matrixA[i][k] * matrixB[k][j];
+                for (let j = 0; j < resultCols; j++) {
+                    let sum = math.fraction(0);
+                    for (let k = 0; k < colsA; k++) {
+                        // 使用 math.js 进行分数安全的乘法和加法
+                        const product = math.multiply(matrixA[i][k], matrixB[k][j]);
+                        sum = math.add(sum, product);
                     }
                     result[i][j] = sum;
                 }
@@ -2016,18 +2214,23 @@
             return result;
         }
 
-        // 生成过程矩阵（显示计算过程）
-        function generateProcessMatrix(matrixA, matrixB) {
-            const size = matrixA.length;
+        // 生成过程矩阵（显示计算过程）- 支持不同维度
+        function generateProcessMatrix(matrixA, rowsA, colsA, matrixB, rowsB, colsB) {
+            const resultRows = rowsA;
+            const resultCols = colsB;
             const processMatrix = [];
             
-            for (let i = 0; i < size; i++) {
+            for (let i = 0; i < resultRows; i++) {
                 processMatrix[i] = [];
-                for (let j = 0; j < size; j++) {
+                for (let j = 0; j < resultCols; j++) {
                     let processText = '';
-                    for (let k = 0; k < size; k++) {
+                    for (let k = 0; k < colsA; k++) {
                         if (k > 0) processText += ' + ';
-                        processText += `${matrixA[i][k]}×${matrixB[k][j]}`;
+                        
+                        // 格式化显示每个值
+                        const aFormatted = formatMatrixValue(matrixA[i][k]);
+                        const bFormatted = formatMatrixValue(matrixB[k][j]);
+                        processText += `${aFormatted}×${bFormatted}`;
                     }
                     processMatrix[i][j] = processText;
                 }
@@ -2054,9 +2257,12 @@
         }
 
         // 矩阵计算器功能
-        let sizeA = 3;
-        let sizeB = 3; 
-        const minSize = 2;
+        // 修改为支持行列独立控制
+        let matrices = {
+            A: { rows: 3, cols: 3 },
+            B: { rows: 3, cols: 3 }
+        };
+        const minSize = 1;
         const maxSize = 9; 
         
         const containerA = document.getElementById('matrix-container-a');
@@ -2064,64 +2270,278 @@
         const resultContainer = document.getElementById('result-container');
         const resultHistory = document.getElementById('result-history');
         
-        const increaseBtnA = document.getElementById('increase-btn-a');
-        const decreaseBtnA = document.getElementById('decrease-btn-a');
-        const increaseBtnB = document.getElementById('increase-btn-b');
-        const decreaseBtnB = document.getElementById('decrease-btn-b');
+        // 控制按钮
+        const decreaseRowsA = document.getElementById('decrease-rows-a');
+        const increaseRowsA = document.getElementById('increase-rows-a');
+        const decreaseColsA = document.getElementById('decrease-cols-a');
+        const increaseColsA = document.getElementById('increase-cols-a');
+        const decreaseRowsB = document.getElementById('decrease-rows-b');
+        const increaseRowsB = document.getElementById('increase-rows-b');
+        const decreaseColsB = document.getElementById('decrease-cols-b');
+        const increaseColsB = document.getElementById('increase-cols-b');
         
         const randomOptionsA = document.getElementById('random-options-a');
         const randomOptionsB = document.getElementById('random-options-b');
         const swapBtn = document.getElementById('swap-ab-btn');
         const clearAllResultsBtn = document.getElementById('clear-all-results');
 
-        // 使用您提供的结果显示函数
+        // 更新矩阵维度显示
+        function updateDimensionDisplay(matrixId) {
+            const dimElement = document.getElementById(`dim-${matrixId.toLowerCase()}`);
+            if (dimElement) {
+                const m = matrices[matrixId];
+                dimElement.textContent = `(${m.rows}×${m.cols})`;
+                
+                // 更新行列显示
+                const rowsElement = document.getElementById(`rows-${matrixId.toLowerCase()}`);
+                const colsElement = document.getElementById(`cols-${matrixId.toLowerCase()}`);
+                if (rowsElement) rowsElement.textContent = m.rows;
+                if (colsElement) colsElement.textContent = m.cols;
+            }
+        }
+
+        // 渲染矩阵
+        function renderMatrix(matrixId) {
+            const container = matrixId === 'A' ? containerA : containerB;
+            const matrix = matrices[matrixId];
+            const { rows, cols } = matrix;
+            
+            // 保存现有值
+            const oldInputs = container.querySelectorAll('.matrix input');
+            const oldValues = Array.from(oldInputs).map(input => input.value);
+            const oldRows = matrices[matrixId].rows;
+            const oldCols = matrices[matrixId].cols;
+            
+            container.innerHTML = '';
+            const newMatrixDiv = document.createElement('div');
+            newMatrixDiv.classList.add('matrix');
+            newMatrixDiv.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+            
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const input = document.createElement('input');
+                    input.type = 'text';  // 允许输入分数
+                    input.placeholder = '0';  // 可选：添加提示
+                    
+                    // 尝试从旧矩阵中获取值（如果位置匹配）
+                    if (r < oldRows && c < oldCols) {
+                        const oldIndex = r * oldCols + c;
+                        if (oldIndex < oldValues.length) {
+                            input.value = oldValues[oldIndex];
+                        }
+                    }
+                    
+                    // 添加输入验证
+                    input.addEventListener('blur', function() {
+                        const value = this.value.trim();
+                        if (value) {
+                            try {
+                                // 尝试解析，如果失败则提示
+                                math.fraction(value);
+                                this.style.borderColor = ''; // 有效输入
+                            } catch (e) {
+                                this.style.borderColor = 'red'; // 无效输入
+                                console.warn('无效输入:', value);
+                            }
+                        }
+                    });
+                    
+                    newMatrixDiv.appendChild(input);
+                }
+            }
+            
+            container.appendChild(newMatrixDiv);
+            updateDimensionDisplay(matrixId);
+            updateControlState(matrixId);
+        }
+
+        // 更新控制按钮状态
+        function updateControlState(matrixId) {
+            const matrix = matrices[matrixId];
+            
+            // 更新按钮禁用状态
+            const decreaseRowsBtn = document.getElementById(`decrease-rows-${matrixId.toLowerCase()}`);
+            const increaseRowsBtn = document.getElementById(`increase-rows-${matrixId.toLowerCase()}`);
+            const decreaseColsBtn = document.getElementById(`decrease-cols-${matrixId.toLowerCase()}`);
+            const increaseColsBtn = document.getElementById(`increase-cols-${matrixId.toLowerCase()}`);
+            
+            if (decreaseRowsBtn) decreaseRowsBtn.disabled = (matrix.rows === minSize);
+            if (increaseRowsBtn) increaseRowsBtn.disabled = (matrix.rows === maxSize);
+            if (decreaseColsBtn) decreaseColsBtn.disabled = (matrix.cols === minSize);
+            if (increaseColsBtn) increaseColsBtn.disabled = (matrix.cols === maxSize);
+        }
+
+        // 获取矩阵值
+        function getMatrixValues(matrixId) {
+            const container = matrixId === 'A' ? containerA : containerB;
+            const matrix = matrices[matrixId];
+            const inputs = container.querySelectorAll('.matrix input');
+            const matrixValues = [];
+            
+            for (let i = 0; i < matrix.rows; i++) {
+                const row = [];
+                for (let j = 0; j < matrix.cols; j++) {
+                    const index = i * matrix.cols + j;
+                    const value = inputs[index] ? parseMatrixInput(inputs[index].value) : math.fraction(0);
+                    row.push(value);
+                }
+                matrixValues.push(row);
+            }
+            return matrixValues;
+        }
+
+        // 填充随机值
+        function fillMatrix(target, type) {
+            const container = target === 'A' ? containerA : containerB;
+            const optionsDiv = target === 'A' ? randomOptionsA : randomOptionsB;
+            const inputs = container.querySelectorAll('.matrix input');
+            
+            inputs.forEach(input => { 
+                let value;
+                switch (type) {
+                    case 'pos_int': 
+                        value = Math.floor(Math.random() * 10);
+                        break;
+                    case 'signed_int': 
+                        value = Math.floor(Math.random() * 21) - 10;
+                        break;
+                    case 'float': 
+                        value = ((Math.random() * 2) - 1).toFixed(2); 
+                        break;
+                    default:
+                        value = 0;
+                }
+                input.value = value;
+            });
+            
+            optionsDiv.style.display = 'none';
+        }
+
+        // 设置随机控制
+        function setupRandomControls(target) {
+            const toggleBtn = document.getElementById(`toggle-random-btn-${target.toLowerCase()}`);
+            const optionsDiv = document.getElementById(`random-options-${target.toLowerCase()}`);
+            const buttons = optionsDiv.querySelectorAll('.random-option-btn');
+
+            toggleBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                randomOptionsA.style.display = 'none'; 
+                randomOptionsB.style.display = 'none'; 
+                optionsDiv.style.display = 'flex';
+            });
+
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const type = button.getAttribute('data-type');
+                    fillMatrix(target, type);
+                });
+            });
+        }
+
+        // 从URL参数初始化
+        function initFromURLParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // 获取矩阵大小
+            const urlRowsA = parseInt(urlParams.get('rowsA'));
+            const urlColsA = parseInt(urlParams.get('colsA'));
+            const urlRowsB = parseInt(urlParams.get('rowsB'));
+            const urlColsB = parseInt(urlParams.get('colsB'));
+            
+            if (urlRowsA && urlColsA) {
+                matrices.A.rows = urlRowsA;
+                matrices.A.cols = urlColsA;
+            }
+            
+            if (urlRowsB && urlColsB) {
+                matrices.B.rows = urlRowsB;
+                matrices.B.cols = urlColsB;
+            }
+            
+            // 获取矩阵数据
+            try {
+                const matrixAData = JSON.parse(urlParams.get('matrixA') || '[]');
+                const matrixBData = JSON.parse(urlParams.get('matrixB') || '[]');
+                
+                if (matrixAData.length > 0) fillMatrixFromData('A', matrixAData);
+                if (matrixBData.length > 0) fillMatrixFromData('B', matrixBData);
+                
+                // 检查是否需要自动计算乘法
+                const operation = urlParams.get('operation');
+                if (operation === 'Multiplication' || (matrixAData.length > 0 && matrixBData.length > 0)) {
+                    // 延迟执行以确保矩阵已完全渲染
+                    setTimeout(() => {
+                        calculateMultiplication();
+                    }, 100);
+                }
+            } catch (e) {
+                console.warn('Invalid matrix data in URL parameters');
+            }
+        }
+
+        function fillMatrixFromData(target, data) {
+            const container = target === 'A' ? containerA : containerB;
+            const matrix = matrices[target];
+            const inputs = container.querySelectorAll('.matrix input');
+            
+            for (let i = 0; i < matrix.rows; i++) {
+                for (let j = 0; j < matrix.cols; j++) {
+                    const index = i * matrix.cols + j;
+                    if (data[i] && data[i][j] !== undefined && inputs[index]) {
+                        inputs[index].value = data[i][j];
+                    }
+                }
+            }
+        }
+
+        // 显示结果矩阵
         function renderResultMatrix(matrix, container, isProcess = false) {
-            const size = matrix.length;
+            const rows = matrix.length;
+            const cols = matrix[0] ? matrix[0].length : 0;
+            
             const gridDiv = document.createElement('div');
             gridDiv.classList.add('result-matrix-grid');
             if (isProcess) gridDiv.classList.add('process-matrix');
             
-            const cols = matrix[0] ? matrix[0].length : size; 
-            gridDiv.style.gridTemplateColumns = `repeat(${cols}, auto)`; 
+            // 添加维度标签
+            const dimLabel = document.createElement('div');
+            dimLabel.className = 'matrix-dimension';
+            dimLabel.textContent = `${rows}×${cols}`;
+            gridDiv.appendChild(dimLabel);
             
-            matrix.forEach(row => {
-                row.forEach(val => {
+            // 设置网格列
+            gridDiv.style.gridTemplateColumns = `repeat(${cols}, auto)`;
+            
+            // 渲染单元格
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
                     const cell = document.createElement('div');
                     cell.classList.add('result-cell');
                     
                     if (isProcess) {
-                        cell.innerHTML = val;
+                        cell.innerHTML = matrix[i][j];
                     } else {
-                        const numVal = parseFloat(val);
-                        if (Number.isInteger(numVal)) {
-                            cell.textContent = numVal.toString(); 
-                        } else {
-                            if (Math.abs(numVal - Math.round(numVal)) < 1e-6) {
-                                cell.textContent = Math.round(numVal).toString();
-                            } else {
-                                cell.textContent = numVal.toFixed(2); 
-                            }
-                        }
+                        // 使用统一的格式化函数
+                        cell.textContent = formatMatrixValue(matrix[i][j]);
                     }
                     gridDiv.appendChild(cell);
-                });
-            });
+                }
+            }
             container.appendChild(gridDiv);
         }
 
-       
+        // 显示结果
         function displayResult(operation, matrixA, matrixB, operator, processMatrix, resultMatrix, errorMessage = null) {
-            
             const resultBlock = document.createElement('div');
             resultBlock.classList.add('result-block');
             resultBlock.id = 'result-' + Date.now(); 
 
-            // 1. 错误显示
+            // 错误显示
             if (errorMessage) {
                 resultBlock.innerHTML = `<div class="error-message">${errorMessage}</div>`;
             } else {
-                
-                // 2. 操作按钮 (切换过程、分享、删除)
+                // 操作按钮
                 const actionButtons = document.createElement('div');
                 actionButtons.classList.add('action-buttons');
                 actionButtons.innerHTML = `
@@ -2139,40 +2559,40 @@
                 `;
                 resultBlock.appendChild(actionButtons);
                 
-                // 3. 桌面端完整视图
+                // 桌面端完整视图
                 const desktopView = document.createElement('div');
                 desktopView.className = 'desktop-result-view';
                 
-                // 表达式行容器 - 使用flex-wrap允许换行
+                // 表达式行容器
                 const row = document.createElement('div');
                 row.classList.add('result-expression-row');
                 
-                // --- 矩阵 A ---
+                // 矩阵 A
                 renderResultMatrix(matrixA, row);
                 
-                // --- 运算符 ---
+                // 运算符
                 row.innerHTML += `<span class="result-op">${operator}</span>`;
                 
-                // --- 矩阵 B ---
+                // 矩阵 B
                 renderResultMatrix(matrixB, row);
                 
-                // --- 等号 1 ---
+                // 等号 1
                 row.innerHTML += `<span class="result-eq">=</span>`;
 
-                // --- 过程矩阵和等号2容器 (可切换显示) ---
+                // 过程矩阵和等号2容器
                 const processOnlyContainer = document.createElement('div');
                 processOnlyContainer.classList.add('process-only-container'); 
                 processOnlyContainer.style.display = 'flex';
                 processOnlyContainer.style.gap = '15px'; 
                 processOnlyContainer.style.alignItems = 'center';
 
-                // --- 过程矩阵 (表达式) ---
+                // 过程矩阵
                 renderResultMatrix(processMatrix, processOnlyContainer, true);
                 
-                // --- 等号 2 ---
+                // 等号 2
                 processOnlyContainer.innerHTML += `<span class="result-eq">=</span>`;
 
-                // --- 最终结果矩阵 (始终可见) ---
+                // 最终结果矩阵
                 const finalResultContainer = document.createElement('div');
                 finalResultContainer.classList.add('final-result-container');
                 finalResultContainer.style.display = 'flex';
@@ -2185,13 +2605,12 @@
                 row.appendChild(finalResultContainer); 
                 desktopView.appendChild(row);
                 resultBlock.appendChild(desktopView);
-                
             }
 
-            // 5. 将结果块添加到顶部 (历史记录顺序)
+            // 将结果块添加到顶部
             resultHistory.prepend(resultBlock);
             
-            // 6. 绑定功能
+            // 绑定功能
             setupResultBlockFunctionality(resultBlock, matrixA, matrixB, resultMatrix, operation);
         }
 
@@ -2220,30 +2639,6 @@
                         toggleProcessBtn.innerHTML = '<i class="fas fa-eye"></i>';
                         toggleProcessBtn.title = 'Show Calculation Process';
                     }
-                });
-            }
-            
-            // 移动端显示/隐藏详情
-            const showDetailsBtn = resultBlock.querySelector('.show-details-btn');
-            if (showDetailsBtn) {
-                showDetailsBtn.addEventListener('click', () => {
-                    const desktopView = resultBlock.querySelector('.desktop-result-view');
-                    const mobileView = resultBlock.querySelector('.mobile-result-view');
-                    
-                    desktopView.style.display = 'block';
-                    mobileView.style.display = 'none';
-                    
-                    // 添加返回按钮
-                    const backBtn = document.createElement('button');
-                    backBtn.className = 'hide-details-btn';
-                    backBtn.textContent = 'Back to Simplified View';
-                    backBtn.addEventListener('click', () => {
-                        desktopView.style.display = 'none';
-                        mobileView.style.display = 'block';
-                        backBtn.remove();
-                    });
-                    
-                    resultBlock.insertBefore(backBtn, desktopView);
                 });
             }
             
@@ -2305,8 +2700,10 @@
             const baseURL = window.location.origin + window.location.pathname;
             const params = new URLSearchParams();
             
-            params.append('sizeA', matrixA.length);
-            params.append('sizeB', matrixB.length);
+            params.append('rowsA', matrices.A.rows);
+            params.append('colsA', matrices.A.cols);
+            params.append('rowsB', matrices.B.rows);
+            params.append('colsB', matrices.B.cols);
             params.append('matrixA', JSON.stringify(matrixA));
             params.append('matrixB', JSON.stringify(matrixB));
             params.append('operation', operation);
@@ -2315,10 +2712,10 @@
         }
 
         function generateEmailBody(matrixA, matrixB, result, operation) {
-            let body = `Matrix A:\n${matrixToString(matrixA)}\n\n`;
-            body += `Matrix B:\n${matrixToString(matrixB)}\n\n`;
+            let body = `Matrix A (${matrices.A.rows}×${matrices.A.cols}):\n${matrixToString(matrixA)}\n\n`;
+            body += `Matrix B (${matrices.B.rows}×${matrices.B.cols}):\n${matrixToString(matrixB)}\n\n`;
             body += `Operation: ${operation}\n\n`;
-            body += `Result:\n${matrixToString(result)}\n\n`;
+            body += `Result (${matrices.A.rows}×${matrices.B.cols}):\n${matrixToString(result)}\n\n`;
             body += `View full calculation: ${generateShareURL(matrixA, matrixB, operation)}`;
             
             return body;
@@ -2337,12 +2734,12 @@
             
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error-message';
-            errorDiv.textContent = `❌ Error: ${message}`;
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
             
             // 添加到结果容器的顶部
             resultHistory.insertBefore(errorDiv, resultHistory.firstChild);
             
-            // 3秒后自动移除错误消息
+            // 5秒后自动移除错误消息
             setTimeout(() => {
                 if (errorDiv.parentNode) {
                     errorDiv.remove();
@@ -2350,251 +2747,197 @@
             }, 5000);
         }
 
-        // Helper 1: Safely extract matrix values from DOM
-        function getMatrixValues(container, size) {
-            const inputs = container.querySelectorAll('.matrix input');
-            const matrix = [];
-            let isValid = true;
+        // 交换矩阵
+        function swapMatrices() {
+            // 交换矩阵数据
+            const temp = matrices.A;
+            matrices.A = matrices.B;
+            matrices.B = temp;
             
-            for (let i = 0; i < size; i++) {
-                const row = [];
-                for (let j = 0; j < size; j++) {
-                    const value = parseFloat(inputs[i * size + j].value); 
-                    if (isNaN(value)) {
-                        isValid = false;
-                        row.push(0); 
-                    } else {
-                        row.push(value);
-                    }
-                }
-                matrix.push(row);
-            }
-            return { matrix, isValid };
-        }
-
-        // Helper 2: Generate random numbers
-        function generateRandomValue(type) {
-            let value;
-            switch (type) {
-                case 'pos_int': 
-                    value = Math.floor(Math.random() * 10);
-                    break;
-                case 'signed_int': 
-                    value = Math.floor(Math.random() * 21) - 10;
-                    break;
-                case 'float': 
-                    value = ((Math.random() * 2) - 1).toFixed(2); 
-                    break;
-                default:
-                    value = 0;
-            }
-            return value;
-        }
-
-        // Helper 3: Fill matrix with random values
-        function fillMatrix(target, type) {
-            const container = target === 'A' ? containerA : containerB;
-            const optionsDiv = target === 'A' ? randomOptionsA : randomOptionsB;
-            const inputs = container.querySelectorAll('.matrix input');
-            if (inputs.length === 0) return;
-            inputs.forEach(input => { input.value = generateRandomValue(type); });
-            optionsDiv.style.display = 'none';
-        }
-
-        // Helper 4: Render matrix (size adjustment logic)
-        function renderMatrix(size, container, matrixId) {
-            const oldInputs = container.querySelectorAll('.matrix input');
-            const oldValues = Array.from(oldInputs).map(input => input.value);
-            const oldSize = matrixId === 'A' ? sizeA : sizeB;
-
-            container.innerHTML = ''; 
-            const newMatrixDiv = document.createElement('div');
-            newMatrixDiv.classList.add('matrix');
-            newMatrixDiv.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-
-            for (let r = 0; r < size; r++) {
-                for (let c = 0; c < size; c++) {
-                    const input = document.createElement('input');
-                    input.type = 'number';
-                    input.placeholder = '0'; 
-                    if (r < oldSize && c < oldSize) {
-                        const oldIndex = r * oldSize + c;
-                        input.value = oldValues[oldIndex] || ''; 
-                    } else {
-                        input.value = ''; 
-                    }
-                    newMatrixDiv.appendChild(input);
-                }
-            }
-            container.appendChild(newMatrixDiv);
+            // 重新渲染矩阵
+            renderMatrix('A');
+            renderMatrix('B');
             
-            if (matrixId === 'A') { sizeA = size; } else { sizeB = size; }
-            updateControlState();
-        }
-
-        // Helper 5: Update control button state
-        function updateControlState() {
-            decreaseBtnA.disabled = (sizeA === minSize);
-            increaseBtnA.disabled = (sizeA === maxSize);
-            decreaseBtnA.title = `Decrease Size A (Current: ${sizeA}x${sizeA})`;
-            increaseBtnA.title = `Increase Size A (Current: ${sizeA}x${sizeA})`;
-
-            decreaseBtnB.disabled = (sizeB === minSize);
-            increaseBtnB.disabled = (sizeB === maxSize);
-            decreaseBtnB.title = `Decrease Size B (Current: ${sizeB}x${sizeB})`;
-            increaseBtnB.title = `Increase Size B (Current: ${sizeB}x${sizeB})`;
-        }
-        
-        // Helper 6: Setup random number controls
-        const setupRandomControls = (target) => {
-            const toggleBtn = document.getElementById(`toggle-random-btn-${target.toLowerCase()}`);
-            const optionsDiv = document.getElementById(`random-options-${target.toLowerCase()}`);
-            const buttons = optionsDiv.querySelectorAll('.random-option-btn');
-
-            toggleBtn.addEventListener('click', (event) => {
-                event.stopPropagation();
-                randomOptionsA.style.display = 'none'; 
-                randomOptionsB.style.display = 'none'; 
-                optionsDiv.style.display = 'flex';
-            });
-
-            buttons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    const type = button.getAttribute('data-type');
-                    fillMatrix(target, type);
-                });
-            });
-        };
-
-        // Helper 7: Initialize from URL parameters
-        function initFromURLParameters() {
-            const urlParams = new URLSearchParams(window.location.search);
+            // 重新填充值
+            const matrixAData = getMatrixData('A');
+            const matrixBData = getMatrixData('B');
             
-            // 获取矩阵大小
-            const urlSizeA = parseInt(urlParams.get('sizeA'));
-            const urlSizeB = parseInt(urlParams.get('sizeB'));
-            
-            if (urlSizeA && urlSizeB) {
-                sizeA = urlSizeA;
-                sizeB = urlSizeB;
-            }
-            
-            // 获取矩阵数据
-            try {
-                const matrixAData = JSON.parse(urlParams.get('matrixA') || '[]');
-                const matrixBData = JSON.parse(urlParams.get('matrixB') || '[]');
-                
-                if (matrixAData.length > 0) fillMatrixFromData('A', matrixAData);
-                if (matrixBData.length > 0) fillMatrixFromData('B', matrixBData);
-                
-                // 检查是否需要自动计算乘法
-                const operation = urlParams.get('operation');
-                if (operation === 'Multiplication' || (matrixAData.length > 0 && matrixBData.length > 0)) {
-                    // 延迟执行以确保矩阵已完全渲染
-                    setTimeout(() => {
-                        calculateMultiplication();
-                    }, 100);
-                }
-            } catch (e) {
-                console.warn('Invalid matrix data in URL parameters');
-            }
-        }
-
-        function fillMatrixFromData(target, data) {
-            const container = target === 'A' ? containerA : containerB;
-            const size = target === 'A' ? sizeA : sizeB;
-            const inputs = container.querySelectorAll('.matrix input');
-            
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    const index = i * size + j;
-                    if (data[i] && data[i][j] !== undefined) {
-                        inputs[index].value = data[i][j];
-                    }
-                }
-            }
-        }
-
-        // --- Event Listeners ---
-
-        // Size controls
-        increaseBtnA.addEventListener('click', () => { renderMatrix(sizeA + 1, containerA, 'A'); });
-        decreaseBtnA.addEventListener('click', () => { renderMatrix(sizeA - 1, containerA, 'A'); });
-        increaseBtnB.addEventListener('click', () => { renderMatrix(sizeB + 1, containerB, 'B'); });
-        decreaseBtnB.addEventListener('click', () => { renderMatrix(sizeB - 1, containerB, 'B'); });
-
-        // Swap button (保留功能)
-        swapBtn.addEventListener('click', () => {
-            if (sizeA !== sizeB) {
-                alert(`Cannot SWAP! Matrix A (${sizeA}x${sizeA}) and Matrix B (${sizeB}x${sizeB}) must be the same size.`);
-                return;
-            }
+            // 实际上交换值
             const inputsA = containerA.querySelectorAll('.matrix input');
             const inputsB = containerB.querySelectorAll('.matrix input');
-            const valuesA = Array.from(inputsA).map(input => input.value);
-            const valuesB = Array.from(inputsB).map(input => input.value);
-            inputsA.forEach((input, index) => { input.value = valuesB[index]; });
-            inputsB.forEach((input, index) => { input.value = valuesA[index]; });
-        });
-        
-        // Clear buttons
-        document.getElementById('clear-btn-a').addEventListener('click', () => { containerA.querySelectorAll('.matrix input').forEach(input => { input.value = ''; }); });
-        document.getElementById('clear-btn-b').addEventListener('click', () => { containerB.querySelectorAll('.matrix input').forEach(input => { input.value = ''; }); });
-
-        // Clear all results button
-        clearAllResultsBtn.addEventListener('click', () => {
-            resultHistory.innerHTML = '';
-        });
-
-        // Random options global close
-        document.addEventListener('click', (event) => {
-            const isInsideA = document.getElementById('random-controls-main-a').contains(event.target);
-            const isInsideB = document.getElementById('random-controls-main-b').contains(event.target);
-            if (!isInsideA) randomOptionsA.style.display = 'none';
-            if (!isInsideB) randomOptionsB.style.display = 'none';
-        }, true); 
-
-        // 初始化矩阵计算器 - 修复2×2矩阵问题
-        function initMatrixCalculator() {
-                    // 先检查URL参数中的矩阵数据来确定尺寸
-                    const urlParams = new URLSearchParams(window.location.search);
-    
-                    // 检查是否有矩阵数据
-                    const hasMatrixData = urlParams.has('matrixA') || urlParams.has('matrixB');
-    
-                    if (hasMatrixData) {
-                          try {
-                                 // 从URL参数获取矩阵A的尺寸
-                                 const matrixAData = urlParams.get('matrixA');
-                                  if (matrixAData) {
-                                        const data = JSON.parse(matrixAData);
-                                        sizeA = data.length; // 使用实际行数作为尺寸
-                                 }
             
-                                 // 从URL参数获取矩阵B的尺寸  
-                                 const matrixBData = urlParams.get('matrixB');
-                                 if (matrixBData) {
-                                       const data = JSON.parse(matrixBData);
-                                       sizeB = data.length; // 使用实际行数作为尺寸
-                                 }
+            // 由于维度可能不同，我们只交换最小公共部分
+            const minRows = Math.min(matrices.A.rows, matrices.B.rows);
+            const minCols = Math.min(matrices.A.cols, matrices.B.cols);
             
-                                 console.log(`从URL加载矩阵尺寸: A=${sizeA}×${sizeA}, B=${sizeB}×${sizeB}`);
-                          } catch (e) {
-                                 console.warn('解析URL矩阵数据失败，使用默认尺寸');
-                          }
-                    } else {
-                          console.log('无URL矩阵数据，使用默认3×3矩阵');
+            for (let i = 0; i < minRows; i++) {
+                for (let j = 0; j < minCols; j++) {
+                    const indexA = i * matrices.A.cols + j;
+                    const indexB = i * matrices.B.cols + j;
+                    if (inputsA[indexA] && inputsB[indexB]) {
+                        const temp = inputsA[indexA].value;
+                        inputsA[indexA].value = inputsB[indexB].value;
+                        inputsB[indexB].value = temp;
                     }
-    
-                    // 用正确的尺寸渲染矩阵
-                    renderMatrix(sizeA, containerA, 'A');
-                    renderMatrix(sizeB, containerB, 'B');
-                    setupRandomControls('A');
-                    setupRandomControls('B');
-                    updateControlState();
-                    initFromURLParameters();
-           }
+                }
+            }
+        }
+
+        // 事件监听器
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化矩阵
+            renderMatrix('A');
+            renderMatrix('B');
+            
+            // 设置随机控制
+            setupRandomControls('A');
+            setupRandomControls('B');
+            
+            // 行控制事件
+            decreaseRowsA.addEventListener('click', () => { 
+                if (matrices.A.rows > minSize) {
+                    matrices.A.rows--;
+                    renderMatrix('A');
+                }
+            });
+            
+            increaseRowsA.addEventListener('click', () => { 
+                if (matrices.A.rows < maxSize) {
+                    matrices.A.rows++;
+                    renderMatrix('A');
+                }
+            });
+            
+            decreaseColsA.addEventListener('click', () => { 
+                if (matrices.A.cols > minSize) {
+                    matrices.A.cols--;
+                    renderMatrix('A');
+                }
+            });
+            
+            increaseColsA.addEventListener('click', () => { 
+                if (matrices.A.cols < maxSize) {
+                    matrices.A.cols++;
+                    renderMatrix('A');
+                }
+            });
+            
+            decreaseRowsB.addEventListener('click', () => { 
+                if (matrices.B.rows > minSize) {
+                    matrices.B.rows--;
+                    renderMatrix('B');
+                }
+            });
+            
+            increaseRowsB.addEventListener('click', () => { 
+                if (matrices.B.rows < maxSize) {
+                    matrices.B.rows++;
+                    renderMatrix('B');
+                }
+            });
+            
+            decreaseColsB.addEventListener('click', () => { 
+                if (matrices.B.cols > minSize) {
+                    matrices.B.cols--;
+                    renderMatrix('B');
+                }
+            });
+            
+            increaseColsB.addEventListener('click', () => { 
+                if (matrices.B.cols < maxSize) {
+                    matrices.B.cols++;
+                    renderMatrix('B');
+                }
+            });
+            
+            // 交换按钮
+            swapBtn.addEventListener('click', swapMatrices);
+            
+            // 清除按钮
+            document.getElementById('clear-btn-a').addEventListener('click', () => { 
+                containerA.querySelectorAll('.matrix input').forEach(input => { input.value = ''; }); 
+            });
+            
+            document.getElementById('clear-btn-b').addEventListener('click', () => { 
+                containerB.querySelectorAll('.matrix input').forEach(input => { input.value = ''; }); 
+            });
+
+            // 清除所有结果按钮
+            clearAllResultsBtn.addEventListener('click', () => {
+                resultHistory.innerHTML = '';
+            });
+
+            // 随机选项全局关闭
+            document.addEventListener('click', (event) => {
+                const isInsideA = document.getElementById('random-controls-main-a').contains(event.target);
+                const isInsideB = document.getElementById('random-controls-main-b').contains(event.target);
+                if (!isInsideA) randomOptionsA.style.display = 'none';
+                if (!isInsideB) randomOptionsB.style.display = 'none';
+            }, true); 
+
+            // 从URL参数初始化
+            initFromURLParameters();
+            
+            // Matrix Game按钮的滚动功能
+            const matrixGameButton = document.querySelector('a[href="#matrix-game"]');
+            const rightSidebar = document.getElementById('matrix-game');
+            
+            if (matrixGameButton) {
+                matrixGameButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (window.innerWidth <= 768) {
+                        rightSidebar.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        rightSidebar.classList.add('highlight');
+                        
+                        setTimeout(() => {
+                            rightSidebar.classList.remove('highlight');
+                        }, 2000);
+                    }
+                });
+            }
+            
+            // 多语言选择器功能
+            const languageToggle = document.querySelector('.language-toggle');
+            const languageDropdown = document.querySelector('.language-dropdown');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            if (languageToggle) {
+                languageToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    languageDropdown.classList.toggle('active');
+                });
+            }
+            
+            if (languageOptions.length > 0) {
+                languageOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        const selectedLang = this.getAttribute('data-lang');
+                        const selectedText = this.textContent;
+                        
+                        languageToggle.innerHTML = `<span class="globe-icon">🌐</span> ${selectedText}`;
+                        
+                        languageOptions.forEach(opt => opt.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        languageDropdown.classList.remove('active');
+                    });
+                });
+            }
+            
+            document.addEventListener('click', function() {
+                if (languageDropdown) {
+                    languageDropdown.classList.remove('active');
+                }
+            });
+
+            // 初始化问答栏
+            initPoll();
+            
+            // 初始化矩阵学习指南
+            initMatrixGuide();
+        });
 
         // 问答栏功能
         function initPoll() {
@@ -2602,15 +2945,17 @@
             const noBtn = document.querySelector('.question-box .no');
             const response = document.getElementById('response');
 
-            yesBtn.addEventListener('click', () => {
-                response.textContent = "Nice! Let's make it happen 💪";
-                response.classList.add('show');
-            });
+            if (yesBtn && noBtn && response) {
+                yesBtn.addEventListener('click', () => {
+                    response.textContent = "Nice! Let's make it happen 💪";
+                    response.classList.add('show');
+                });
 
-            noBtn.addEventListener('click', () => {
-                response.textContent = "Run while you can! Matrix's on its way 🏃‍♂️💨";
-                response.classList.add('show');
-            });
+                noBtn.addEventListener('click', () => {
+                    response.textContent = "Run while you can! Matrix's on its way 🏃‍♂️💨";
+                    response.classList.add('show');
+                });
+            }
         }
 
         // 矩阵学习指南功能
@@ -2618,7 +2963,9 @@
             // 答案切换功能
             function toggleAnswer(id) {
                 const box = document.getElementById(id);
-                box.style.display = box.style.display === "none" ? "block" : "none";
+                if (box) {
+                    box.style.display = box.style.display === "none" ? "block" : "none";
+                }
             }
             
             // 计算器切换功能
@@ -2626,12 +2973,14 @@
                 const calcBox = document.getElementById('calc-box');
                 const button = document.querySelector('.calc-btn');
                 
-                if (calcBox.style.display === 'none') {
-                    calcBox.style.display = 'block'; 
-                    button.innerText = 'Close Matrix Multiplication Calculator';
-                } else {
-                    calcBox.style.display = 'none';
-                    button.innerText = 'Open Matrix Multiplication Calculator';
+                if (calcBox && button) {
+                    if (calcBox.style.display === 'none') {
+                        calcBox.style.display = 'block'; 
+                        button.innerText = 'Close Matrix Multiplication Calculator';
+                    } else {
+                        calcBox.style.display = 'none';
+                        button.innerText = 'Open Matrix Multiplication Calculator';
+                    }
                 }
             }
             
@@ -2657,73 +3006,6 @@
             window.toggleAnswer = toggleAnswer;
             window.toggleCalc = toggleCalc;
         }
-
-        // 添加Matrix Game按钮的滚动功能
-        document.addEventListener('DOMContentLoaded', function() {
-            const matrixGameButton = document.querySelector('a[href="#matrix-game"]');
-            const rightSidebar = document.getElementById('matrix-game');
-            
-            matrixGameButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // 在移动端，滚动到右侧边栏
-                if (window.innerWidth <= 768) {
-                    rightSidebar.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    // 在桌面端，添加高亮效果来吸引用户注意
-                    rightSidebar.classList.add('highlight');
-                    
-                    // 2秒后移除高亮效果
-                    setTimeout(() => {
-                        rightSidebar.classList.remove('highlight');
-                    }, 2000);
-                }
-            });
-            
-            // 多语言选择器功能
-            const languageToggle = document.querySelector('.language-toggle');
-            const languageDropdown = document.querySelector('.language-dropdown');
-            const languageOptions = document.querySelectorAll('.language-option');
-            
-            // 切换下拉菜单显示/隐藏
-            languageToggle.addEventListener('click', function(e) {
-                e.stopPropagation();
-                languageDropdown.classList.toggle('active');
-            });
-            
-            // 选择语言时更新显示
-            languageOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    const selectedLang = this.getAttribute('data-lang');
-                    const selectedText = this.textContent;
-                    
-                    // 更新当前显示的语言
-                    languageToggle.innerHTML = `<span class="globe-icon">🌐</span> ${selectedText}`;
-                    
-                    // 更新活动状态
-                    languageOptions.forEach(opt => opt.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // 关闭下拉菜单
-                    languageDropdown.classList.remove('active');
-                });
-            });
-            
-            // 点击页面其他区域关闭下拉菜单
-            document.addEventListener('click', function() {
-                languageDropdown.classList.remove('active');
-            });
-
-            // 初始化矩阵计算器
-            initMatrixCalculator();
-
-            // 初始化问答栏
-            initPoll();
-            
-            // 初始化矩阵学习指南
-            initMatrixGuide();
-
-        });
     </script>
 </body>
 </html>
