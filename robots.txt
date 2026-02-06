@@ -11,3 +11,4 @@ Allow: /wp-admin/admin-ajax.php
 
 # Sitemap location (请将下面的网址替换为您实际的sitemap.xml地址)
 Sitemap: https://matrixcalcu.com/sitemap.xml
+
