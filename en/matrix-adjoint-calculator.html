@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online matrix adjoint calculator. Compute the adjugate (adjoint) matrix of any square matrix with step-by-step solutions.">
-    <meta name="keywords" content="matrix adjoint, adjugate matrix, matrix calculator, linear algebra, square matrix, cofactor matrix">
+    <meta name="description"
+        content="Free online matrix adjoint calculator. Compute the adjugate (adjoint) matrix of any square matrix with step-by-step solutions.">
+    <meta name="keywords"
+        content="matrix adjoint, adjugate matrix, matrix calculator, linear algebra, square matrix, cofactor matrix">
     <meta name="author" content="Matrix Calculator Pro">
     <!-- Canonical标签 -->
     <link rel="canonical" href="https://matrixcalcu.com/en/matrix-adjoint-calculator">
-    
+
     <!-- Open Graph 标签 -->
     <meta property="og:title" content="Matrix Adjoint Calculator - Compute Adjugate of Any Square Matrix">
-    <meta property="og:description" content="Calculate the adjoint (adjugate) matrix of any square matrix instantly. Easy-to-use online adjoint calculator with step-by-step solutions.">
+    <meta property="og:description"
+        content="Calculate the adjoint (adjugate) matrix of any square matrix instantly. Easy-to-use online adjoint calculator with step-by-step solutions.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
     <!-- Open Graph URL -->
     <meta property="og:url" content="https://matrixcalcu.com/en/matrix-adjoint-calculator" />
 
-    
+
     <title>Matrix Adjoint Calculator - Compute Adjugate of Any Square Matrix</title>
 
     <!-- ========== HREFLANG 标签（英文计算器页面）========== -->
@@ -27,16 +31,16 @@
     <link rel="alternate" hreflang="es-ES" href="https://matrixcalcu.com/es/matrix-adjoint-calculator" />
     <link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/" />
 
-    
+
     <!-- MathJax for mathematical formulas -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
+
     <!-- Favicon 链接 -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    
+
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+
     <!-- Schema.org 结构化数据 -->
     <script type="application/ld+json">
     {
@@ -59,35 +63,36 @@
       }
     }
     </script>
-    
+
     <!-- Math.js 库 -->
     <script src="/math.min.js"></script>
-    
+
     <style>
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
-            --accent-color: #8a2be2; /* 改为蓝紫色 */
+            --accent-color: #8a2be2;
+            /* 改为蓝紫色 */
             --light-color: #ecf0f1;
             --dark-color: #2c3e50;
             --success-color: #2ecc71;
             --border-radius: 8px;
             --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f9f9f9;
             color: var(--dark-color);
             line-height: 1.6;
         }
-        
+
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -102,21 +107,22 @@
             position: relative;
             z-index: 1;
         }
-        
+
         /* 更宽的容器，用于容纳三个并排的部分 */
         .wide-container {
             max-width: 1800px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         /* 主行布局 */
         .main-row {
             display: flex;
             gap: 2rem;
         }
-        
-        .left-sidebar, .right-sidebar {
+
+        .left-sidebar,
+        .right-sidebar {
             flex: 0 0 250px;
             background-color: white;
             border-radius: var(--border-radius);
@@ -125,7 +131,7 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .calculator-main {
             flex: 1;
             position: relative;
@@ -254,7 +260,8 @@
             line-height: 1.6;
         }
 
-        .seo-article-content .example, .seo-article-content .exercise {
+        .seo-article-content .example,
+        .seo-article-content .exercise {
             border: 1px solid #ddd;
             padding: 1.5rem;
             border-radius: 8px;
@@ -299,7 +306,8 @@
         .seo-article-footer {
             margin-top: 3rem;
             padding: 1.5rem;
-            background-color: #f8f9fa; /* 浅灰色背景 */
+            background-color: #f8f9fa;
+            /* 浅灰色背景 */
             border-top: 1px solid #e0e0e0;
             border-radius: 0 0 var(--border-radius) var(--border-radius);
             font-size: 14px;
@@ -540,25 +548,25 @@
 
         .matrix-calculator .main-calculator-container {
             display: flex;
-            align-items: flex-start; 
-            gap: 20px; 
-            margin-bottom: 0px; 
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 0px;
         }
-        
+
         .matrix-calculator .matrix-area {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 400px; 
+            width: 400px;
         }
-        
+
         .matrix-calculator .controls {
             display: flex;
-            align-items: center; 
-            gap: 15px; 
+            align-items: center;
+            gap: 15px;
             margin-bottom: 10px;
             padding: 0 10px;
-            width: 100%; 
+            width: 100%;
             box-sizing: border-box;
         }
 
@@ -568,10 +576,10 @@
             color: #333;
             margin-right: 15px;
         }
-        
+
         .matrix-calculator .size-controls {
             display: flex;
-            gap: 5px; 
+            gap: 5px;
             border-right: 1px solid #ccc;
             padding-right: 15px;
         }
@@ -586,89 +594,89 @@
         }
 
         .matrix-calculator .random-options {
-            display: flex; 
-            flex-direction: column; 
-            position: absolute; 
-            top: 45px; 
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 45px;
             left: 0;
-            background-color: #f8f9fa; 
-            border: 1px solid #ddd; 
-            border-radius: 5px; 
-            padding: 5px; 
-            z-index: 1000; 
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            z-index: 1000;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         .matrix-calculator .operation-buttons {
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             margin-top: 250px;
-            gap: 5px; 
+            gap: 5px;
             justify-content: center;
         }
-        
+
         .matrix-calculator .operation-btn {
-            background-color: #6c757d; 
+            background-color: #6c757d;
             color: white;
             border: none;
             padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1.2em; 
-            width: 100px; 
-            height: 50px; 
+            font-size: 1.2em;
+            width: 100px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-sizing: border-box; 
+            box-sizing: border-box;
             transition: background-color 0.2s;
         }
-        
+
         .matrix-calculator .operation-btn:hover {
             background-color: #5a6268;
         }
-        
+
         .matrix-calculator .operation-btn:active {
             background-color: #545b62;
             transform: translateY(1px);
         }
-        
+
         .matrix-calculator #swap-ab-btn {
             background-color: #ffc107;
             color: #343a40;
-            font-size: 1.2em; 
+            font-size: 1.2em;
         }
-        
+
         .matrix-calculator #swap-ab-btn:hover {
             background-color: #e0a800;
         }
-        
+
         .matrix-calculator #swap-ab-btn:active {
             background-color: #d39e00;
         }
-        
+
         .matrix-calculator .single-ops-container {
             margin-top: 10px;
             padding-top: 10px;
-            border-top: 2px solid #ddd; 
-            width: 110%; 
+            border-top: 2px solid #ddd;
+            width: 110%;
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             align-items: center;
         }
 
         .matrix-calculator .op-row {
             display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px; 
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             margin-bottom: 10px;
-            width: 100%; 
-            padding: 0 10px; 
+            width: 100%;
+            padding: 0 10px;
             box-sizing: border-box;
         }
 
         .matrix-calculator .single-op-btn {
-            background-color: #ADD8E6; 
+            background-color: #ADD8E6;
             color: #333;
             border: none;
             padding: 3px 10px;
@@ -678,20 +686,25 @@
             transition: background-color 0.3s;
             text-align: center;
             white-space: nowrap;
-            height: 32px; 
-            width: 100%; 
+            height: 32px;
+            width: 100%;
         }
-        .matrix-calculator .single-op-btn:hover { background-color: #87CEEB; }
-        
+
+        .matrix-calculator .single-op-btn:hover {
+            background-color: #87CEEB;
+        }
+
         .matrix-calculator .op-with-input {
             display: flex;
             align-items: center;
             gap: 5px;
             width: 100%;
         }
+
         .matrix-calculator .op-with-input .single-op-btn {
-            flex-grow: 1; 
+            flex-grow: 1;
         }
+
         .matrix-calculator .op-input {
             width: 40px;
             padding: 5px;
@@ -706,27 +719,27 @@
         .matrix-calculator .matrix-container {
             border: 2px solid #333;
             border-radius: 5px;
-            padding: 10px; 
+            padding: 10px;
             background-color: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            min-width: 150px; 
+            min-width: 150px;
             min-height: 150px;
             display: flex;
             justify-content: center;
-            align-items: flex-start; 
-            width: 380px; 
+            align-items: flex-start;
+            width: 380px;
         }
 
-        .matrix-calculator .matrix { 
-            display: grid; 
-            gap: 5px; 
-        } 
-        
+        .matrix-calculator .matrix {
+            display: grid;
+            gap: 5px;
+        }
+
         .matrix-calculator .matrix input {
-            width: 45px; 
-            height: 45px; 
+            width: 45px;
+            height: 45px;
             text-align: center;
-            font-size: 14px; 
+            font-size: 14px;
             border: 1px solid #ccc;
             border-radius: 3px;
             padding: 0;
@@ -734,30 +747,32 @@
             box-sizing: border-box;
             transition: border-color 0.3s;
         }
-        
+
         /* Hide number input spinners */
-        .matrix-calculator .matrix input[type=number]::-webkit-inner-spin-button, 
-        .matrix-calculator .matrix input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
+        .matrix-calculator .matrix input[type=number]::-webkit-inner-spin-button,
+        .matrix-calculator .matrix input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
+
         .matrix-calculator .matrix input[type=number] {
-            -moz-appearance: textfield; /* Firefox */
+            -moz-appearance: textfield;
+            /* Firefox */
         }
-        
+
         /* --- 您提供的结果输出样式 --- */
         #result-container {
-            margin-top: 0px; 
-            width: 90%; 
-            max-width: 1200px; 
+            margin-top: 0px;
+            width: 90%;
+            max-width: 1200px;
             background-color: white;
-            border: 2px solid #aaa; 
+            border: 2px solid #aaa;
             border-radius: 8px;
-            padding: 0; 
+            padding: 0;
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
         }
-        
+
         .result-header {
             display: flex;
             justify-content: space-between;
@@ -766,14 +781,15 @@
             border-bottom: 1px solid #e0e0e0;
             background-color: #f8f9fa;
         }
-        
+
         .result-header h3 {
             margin: 0;
             color: var(--primary-color);
         }
-        
+
         .clear-all-btn {
-            background-color: var(--accent-color); /* 使用蓝紫色 */
+            background-color: var(--accent-color);
+            /* 使用蓝紫色 */
             color: white;
             border: none;
             padding: 4px 10px;
@@ -782,37 +798,41 @@
             font-size: 0.9em;
             transition: background-color 0.2s;
         }
-        
+
         .clear-all-btn:hover {
-            background-color: #7b1fa2; /* 深一点的蓝紫色 */
+            background-color: #7b1fa2;
+            /* 深一点的蓝紫色 */
         }
-        
+
         .result-history {
             max-height: 600px;
             overflow-y: auto;
         }
-        
+
         .result-block {
             padding: 15px 10px;
-            border-bottom: 1px solid #e0e0e0; 
+            border-bottom: 1px solid #e0e0e0;
             position: relative;
         }
 
         .result-block:last-child {
-            border-bottom: none; 
+            border-bottom: none;
         }
-        
+
         .result-expression-row {
             display: flex;
-            flex-wrap: wrap; /* 关键修改：允许换行 */
+            flex-wrap: wrap;
+            /* 关键修改：允许换行 */
             align-items: center;
             justify-content: flex-start;
-            gap: 15px; 
+            gap: 15px;
             padding: 10px 0;
-            overflow-x: visible; /* 移除横向滚动 */
+            overflow-x: visible;
+            /* 移除横向滚动 */
         }
-        
-        .result-op, .result-eq {
+
+        .result-op,
+        .result-eq {
             font-size: 2em;
             font-weight: 500;
             color: #333;
@@ -822,22 +842,22 @@
         .result-matrix-grid {
             display: grid;
             gap: 5px;
-            padding: 5px 0; 
-            border: none; 
-            border-left: 3px solid #333; 
-            border-right: 3px solid #333; 
+            padding: 5px 0;
+            border: none;
+            border-left: 3px solid #333;
+            border-right: 3px solid #333;
             border-radius: 0;
-            box-sizing: content-box; 
+            box-sizing: content-box;
         }
-        
+
         .result-cell {
-            min-width: 45px; 
-            height: 45px; 
+            min-width: 45px;
+            height: 45px;
             text-align: center;
             font-size: 14px;
-            line-height: 45px; 
+            line-height: 45px;
             border: 1px solid #ddd;
-            background-color: #f0f8ff; 
+            background-color: #f0f8ff;
             border-radius: 3px;
             overflow: hidden;
             white-space: nowrap;
@@ -846,21 +866,21 @@
         }
 
         .process-matrix {
-            border-left: 3px solid orange; 
+            border-left: 3px solid orange;
             border-right: 3px solid orange;
         }
 
         .process-matrix .result-cell {
-            background-color: #fff3e0; 
+            background-color: #fff3e0;
             font-size: 12px;
             line-height: normal;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: auto; 
-            height: auto; 
-            padding: 5px; 
-            white-space: normal; 
+            min-width: auto;
+            height: auto;
+            padding: 5px;
+            white-space: normal;
         }
 
         .action-buttons {
@@ -893,13 +913,13 @@
             background-color: #ffeaea;
             border-radius: 4px;
         }
-        
+
         /* 分享下拉菜单样式 */
         .share-dropdown {
             position: relative;
             display: inline-block;
         }
-        
+
         .share-menu {
             position: absolute;
             top: 100%;
@@ -907,16 +927,16 @@
             background: white;
             border: 1px solid #ddd;
             border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             display: none;
             z-index: 1000;
             min-width: 150px;
         }
-        
+
         .share-menu.active {
             display: block;
         }
-        
+
         .share-option {
             display: block;
             width: 100%;
@@ -927,140 +947,143 @@
             cursor: pointer;
             font-size: 0.9em;
         }
-        
+
         .share-option:hover {
             background: #f5f5f5;
         }
-        
-          
+
+
         /* --- 移动端响应式设计 --- */
         @media (max-width: 1200px) {
             .matrix-calculator .main-calculator-container {
                 gap: 20px;
             }
-            
+
             .matrix-calculator .matrix-area {
                 width: 350px;
             }
-            
+
             .matrix-calculator .matrix-container {
                 width: 330px;
             }
-            
+
             .matrix-calculator .matrix input {
                 width: 40px;
                 height: 40px;
             }
         }
-        
+
         @media (max-width: 992px) {
             .matrix-calculator .main-calculator-container {
                 flex-direction: column;
                 align-items: center;
                 gap: 30px;
             }
-            
+
             .matrix-calculator .operation-buttons {
                 flex-direction: row;
                 margin-top: 20px;
                 margin-bottom: 20px;
                 order: 3;
             }
-            
+
             .matrix-calculator .operation-btn {
                 width: 80px;
                 height: 45px;
                 font-size: 1em;
             }
-            
+
             .matrix-calculator .matrix-area {
                 width: 100%;
                 max-width: 500px;
             }
-            
+
             .matrix-calculator .matrix-container {
                 width: 100%;
                 max-width: 480px;
             }
-            
+
             .matrix-calculator .controls {
                 justify-content: center;
             }
         }
-        
+
         @media (max-width: 768px) {
             .matrix-calculator body {
                 padding: 5px 10px;
             }
-            
+
             .matrix-calculator .matrix-label {
                 font-size: 2em;
             }
-            
+
             .matrix-calculator .controls {
                 flex-wrap: wrap;
                 gap: 10px;
                 justify-content: center;
             }
-            
-            .matrix-calculator .size-controls, .matrix-calculator .random-controls {
+
+            .matrix-calculator .size-controls,
+            .matrix-calculator .random-controls {
                 border-right: none;
                 padding-right: 0;
             }
-            
+
             .matrix-calculator .single-ops-container {
                 margin-top: 15px;
             }
-            
+
             .matrix-calculator .op-row {
                 grid-template-columns: 1fr;
                 gap: 8px;
             }
-            
+
             .matrix-calculator .matrix input {
                 width: 35px;
                 height: 35px;
                 font-size: 12px;
             }
-            
+
             .result-expression-row {
                 flex-direction: column;
                 gap: 10px;
                 overflow-x: visible;
             }
-            
-            .result-op, .result-eq {
+
+            .result-op,
+            .result-eq {
                 font-size: 1.5em;
             }
-            
+
             .result-cell {
                 min-width: 35px;
                 height: 35px;
                 font-size: 12px;
                 line-height: 35px;
             }
-            
+
             .process-matrix .result-cell {
                 min-width: 100px;
                 font-size: 10px;
             }
-            
+
             #result-container {
                 width: 100%;
             }
-            
+
             .main-row {
                 flex-direction: column;
             }
-            
-            .left-sidebar, .right-sidebar {
+
+            .left-sidebar,
+            .right-sidebar {
                 flex: 1;
             }
-            
+
             h1 {
                 font-size: 2rem;
             }
-            
+
             .language-selector {
                 position: relative;
                 top: auto;
@@ -1069,25 +1092,25 @@
                 margin-top: 10px;
                 text-align: center;
             }
-            
+
             .language-dropdown {
                 left: 0;
                 right: 0;
                 width: auto;
                 margin: 0 auto;
             }
-            
+
             header {
                 flex-direction: column;
                 padding: 0.5rem 0;
             }
-            
+
             .result-header {
                 flex-direction: column;
                 gap: 10px;
                 align-items: flex-start;
             }
-            
+
             .action-buttons {
                 position: relative;
                 top: 0;
@@ -1095,25 +1118,25 @@
                 justify-content: center;
                 margin-bottom: 10px;
             }
-            
+
             /* SEO文章在移动端的响应式调整 */
             .seo-article-content {
                 padding: 1.5rem;
             }
-            
+
             .seo-article-content h1 {
                 font-size: 1.8rem;
             }
-            
+
             .seo-article-content h2 {
                 font-size: 1.5rem;
             }
-            
+
             .seo-article-content h3 {
                 font-size: 1.3rem;
             }
-            
-            .seo-article-content .example, 
+
+            .seo-article-content .example,
             .seo-article-content .exercise {
                 padding: 1rem;
             }
@@ -1121,97 +1144,98 @@
 
         @media (max-width: 768px) {
 
-             /* 1. 缩小矩阵容器宽度，让它更适配屏幕 */
-             .matrix-calculator .matrix-container {
-                 width: 100%;
-                 max-width: 260px; /* 你可以改成 250/280/300 试试效果 */
-                 padding: 5px;
-             }
+            /* 1. 缩小矩阵容器宽度，让它更适配屏幕 */
+            .matrix-calculator .matrix-container {
+                width: 100%;
+                max-width: 260px;
+                /* 你可以改成 250/280/300 试试效果 */
+                padding: 5px;
+            }
 
-             /* 2. 缩小矩阵单元格（结果矩阵 & 输入矩阵通用） */
-             .result-cell,
-             .matrix-cell,
-             .input-matrix .matrix-cell input {
-                 min-width: 26px !important;
-                 height: 26px !important;
-                 padding: 2px !important;
-                 font-size: 12px !important;
-                 line-height: 1.1 !important;
-             }
+            /* 2. 缩小矩阵单元格（结果矩阵 & 输入矩阵通用） */
+            .result-cell,
+            .matrix-cell,
+            .input-matrix .matrix-cell input {
+                min-width: 26px !important;
+                height: 26px !important;
+                padding: 2px !important;
+                font-size: 12px !important;
+                line-height: 1.1 !important;
+            }
 
-             /* 3. 缩小过程矩阵（你的过程矩阵本来特别大，所以单独缩小） */
-             .process-matrix .result-cell {
-                 min-width: 24px !important;
-                 height: 24px !important;
-                 font-size: 11px !important;
-                 padding: 1px !important;
-             }
+            /* 3. 缩小过程矩阵（你的过程矩阵本来特别大，所以单独缩小） */
+            .process-matrix .result-cell {
+                min-width: 24px !important;
+                height: 24px !important;
+                font-size: 11px !important;
+                padding: 1px !important;
+            }
 
-             /* 4. 缩小符号，例如加号、乘号、等号 */
+            /* 4. 缩小符号，例如加号、乘号、等号 */
             .matrix-operator {
                 font-size: 20px !important;
                 margin: 0 4px !important;
-             }
+            }
 
             /* 5. 缩小矩阵块与块之间的间距 */
             .matrix-wrapper {
                 margin: 4px 0 !important;
-              }
-         }
-        
+            }
+        }
+
         @media (max-width: 480px) {
             .matrix-calculator .matrix input {
                 width: 30px;
                 height: 30px;
                 font-size: 11px;
             }
-            
+
             .matrix-calculator .matrix-container {
                 padding: 5px;
             }
-            
+
             .matrix-calculator .operation-btn {
                 width: 70px;
                 height: 40px;
                 font-size: 0.9em;
                 padding: 5px 10px;
             }
-            
+
             .matrix-calculator .single-op-btn {
                 font-size: 0.8em;
                 height: 35px;
             }
-            
+
             .matrix-calculator .op-input {
                 width: 35px;
                 height: 35px;
             }
-            
+
             .result-cell {
                 min-width: 30px;
                 height: 30px;
                 font-size: 11px;
                 line-height: 30px;
             }
-            
+
             .simplified-matrix {
                 font-size: 0.9em;
                 padding: 8px;
             }
-            
+
             /* SEO文章在更小屏幕上的调整 */
             .seo-article-content {
                 padding: 1rem;
             }
-            
+
             .seo-article-content h1 {
                 font-size: 1.6rem;
             }
-            
+
             .seo-article-content h2 {
                 font-size: 1.3rem;
             }
-            
+
             .seo-article-content h3 {
                 font-size: 1.1rem;
             }
@@ -1221,7 +1245,7 @@
         .question-box {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             text-align: center;
             padding: 1.5em;
             width: 100%;
@@ -1255,7 +1279,7 @@
 
         .question-box .yes:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(120,100,255,0.3);
+            box-shadow: 0 4px 10px rgba(120, 100, 255, 0.3);
         }
 
         .question-box .no {
@@ -1265,7 +1289,7 @@
 
         .question-box .no:hover {
             transform: rotate(-2deg) scale(1.05);
-            box-shadow: 0 4px 10px rgba(255,75,75,0.2);
+            box-shadow: 0 4px 10px rgba(255, 75, 75, 0.2);
         }
 
         .question-box .response {
@@ -1282,17 +1306,26 @@
         }
 
         @keyframes highlight {
-            0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+            }
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
             <h1 id="page-title">Matrix Adjoint Calculator</h1>
-            
+
             <!-- 多语言选择器 -->
             <div class="language-selector">
                 <div class="language-toggle">
@@ -1321,7 +1354,7 @@
             </div>
         </div>
     </header>
-    
+
     <!-- 主行容器，包含左容器、计算器和右容器 -->
     <div class="main-row-container">
         <div class="wide-container">
@@ -1330,13 +1363,15 @@
                 <div class="left-sidebar">
                     <h3 class="nav-title">Navigation</h3>
                     <div class="nav-buttons">
-                        <a href="#matrix-multiplication-operation" class="nav-button">Matrix Multiplication Calculator</a>
+                        <a href="#matrix-multiplication-operation" class="nav-button">Matrix Multiplication
+                            Calculator</a>
                         <a href="#matrix-game" class="nav-button">Matrix Multiplication Game</a>
                         <a href="matrix-equations-calculator.html" class="nav-button">System of Equations Calculator</a>
-                        <a href="https://en.wikipedia.org/wiki/Adjugate_matrix" target="_blank" class="nav-button external">Wikipedia: Adjugate Matrix</a>
+                        <a href="https://en.wikipedia.org/wiki/Adjugate_matrix" target="_blank"
+                            class="nav-button external">Wikipedia: Adjugate Matrix</a>
                     </div>
                 </div>
-                
+
                 <!-- 主计算器部分 - 已替换为矩阵计算器 -->
                 <div class="calculator-main">
                     <!-- 动态内容容器 - 现在包含矩阵计算器 -->
@@ -1345,22 +1380,29 @@
                             <div class="main-calculator-container">
 
                                 <div class="matrix-area">
-                                    
+
                                     <div class="controls" id="controls-a">
                                         <div class="matrix-label">A</div>
                                         <div class="size-controls">
-                                            <button id="decrease-btn-a" class="control-btn" title="Decrease Size A"><i class="fas fa-minus"></i></button>
-                                            <button id="increase-btn-a" class="control-btn" title="Increase Size A"><i class="fas fa-plus"></i></button>
+                                            <button id="decrease-btn-a" class="control-btn" title="Decrease Size A"><i
+                                                    class="fas fa-minus"></i></button>
+                                            <button id="increase-btn-a" class="control-btn" title="Increase Size A"><i
+                                                    class="fas fa-plus"></i></button>
                                         </div>
                                         <div class="random-controls" id="random-controls-main-a">
-                                            <button id="toggle-random-btn-a" class="control-btn" title="Generate Random Matrix A"><i class="fas fa-dice"></i></button>
+                                            <button id="toggle-random-btn-a" class="control-btn"
+                                                title="Generate Random Matrix A"><i class="fas fa-dice"></i></button>
                                             <div id="random-options-a" class="random-options" style="display: none;">
-                                                <button class="random-option-btn" data-type="pos_int" data-target="A">Positive Integers (0 ~ 9)</button>
-                                                <button class="random-option-btn" data-type="signed_int" data-target="A">Integers (-10 ~ 10)</button>
-                                                <button class="random-option-btn" data-type="float" data-target="A">Decimals (-1.0 ~ 1.0)</button>
+                                                <button class="random-option-btn" data-type="pos_int"
+                                                    data-target="A">Positive Integers (0 ~ 9)</button>
+                                                <button class="random-option-btn" data-type="signed_int"
+                                                    data-target="A">Integers (-10 ~ 10)</button>
+                                                <button class="random-option-btn" data-type="float"
+                                                    data-target="A">Decimals (-1.0 ~ 1.0)</button>
                                             </div>
                                         </div>
-                                        <button id="clear-btn-a" class="control-btn" title="Clear Values A"><i class="fas fa-trash-alt"></i></button>
+                                        <button id="clear-btn-a" class="control-btn" title="Clear Values A"><i
+                                                class="fas fa-trash-alt"></i></button>
                                     </div>
 
                                     <div class="matrix-container" id="matrix-container-a"></div>
@@ -1368,80 +1410,107 @@
                                     <!-- 矩阵A的按钮 - 已添加路径 -->
                                     <div class="single-ops-container">
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-determinant')" class="single-op-btn">Determinant</button>
-                                            <button onclick="goTo('matrix-inverse')" class="single-op-btn">Inverse</button>
+                                            <button onclick="goTo('matrix-determinant')"
+                                                class="single-op-btn">Determinant</button>
+                                            <button onclick="goTo('matrix-inverse')"
+                                                class="single-op-btn">Inverse</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-upper-triangular')" class="single-op-btn">Upper Triangular</button>
+                                            <button onclick="goTo('matrix-upper-triangular')"
+                                                class="single-op-btn">Upper Triangular</button>
                                             <button onclick="goTo('matrix-rref')" class="single-op-btn">RREF</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-eigenvectors')" class="single-op-btn">Eigenvectors</button>
-                                            <button onclick="goTo('matrix-eigenvalues')" class="single-op-btn">Eigenvalues</button>
+                                            <button onclick="goTo('matrix-eigenvectors')"
+                                                class="single-op-btn">Eigenvectors</button>
+                                            <button onclick="goTo('matrix-eigenvalues')"
+                                                class="single-op-btn">Eigenvalues</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-transpose')" class="single-op-btn">Transpose</button>
+                                            <button onclick="goTo('matrix-transpose')"
+                                                class="single-op-btn">Transpose</button>
                                             <button onclick="goTo('matrix-rank')" class="single-op-btn">Rank</button>
                                         </div>
                                         <div class="op-row">
                                             <div class="op-with-input">
-                                                <button onclick="goTo('matrix-scalar-multiplication')" class="single-op-btn">Multiply By</button>
-                                                <input type="number" class="op-input" placeholder="k" value="2" id="mBy-a-val">
+                                                <button onclick="goTo('matrix-scalar-multiplication')"
+                                                    class="single-op-btn">Multiply By</button>
+                                                <input type="number" class="op-input" placeholder="k" value="2"
+                                                    id="mBy-a-val">
                                             </div>
                                             <div class="op-with-input">
-                                                <button onclick="goTo('matrix-power')" class="single-op-btn">Power</button>
-                                                <input type="number" class="op-input" placeholder="n" value="2" id="pow-a-val">
+                                                <button onclick="goTo('matrix-power')"
+                                                    class="single-op-btn">Power</button>
+                                                <input type="number" class="op-input" placeholder="n" value="2"
+                                                    id="pow-a-val">
                                             </div>
                                         </div>
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-trace')" class="single-op-btn">Trace</button>
-                                            <button onclick="goTo('matrix-diagonal')" class="single-op-btn">Diagonal Matrix</button>
+                                            <button onclick="goTo('matrix-diagonal')" class="single-op-btn">Diagonal
+                                                Matrix</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-lu-decomposition')" class="single-op-btn">LU Decomposition</button>
-                                            <button onclick="goTo('matrix-cholesky')" class="single-op-btn">Cholesky Decomposition</button>
+                                            <button onclick="goTo('matrix-lu-decomposition')" class="single-op-btn">LU
+                                                Decomposition</button>
+                                            <button onclick="goTo('matrix-cholesky')" class="single-op-btn">Cholesky
+                                                Decomposition</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-pseudo-inverse')" class="single-op-btn">Pseudo Inverse</button>
-                                            <button onclick="goTo('matrix-qr-decomposition')" class="single-op-btn">QR Decomposition</button>
+                                            <button onclick="goTo('matrix-pseudo-inverse')" class="single-op-btn">Pseudo
+                                                Inverse</button>
+                                            <button onclick="goTo('matrix-qr-decomposition')" class="single-op-btn">QR
+                                                Decomposition</button>
                                         </div>
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-svd')" class="single-op-btn">SVD</button>
-                                            <button onclick="goTo('matrix-augmented')" class="single-op-btn">Augmented Matrix</button>
+                                            <button onclick="goTo('matrix-augmented')" class="single-op-btn">Augmented
+                                                Matrix</button>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
 
                                 <div class="operation-buttons">
-                                    <button id="swap-ab-btn" class="operation-btn" title="Swap A and B Matrices"><i class="fas fa-exchange-alt"></i> SWAP</button>
+                                    <button id="swap-ab-btn" class="operation-btn" title="Swap A and B Matrices"><i
+                                            class="fas fa-exchange-alt"></i> SWAP</button>
                                     <div id="matrix-multiplication-operation">
                                         <!-- 修改：乘法按钮改为跳转 -->
-                                        <button onclick="goTo('matrix-multiplication')" class="operation-btn" title="Calculate A * B">A × B</button>
+                                        <button onclick="goTo('matrix-multiplication')" class="operation-btn"
+                                            title="Calculate A * B">A × B</button>
                                     </div>
                                     <!-- 修改：加法和减法按钮改为跳转 -->
-                                    <button onclick="goTo('matrix-addition')" class="operation-btn" title="Calculate A + B">A + B</button>
-                                    <button onclick="goTo('matrix-subtraction')" class="operation-btn" title="Calculate A - B">A - B</button>
+                                    <button onclick="goTo('matrix-addition')" class="operation-btn"
+                                        title="Calculate A + B">A + B</button>
+                                    <button onclick="goTo('matrix-subtraction')" class="operation-btn"
+                                        title="Calculate A - B">A - B</button>
                                 </div>
 
 
                                 <div class="matrix-area">
-                                    
+
                                     <div class="controls" id="controls-b">
                                         <div class="matrix-label">B</div>
                                         <div class="size-controls">
-                                            <button id="decrease-btn-b" class="control-btn" title="Decrease Size B"><i class="fas fa-minus"></i></button>
-                                            <button id="increase-btn-b" class="control-btn" title="Increase Size B"><i class="fas fa-plus"></i></button>
+                                            <button id="decrease-btn-b" class="control-btn" title="Decrease Size B"><i
+                                                    class="fas fa-minus"></i></button>
+                                            <button id="increase-btn-b" class="control-btn" title="Increase Size B"><i
+                                                    class="fas fa-plus"></i></button>
                                         </div>
                                         <div class="random-controls" id="random-controls-main-b">
-                                            <button id="toggle-random-btn-b" class="control-btn" title="Generate Random Matrix B"><i class="fas fa-dice"></i></button>
+                                            <button id="toggle-random-btn-b" class="control-btn"
+                                                title="Generate Random Matrix B"><i class="fas fa-dice"></i></button>
                                             <div id="random-options-b" class="random-options" style="display: none;">
-                                                <button class="random-option-btn" data-type="pos_int" data-target="B">Positive Integers (0 ~ 9)</button>
-                                                <button class="random-option-btn" data-type="signed_int" data-target="B">Integers (-10 ~ 10)</button>
-                                                <button class="random-option-btn" data-type="float" data-target="B">Decimals (-1.0 ~ 1.0)</button>
+                                                <button class="random-option-btn" data-type="pos_int"
+                                                    data-target="B">Positive Integers (0 ~ 9)</button>
+                                                <button class="random-option-btn" data-type="signed_int"
+                                                    data-target="B">Integers (-10 ~ 10)</button>
+                                                <button class="random-option-btn" data-type="float"
+                                                    data-target="B">Decimals (-1.0 ~ 1.0)</button>
                                             </div>
                                         </div>
-                                        <button id="clear-btn-b" class="control-btn" title="Clear Values B"><i class="fas fa-trash-alt"></i></button>
+                                        <button id="clear-btn-b" class="control-btn" title="Clear Values B"><i
+                                                class="fas fa-trash-alt"></i></button>
                                     </div>
 
                                     <div class="matrix-container" id="matrix-container-b"></div>
@@ -1453,43 +1522,56 @@
                                             <button onclick="goTo('matrix-svd')" class="single-op-btn">svd(A)</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-exponential')" class="single-op-btn">exp(A)</button>
-                                            <button onclick="goTo('matrix-pseudo-inverse')" class="single-op-btn">pinv(A)</button>
+                                            <button onclick="goTo('matrix-exponential')"
+                                                class="single-op-btn">exp(A)</button>
+                                            <button onclick="goTo('matrix-pseudo-inverse')"
+                                                class="single-op-btn">pinv(A)</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-square-root')" class="single-op-btn">√(A)</button>
-                                            <button onclick="goTo('matrix-augmented')" class="single-op-btn">(A | B)</button>
+                                            <button onclick="goTo('matrix-square-root')"
+                                                class="single-op-btn">√(A)</button>
+                                            <button onclick="goTo('matrix-augmented')" class="single-op-btn">(A |
+                                                B)</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-kronecker-product')" class="single-op-btn">A ⊗ B</button>
-                                            <button onclick="goTo('matrix-cosine')" class="single-op-btn">cos[A]</button>
+                                            <button onclick="goTo('matrix-kronecker-product')" class="single-op-btn">A ⊗
+                                                B</button>
+                                            <button onclick="goTo('matrix-cosine')"
+                                                class="single-op-btn">cos[A]</button>
                                         </div>
                                         <div class="op-row">
                                             <button onclick="goTo('matrix-sine')" class="single-op-btn">sin[A]</button>
-                                            <button onclick="goTo('matrix-logarithm')" class="single-op-btn">log[A]</button>
+                                            <button onclick="goTo('matrix-logarithm')"
+                                                class="single-op-btn">log[A]</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-tangent')" class="single-op-btn">tan[A]</button>
+                                            <button onclick="goTo('matrix-tangent')"
+                                                class="single-op-btn">tan[A]</button>
                                             <!-- 修改：adj(A)按钮改为本地计算 -->
                                             <button onclick="calculateAdjoint()" class="single-op-btn">adj(A)</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-jordan')" class="single-op-btn">jordan(A)</button>
-                                            <button onclick="goTo('matrix-arctangent')" class="single-op-btn">arctan[A]</button>
+                                            <button onclick="goTo('matrix-jordan')"
+                                                class="single-op-btn">jordan(A)</button>
+                                            <button onclick="goTo('matrix-arctangent')"
+                                                class="single-op-btn">arctan[A]</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-arcsine')" class="single-op-btn">arcsin[A]</button>
-                                            <button onclick="goTo('matrix-arccosine')" class="single-op-btn">arccos[A]</button>
+                                            <button onclick="goTo('matrix-arcsine')"
+                                                class="single-op-btn">arcsin[A]</button>
+                                            <button onclick="goTo('matrix-arccosine')"
+                                                class="single-op-btn">arccos[A]</button>
                                         </div>
                                         <div class="op-row">
-                                            <button onclick="goTo('matrix-hermite-normal-form')" class="single-op-btn">HNF(A)</button>
+                                            <button onclick="goTo('matrix-hermite-normal-form')"
+                                                class="single-op-btn">HNF(A)</button>
                                             <button onclick="goTo('matrix-lll')" class="single-op-btn">LLL(A)</button>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-                            
+
                             <!-- 使用您提供的结果输出结构 -->
                             <div id="result-container">
                                 <div class="result-header">
@@ -1502,72 +1584,75 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- SEO文章容器 - 现在包含SEO文章 -->
                     <div class="seo-articles-container">
                         <div class="seo-article-content">
                             <h1>Adjoint (Adjugate) Matrix – Complete Guide</h1>
-                            
+
                             <p>
-                                The <strong>adjoint (or adjugate) matrix</strong> of a square matrix plays a central role in inverse matrix computation, 
-                                determinants, and solving linear systems.  
-                                This guide explains the definition, formula, worked examples, and practice problems for adjoint matrices.
+                                The <strong>adjoint (or adjugate) matrix</strong> of a square matrix plays a central
+                                role in inverse matrix computation,
+                                determinants, and solving linear systems.
+                                This guide explains the definition, formula, worked examples, and practice problems for
+                                adjoint matrices.
                             </p>
-                            
+
                             <hr>
-                            
+
                             <h2>1. Definition and Formula of Adjoint Matrix</h2>
-                            
+
                             <p>
-                                For an \( n \times n \) matrix \( A \), the <strong>adjoint matrix</strong>, denoted as \( \text{adj}(A) \), is defined as:
+                                For an \( n \times n \) matrix \( A \), the <strong>adjoint matrix</strong>, denoted as
+                                \( \text{adj}(A) \), is defined as:
                             </p>
-                            
+
                             <p style="text-align:center;">
                                 \[
                                 \text{adj}(A) = \left( C_{ij} \right)^T
                                 \]
                             </p>
-                            
+
                             Where:
                             <ul>
                                 <li>\( C_{ij} \) is the cofactor of element \( a_{ij} \)</li>
-                                <li>Cofactor is computed as:  
+                                <li>Cofactor is computed as:
                                     \[
                                     C_{ij} = (-1)^{i+j} \cdot M_{ij}
                                     \]
                                 </li>
                                 <li>\( M_{ij} \) is the minor obtained by deleting row \( i \) and column \( j \)</li>
                             </ul>
-                            
+
                             <p><strong>Important property:</strong></p>
-                            
+
                             <p style="text-align:center;">
                                 \[
                                 A^{-1} = \frac{1}{\det(A)} \text{adj}(A)
                                 \quad \text{(if } \det(A) \neq 0)
                                 \]
                             </p>
-                            
+
                             <hr>
-                            
+
                             <h2>2. Examples</h2>
-                            
+
                             <div class="example">
                                 <h3>Example 1</h3>
-                                
+
                                 <p>Find the adjoint of:</p>
-                                
+
                                 \[
                                 A = \begin{pmatrix}
                                 2 & 4 \\
                                 3 & 1
                                 \end{pmatrix}
                                 \]
-                                
+
                                 <details>
                                     <summary>Show Answer</summary>
                                     <p>Step 1: Compute cofactors</p>
-                                    
+
                                     \[
                                     C = \begin{pmatrix}
                                     (+1)\cdot 1 & -4 \\
@@ -1578,11 +1663,11 @@
                                     -3 & 2
                                     \end{pmatrix}
                                     \]
-                                    
+
                                     <p>Step 2: Transpose cofactor matrix</p>
-                                    
+
                                     \[
-                                    \text{adj}(A) = 
+                                    \text{adj}(A) =
                                     \begin{pmatrix}
                                     1 & -3 \\
                                     -4 & 2
@@ -1590,12 +1675,12 @@
                                     \]
                                 </details>
                             </div>
-                            
+
                             <div class="example">
                                 <h3>Example 2</h3>
-                                
+
                                 <p>Find the adjoint of:</p>
-                                
+
                                 \[
                                 A = \begin{pmatrix}
                                 1 & 0 & 2 \\
@@ -1603,11 +1688,11 @@
                                 2 & 4 & 0
                                 \end{pmatrix}
                                 \]
-                                
+
                                 <details>
                                     <summary>Show Answer</summary>
                                     <p>The cofactor matrix is:</p>
-                                    
+
                                     \[
                                     C = \begin{pmatrix}
                                     -12 & -2 & 10 \\
@@ -1615,11 +1700,11 @@
                                     6 & 2 & 3
                                     \end{pmatrix}
                                     \]
-                                    
+
                                     <p>Transpose to get adjoint:</p>
-                                    
+
                                     \[
-                                    \text{adj}(A) = 
+                                    \text{adj}(A) =
                                     \begin{pmatrix}
                                     -12 & 8 & 6 \\
                                     -2 & -4 & 2 \\
@@ -1628,22 +1713,22 @@
                                     \]
                                 </details>
                             </div>
-                            
+
                             <hr>
-                            
+
                             <h2>3. Common Mistakes and Tips</h2>
-                            
+
                             <ul>
                                 <li>Do not confuse "adjoint" with "transpose" — adjoint uses cofactors.</li>
                                 <li>Be careful with signs \( (-1)^{i+j} \).</li>
                                 <li>You must transpose the cofactor matrix at the end.</li>
                                 <li>If \(\det(A)=0\), adjoint still exists, but \(A^{-1}\) does not.</li>
                             </ul>
-                            
+
                             <hr>
-                            
+
                             <h2>4. Practice Problems (with Answers)</h2>
-                            
+
                             <div class="exercise">
                                 <p><strong>Exercise 1.</strong> Find the adjoint of:
                                     \[
@@ -1663,11 +1748,11 @@
                                     \]
                                 </details>
                             </div>
-                            
+
                             <div class="exercise">
                                 <p><strong>Exercise 2.</strong> Find the adjoint of:
                                     \[
-                                    A = 
+                                    A =
                                     \begin{pmatrix}
                                     3 & -1 & 0 \\
                                     2 & 1 & 4 \\
@@ -1678,7 +1763,7 @@
                                 <details>
                                     <summary>Show Answer</summary>
                                     \[
-                                    \text{adj}(A) = 
+                                    \text{adj}(A) =
                                     \begin{pmatrix}
                                     6 & -2 & 4 \\
                                     -4 & 6 & -12 \\
@@ -1687,17 +1772,17 @@
                                     \]
                                 </details>
                             </div>
-                            
+
                             <div class="exercise">
-                                <p><strong>Exercise 3.</strong> True or False:  
-                                    If \(\det(A) = 0\), then \(\text{adj}(A)\) does not exist.</p>
+                                <p><strong>Exercise 3.</strong> True or False:
+                                    adj(A) exists for any square matrix A (including det(A)=0). When det(A)≠0, A^{-1} = adj(A)/det(A).
                                 <details>
                                     <summary>Show Answer</summary>
-                                    False.  
+                                    False.
                                     Adjoint always exists; only the inverse fails to exist.
                                 </details>
                             </div>
-                            
+
                             <div class="exercise">
                                 <p><strong>Exercise 4.</strong> Use the adjoint to compute the inverse of:
                                     \[
@@ -1713,25 +1798,25 @@
                                     \text{adj}(A) = \begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix},
                                     \qquad \det(A)=1
                                     \]
-                                    
+
                                     \[
                                     A^{-1} = \text{adj}(A)
                                     \]
                                 </details>
                             </div>
                         </div>
-                        
+
                         <!-- SEO文章页脚 -->
                         <div class="seo-article-footer">
                             <p>
-                                Copyright Notice: This article is original content from the Matrix Calculator website.  
-                                Please credit the source when sharing or reproducing it.  
+                                Copyright Notice: This article is original content from the Matrix Calculator website.
+                                Please credit the source when sharing or reproducing it.
                                 For more matrix computation tools, visit <b>matrixcalcu.com</b>.
                             </p>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 右侧容器 - 现在包含问答栏 -->
                 <div class="right-sidebar" id="matrix-game">
                     <div class="question-box">
@@ -1744,7 +1829,7 @@
             </div>
         </div>
     </div>
-    
+
     <footer>
         <div class="container">
             <p>&copy; 2025 Matrix Calculator. All rights reserved.</p>
@@ -1757,21 +1842,21 @@
         function goTo(pageName) {
             const pathParts = window.location.pathname.split('/');
             const lang = pathParts[1] || 'en'; // 默认英语
-            
+
             // 获取矩阵A和B的数据
             const matrixAData = getMatrixData('A');
             const matrixBData = getMatrixData('B');
-            
+
             // 创建URL参数
             const params = new URLSearchParams();
             params.append('sizeA', sizeA);
             params.append('sizeB', sizeB);
             params.append('matrixA', JSON.stringify(matrixAData));
             params.append('matrixB', JSON.stringify(matrixBData));
-            
+
             // 添加时间戳防止缓存
             params.append('t', Date.now());
-            
+
             window.location.href = `/${lang}/${pageName}-calculator.html?${params.toString()}`;
         }
 
@@ -1781,7 +1866,7 @@
             const size = matrixId === 'A' ? sizeA : sizeB;
             const inputs = container.querySelectorAll('.matrix input');
             const data = [];
-            
+
             for (let i = 0; i < size; i++) {
                 const row = [];
                 for (let j = 0; j < size; j++) {
@@ -1799,13 +1884,13 @@
         function switchLanguage(lang) {
             let path = window.location.pathname;
             let parts = path.split("/").filter(part => part !== "");
-            
+
             // 如果在根目录，跳转到目标语言的首页
             if (parts.length === 0) {
                 window.location.href = `/${lang}/index.html`;
                 return;
             }
-            
+
             // 正常情况：替换语言代码
             parts[0] = lang;
             let newPath = "/" + parts.join("/");
@@ -1814,20 +1899,20 @@
 
         // 矩阵计算器功能
         let sizeA = 3;
-        let sizeB = 3; 
+        let sizeB = 3;
         const minSize = 2;
-        const maxSize = 9; 
-        
+        const maxSize = 9;
+
         const containerA = document.getElementById('matrix-container-a');
         const containerB = document.getElementById('matrix-container-b');
         const resultContainer = document.getElementById('result-container');
         const resultHistory = document.getElementById('result-history');
-        
+
         const increaseBtnA = document.getElementById('increase-btn-a');
         const decreaseBtnA = document.getElementById('decrease-btn-a');
         const increaseBtnB = document.getElementById('increase-btn-b');
         const decreaseBtnB = document.getElementById('decrease-btn-b');
-        
+
         const randomOptionsA = document.getElementById('random-options-a');
         const randomOptionsB = document.getElementById('random-options-b');
         const swapBtn = document.getElementById('swap-ab-btn');
@@ -1839,26 +1924,26 @@
             const gridDiv = document.createElement('div');
             gridDiv.classList.add('result-matrix-grid');
             if (isProcess) gridDiv.classList.add('process-matrix');
-            
-            const cols = matrix[0] ? matrix[0].length : size; 
-            gridDiv.style.gridTemplateColumns = `repeat(${cols}, auto)`; 
-            
+
+            const cols = matrix[0] ? matrix[0].length : size;
+            gridDiv.style.gridTemplateColumns = `repeat(${cols}, auto)`;
+
             matrix.forEach(row => {
                 row.forEach(val => {
                     const cell = document.createElement('div');
                     cell.classList.add('result-cell');
-                    
+
                     if (isProcess) {
                         cell.innerHTML = val;
                     } else {
                         const numVal = parseFloat(val);
                         if (Number.isInteger(numVal)) {
-                            cell.textContent = numVal.toString(); 
+                            cell.textContent = numVal.toString();
                         } else {
                             if (Math.abs(numVal - Math.round(numVal)) < 1e-6) {
                                 cell.textContent = Math.round(numVal).toString();
                             } else {
-                                cell.textContent = numVal.toFixed(2); 
+                                cell.textContent = numVal.toFixed(2);
                             }
                         }
                     }
@@ -1868,18 +1953,18 @@
             container.appendChild(gridDiv);
         }
 
-       
+
         function displayResult(operation, matrixA, matrixB, operator, processMatrix, resultMatrix, errorMessage = null) {
-            
+
             const resultBlock = document.createElement('div');
             resultBlock.classList.add('result-block');
-            resultBlock.id = 'result-' + Date.now(); 
+            resultBlock.id = 'result-' + Date.now();
 
             // 1. 错误显示
             if (errorMessage) {
                 resultBlock.innerHTML = `<div class="error-message">${errorMessage}</div>`;
             } else {
-                
+
                 // 2. 操作按钮 (切换过程、分享、删除)
                 const actionButtons = document.createElement('div');
                 actionButtons.classList.add('action-buttons');
@@ -1897,37 +1982,37 @@
                     <button class="delete-btn" title="Delete this record"><i class="fas fa-times"></i></button>
                 `;
                 resultBlock.appendChild(actionButtons);
-                
+
                 // 3. 桌面端完整视图
                 const desktopView = document.createElement('div');
                 desktopView.className = 'desktop-result-view';
-                
+
                 // 表达式行容器 - 使用flex-wrap允许换行
                 const row = document.createElement('div');
                 row.classList.add('result-expression-row');
-                
+
                 // --- 矩阵 A ---
                 renderResultMatrix(matrixA, row);
-                
+
                 // --- 运算符 ---
                 row.innerHTML += `<span class="result-op">${operator}</span>`;
-                
+
                 // --- 矩阵 B ---
                 renderResultMatrix(matrixB, row);
-                
+
                 // --- 等号 1 ---
                 row.innerHTML += `<span class="result-eq">=</span>`;
 
                 // --- 过程矩阵和等号2容器 (可切换显示) ---
                 const processOnlyContainer = document.createElement('div');
-                processOnlyContainer.classList.add('process-only-container'); 
+                processOnlyContainer.classList.add('process-only-container');
                 processOnlyContainer.style.display = 'flex';
-                processOnlyContainer.style.gap = '15px'; 
+                processOnlyContainer.style.gap = '15px';
                 processOnlyContainer.style.alignItems = 'center';
 
                 // --- 过程矩阵 (表达式) ---
                 renderResultMatrix(processMatrix, processOnlyContainer, true);
-                
+
                 // --- 等号 2 ---
                 processOnlyContainer.innerHTML += `<span class="result-eq">=</span>`;
 
@@ -1938,18 +2023,18 @@
                 finalResultContainer.style.alignItems = 'center';
 
                 renderResultMatrix(resultMatrix, finalResultContainer);
-                
+
                 // 将过程部分和最终结果部分添加到主行
-                row.appendChild(processOnlyContainer); 
-                row.appendChild(finalResultContainer); 
+                row.appendChild(processOnlyContainer);
+                row.appendChild(finalResultContainer);
                 desktopView.appendChild(row);
                 resultBlock.appendChild(desktopView);
-                
+
             }
 
             // 5. 将结果块添加到顶部 (历史记录顺序)
             resultHistory.prepend(resultBlock);
-            
+
             // 6. 绑定功能
             setupResultBlockFunctionality(resultBlock, matrixA, matrixB, resultMatrix, operation);
         }
@@ -1962,7 +2047,7 @@
                     resultBlock.remove();
                 });
             }
-            
+
             // 显示/隐藏计算过程
             const toggleProcessBtn = resultBlock.querySelector('.toggle-process-btn');
             if (toggleProcessBtn) {
@@ -1981,17 +2066,17 @@
                     }
                 });
             }
-            
+
             // 移动端显示/隐藏详情
             const showDetailsBtn = resultBlock.querySelector('.show-details-btn');
             if (showDetailsBtn) {
                 showDetailsBtn.addEventListener('click', () => {
                     const desktopView = resultBlock.querySelector('.desktop-result-view');
                     const mobileView = resultBlock.querySelector('.mobile-result-view');
-                    
+
                     desktopView.style.display = 'block';
                     mobileView.style.display = 'none';
-                    
+
                     // 添加返回按钮
                     const backBtn = document.createElement('button');
                     backBtn.className = 'hide-details-btn';
@@ -2001,21 +2086,21 @@
                         mobileView.style.display = 'block';
                         backBtn.remove();
                     });
-                    
+
                     resultBlock.insertBefore(backBtn, desktopView);
                 });
             }
-            
+
             // 分享功能
             const shareBtn = resultBlock.querySelector('.share-btn');
             const shareMenu = resultBlock.querySelector('.share-menu');
-            
+
             if (shareBtn) {
                 shareBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     shareMenu.classList.toggle('active');
                 });
-                
+
                 // 复制链接
                 const copyLinkBtn = resultBlock.querySelector('.copy-link');
                 copyLinkBtn.addEventListener('click', () => {
@@ -2025,7 +2110,7 @@
                         shareMenu.classList.remove('active');
                     });
                 });
-                
+
                 // 分享到X
                 const shareXBtn = resultBlock.querySelector('.share-x');
                 shareXBtn.addEventListener('click', () => {
@@ -2034,7 +2119,7 @@
                     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
                     shareMenu.classList.remove('active');
                 });
-                
+
                 // 分享到Reddit
                 const shareRedditBtn = resultBlock.querySelector('.share-reddit');
                 shareRedditBtn.addEventListener('click', () => {
@@ -2043,7 +2128,7 @@
                     window.open(`https://www.reddit.com/submit?title=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
                     shareMenu.classList.remove('active');
                 });
-                
+
                 // 邮件分享
                 const shareEmailBtn = resultBlock.querySelector('.share-email');
                 shareEmailBtn.addEventListener('click', () => {
@@ -2052,7 +2137,7 @@
                     window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
                     shareMenu.classList.remove('active');
                 });
-                
+
                 // 点击其他地方关闭分享菜单
                 document.addEventListener('click', () => {
                     shareMenu.classList.remove('active');
@@ -2063,13 +2148,13 @@
         function generateShareURL(matrixA, matrixB, operation) {
             const baseURL = window.location.origin + window.location.pathname;
             const params = new URLSearchParams();
-            
+
             params.append('sizeA', matrixA.length);
             params.append('sizeB', matrixB.length);
             params.append('matrixA', JSON.stringify(matrixA));
             params.append('matrixB', JSON.stringify(matrixB));
             params.append('operation', operation);
-            
+
             return `${baseURL}?${params.toString()}`;
         }
 
@@ -2079,7 +2164,7 @@
             body += `Operation: ${operation}\n\n`;
             body += `Result:\n${matrixToString(result)}\n\n`;
             body += `View full calculation: ${generateShareURL(matrixA, matrixB, operation)}`;
-            
+
             return body;
         }
 
@@ -2093,14 +2178,14 @@
             if (existingError) {
                 existingError.remove();
             }
-            
+
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error-message';
             errorDiv.textContent = `❌ Error: ${message}`;
-            
+
             // 添加到结果容器的顶部
             resultHistory.insertBefore(errorDiv, resultHistory.firstChild);
-            
+
             // 3秒后自动移除错误消息
             setTimeout(() => {
                 if (errorDiv.parentNode) {
@@ -2117,26 +2202,26 @@
         function getMatrixValues(container, size) {
             const inputs = container.querySelectorAll('.matrix input');
             const matrix = [];
-            
+
             for (let i = 0; i < size; i++) {
                 const row = [];
                 for (let j = 0; j < size; j++) {
                     const input = inputs[i * size + j];
                     let value = input.value.trim();
-                    
+
                     // 处理各种空值情况
                     if (value === '' || value === '.' || value === '-') {
                         value = '0';
                         // 立即更新输入框显示
                         setTimeout(() => { input.value = '0'; }, 0);
                     }
-                    
+
                     const numValue = parseFloat(value);
                     row.push(isNaN(numValue) ? 0 : numValue);
                 }
                 matrix.push(row);
             }
-            
+
             return { matrix, isValid: true }; // 现在总是有效，因为空值已转为0
         }
 
@@ -2144,14 +2229,14 @@
         function generateRandomValue(type) {
             let value;
             switch (type) {
-                case 'pos_int': 
+                case 'pos_int':
                     value = Math.floor(Math.random() * 10);
                     break;
-                case 'signed_int': 
+                case 'signed_int':
                     value = Math.floor(Math.random() * 21) - 10;
                     break;
-                case 'float': 
-                    value = ((Math.random() * 2) - 1).toFixed(2); 
+                case 'float':
+                    value = ((Math.random() * 2) - 1).toFixed(2);
                     break;
                 default:
                     value = 0;
@@ -2172,7 +2257,7 @@
         // Helper 4: Render matrix (size adjustment logic) - 增强渲染函数
         function renderMatrix(size, container, matrixId) {
             console.log(`渲染矩阵${matrixId}，尺寸: ${size}x${size}`);
-            
+
             const oldInputs = container.querySelectorAll('.matrix input');
             const oldValues = Array.from(oldInputs).map(input => {
                 const val = input.value.trim();
@@ -2191,7 +2276,7 @@
                     input.type = 'text'; // 改为text类型，方便处理各种输入
                     input.inputMode = 'decimal'; // 移动端显示数字键盘
                     input.placeholder = '0';
-                    
+
                     // 设置初始值
                     if (r < oldSize && c < oldSize) {
                         const oldIndex = r * oldSize + c;
@@ -2199,17 +2284,17 @@
                     } else {
                         input.value = '0';
                     }
-                    
+
                     // 添加输入事件处理：自动格式化
-                    input.addEventListener('blur', function() {
+                    input.addEventListener('blur', function () {
                         const val = this.value.trim();
                         if (val === '' || val === '.' || val === '-') {
                             this.value = '0';
                         }
                     });
-                    
+
                     // 添加输入事件：实时验证
-                    input.addEventListener('input', function() {
+                    input.addEventListener('input', function () {
                         // 允许空值、数字、小数点、负号
                         const val = this.value;
                         if (val && !/^-?\d*\.?\d*$/.test(val)) {
@@ -2217,20 +2302,20 @@
                             this.value = val.replace(/[^-.\d]/g, '');
                         }
                     });
-                    
+
                     newMatrixDiv.appendChild(input);
                 }
             }
-            
+
             container.appendChild(newMatrixDiv);
-            
+
             // 更新全局尺寸变量
-            if (matrixId === 'A') { 
-                sizeA = size; 
-            } else { 
-                sizeB = size; 
+            if (matrixId === 'A') {
+                sizeA = size;
+            } else {
+                sizeB = size;
             }
-            
+
             console.log(`矩阵${matrixId}渲染完成，新尺寸: ${size}x${size}`);
             updateControlState();
         }
@@ -2247,7 +2332,7 @@
             decreaseBtnB.title = `Decrease Size B (Current: ${sizeB}x${sizeB})`;
             increaseBtnB.title = `Increase Size B (Current: ${sizeB}x${sizeB})`;
         }
-        
+
         // Helper 6: Setup random number controls
         const setupRandomControls = (target) => {
             const toggleBtn = document.getElementById(`toggle-random-btn-${target.toLowerCase()}`);
@@ -2256,8 +2341,8 @@
 
             toggleBtn.addEventListener('click', (event) => {
                 event.stopPropagation();
-                randomOptionsA.style.display = 'none'; 
-                randomOptionsB.style.display = 'none'; 
+                randomOptionsA.style.display = 'none';
+                randomOptionsB.style.display = 'none';
                 optionsDiv.style.display = 'flex';
             });
 
@@ -2275,70 +2360,99 @@
         // ================================================
 
         // 伴随矩阵计算函数
-        function calculateAdjoint() {
-            console.log('开始计算伴随矩阵...');
-            
-            const { matrix: matrixA, isValid: isValidA } = getMatrixValues(containerA, sizeA);
-            
-            if (!isValidA) {
-                showError('Matrix A contains invalid values. Please enter valid numbers.');
-                return;
-            }
-            
-            // 验证矩阵是否为方阵
-            if (sizeA !== matrixA[0].length) {
-                showError('Matrix must be square to calculate adjoint.');
-                return;
-            }
-            
-            try {
-                console.log('原始矩阵:', matrixA);
-                
-                // 检查math.js是否可用
-                if (typeof math === 'undefined') {
-                    throw new Error('math.js library not found. Please ensure math.min.js is loaded.');
+        // 伴随矩阵计算函数（根治版：adj(A)=transpose(cofactor(A))）
+            function calculateAdjoint() {
+                console.log('开始计算伴随矩阵...');
+
+                const { matrix: matrixA, isValid: isValidA } = getMatrixValues(containerA, sizeA);
+
+                if (!isValidA) {
+                    showError('Matrix A contains invalid values. Please enter valid numbers.');
+                    return;
                 }
-                
-                // 使用math.js计算伴随矩阵
-                let adjMatrix;
+
+                // 验证矩阵是否为方阵
+                if (sizeA !== matrixA[0].length) {
+                    showError('Matrix must be square to calculate adjoint.');
+                    return;
+                }
+
                 try {
-                    // 尝试使用math.adjoint函数
-                    adjMatrix = math.adjoint(matrixA);
-                } catch (e) {
-                    console.warn('math.adjoint failed, trying alternative method:', e.message);
-                    // 备用方法：adj(A) = det(A) * inv(A) 的转置
-                    const det = math.det(matrixA);
-                    if (Math.abs(det) < 1e-10) {
-                        throw new Error('Matrix is singular (determinant ≈ 0), adjoint cannot be calculated.');
+                    console.log('原始矩阵:', matrixA);
+
+                    if (typeof math === 'undefined') {
+                        throw new Error('math.js library not found. Please ensure math.min.js is loaded.');
                     }
-                    const inv = math.inv(matrixA);
-                    adjMatrix = math.multiply(det, math.transpose(inv));
+
+                    // 根治：按定义计算 adjugate（不依赖 math.adjoint，不用 inv，不怕 det=0）
+                    const adjMatrix = adjugateByCofactor(matrixA);
+
+                    console.log('伴随矩阵结果:', adjMatrix);
+
+                    // 显示结果
+                    displayAdjointResult(matrixA, adjMatrix);
+
+                } catch (error) {
+                    console.error('伴随矩阵计算错误:', error);
+                    showError(`Error calculating adjoint: ${error.message}`);
                 }
-                
-                console.log('伴随矩阵结果:', adjMatrix);
-                
-                // 显示结果
-                displayAdjointResult(matrixA, adjMatrix);
-                
-            } catch (error) {
-                console.error('伴随矩阵计算错误:', error);
-                showError(`Error calculating adjoint: ${error.message}`);
             }
-        }
+
+            // ========== helper：adj(A) = transpose(cofactor(A)) ==========
+            function adjugateByCofactor(A) {
+                const n = A.length;
+                if (n === 0) throw new Error('Empty matrix.');
+
+                // 1x1 特判：adj([a]) = [1]
+                if (n === 1) return [[1]];
+
+                const cof = Array.from({ length: n }, () => Array(n).fill(0));
+
+                for (let i = 0; i < n; i++) {
+                    for (let j = 0; j < n; j++) {
+                        const minor = buildMinor(A, i, j);
+                        const detMinor = math.det(minor);
+
+                        // cofactor = (-1)^(i+j) * det(minor)
+                        const sign = ((i + j) % 2 === 0) ? 1 : -1;
+                        cof[i][j] = math.multiply(sign, detMinor);
+                    }
+                }
+
+                // adj(A) = transpose(cofactor matrix)
+                return math.transpose(cof);
+            }
+
+            function buildMinor(A, rowToRemove, colToRemove) {
+                const n = A.length;
+                const minor = [];
+
+                for (let i = 0; i < n; i++) {
+                    if (i === rowToRemove) continue;
+                    const row = [];
+                    for (let j = 0; j < n; j++) {
+                        if (j === colToRemove) continue;
+                        row.push(A[i][j]);
+                    }
+                    minor.push(row);
+                }
+
+                return minor;
+            }
 
         // 显示伴随矩阵结果的函数 - 移除说明部分
         function displayAdjointResult(originalMatrix, adjointMatrix) {
             const resultHistory = document.getElementById('result-history');
-            
+
             // 创建结果块
             const resultBlock = document.createElement('div');
             resultBlock.classList.add('result-block');
             resultBlock.id = 'result-adjoint-' + Date.now();
-            
+
             // 表达式行
             const row = document.createElement('div');
             row.classList.add('result-expression-row');
-            
+
             // 显示 "adj("
             const adjLabel = document.createElement('span');
             adjLabel.textContent = 'adj(';
@@ -2346,10 +2460,10 @@
             adjLabel.style.fontWeight = 'bold';
             adjLabel.style.color = '#8a2be2';
             row.appendChild(adjLabel);
-            
+
             // 显示原矩阵
             renderResultMatrix(originalMatrix, row);
-            
+
             // 显示 ")"
             const closeParen = document.createElement('span');
             closeParen.textContent = ')';
@@ -2357,7 +2471,7 @@
             closeParen.style.fontWeight = 'bold';
             closeParen.style.color = '#8a2be2';
             row.appendChild(closeParen);
-            
+
             // 显示等号
             const eqSpan = document.createElement('span');
             eqSpan.textContent = '=';
@@ -2365,12 +2479,12 @@
             eqSpan.style.fontWeight = 'bold';
             eqSpan.style.margin = '0 15px';
             row.appendChild(eqSpan);
-            
+
             // 显示伴随矩阵结果
             renderResultMatrix(adjointMatrix, row);
-            
+
             resultBlock.appendChild(row);
-            
+
             // 添加操作按钮
             const actionButtons = document.createElement('div');
             actionButtons.classList.add('action-buttons');
@@ -2385,10 +2499,10 @@
                 <button class="delete-btn" title="Delete this record"><i class="fas fa-times"></i></button>
             `;
             resultBlock.appendChild(actionButtons);
-            
+
             // 添加到结果历史顶部
             resultHistory.prepend(resultBlock);
-            
+
             // 绑定功能
             setupAdjointResultFunctionality(resultBlock, originalMatrix, adjointMatrix);
         }
@@ -2400,16 +2514,16 @@
             deleteBtn.addEventListener('click', () => {
                 resultBlock.remove();
             });
-            
+
             // 分享功能
             const shareBtn = resultBlock.querySelector('.share-btn');
             const shareMenu = resultBlock.querySelector('.share-menu');
-            
+
             shareBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 shareMenu.classList.toggle('active');
             });
-            
+
             // 复制链接
             const copyLinkBtn = resultBlock.querySelector('.copy-link');
             copyLinkBtn.addEventListener('click', () => {
@@ -2419,7 +2533,7 @@
                     shareMenu.classList.remove('active');
                 });
             });
-            
+
             // 分享到X
             const shareXBtn = resultBlock.querySelector('.share-x');
             shareXBtn.addEventListener('click', () => {
@@ -2428,7 +2542,7 @@
                 window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
                 shareMenu.classList.remove('active');
             });
-            
+
             // 点击其他地方关闭分享菜单
             document.addEventListener('click', () => {
                 shareMenu.classList.remove('active');
@@ -2439,12 +2553,12 @@
         function generateAdjointShareURL(matrix) {
             const baseURL = window.location.origin + window.location.pathname;
             const params = new URLSearchParams();
-            
+
             params.append('size', matrix.length);
             params.append('matrixA', JSON.stringify(matrix));
             params.append('operation', 'adjoint');
             params.append('autoCalculate', 'true');
-            
+
             return `${baseURL}?${params.toString()}`;
         }
 
@@ -2456,7 +2570,7 @@
         function updateMatrixSizeFromURL(target, sizeFromURL) {
             const newSize = Math.max(minSize, Math.min(maxSize, sizeFromURL));
             const currentSize = target === 'A' ? sizeA : sizeB;
-            
+
             if (newSize !== currentSize) {
                 console.log(`更新矩阵${target}尺寸: ${currentSize} -> ${newSize}`);
                 if (target === 'A') {
@@ -2476,7 +2590,7 @@
             console.log(`填充矩阵${target}数据:`, data);
             const container = target === 'A' ? containerA : containerB;
             let matrixData = data;
-            
+
             // 处理数据格式
             if (Array.isArray(data) && data.length > 0) {
                 // 检查是否为二维数组
@@ -2492,23 +2606,23 @@
                     }
                 }
             }
-            
+
             // 获取实际尺寸
             const dataRows = matrixData.length;
             const dataCols = matrixData[0] ? matrixData[0].length : 0;
             const dataSize = Math.max(dataRows, dataCols);
-            
+
             console.log(`矩阵${target}数据尺寸: ${dataSize}x${dataSize}`);
-            
+
             // 如果需要，更新尺寸
             if (dataSize > 0) {
                 updateMatrixSizeFromURL(target, dataSize);
             }
-            
+
             // 填充数据
             const currentSize = target === 'A' ? sizeA : sizeB;
             const inputs = container.querySelectorAll('.matrix input');
-            
+
             for (let i = 0; i < currentSize; i++) {
                 for (let j = 0; j < currentSize; j++) {
                     const index = i * currentSize + j;
@@ -2523,7 +2637,7 @@
                     }
                 }
             }
-            
+
             console.log(`矩阵${target}填充完成`);
         }
 
@@ -2531,20 +2645,20 @@
         function initFromURLParameters() {
             console.log('开始初始化URL参数...');
             const urlParams = new URLSearchParams(window.location.search);
-            
+
             // 调试：输出所有URL参数
             console.log('URL参数:', Object.fromEntries(urlParams.entries()));
-            
+
             // 方法1：从sizeA和sizeB参数获取尺寸
             let urlSizeA = parseInt(urlParams.get('sizeA'));
             let urlSizeB = parseInt(urlParams.get('sizeB'));
-            
+
             // 方法2：如果没有size参数，尝试从matrixA数据推断
             if (!urlSizeA && urlParams.has('matrixA')) {
                 try {
                     const matrixADataStr = urlParams.get('matrixA');
                     let matrixAData;
-                    
+
                     // 尝试解析JSON
                     try {
                         matrixAData = JSON.parse(matrixADataStr);
@@ -2553,7 +2667,7 @@
                         const cleanedStr = matrixADataStr.replace(/'/g, '"');
                         matrixAData = JSON.parse(cleanedStr);
                     }
-                    
+
                     if (Array.isArray(matrixAData)) {
                         if (Array.isArray(matrixAData[0])) {
                             // 二维数组
@@ -2570,12 +2684,12 @@
                     console.warn('无法从matrixA推断尺寸:', e);
                 }
             }
-            
+
             // 方法3：使用size参数（兼容性）
             if (!urlSizeA) {
                 urlSizeA = parseInt(urlParams.get('size'));
             }
-            
+
             // 确保尺寸在有效范围内
             if (urlSizeA && urlSizeA >= minSize && urlSizeA <= maxSize) {
                 console.log('设置矩阵A尺寸为:', urlSizeA, '当前尺寸:', sizeA);
@@ -2585,7 +2699,7 @@
                     console.log('矩阵A已重新渲染为', sizeA, 'x', sizeA);
                 }
             }
-            
+
             if (urlSizeB && urlSizeB >= minSize && urlSizeB <= maxSize) {
                 console.log('设置矩阵B尺寸为:', urlSizeB, '当前尺寸:', sizeB);
                 if (urlSizeB !== sizeB) {
@@ -2594,14 +2708,14 @@
                     console.log('矩阵B已重新渲染为', sizeB, 'x', sizeB);
                 }
             }
-            
+
             // 获取并填充矩阵数据
             try {
                 // 处理矩阵A
                 if (urlParams.has('matrixA')) {
                     const matrixADataStr = urlParams.get('matrixA');
                     console.log('获取矩阵A数据，长度:', matrixADataStr.length);
-                    
+
                     let matrixAData;
                     try {
                         matrixAData = JSON.parse(matrixADataStr);
@@ -2610,11 +2724,11 @@
                         const cleanedStr = matrixADataStr.replace(/'/g, '"');
                         matrixAData = JSON.parse(cleanedStr);
                     }
-                    
+
                     if (matrixAData && matrixAData.length > 0) {
                         console.log('填充矩阵A数据，类型:', Array.isArray(matrixAData[0]) ? '二维数组' : '一维数组');
                         fillMatrixFromData('A', matrixAData);
-                        
+
                         // 关键修改：从落地页跳转过来自动计算伴随矩阵
                         // 只要URL中有矩阵A数据，就自动计算
                         console.log('检测到矩阵A数据，准备自动计算伴随矩阵...');
@@ -2631,7 +2745,7 @@
                         }, 500); // 增加延迟时间，确保DOM完全渲染
                     }
                 }
-                
+
                 // 处理矩阵B
                 if (urlParams.has('matrixB')) {
                     const matrixBData = JSON.parse(urlParams.get('matrixB') || '[]');
@@ -2639,12 +2753,12 @@
                         fillMatrixFromData('B', matrixBData);
                     }
                 }
-                
+
             } catch (e) {
                 console.warn('URL参数中的矩阵数据格式错误:', e);
                 showError('URL参数中的矩阵数据格式不正确。请检查数据格式。');
             }
-            
+
             // 更新控制按钮状态
             updateControlState();
             console.log('URL参数初始化完成');
@@ -2671,17 +2785,17 @@
             inputsA.forEach((input, index) => { input.value = valuesB[index]; });
             inputsB.forEach((input, index) => { input.value = valuesA[index]; });
         });
-        
+
         // Clear buttons - 修改：清除时设为0而不是空
-        document.getElementById('clear-btn-a').addEventListener('click', () => { 
-            containerA.querySelectorAll('.matrix input').forEach(input => { 
-                input.value = '0'; 
-            }); 
+        document.getElementById('clear-btn-a').addEventListener('click', () => {
+            containerA.querySelectorAll('.matrix input').forEach(input => {
+                input.value = '0';
+            });
         });
-        document.getElementById('clear-btn-b').addEventListener('click', () => { 
-            containerB.querySelectorAll('.matrix input').forEach(input => { 
-                input.value = '0'; 
-            }); 
+        document.getElementById('clear-btn-b').addEventListener('click', () => {
+            containerB.querySelectorAll('.matrix input').forEach(input => {
+                input.value = '0';
+            });
         });
 
         // Clear all results button
@@ -2695,7 +2809,7 @@
             const isInsideB = document.getElementById('random-controls-main-b').contains(event.target);
             if (!isInsideA) randomOptionsA.style.display = 'none';
             if (!isInsideB) randomOptionsB.style.display = 'none';
-        }, true); 
+        }, true);
 
         // 初始化矩阵计算器
         function initMatrixCalculator() {
@@ -2705,10 +2819,10 @@
             setupRandomControls('A');
             setupRandomControls('B');
             updateControlState();
-            
+
             // 初始化URL参数
             initFromURLParameters();
-            
+
             console.log('矩阵计算器初始化完成');
         }
 
@@ -2730,30 +2844,30 @@
         }
 
         // 页面初始化
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             console.log('DOM加载完成，开始初始化...');
-            
+
             // 根据URL参数设置页面标题
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('operation') === 'adjoint' || urlParams.has('matrixA')) {
                 document.title = 'Matrix Adjoint Calculator - Compute Adjugate of Any Square Matrix';
                 document.getElementById('page-title').textContent = 'Matrix Adjoint Calculator';
             }
-            
+
             const matrixGameButton = document.querySelector('a[href="#matrix-game"]');
             const rightSidebar = document.getElementById('matrix-game');
-            
+
             if (matrixGameButton) {
-                matrixGameButton.addEventListener('click', function(e) {
+                matrixGameButton.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
+
                     // 在移动端，滚动到右侧边栏
                     if (window.innerWidth <= 768) {
                         rightSidebar.scrollIntoView({ behavior: 'smooth' });
                     } else {
                         // 在桌面端，添加高亮效果来吸引用户注意
                         rightSidebar.classList.add('highlight');
-                        
+
                         // 2秒后移除高亮效果
                         setTimeout(() => {
                             rightSidebar.classList.remove('highlight');
@@ -2761,39 +2875,39 @@
                     }
                 });
             }
-            
+
             // 多语言选择器功能
             const languageToggle = document.querySelector('.language-toggle');
             const languageDropdown = document.querySelector('.language-dropdown');
             const languageOptions = document.querySelectorAll('.language-option');
-            
+
             if (languageToggle) {
                 // 切换下拉菜单显示/隐藏
-                languageToggle.addEventListener('click', function(e) {
+                languageToggle.addEventListener('click', function (e) {
                     e.stopPropagation();
                     languageDropdown.classList.toggle('active');
                 });
-                
+
                 // 选择语言时更新显示
                 languageOptions.forEach(option => {
-                    option.addEventListener('click', function() {
+                    option.addEventListener('click', function () {
                         const selectedLang = this.getAttribute('data-lang');
                         const selectedText = this.textContent;
-                        
+
                         // 更新当前显示的语言
                         languageToggle.innerHTML = `<span class="globe-icon">🌐</span> ${selectedText}`;
-                        
+
                         // 更新活动状态
                         languageOptions.forEach(opt => opt.classList.remove('active'));
                         this.classList.add('active');
-                        
+
                         // 关闭下拉菜单
                         languageDropdown.classList.remove('active');
                     });
                 });
-                
+
                 // 点击页面其他区域关闭下拉菜单
-                document.addEventListener('click', function() {
+                document.addEventListener('click', function () {
                     languageDropdown.classList.remove('active');
                 });
             }
@@ -2803,9 +2917,10 @@
 
             // 初始化问答栏
             initPoll();
-            
+
             console.log('页面初始化完成');
         });
     </script>
 </body>
+
 </html>
