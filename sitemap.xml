@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://matrixcalcu.com/</loc>
+    <loc>https://matrixcalcu.com/en/</loc>
   </url>
   <url>
     <loc>https://matrixcalcu.com/es/</loc>
   </url>
 
-  <url><loc>https://matrixcalcu.com/matrix-addition-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-adjoint-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-arccosine-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-arcsine-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-arctangent-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-augmented-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-cholesky-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-cosine-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-determinant-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-diagonal-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-eigenvalues-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-eigenvectors-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-equations-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-exponential-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-hermite-normal-form-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-inverse-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-jordan-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-kronecker-product-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-lll-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-logarithm-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-lu-decomposition-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-multiplication-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-power-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-pseudo-inverse-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-qr-decomposition-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-rank-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-rref-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-scalar-multiplication-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-sine-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-square-root-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-subtraction-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-svd-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-tangent-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-trace-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-transpose-calculator.html</loc></url>
-  <url><loc>https://matrixcalcu.com/matrix-upper-triangular-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-addition-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-adjoint-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-arccosine-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-arcsine-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-arctangent-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-augmented-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-cholesky-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-cosine-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-determinant-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-diagonal-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-eigenvalues-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-eigenvectors-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-equations-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-exponential-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-hermite-normal-form-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-inverse-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-jordan-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-kronecker-product-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-lll-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-logarithm-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-lu-decomposition-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-multiplication-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-power-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-pseudo-inverse-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-qr-decomposition-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-rank-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-rref-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-scalar-multiplication-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-sine-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-square-root-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-subtraction-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-svd-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-tangent-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-trace-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-transpose-calculator.html</loc></url>
+  <url><loc>https://matrixcalcu.com/en/matrix-upper-triangular-calculator.html</loc></url>
 
   <url><loc>https://matrixcalcu.com/es/matrix-addition-calculator.html</loc></url>
   <url><loc>https://matrixcalcu.com/es/matrix-adjoint-calculator.html</loc></url>
