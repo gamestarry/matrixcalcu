@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/square-root.js
 // Single-matrix: Matrix Square Root (principal real sqrt when it exists)
 // Numeric output using Denman–Beavers iteration.
@@ -25,7 +27,7 @@ function toNumberMatrix(A) {
   const c = A[0].length;
   const out = new Array(r);
   for (let i = 0; i < r; i++) {
-    if (!Array.isArray(A[i]) || A[i].length !== c) throw new Error("Invalid matrix row length.");
+    if (!Array.isArray(A[i]) || A[i].length !== c) throw userError('ERR_INVALID_MATRIX_ROW_LENGTH');
     const row = new Array(c);
     for (let j = 0; j < c; j++) row[j] = toNumber(A[i][j]);
     out[i] = row;
@@ -143,7 +145,7 @@ function sqrtmDenmanBeavers(A, opts = {}) {
       invZ = invMatrix(Z);
       invY = invMatrix(Y);
     } catch (e) {
-      throw new Error("Matrix square root failed: matrix became singular during iteration.");
+      throw userError('ERR_SQRT_SINGULAR_DURING_ITERATION');
     }
 
     const Ynext = scale(add(Y, invZ), 0.5);
@@ -160,7 +162,7 @@ function sqrtmDenmanBeavers(A, opts = {}) {
     Z = Znext;
   }
 
-  throw new Error("Matrix square root did not converge (no real principal square root or matrix is ill-conditioned).");
+  throw userError('ERR_SQRT_NOT_CONVERGED');
 }
 
 /* ===============================
@@ -170,20 +172,20 @@ function sqrtmDenmanBeavers(A, opts = {}) {
 export const config = {
   validate(matrices) {
     const A = matrices?.[0];
-    if (!looksLikeMatrix(A)) throw new Error("Please enter Matrix A.");
+    if (!looksLikeMatrix(A)) throw userError('ERR_MATRIX_A_REQUIRED');
 
     const r = A.length;
     const c = A[0].length;
 
-    if (r !== c) throw new Error("Matrix square root requires a square matrix (n×n).");
-    if (r < 1) throw new Error("Matrix A is empty.");
-    if (r > 20) throw new Error("Matrix size too large for matrix square root.");
+    if (r !== c) throw userError('ERR_SQRT_NOT_SQUARE');
+    if (r < 1) throw userError('ERR_MATRIX_A_EMPTY');
+    if (r > 20) throw userError('ERR_SQRT_MATRIX_TOO_LARGE');
 
     const numA = toNumberMatrix(A);
     for (let i = 0; i < r; i++) {
       for (let j = 0; j < c; j++) {
         const v = numA[i][j];
-        if (!Number.isFinite(v)) throw new Error("Matrix contains invalid number(s).");
+        if (!Number.isFinite(v)) throw userError('ERR_INVALID_NUMBER');
       }
     }
   }

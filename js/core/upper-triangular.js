@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/upper-triangular.js
 // Single-matrix operation: Upper Triangular Form
 // Uses fraction-friendly Gaussian elimination.
@@ -11,13 +13,13 @@ function isMatrix(M) {
 
 function assertRectangular(M, name = 'Matrix') {
     if (!isMatrix(M)) {
-        throw new Error(`${name} is invalid.`);
+        throw userError('ERR_MATRIX_INVALID', { matrixName: name });
     }
 
     const cols = M[0].length;
     for (let i = 0; i < M.length; i++) {
         if (!Array.isArray(M[i]) || M[i].length !== cols) {
-            throw new Error(`${name} is invalid.`);
+            throw userError('ERR_MATRIX_INVALID', { matrixName: name });
         }
     }
 }
@@ -78,7 +80,7 @@ export const config = {
         const A = matrices[0];
 
         if (!A || !A.length) {
-            throw new Error('Please enter Matrix A.');
+            throw userError('ERR_MATRIX_A_REQUIRED');
         }
 
         assertRectangular(A, 'Matrix A');

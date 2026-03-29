@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/determinant.js
 // 单矩阵：det(A)
 // 与现有 app.js 单矩阵分发保持一致：export const config / export function calculate / export function generateProcessMatrix
@@ -23,7 +25,7 @@ export const config = {
   validate(matrices) {
     const A = matrices?.[0];
     if (!A || !A.length || !A[0] || !A[0].length) {
-      throw new Error('Please enter Matrix A.');
+      throw userError('ERR_MATRIX_A_REQUIRED');
     }
 
     const rows = A.length;
@@ -32,14 +34,12 @@ export const config = {
     // 矩阵必须是规则矩阵（每行列数一致）
     for (let i = 0; i < rows; i++) {
       if (!A[i] || A[i].length !== cols) {
-        throw new Error('Invalid matrix: each row must have the same number of columns.');
+        throw userError('ERR_DETERMINANT_INVALID_SHAPE');
       }
     }
 
     if (rows !== cols) {
-      throw new Error(
-        `Determinant is only defined for square matrices. Got A(${rows}×${cols}).`
-      );
+      throw userError('ERR_DETERMINANT_NOT_SQUARE', { rows, cols });
     }
   }
 };

@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/hermite-normal-form.js
 // Single-matrix operation: Hermite Normal Form (row-style HNF)
 // Integer matrices only.
@@ -15,13 +17,13 @@ function cloneMatrix(M) {
 
 function assertRectangular(M, matrixName = 'Matrix') {
     if (!isMatrix(M)) {
-        throw new Error(`${matrixName} is invalid.`);
+        throw userError('ERR_MATRIX_INVALID', { matrixName });
     }
 
     const cols = M[0].length;
     for (let i = 0; i < M.length; i++) {
         if (!Array.isArray(M[i]) || M[i].length !== cols) {
-            throw new Error(`${matrixName} is invalid.`);
+            throw userError('ERR_MATRIX_INVALID', { matrixName });
         }
     }
 }
@@ -47,7 +49,7 @@ function normalizeIntegerMatrix(M) {
         for (let j = 0; j < M[i].length; j++) {
             const v = toIntegerValue(M[i][j]);
             if (v === null) {
-                throw new Error('Hermite Normal Form is defined here for integer matrices only.');
+                throw userError('ERR_HERMITE_INTEGER_ONLY');
             }
             row.push(v);
         }
@@ -215,7 +217,7 @@ export const config = {
         const A = matrices[0];
 
         if (!A || !A.length) {
-            throw new Error('Please enter Matrix A.');
+            throw userError('ERR_MATRIX_A_REQUIRED');
         }
 
         assertRectangular(A, 'Matrix A');

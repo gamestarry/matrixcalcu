@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/lu-decomposition.js
 // Single-matrix: LU Decomposition with partial pivoting
 // Returns { P, L, U } where P*A = L*U
@@ -55,12 +57,12 @@ export const config = {
   validate(matrices) {
     const [A] = matrices || [];
     if (!A || !A.length || !A[0] || !A[0].length) {
-      throw new Error('Please enter Matrix A.');
+      throw userError('ERR_MATRIX_A_REQUIRED');
     }
     const rows = A.length;
     const cols = A[0].length;
     if (rows !== cols) {
-      throw new Error(`LU decomposition requires a square matrix. Got ${rows}×${cols}.`);
+      throw userError('ERR_LU_NOT_SQUARE', { rows, cols });
     }
   }
 };
@@ -93,7 +95,7 @@ export function calculate(matrices) {
     // If pivot is 0, matrix is singular (still can proceed but may divide by 0)
     // We'll throw a clear error.
     if (absAsNumber(U[pivotRow][k]) === 0) {
-      throw new Error('LU decomposition failed: pivot is 0 (matrix may be singular).');
+      throw userError('ERR_LU_ZERO_PIVOT');
     }
 
     // ---- Apply row swaps to U and P; also to L (only columns < k)

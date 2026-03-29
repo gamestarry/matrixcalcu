@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/tangent.js
 // Single-matrix: Matrix tangent tan(A) (numeric, stable)
 // Uses the same block expm identity to get sin(A) and cos(A), then tan(A)=sin(A)*inv(cos(A)).
@@ -17,7 +19,7 @@ function toNumberMatrix(A) {
   const r = A.length, c = A[0].length;
   const out = new Array(r);
   for (let i = 0; i < r; i++) {
-    if (!Array.isArray(A[i]) || A[i].length !== c) throw new Error("Invalid matrix row length.");
+    if (!Array.isArray(A[i]) || A[i].length !== c) throw userError('ERR_INVALID_MATRIX_ROW_LENGTH');
     const row = new Array(c);
     for (let j = 0; j < c; j++) row[j] = toNumber(A[i][j]);
     out[i] = row;
@@ -162,7 +164,7 @@ function expmPade13(A) {
     const invQ = invMatrix(Q);
     R = mul(invQ, P);
   } catch {
-    throw new Error("Matrix tangent failed: internal expm solve failed (singular system).");
+    throw userError('ERR_TANGENT_INTERNAL_SOLVE_FAILED');
   }
 
   for (let k = 0; k < s; k++) R = mul(R, R);
@@ -209,7 +211,7 @@ function tanMatrix(A) {
   try {
     invC = invMatrix(C);
   } catch {
-    throw new Error("Matrix tangent failed: cos(A) is singular (not invertible).");
+    throw userError('ERR_TANGENT_COS_SINGULAR');
   }
 
   return cleanupNegZero(mul(S, invC));
@@ -219,14 +221,14 @@ function tanMatrix(A) {
 export const config = {
   validate(matrices) {
     const A = matrices?.[0];
-    if (!looksLikeMatrix(A)) throw new Error("Please enter Matrix A.");
+    if (!looksLikeMatrix(A)) throw userError('ERR_MATRIX_A_REQUIRED');
     const r = A.length, c = A[0].length;
-    if (r !== c) throw new Error("Matrix tangent requires a square matrix (n×n).");
-    if (r > 10) throw new Error("Matrix tangent currently supports up to 10×10 (for stability/performance).");
+    if (r !== c) throw userError('ERR_TANGENT_NOT_SQUARE');
+    if (r > 10) throw userError('ERR_TANGENT_MATRIX_TOO_LARGE');
 
     const numA = toNumberMatrix(A);
     for (let i = 0; i < r; i++) for (let j = 0; j < c; j++) {
-      if (!Number.isFinite(numA[i][j])) throw new Error("Matrix contains invalid number(s).");
+      if (!Number.isFinite(numA[i][j])) throw userError('ERR_INVALID_NUMBER');
     }
   }
 };

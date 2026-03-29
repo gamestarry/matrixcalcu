@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/exponential.js
 // Single-matrix: Matrix Exponential expm(A) = e^A
 // Uses Scaling-and-Squaring with Pade(13) (Higham-style), numeric output.
@@ -25,7 +27,7 @@ function toNumberMatrix(A) {
   const c = A[0].length;
   const out = new Array(r);
   for (let i = 0; i < r; i++) {
-    if (!Array.isArray(A[i]) || A[i].length !== c) throw new Error("Invalid matrix row length.");
+    if (!Array.isArray(A[i]) || A[i].length !== c) throw userError('ERR_INVALID_MATRIX_ROW_LENGTH');
     const row = new Array(c);
     for (let j = 0; j < c; j++) row[j] = toNumber(A[i][j]);
     out[i] = row;
@@ -205,23 +207,23 @@ function expmPade13(A) {
 export const config = {
   validate(matrices) {
     const A = matrices?.[0];
-    if (!looksLikeMatrix(A)) throw new Error("Please enter Matrix A.");
+    if (!looksLikeMatrix(A)) throw userError('ERR_MATRIX_A_REQUIRED');
 
     const r = A.length;
     const c = A[0].length;
 
-    if (r !== c) throw new Error("Matrix exponential requires a square matrix (n×n).");
-    if (r < 1) throw new Error("Matrix A is empty.");
+    if (r !== c) throw userError('ERR_EXPONENTIAL_NOT_SQUARE');
+    if (r < 1) throw userError('ERR_MATRIX_A_EMPTY');
 
     // Optional guard: keep within reasonable compute size (your UI is usually <= 10)
-    if (r > 20) throw new Error("Matrix size too large for matrix exponential.");
+    if (r > 20) throw userError('ERR_EXPONENTIAL_MATRIX_TOO_LARGE');
 
     // Validate finite numeric conversion
     const numA = toNumberMatrix(A);
     for (let i = 0; i < r; i++) {
       for (let j = 0; j < c; j++) {
         const v = numA[i][j];
-        if (!Number.isFinite(v)) throw new Error("Matrix contains invalid number(s).");
+        if (!Number.isFinite(v)) throw userError('ERR_INVALID_NUMBER');
       }
     }
   }

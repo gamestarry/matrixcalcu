@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/arccosine.js
 // Single-matrix: Matrix arccos(A) (numeric principal approximation near 0)
 // Uses identity: arccos(A) = (pi/2)I - arcsin(A)
@@ -7,7 +9,7 @@
 
 function looksLikeMatrix(M){return Array.isArray(M)&&M.length&&Array.isArray(M[0])&&M[0].length;}
 function toNumber(x){try{return math.number(x);}catch{const v=Number(x);return Number.isFinite(v)?v:NaN;}}
-function toNumberMatrix(A){const r=A.length,c=A[0].length;const out=new Array(r);for(let i=0;i<r;i++){if(!Array.isArray(A[i])||A[i].length!==c)throw new Error("Invalid matrix row length.");const row=new Array(c);for(let j=0;j<c;j++)row[j]=toNumber(A[i][j]);out[i]=row;}return out;}
+function toNumberMatrix(A){const r=A.length,c=A[0].length;const out=new Array(r);for(let i=0;i<r;i++){if(!Array.isArray(A[i])||A[i].length!==c)throw userError('ERR_INVALID_MATRIX_ROW_LENGTH');const row=new Array(c);for(let j=0;j<c;j++)row[j]=toNumber(A[i][j]);out[i]=row;}return out;}
 function zeros(n){return Array.from({length:n},()=>Array(n).fill(0));}
 function identity(n){const I=zeros(n);for(let i=0;i<n;i++)I[i][i]=1;return I;}
 function add(A,B){const n=A.length,m=A[0].length;const C=new Array(n);for(let i=0;i<n;i++){const r=new Array(m);for(let j=0;j<m;j++)r[j]=A[i][j]+B[i][j];C[i]=r;}return C;}
@@ -58,13 +60,13 @@ function arcsinSeries(A, terms){
 export const config={
   validate(matrices){
     const A=matrices?.[0];
-    if(!looksLikeMatrix(A))throw new Error("Please enter Matrix A.");
+    if(!looksLikeMatrix(A))throw userError('ERR_MATRIX_A_REQUIRED');
     const r=A.length,c=A[0].length;
-    if(r!==c)throw new Error("Matrix arccos requires a square matrix (n×n).");
-    if(r>25)throw new Error("Matrix size too large for matrix arccos.");
+    if(r!==c)throw userError('ERR_ARCCOS_NOT_SQUARE');
+    if(r>25)throw userError('ERR_ARCCOS_MATRIX_TOO_LARGE');
     const numA=toNumberMatrix(A);
     for(let i=0;i<r;i++)for(let j=0;j<c;j++){
-      if(!Number.isFinite(numA[i][j]))throw new Error("Matrix contains invalid number(s).");
+      if(!Number.isFinite(numA[i][j]))throw userError('ERR_INVALID_NUMBER');
     }
   }
 };
@@ -74,11 +76,7 @@ export function calculate(matrices,value=""){
   const {terms,bound}=parseParams(value);
   const nrm=normF(A);
   if (nrm >= bound) {
-    throw new Error(
-      `Input too large for arccos(A) with the current method. ` +
-      `Try smaller values (e.g., multiply all entries by 0.5) and try again. ` +
-      `(Tip: this method works best when the matrix is scaled so its overall size is below about ${bound}.)`
-    );
+    throw userError('ERR_ARCCOS_INPUT_TOO_LARGE', { bound });
   }
   const n=A.length;
   const I=identity(n);

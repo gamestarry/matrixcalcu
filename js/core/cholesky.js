@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/cholesky.js
 // Single-matrix: Cholesky Decomposition
 // Returns { L, Lt } such that A = L * Lt
@@ -70,9 +72,7 @@ function cholesky(A) {
 
       if (i === j) {
         if (val <= 0) {
-          throw new Error(
-            'Cholesky requires a positive definite matrix.'
-          );
+          throw userError('ERR_CHOLESKY_NOT_POSITIVE_DEFINITE');
         }
         L[i][j] = Math.sqrt(val);
       } else {
@@ -108,11 +108,11 @@ export const config = {
     const A = matrices[0];
 
     if (!isSquareMatrix(A)) {
-      throw new Error('Cholesky requires a square matrix.');
+      throw userError('ERR_CHOLESKY_NOT_SQUARE');
     }
 
     if (!isSymmetricMatrix(A)) {
-      throw new Error('Cholesky requires a symmetric matrix (A = Aᵀ).');
+      throw userError('ERR_CHOLESKY_NOT_SYMMETRIC');
     }
   }
 };

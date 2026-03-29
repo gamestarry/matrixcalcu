@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/rank.js
 // Single-matrix: Rank(A)
 // Interface aligned with other core modules: config / calculate / generateProcessMatrix
@@ -92,7 +94,7 @@ export const config = {
   validate(matrices) {
     const A = (matrices || [])[0];
     if (!A || !A.length || !A[0] || !A[0].length) {
-      throw new Error('Please enter Matrix A.');
+      throw userError('ERR_MATRIX_A_REQUIRED');
     }
   }
 };

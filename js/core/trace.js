@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/trace.js
 // 单矩阵：Trace(A) = a11 + a22 + ... + ann
 // 接口与现有模块一致：config / calculate / generateProcessMatrix
@@ -18,14 +20,14 @@ export const config = {
   name: 'Trace',
   validate(matrices) {
     const [A] = matrices || [];
-    if (!A) throw new Error('Please enter Matrix A.');
+    if (!A) throw userError('ERR_MATRIX_A_REQUIRED');
 
     const rows = A.length;
     const cols = (A[0] || []).length;
 
-    if (!rows || !cols) throw new Error('Please enter Matrix A.');
+    if (!rows || !cols) throw userError('ERR_MATRIX_A_REQUIRED');
     if (rows !== cols) {
-      throw new Error(`Trace is only defined for square matrices. Got A(${rows}×${cols}).`);
+      throw userError('ERR_TRACE_NOT_SQUARE', { rows, cols });
     }
   }
 };

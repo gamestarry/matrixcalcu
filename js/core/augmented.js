@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/augmented.js
 // Two-matrix: Augmented Matrix [A | B]
 // - A: r×cA
@@ -23,7 +25,7 @@ function augment(A, B) {
   const { r: rB, c: cB } = dims(B);
 
   if (rA !== rB) {
-    throw new Error(`Row mismatch: A has ${rA} rows, B has ${rB} rows.`);
+    throw userError('ERR_AUGMENTED_ROW_MISMATCH', { rA, rB });
   }
 
   const out = new Array(rA);
@@ -31,8 +33,8 @@ function augment(A, B) {
     const left = cloneRowSlice(A[i]);
     const right = cloneRowSlice(B[i]);
     // Ensure the row lengths are correct (in case of ragged inputs)
-    if (left.length !== cA) throw new Error('Invalid Matrix A row length.');
-    if (right.length !== cB) throw new Error('Invalid Matrix B row length.');
+    if (left.length !== cA) throw userError('ERR_INVALID_MATRIX_A_ROW_LENGTH');
+    if (right.length !== cB) throw userError('ERR_INVALID_MATRIX_B_ROW_LENGTH');
     out[i] = left.concat(right);
   }
   return out;
@@ -53,15 +55,15 @@ export const config = {
     const A = matrices[0];
     const B = matrices[1];
 
-    if (!looksLikeMatrix(A)) throw new Error('Please enter Matrix A.');
-    if (!looksLikeMatrix(B)) throw new Error('Please enter Matrix B.');
+    if (!looksLikeMatrix(A)) throw userError('ERR_MATRIX_A_REQUIRED');
+    if (!looksLikeMatrix(B)) throw userError('ERR_MATRIX_B_REQUIRED');
 
     const { r: rA, c: cA } = dims(A);
     const { r: rB, c: cB } = dims(B);
 
-    if (rA <= 0 || cA <= 0) throw new Error('Matrix A is empty.');
-    if (rB <= 0 || cB <= 0) throw new Error('Matrix B is empty.');
-    if (rA !== rB) throw new Error('Augmented matrix requires A and B to have the same number of rows.');
+    if (rA <= 0 || cA <= 0) throw userError('ERR_MATRIX_A_EMPTY');
+    if (rB <= 0 || cB <= 0) throw userError('ERR_MATRIX_B_EMPTY');
+    if (rA !== rB) throw userError('ERR_AUGMENTED_ROW_COUNT_MISMATCH');
   }
 };
 

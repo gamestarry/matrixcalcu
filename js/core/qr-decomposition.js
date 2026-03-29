@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/qr-decomposition.js
 // Single-matrix: QR Decomposition (economy QR) using Modified Gram-Schmidt
 // Returns { Q, R } such that A ≈ Q * R
@@ -56,14 +58,14 @@ export const config = {
   validate(matrices) {
     const [A] = matrices || [];
     if (!A || !A.length || !A[0] || !A[0].length) {
-      throw new Error('Please enter Matrix A.');
+      throw userError('ERR_MATRIX_A_REQUIRED');
     }
     const rows = A.length;
     const cols = A[0].length;
     // Basic shape sanity
     for (let i = 0; i < rows; i++) {
       if (!A[i] || A[i].length !== cols) {
-        throw new Error('Invalid matrix shape: each row must have the same number of columns.');
+        throw userError('ERR_QR_INVALID_SHAPE');
       }
     }
   }

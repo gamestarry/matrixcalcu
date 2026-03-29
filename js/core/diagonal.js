@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/diagonal.js
 // 单矩阵：Diagonal Matrix（提取对角元素，生成同尺寸对角矩阵）
 // 接口：config / calculate / generateProcessMatrix
@@ -20,7 +22,7 @@ export const config = {
   validate(matrices) {
     const [A] = matrices || [];
     if (!A || !A.length || !A[0] || !A[0].length) {
-      throw new Error('Please enter Matrix A.');
+      throw userError('ERR_MATRIX_A_REQUIRED');
     }
   }
 };

@@ -1,45 +1,46 @@
 <!DOCTYPE html>
-<html lang="es"> <!-- Cambiado a español -->
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculadora de matrices gratuita en línea para multiplicación, matrices inversas y determinantes. Calcule matrices 2x2 y 3x3 de forma rápida y sencilla.">
-    <meta name="keywords" content="multiplicación de matrices, matriz inversa, determinante, calculadora de matrices 2x2, calculadora de matrices 3x3, herramientas de álgebra lineal">
-    <meta name="author" content="Matrix Calculator Pro">
-    <!-- Canonical标签 -->
-    <link rel="canonical" href="https://matrixcalcu.com/es/" />
-
- <!-- Open Graph 标签 -->
-    <meta property="og:title" content="Calculadora de Matrices Gratuita - Multiplicación, Inversa y Determinante">
-    <meta property="og:description" content="Calcule productos de matrices, matrices inversas y determinantes al instante. Calculadora en línea fácil de usar para matrices 2x2 y 3x3.">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="es_ES"> <!-- Cambiado a español -->
-        <!-- Open Graph URL -->
-    <meta property="og:url" content="https://matrixcalcu.com/es/" />
-   
-    <title>Calculadora de Matrices - Multiplicación, Inversa y Determinante para Matrices 2x2 y 3x3</title>
-
-    <!-- ========== HREFLANG 标签（西语首页）========== -->
-    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/" />
-    <link rel="alternate" hreflang="es-ES" href="https://matrixcalcu.com/es/" />
+    <!-- SEO 首页替换：title/description/canonical -->
+    <meta name="description"
+        content="Calculadora de matrices gratuita para multiplicación, suma, resta, determinantes, inversas, RREF y más. Admite fracciones, decimales y resultados paso a paso.">
+    <link rel="canonical" href="https://matrixcalcu.com/es/">
+    
     <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/" />
-    <link rel="alternate" hreflang="en-US" href="https://matrixcalcu.com/" />
+    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/" />
     <link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/" />
-
     
-    <!-- Favicon 链接 -->
+    <meta property="og:title"
+        content="Calculadora de matrices gratuita - Multiplicación, suma, resta, inversa, determinante y más">
+    <meta property="og:description"
+        content="Calculadora de matrices gratuita para multiplicación, suma, resta, determinantes, inversas, RREF y más. Admite fracciones, decimales y resultados paso a paso.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:url" content="https://matrixcalcu.com/es/">
+    
+    <title>Calculadora de matrices gratuita - Multiplicación, suma, resta, inversa, determinante y más</title>
+    
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    
+
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- Schema.org 结构化数据 -->
+
+    <!-- MathJax for rendering formulas (全局已包含) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+
+    <!-- math.js 库 -->
+    <script src="/math.min.js"></script>
+
+    <!-- Schema.org 结构化数据 (适配首页) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Calculadora de Matrices - Multiplicación, Inversa y Determinante",
-      "description": "Calculadora de matrices gratuita en línea para multiplicación, matrices inversas y determinantes de matrices 2x2 y 3x3",
+      "name": "Calculadora de matrices | Inicio",
+      "description": "Calculadora de matrices gratuita con múltiples operaciones y resultados paso a paso.",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "Any",
       "browserRequirements": "Requires JavaScript",
@@ -51,1789 +52,822 @@
       },
       "author": {
         "@type": "Organization",
-        "name": "Math Tools Pro"
+        "name": "MatrixCalcu"
       }
     }
     </script>
-    
+
+    <!-- 外部 CSS 文件 -->
+    <link rel="stylesheet" href="/css/calculator.css">
+    <!-- 隐藏按钮下拉栏 -->
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-            --success-color: #2ecc71;
-            --border-radius: 8px;
-            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f9f9f9;
-            color: var(--dark-color);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* 主行布局容器 */
-        .main-row-container {
-            width: 100%;
-            background-color: #f9f9f9;
-            padding: 0 0 2rem 0;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* 更宽的容器，用于容纳三个并排的部分 */
-        .wide-container {
-            max-width: 1800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 主行布局 */
-        .main-row {
-            display: flex;
-            gap: 2rem;
-        }
-        
-        .left-sidebar, .right-sidebar {
-            flex: 0 0 250px;
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .calculator-main {
-            flex: 1;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* 新的动态内容容器样式 */
-        .dynamic-content-container {
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 0;
-            margin-bottom: 2rem;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .dynamic-content-container h2 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            text-align: center;
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .dynamic-content-container p {
-            color: var(--dark-color);
-            text-align: center;
-            max-width: 600px;
-            margin-bottom: 1.5rem;
-        }
-
-        .placeholder-content {
-            text-align: center;
-            color: #7f8c8d;
-            font-style: italic;
-            padding: 2rem;
-        }
-
-        /* SEO文章容器样式 */
-        .seo-articles-container {
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 0;
-            margin-bottom: 2rem;
-            width: 100%;
-        }
-
-        .seo-articles-container h2 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--light-color);
-        }
-
-        .seo-articles-container p {
-            color: var(--dark-color);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .seo-placeholder {
-            text-align: center;
-            color: #7f8c8d;
-            font-style: italic;
-            padding: 2rem;
-            border: 2px dashed #ddd;
-            border-radius: var(--border-radius);
-        }
-
-        /* 左侧导航栏样式 */
-        .nav-title {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--light-color);
-            text-align: center;
-        }
-
-        .nav-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 0.45rem;
-        }
-
-        .nav-button {
-            background-color: var(--light-color);
-            color: var(--primary-color);
-            border: 2px solid var(--secondary-color);
-            padding: 0.45rem 1rem;
-            font-size: 1rem;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            font-weight: 500;
-        }
-
-        .nav-button:hover {
-            background-color: var(--secondary-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-color: var(--secondary-color);
-        }
-
-        .nav-button:active {
-            transform: translateY(0);
-        }
-
-        /* 为外部链接按钮添加外链标志 */
-        .nav-button.external {
-            position: relative;
-            padding-right: 2.5rem;
-            background-color: var(--light-color);
-            color: var(--primary-color);
-            border: 2px solid var(--secondary-color);
-        }
-
-        .nav-button.external::after {
-            content: "↗";
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: transform 0.2s ease;
-        }
-
-        .nav-button.external:hover {
-            background-color: var(--secondary-color);
-            color: white;
-            border-color: var(--secondary-color);
-        }
-
-        .nav-button.external:hover::after {
-            transform: translateY(-50%) translateX(2px) translateY(-2px);
-        }
-
-        /* 头部样式 */
-        header {
-            background: linear-gradient(135deg, #00447F 0%, #0066AA 100%);
-            color: white;
-            padding: 0.25rem 0;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-            box-shadow: var(--box-shadow);
-            position: relative;
-            overflow: visible;
-            display: flex;
-            align-items: center;
-            min-height: 70px;
-            z-index: 1000;
-        }
-
-        /* 添加微妙的纹理效果 */
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
-            background-size: cover;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 0.5rem 0;
-            margin-top: 3rem;
-        }
-
-        /* 右侧边栏样式 - 现在包含问答栏 */
-        .right-sidebar {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            min-height: 200px;
-            padding: 1.5rem;
-        }
-
-        .right-sidebar-placeholder {
-            text-align: center;
-            color: #7f8c8d;
-            font-style: italic;
-        }
-
-        /* 添加右侧边栏高亮样式 */
-        .right-sidebar.highlight {
-            animation: highlight 2s ease;
-            box-shadow: 0 0 0 4px #3498db;
-        }
-
-        /* 多语言选择器样式 */
-        .language-selector {
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            z-index: 1001;
-        }
-
-        .language-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-
-        .language-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .language-toggle::after {
-            content: "▼";
-            margin-left: 5px;
-            font-size: 0.7rem;
-        }
-
-        .language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            width: 107px;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-            z-index: 1002;
-        }
-
-        .language-dropdown.active {
-            display: block;
-        }
-
-        .language-option {
-            padding: 8px 12px;
-            cursor: pointer;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.2s;
-            font-size: 0.85rem;
-            color: #333;
-        }
-
-        .language-option:hover {
-            background: #f5f5f5;
-        }
-
-        .language-option:last-child {
-            border-bottom: none;
-        }
-
-        .language-option.active {
-            background: #e6f2ff;
-            color: #0066cc;
-            font-weight: 500;
-        }
-
-        .globe-icon {
-            margin-right: 5px;
-            font-size: 0.9rem;
-        }
-
-        /* 矩阵计算器样式 */
-        .matrix-calculator {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 5px;
-            background-color: #f4f4f9;
-            width: 100%;
-        }
-
-        .matrix-calculator .main-calculator-container {
-            display: flex;
-            align-items: flex-start; 
-            gap: 20px; 
-            margin-bottom: 30px; 
-        }
-        
-        .matrix-calculator .matrix-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 400px; 
-        }
-        
-        .matrix-calculator .controls {
-            display: flex;
-            align-items: center; 
-            gap: 15px; 
-            margin-bottom: 10px;
-            padding: 0 10px;
-            width: 100%; 
-            box-sizing: border-box;
-        }
-
-        .matrix-calculator .matrix-label {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #333;
-            margin-right: 15px;
-        }
-        
-        .matrix-calculator .size-controls {
-            display: flex;
-            gap: 5px; 
-            border-right: 1px solid #ccc;
-            padding-right: 15px;
-        }
-
-        .matrix-calculator .random-controls {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-right: 1px solid #ccc;
-            padding-right: 15px;
-        }
-
-        .matrix-calculator .random-options {
-            display: flex; 
-            flex-direction: column; 
-            position: absolute; 
-            top: 45px; 
-            left: 0;
-            background-color: #f8f9fa; 
-            border: 1px solid #ddd; 
-            border-radius: 5px; 
-            padding: 5px; 
-            z-index: 1000; 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .matrix-calculator .operation-buttons {
-            display: flex;
-            flex-direction: column; 
-            margin-top: 250px;
-            gap: 5px; 
-            justify-content: center;
-        }
-        
-        .matrix-calculator .operation-btn {
-            background-color: #6c757d; 
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.2em; 
-            width: 100px; 
-            height: 50px; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box; 
-            transition: background-color 0.2s;
-        }
-        
-        .matrix-calculator .operation-btn:hover {
-            background-color: #5a6268;
-        }
-        
-        .matrix-calculator .operation-btn:active {
-            background-color: #545b62;
-            transform: translateY(1px);
-        }
-        
-        .matrix-calculator #swap-ab-btn {
-            background-color: #ffc107;
-            color: #343a40;
-            font-size: 1.2em; 
-        }
-        
-        .matrix-calculator #swap-ab-btn:hover {
-            background-color: #e0a800;
-        }
-        
-        .matrix-calculator #swap-ab-btn:active {
-            background-color: #d39e00;
-        }
-        
-        .matrix-calculator .single-ops-container {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 2px solid #ddd; 
-            width: 110%; 
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-        }
-
-        .matrix-calculator .op-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px; 
-            margin-bottom: 10px;
-            width: 100%; 
-            padding: 0 10px; 
-            box-sizing: border-box;
-        }
-
-        .matrix-calculator .single-op-btn {
-            background-color: #ADD8E6; 
-            color: #333;
-            border: none;
-            padding: 3px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s;
-            text-align: center;
-            white-space: nowrap;
-            height: 32px; 
-            width: 100%; 
-        }
-        .matrix-calculator .single-op-btn:hover { background-color: #87CEEB; }
-        
-        .matrix-calculator .op-with-input {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            width: 100%;
-        }
-        .matrix-calculator .op-with-input .single-op-btn {
-            flex-grow: 1; 
-        }
-        .matrix-calculator .op-input {
-            width: 40px;
-            padding: 5px;
-            text-align: center;
-            border: 1px solid #aaa;
-            border-radius: 3px;
-            font-size: 0.9em;
-            height: 40px;
-            box-sizing: border-box;
-        }
-
-        .matrix-calculator .matrix-container {
-            border: 2px solid #333;
-            border-radius: 5px;
-            padding: 10px; 
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            min-width: 150px; 
-            min-height: 150px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; 
-            width: 380px; 
-        }
-
-        .matrix-calculator .matrix { 
-            display: grid; 
-            gap: 5px; 
-        } 
-        
-        .matrix-calculator .matrix input {
-            width: 45px; 
-            height: 45px; 
-            text-align: center;
-            font-size: 14px; 
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        
-        /* Hide number input spinners */
-        .matrix-calculator .matrix input[type=number]::-webkit-inner-spin-button, 
-        .matrix-calculator .matrix input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
-        }
-        .matrix-calculator .matrix input[type=number] {
-            -moz-appearance: textfield; /* Firefox */
-        }
-        
-        /* --- Result Area Styles (History) --- */
-        .matrix-calculator #result-container {
-            margin-top: 0px; 
-            width: 90%; 
-            max-width: 1200px; 
-            background-color: white;
-            border: 2px solid #aaa; 
-            border-radius: 8px;
-            padding: 0; 
-            display: flex;
-            flex-direction: column; 
-        }
-        
-        .matrix-calculator .result-block {
-            padding: 15px 10px;
-            border-bottom: 1px solid #e0e0e0; 
-            position: relative;
-        }
-
-        .matrix-calculator .result-block:last-child {
-            border-bottom: none; 
-        }
-        
-        .matrix-calculator .result-expression-row {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 15px; 
-            padding: 10px 0;
-            overflow-x: auto; 
-        }
-        
-        .matrix-calculator .result-op, .matrix-calculator .result-eq {
-            font-size: 2em;
-            font-weight: 500;
-            color: #333;
-        }
-
-        /* Result Matrix Styling */
-        .matrix-calculator .result-matrix-grid {
-            display: grid;
-            gap: 5px;
-            padding: 5px 0; 
-            border: none; 
-            border-left: 3px solid #333; 
-            border-right: 3px solid #333; 
-            border-radius: 0;
-            box-sizing: content-box; 
-        }
-        
-        .matrix-calculator .result-cell {
-            min-width: 45px; 
-            height: 45px; 
-            text-align: center;
-            font-size: 14px;
-            line-height: 45px; 
-            border: 1px solid #ddd;
-            background-color: #f0f8ff; 
-            border-radius: 3px;
-            overflow: hidden;
-            white-space: nowrap;
-            box-sizing: border-box;
-            font-weight: bold;
-        }
-
-        .matrix-calculator .process-matrix {
-            border-left: 3px solid orange; 
-            border-right: 3px solid orange;
-        }
-
-        .matrix-calculator .process-matrix .result-cell {
-            background-color: #fff3e0; 
-            font-size: 12px;
-            line-height: normal;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 120px; 
-            height: auto; 
-            padding: 5px; 
-            white-space: normal; 
-        }
-
-        .matrix-calculator .action-buttons {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .matrix-calculator .action-buttons button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2em;
-            color: #6c757d;
-            transition: color 0.2s;
-        }
-
-        .matrix-calculator .action-buttons button:hover {
-            color: #000;
-        }
-
-        .matrix-calculator .error-message {
-            color: red;
-            font-size: 1em;
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #ffeaea;
-            border-radius: 4px;
-        }
-        
-        /* --- 移动端响应式设计 --- */
-        @media (max-width: 1200px) {
-            .matrix-calculator .main-calculator-container {
-                gap: 20px;
+        @media (max-width: 980px) {
+            #mobile-op-onebar {
+                display: none !important;
             }
-            
-            .matrix-calculator .matrix-area {
-                width: 350px;
-            }
-            
-            .matrix-calculator .matrix-container {
-                width: 330px;
-            }
-            
-            .matrix-calculator .matrix input {
-                width: 40px;
-                height: 40px;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .matrix-calculator .main-calculator-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 30px;
-            }
-            
-            .matrix-calculator .operation-buttons {
-                flex-direction: row;
-                margin-top: 20px;
-                margin-bottom: 20px;
-                order: 3;
-            }
-            
-            .matrix-calculator .operation-btn {
-                width: 80px;
-                height: 45px;
-                font-size: 1em;
-            }
-            
-            .matrix-calculator .matrix-area {
-                width: 100%;
-                max-width: 500px;
-            }
-            
-            .matrix-calculator .matrix-container {
-                width: 100%;
-                max-width: 480px;
-            }
-            
-            .matrix-calculator .controls {
-                justify-content: center;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .matrix-calculator body {
-                padding: 5px 10px;
-            }
-            
-            .matrix-calculator .matrix-label {
-                font-size: 2em;
-            }
-            
-            .matrix-calculator .controls {
-                flex-wrap: wrap;
-                gap: 10px;
-                justify-content: center;
-            }
-            
-            .matrix-calculator .size-controls, .matrix-calculator .random-controls {
-                border-right: none;
-                padding-right: 0;
-            }
-            
-            .matrix-calculator .single-ops-container {
-                margin-top: 15px;
-            }
-            
-            .matrix-calculator .op-row {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-            
-            .matrix-calculator .matrix input {
-                width: 35px;
-                height: 35px;
-                font-size: 12px;
-            }
-            
-            .matrix-calculator .result-expression-row {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .matrix-calculator .result-op, .matrix-calculator .result-eq {
-                font-size: 1.5em;
-            }
-            
-            .matrix-calculator .result-cell {
-                min-width: 35px;
-                height: 35px;
-                font-size: 12px;
-                line-height: 35px;
-            }
-            
-            .matrix-calculator .process-matrix .result-cell {
-                min-width: 100px;
-                font-size: 10px;
-            }
-            
-            .matrix-calculator #result-container {
-                width: 100%;
-            }
-            
-            .main-row {
-                flex-direction: column;
-            }
-            
-            .left-sidebar, .right-sidebar {
-                flex: 1;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .language-selector {
-                position: relative;
-                top: auto;
-                right: auto;
-                transform: none;
-                margin-top: 10px;
-                text-align: center;
-            }
-            
-            .language-dropdown {
-                left: 0;
-                right: 0;
-                width: auto;
-                margin: 0 auto;
-            }
-            
-            header {
-                flex-direction: column;
-                padding: 0.5rem 0;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .matrix-calculator .matrix input {
-                width: 30px;
-                height: 30px;
-                font-size: 11px;
-            }
-            
-            .matrix-calculator .matrix-container {
-                padding: 5px;
-            }
-            
-            .matrix-calculator .operation-btn {
-                width: 70px;
-                height: 40px;
-                font-size: 0.9em;
-                padding: 5px 10px;
-            }
-            
-            .matrix-calculator .single-op-btn {
-                font-size: 0.8em;
-                height: 35px;
-            }
-            
-            .matrix-calculator .op-input {
-                width: 35px;
-                height: 35px;
-            }
-            
-            .matrix-calculator .result-cell {
-                min-width: 30px;
-                height: 30px;
-                font-size: 11px;
-                line-height: 30px;
-            }
-            
-            .matrix-calculator .action-buttons {
-                position: relative;
-                top: 0;
-                right: 0;
-                justify-content: center;
-                margin-bottom: 10px;
-            }
-        }
-
-        /* SEO内容样式 */
-        .seo-content {
-            --blue: #0b69ff;
-            --muted: #6b7280;
-            --card-bg: #f8fafc;
-            --max-w: 980px;
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            line-height: 1.6;
-            color: #0f172a;
-            background: #ffffff;
-            padding: 28px;
-        }
-
-        .seo-content header {
-            background: linear-gradient(90deg, #f3f8ff, #ffffff);
-            border-bottom: 1px solid #e6eefc;
-            margin: -28px -28px 28px -28px;
-            padding: 28px;
-        }
-
-        .seo-content .container {
-            max-width: var(--max-w);
-            margin: 0 auto;
-        }
-
-        .seo-content h1 {
-            font-size: 28px;
-            margin: 6px 0;
-            color: var(--blue);
-            border-bottom: none;
-            text-shadow: none;
-        }
-
-        .seo-content h2 {
-            font-size: 20px;
-            margin: 18px 0 8px;
-            color: #0f172a;
-        }
-
-        .seo-content p {
-            margin: 8px 0;
-            color: #0f172a;
-        }
-
-        .seo-content .lead {
-            color: var(--muted);
-            font-size: 15px;
-        }
-
-        .seo-content .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .seo-content .card {
-            background: var(--card-bg);
-            padding: 14px;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(11, 105, 255, 0.06);
-        }
-
-        .seo-content .cta {
-            display: inline-block;
-            background: var(--blue);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            margin-top: 16px;
-            box-shadow: 0 4px 12px rgba(11, 105, 255, 0.3);
-        }
-
-        .seo-content footer {
-            padding: 22px 0;
-            color: var(--muted);
-            font-size: 14px;
-            border-top: 1px solid #eef2ff;
-            margin-top: 28px;
-        }
-
-        .seo-content pre {
-            background: #0b1220;
-            color: #e6f0ff;
-            padding: 12px;
-            border-radius: 8px;
-            overflow: auto;
-            font-family: monospace;
-        }
-
-        .seo-content .meta {
-            font-size: 13px;
-            color: var(--muted);
-        }
-
-        .seo-content dt {
-            font-weight: 600;
-            margin-top: 10px;
-            color: #1e293b;
-        }
-
-        .seo-content dd {
-            margin-left: 0;
-            padding-left: 10px;
-            border-left: 2px solid var(--blue);
-        }
-
-        .seo-content ul, .seo-content ol {
-            margin: 8px 0;
-            padding-left: 20px;
-        }
-
-        .seo-content li {
-            margin-bottom: 8px;
-        }
-
-        .seo-content section {
-            margin-bottom: 28px;
-        }
-
-        .seo-content strong {
-            font-weight: 600;
-        }
-
-        /* SEO文章图片样式 */
-        .matrix-image {
-            width: 450px;
-            height: auto;
-            max-width: 90%;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin: 10px 0;
-        }
-
-        @media (max-width: 560px) {
-            .seo-content h1 {
-                font-size: 22px;
-            }
-        }
-
-        /* 问答栏样式 */
-        .question-box {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            padding: 1.5em;
-            width: 100%;
-            transition: all 0.3s ease;
-            font-family: "Poppins", "Nunito", sans-serif;
-        }
-
-        .question-box h2 {
-            font-size: 1.1rem;
-            margin-bottom: 1.5em;
-            color: #333;
-        }
-
-        .question-box .btn {
-            display: block;
-            width: 100%;
-            padding: 0.8em 1em;
-            margin-bottom: 0.8em;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-        }
-
-        .question-box .yes {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            color: white;
-        }
-
-        .question-box .yes:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(120,100,255,0.3);
-        }
-
-        .question-box .no {
-            background: #ffe7e7;
-            color: #ff4b4b;
-        }
-
-        .question-box .no:hover {
-            transform: rotate(-2deg) scale(1.05);
-            box-shadow: 0 4px 10px rgba(255,75,75,0.2);
-        }
-
-        .question-box .response {
-            margin-top: 1.5em;
-            font-size: 1rem;
-            color: #555;
-            font-weight: 500;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .question-box .response.show {
-            opacity: 1;
-        }
-
-        @keyframes highlight {
-            0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
         }
     </style>
 </head>
-<body>
+<!-- 首页专用类名 page-index (更紧凑移动端网格) -->
+
+<body class="page-index">
     <header>
         <div class="container">
-            <h1>Calculadora de Matrices</h1>
-            
+            <h1>Calculadora de matrices</h1>
+
             <!-- 多语言选择器 -->
             <div class="language-selector">
                 <div class="language-toggle">
                     <span class="globe-icon">🌐</span> Español
                 </div>
                 <div class="language-dropdown">
-                    <div class="language-option" data-lang="en" onclick="switchLanguage('en')">English</div>
-                    <div class="language-option" data-lang="zh" onclick="switchLanguage('zh')">中文</div>
-                    <div class="language-option active" data-lang="es" onclick="switchLanguage('es')">Español</div>
-                    <div class="language-option" data-lang="fr" onclick="switchLanguage('fr')">Français</div>
-                    <div class="language-option" data-lang="de" onclick="switchLanguage('de')">Deutsch</div>
-                    <div class="language-option" data-lang="ja" onclick="switchLanguage('ja')">日本語</div>
-                    <div class="language-option" data-lang="ru" onclick="switchLanguage('ru')">Русский</div>
-                    <div class="language-option" data-lang="pt" onclick="switchLanguage('pt')">Português</div>
-                    <div class="language-option" data-lang="ar" onclick="switchLanguage('ar')">العربية</div>
-                    <div class="language-option" data-lang="hi" onclick="switchLanguage('hi')">हिन्दी</div>
-                    <div class="language-option" data-lang="bn" onclick="switchLanguage('bn')">বাংলা</div>
-                    <div class="language-option" data-lang="it" onclick="switchLanguage('it')">Italiano</div>
-                    <div class="language-option" data-lang="ko" onclick="switchLanguage('ko')">한국어</div>
-                    <div class="language-option" data-lang="tr" onclick="switchLanguage('tr')">Türkçe</div>
-                    <div class="language-option" data-lang="vi" onclick="switchLanguage('vi')">Tiếng Việt</div>
-                    <div class="language-option" data-lang="th" onclick="switchLanguage('th')">ไทย</div>
-                    <div class="language-option" data-lang="nl" onclick="switchLanguage('nl')">Nederlands</div>
-                    <div class="language-option" data-lang="pl" onclick="switchLanguage('pl')">Polski</div>
+                    <a class="language-option" href="/" lang="en">English</a>
+                    <a class="language-option active" href="/es/" lang="es">Español</a>
                 </div>
             </div>
         </div>
     </header>
-    
+
     <!-- 主行容器，包含左容器、计算器和右容器 -->
     <div class="main-row-container">
         <div class="wide-container">
             <div class="main-row">
-                <!-- 左侧容器 - 现在包含导航按钮 -->
+                <!-- 左侧容器 - 导航按钮 (完全保留结构，新增 Home) -->
                 <div class="left-sidebar">
+                    <button class="mobile-nav-toggle">Navegación</button>
                     <h3 class="nav-title">Navegación</h3>
                     <div class="nav-buttons">
-                        <a href="#matrix-multiplication-operation" class="nav-button">Calculadora de Multiplicación de Matrices</a>
-                        <a href="#matrix-game" class="nav-button">Juego de Multiplicación de Matrices</a>
-                        <a href="matrix-equations-calculator.html" class="nav-button">Calculadora de Sistemas de Ecuaciones</a>
-                        <a href="https://en.wikipedia.org/wiki/Matrix_(mathematics)" target="_blank" class="nav-button external">Wikipedia: Matriz</a>
+                        <a href="./index.html" class="nav-button" id="home-btn">Inicio</a>
+                        <a href="/es/matrix-multiplication-calculator.html" class="nav-button">Calculadora de multiplicación de
+                            matrices</a>
+                        <a href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html" target="_blank" rel="noopener noreferrer"
+                            class="nav-button external">Juego de multiplicación de matrices</a>
+                        <a href="/es/matrix-equations-calculator.html" class="nav-button">Calculadora de sistemas de ecuaciones</a>
+                        <a href="https://en.wikipedia.org/wiki/Matrix_(mathematics)" target="_blank"
+                            class="nav-button external">Wikipedia: Matriz</a>
                     </div>
                 </div>
-                
-                <!-- 主计算器部分 - 已替换为矩阵计算器 -->
+
+                <!-- 主计算器部分 -->
                 <div class="calculator-main">
-                    <!-- 动态内容容器 - 现在包含矩阵计算器 -->
                     <div class="dynamic-content-container" id="dynamic-content">
                         <div class="matrix-calculator">
-                            <div class="main-calculator-container">
-
-                                <div class="matrix-area">
-                                    
+                            <div class="main-calculator-container main-2m-with-swap">
+                                <!-- 矩阵A区域 -->
+                                <div class="matrix-area" id="matrix-area-a">
                                     <div class="controls" id="controls-a">
-                                        <div class="matrix-label">A</div>
+                                        <div class="matrix-label">A <span id="dim-a"
+                                                class="matrix-dimension">(3×3)</span></div>
                                         <div class="size-controls">
-                                            <button id="decrease-btn-a" class="control-btn" title="Reducir tamaño de A"><i class="fas fa-minus"></i></button>
-                                            <button id="increase-btn-a" class="control-btn" title="Aumentar tamaño de A"><i class="fas fa-plus"></i></button>
+                                            <span class="control-label">Filas:</span>
+                                            <button id="decrease-rows-a" class="control-btn" title="Disminuir filas"><i
+                                                    class="fas fa-minus"></i></button>
+                                            <span class="size-display" id="rows-a">3</span>
+                                            <button id="increase-rows-a" class="control-btn" title="Aumentar filas"><i
+                                                    class="fas fa-plus"></i></button>
+                                        </div>
+                                        <div class="size-controls">
+                                            <span class="control-label">Columnas:</span>
+                                            <button id="decrease-cols-a" class="control-btn" title="Disminuir columnas"><i
+                                                    class="fas fa-minus"></i></button>
+                                            <span class="size-display" id="cols-a">3</span>
+                                            <button id="increase-cols-a" class="control-btn" title="Aumentar columnas"><i
+                                                    class="fas fa-plus"></i></button>
                                         </div>
                                         <div class="random-controls" id="random-controls-main-a">
-                                            <button id="toggle-random-btn-a" class="control-btn" title="Generar matriz aleatoria A"><i class="fas fa-dice"></i></button>
+                                            <button id="toggle-random-btn-a" class="control-btn"
+                                                title="Generar matriz aleatoria A"><i class="fas fa-dice"></i></button>
                                             <div id="random-options-a" class="random-options" style="display: none;">
-                                                <button class="random-option-btn" data-type="pos_int" data-target="A">Enteros positivos (0 ~ 9)</button>
-                                                <button class="random-option-btn" data-type="signed_int" data-target="A">Enteros (-10 ~ 10)</button>
-                                                <button class="random-option-btn" data-type="float" data-target="A">Decimales (-1.0 ~ 1.0)</button>
+                                                <button class="random-option-btn" data-type="pos_int"
+                                                    data-target="A">Enteros positivos (0 ~ 9)</button>
+                                                <button class="random-option-btn" data-type="signed_int"
+                                                    data-target="A">Enteros (-10 ~ 10)</button>
+                                                <button class="random-option-btn" data-type="float"
+                                                    data-target="A">Decimales (-1.0 ~ 1.0)</button>
                                             </div>
                                         </div>
-                                        <button id="clear-btn-a" class="control-btn" title="Borrar valores de A"><i class="fas fa-trash-alt"></i></button>
+                                        <button id="clear-btn-a" class="control-btn" title="Borrar valores de A"><i
+                                                class="fas fa-trash-alt"></i></button>
                                     </div>
-
                                     <div class="matrix-container" id="matrix-container-a"></div>
-
-                                    <!-- 矩阵A的按钮 - 已添加路径 -->
-                                    <div class="single-ops-container">
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-determinant')" class="single-op-btn">Determinante</button>
-                                            <button onclick="goTo('matrix-inverse')" class="single-op-btn">Inversa</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-upper-triangular')" class="single-op-btn">Triangular Superior</button>
-                                            <button onclick="goTo('matrix-rref')" class="single-op-btn">RREF</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-eigenvectors')" class="single-op-btn">Vectores propios</button>
-                                            <button onclick="goTo('matrix-eigenvalues')" class="single-op-btn">Valores propios</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-transpose')" class="single-op-btn">Transpuesta</button>
-                                            <button onclick="goTo('matrix-rank')" class="single-op-btn">Rango</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <div class="op-with-input">
-                                                <button onclick="goTo('matrix-scalar-multiplication')" class="single-op-btn">Multiplicar por</button>
-                                                <input type="number" class="op-input" placeholder="k" value="2" id="mBy-a-val">
-                                            </div>
-                                            <div class="op-with-input">
-                                                <button onclick="goTo('matrix-power')" class="single-op-btn">Potencia</button>
-                                                <input type="number" class="op-input" placeholder="n" value="2" id="pow-a-val">
-                                            </div>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-trace')" class="single-op-btn">Traza</button>
-                                            <button onclick="goTo('matrix-diagonal')" class="single-op-btn">Matriz Diagonal</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-lu-decomposition')" class="single-op-btn">Descomposición LU</button>
-                                            <button onclick="goTo('matrix-cholesky')" class="single-op-btn">Descomposición de Cholesky</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-pseudo-inverse')" class="single-op-btn">Pseudoinversa</button>
-                                            <button onclick="goTo('matrix-qr-decomposition')" class="single-op-btn">Descomposición QR</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-svd')" class="single-op-btn">SVD</button>
-                                            <button onclick="goTo('matrix-augmented')" class="single-op-btn">Matriz Aumentada</button>
-                                        </div>
-                                    </div>
-                                    
                                 </div>
 
-                                <div class="operation-buttons">
-                                    <button id="swap-ab-btn" class="operation-btn" title="Intercambiar matrices A y B"><i class="fas fa-exchange-alt"></i> INTERCAMBIAR</button>
-                                    <div id="matrix-multiplication-operation">
-                                        <button onclick="goTo('matrix-multiplication')" class="operation-btn" title="Calcular A * B">A × B</button>
-                                    </div>
-                                    <button onclick="goTo('matrix-addition')" class="operation-btn" title="Calcular A + B">A + B</button>
-                                    <button onclick="goTo('matrix-subtraction')" class="operation-btn" title="Calcular A - B">A - B</button>
+                                <!-- ===== 中间 Swap 列 ===== -->
+                                <div class="swap-mid-col">
+                                    <button type="button" id="swap-ab-btn" class="swap-icon-btn" title="Intercambiar A y B"
+                                        aria-label="Intercambiar matrices">
+                                        <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+                                    </button>
                                 </div>
 
-
-                                <div class="matrix-area">
-                                    
+                                <!-- 矩阵B区域 -->
+                                <div class="matrix-area" id="matrix-area-b">
                                     <div class="controls" id="controls-b">
-                                        <div class="matrix-label">B</div>
+                                        <div class="matrix-label">B <span id="dim-b"
+                                                class="matrix-dimension">(3×3)</span></div>
                                         <div class="size-controls">
-                                            <button id="decrease-btn-b" class="control-btn" title="Reducir tamaño de B"><i class="fas fa-minus"></i></button>
-                                            <button id="increase-btn-b" class="control-btn" title="Aumentar tamaño de B"><i class="fas fa-plus"></i></button>
+                                            <span class="control-label">Filas:</span>
+                                            <button id="decrease-rows-b" class="control-btn" title="Disminuir filas"><i
+                                                    class="fas fa-minus"></i></button>
+                                            <span class="size-display" id="rows-b">3</span>
+                                            <button id="increase-rows-b" class="control-btn" title="Aumentar filas"><i
+                                                    class="fas fa-plus"></i></button>
+                                        </div>
+                                        <div class="size-controls">
+                                            <span class="control-label">Columnas:</span>
+                                            <button id="decrease-cols-b" class="control-btn" title="Disminuir columnas"><i
+                                                    class="fas fa-minus"></i></button>
+                                            <span class="size-display" id="cols-b">3</span>
+                                            <button id="increase-cols-b" class="control-btn" title="Aumentar columnas"><i
+                                                    class="fas fa-plus"></i></button>
                                         </div>
                                         <div class="random-controls" id="random-controls-main-b">
-                                            <button id="toggle-random-btn-b" class="control-btn" title="Generar matriz aleatoria B"><i class="fas fa-dice"></i></button>
+                                            <button id="toggle-random-btn-b" class="control-btn"
+                                                title="Generar matriz aleatoria B"><i class="fas fa-dice"></i></button>
                                             <div id="random-options-b" class="random-options" style="display: none;">
-                                                <button class="random-option-btn" data-type="pos_int" data-target="B">Enteros positivos (0 ~ 9)</button>
-                                                <button class="random-option-btn" data-type="signed_int" data-target="B">Enteros (-10 ~ 10)</button>
-                                                <button class="random-option-btn" data-type="float" data-target="B">Decimales (-1.0 ~ 1.0)</button>
+                                                <button class="random-option-btn" data-type="pos_int"
+                                                    data-target="B">Enteros positivos (0 ~ 9)</button>
+                                                <button class="random-option-btn" data-type="signed_int"
+                                                    data-target="B">Enteros (-10 ~ 10)</button>
+                                                <button class="random-option-btn" data-type="float"
+                                                    data-target="B">Decimales (-1.0 ~ 1.0)</button>
                                             </div>
                                         </div>
-                                        <button id="clear-btn-b" class="control-btn" title="Borrar valores de B"><i class="fas fa-trash-alt"></i></button>
+                                        <button id="clear-btn-b" class="control-btn" title="Borrar valores de B"><i
+                                                class="fas fa-trash-alt"></i></button>
                                     </div>
-
                                     <div class="matrix-container" id="matrix-container-b"></div>
+                                </div>
+                            </div> <!-- main-calculator-container 结束 -->
 
-                                    <!-- 矩阵B的按钮 - 已添加路径 -->
-                                    <div class="single-ops-container">
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-qr')" class="single-op-btn">qr(A)</button>
-                                            <button onclick="goTo('matrix-svd')" class="single-op-btn">svd(A)</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-exponential')" class="single-op-btn">exp(A)</button>
-                                            <button onclick="goTo('matrix-pseudo-inverse')" class="single-op-btn">pinv(A)</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-square-root')" class="single-op-btn">√(A)</button>
-                                            <button onclick="goTo('matrix-augmented')" class="single-op-btn">(A | B)</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-kronecker-product')" class="single-op-btn">A ⊗ B</button>
-                                            <button onclick="goTo('matrix-cosine')" class="single-op-btn">cos[A]</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-sine')" class="single-op-btn">sin[A]</button>
-                                            <button onclick="goTo('matrix-logarithm')" class="single-op-btn">log[A]</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-tangent')" class="single-op-btn">tan[A]</button>
-                                            <button onclick="goTo('matrix-adjoint')" class="single-op-btn">adj(A)</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-jordan')" class="single-op-btn">jordan(A)</button>
-                                            <button onclick="goTo('matrix-arctangent')" class="single-op-btn">arctan[A]</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-arcsine')" class="single-op-btn">arcsin[A]</button>
-                                            <button onclick="goTo('matrix-arccosine')" class="single-op-btn">arccos[A]</button>
-                                        </div>
-                                        <div class="op-row">
-                                            <button onclick="goTo('matrix-hermite-normal-form')" class="single-op-btn">HNF(A)</button>
-                                            <button onclick="goTo('matrix-lll')" class="single-op-btn">LLL(A)</button>
-                                        </div>
+                            <div class="input-hint">
+                                Admite: fracciones (1/2), decimales (0.5), constantes (pi, e). Las celdas vacías se tratan como 0.
+                            </div>
+
+                            <!-- Mobile-only: one dropdown for all operations -->
+                            <div class="mobile-op-onebar" id="mobile-op-onebar">
+                                <select class="mobile-op-select" id="mobile-op-select" aria-label="Seleccionar una operación">
+                                    <option value="">Seleccionar una operación…</option>
+
+                                    <optgroup label="Operaciones principales (dos matrices)">
+                                        <option value="matrix-multiplication-calculator.html">A × B</option>
+                                        <option value="matrix-addition-calculator.html">A + B</option>
+                                        <option value="matrix-subtraction-calculator.html">A − B</option>
+                                    </optgroup>
+
+                                    <optgroup label="Álgebra lineal básica">
+                                        <option value="matrix-determinant-calculator.html">Determinante(A)</option>
+                                        <option value="matrix-inverse-calculator.html">Inversa(A)</option>
+                                        <option value="matrix-transpose-calculator.html">Traspuesta(A)</option>
+                                        <option value="matrix-rank-calculator.html">Rango(A)</option>
+                                        <option value="matrix-trace-calculator.html">Traza(A)</option>
+                                        <option value="matrix-rref-calculator.html">RREF(A)</option>
+                                        <option value="matrix-diagonal-calculator.html">Diagonal(A)</option>
+                                        <option value="matrix-adjoint-calculator.html">Matriz adjunta(A)</option>
+                                        <option value="matrix-upper-triangular-calculator.html">Triangular superior(A)
+                                        </option>
+                                    </optgroup>
+
+                                    <optgroup label="Descomposiciones y autovalores/autovectores">
+                                        <option value="matrix-lu-decomposition-calculator.html">LU(A)</option>
+                                        <option value="matrix-qr-decomposition-calculator.html">QR(A)</option>
+                                        <option value="matrix-svd-calculator.html">SVD(A)</option>
+                                        <option value="matrix-cholesky-calculator.html">Cholesky(A)</option>
+                                        <option value="matrix-pseudo-inverse-calculator.html">Pseudoinversa(A)</option>
+                                        <option value="matrix-eigenvectors-calculator.html">Vectores propios(A)</option>
+                                        <option value="matrix-eigenvalues-calculator.html">Valores propios(A)</option>
+                                        <option value="matrix-jordan-calculator.html">Forma de Jordan(A)</option>
+                                        <option value="matrix-square-root-calculator.html">√(A)</option>
+                                    </optgroup>
+
+                                    <optgroup label="Funciones matriciales">
+                                        <option value="matrix-exponential-calculator.html">exp(A)</option>
+                                        <option value="matrix-logarithm-calculator.html">log(A)</option>
+                                        <option value="matrix-sine-calculator.html">sin(A)</option>
+                                        <option value="matrix-cosine-calculator.html">cos(A)</option>
+                                        <option value="matrix-tangent-calculator.html">tan(A)</option>
+                                        <option value="matrix-arcsine-calculator.html">arcsin(A)</option>
+                                        <option value="matrix-arccosine-calculator.html">arccos(A)</option>
+                                        <option value="matrix-arctangent-calculator.html">arctan(A)</option>
+                                    </optgroup>
+
+                                    <optgroup label="Estructura / enteros">
+                                        <option value="matrix-augmented-calculator.html">(A | B)</option>
+                                        <option value="matrix-kronecker-product-calculator.html">A ⊗ B</option>
+                                        <option value="matrix-scalar-multiplication-calculator.html">Multiplicar por k
+                                        </option>
+                                        <option value="matrix-power-calculator.html">Potencia</option>
+                                        <option value="matrix-hermite-normal-form-calculator.html">HNF(A)</option>
+                                        <option value="matrix-lll-calculator.html">LLL(A)</option>
+                                        <option value="matrix-equations-calculator.html">Sistema de ecuaciones</option>
+                                    </optgroup>
+                                </select>
+
+                                <div class="mobile-op-display" id="mobile-op-display">—</div>
+
+                                <button type="button" class="mobile-op-eq" id="mobile-op-eq"
+                                    aria-label="Ejecutar la operación seleccionada">=</button>
+                            </div>
+
+                            <!-- Operations 网格（首页：全部按钮带 data-goto 跳转） -->
+                            <section class="ops ops-v2 ops-flat">
+                                <div class="ops-core">
+                                    <button type="button" class="btn main core-main" id="calculate-multiplication-btn" data-action="multiply"
+                                        data-goto="/es/matrix-multiplication-calculator.html" title="Ir a multiplicación de matrices">
+                                        A × B
+                                    </button>
+                                    <button type="button" class="btn core-main" id="addition-btn" data-action="add"
+                                        data-goto="/es/matrix-addition-calculator.html" title="Ir a suma de matrices">
+                                        A + B
+                                    </button>
+                                    <button type="button" class="btn core-main" id="subtraction-btn" data-action="subtract"
+                                        data-goto="/es/matrix-subtraction-calculator.html" title="Ir a resta de matrices">
+                                        A − B
+                                    </button>
+                                    <button type="button" class="btn mini core-sub" data-action="kronecker-product"
+                                        data-goto="/es/matrix-kronecker-product-calculator.html" title="Ir a producto de Kronecker">
+                                        A ⊗ B
+                                    </button>
+                                    <button type="button" class="btn mini core-sub" data-action="augmented" data-target="A"
+                                        data-goto="/es/matrix-augmented-calculator.html" title="Ir a matriz aumentada">
+                                        A | B
+                                    </button>
+                                    <div class="core-inline">
+                                        <button type="button" class="btn mini core-sub" data-action="scalar-multiplication" data-target="A"
+                                            data-goto="/es/matrix-scalar-multiplication-calculator.html" style="justify-content:center;"
+                                            title="Ir a multiplicación por un escalar">
+                                            Multiplicar por
+                                        </button>
+                                        <input class="miniInput" id="mBy-a-val" value="2" placeholder="k" inputmode="numeric" autocomplete="off"
+                                            spellcheck="false" aria-label="Escalar k" />
+                                    </div>
+                                    <div class="core-inline">
+                                        <button type="button" class="btn mini core-sub" data-action="power" data-target="A"
+                                            data-goto="/es/matrix-power-calculator.html" style="justify-content:center;" title="Ir a potencia de matriz">
+                                            Potencia
+                                        </button>
+                                        <input class="miniInput" id="pow-a-val" value="2" placeholder="n" inputmode="numeric" autocomplete="off"
+                                            spellcheck="false" aria-label="Potencia n" />
                                     </div>
                                 </div>
+                                <div class="ops-grid">
+                                    <button type="button" class="btn" data-action="determinant" data-target="A"
+                                        data-goto="/es/matrix-determinant-calculator.html">Determinante(A)</button>
+                                    <button type="button" class="btn" data-action="inverse" data-target="A"
+                                        data-goto="/es/matrix-inverse-calculator.html">Inversa(A)</button>
+                                    <button type="button" class="btn btn-wide" data-action="pseudo-inverse" data-target="A"
+                                        data-goto="/es/matrix-pseudo-inverse-calculator.html" spellcheck="false">Pseudoinversa(A)</button>
+                                    <button type="button" class="btn" data-action="eigenvectors" data-target="A"
+                                        data-goto="/es/matrix-eigenvectors-calculator.html">Vectores propios(A)</button>
+                                    <button type="button" class="btn" data-action="transpose" data-target="A"
+                                        data-goto="/es/matrix-transpose-calculator.html">Traspuesta(A)</button>
+                                    <button type="button" class="btn" data-action="rref" data-target="A"
+                                        data-goto="/es/matrix-rref-calculator.html">RREF(A)</button>
+                                    <button type="button" class="btn" data-action="svd" data-target="A"
+                                        data-goto="/es/matrix-svd-calculator.html">SVD(A)</button>
+                                    <button type="button" class="btn" data-action="eigenvalues" data-target="A"
+                                        data-goto="/es/matrix-eigenvalues-calculator.html">Valores propios(A)</button>
+                                    <button type="button" class="btn" data-action="trace" data-target="A"
+                                        data-goto="/es/matrix-trace-calculator.html">Traza(A)</button>
+                                    <button type="button" class="btn" data-action="rank" data-target="A"
+                                        data-goto="/es/matrix-rank-calculator.html">Rango(A)</button>
+                                    <button type="button" class="btn" data-action="square-root" data-target="A"
+                                        data-goto="/es/matrix-square-root-calculator.html">√(A)</button>
+                                    <button type="button" class="btn" data-action="jordan" data-target="A"
+                                        data-goto="/es/matrix-jordan-calculator.html">Forma de Jordan(A)</button>
+                                    <button type="button" class="btn" data-action="diagonal" data-target="A"
+                                        data-goto="/es/matrix-diagonal-calculator.html">Diagonal(A)</button>
+                                    <button type="button" class="btn" data-action="adjoint" data-target="A"
+                                        data-goto="/es/matrix-adjoint-calculator.html">Adjunta(A)</button>
+                                    <button type="button" class="btn" data-action="logarithm" data-target="A"
+                                        data-goto="/es/matrix-logarithm-calculator.html" spellcheck="false">log(A)</button>
+                                    <button type="button" class="btn" data-action="exponential" data-target="A"
+                                        data-goto="/es/matrix-exponential-calculator.html" spellcheck="false">exp(A)</button>
+                                    <button type="button" class="btn" data-action="upper-triangular" data-target="A"
+                                        data-goto="/es/matrix-upper-triangular-calculator.html">Triangular superior(A)</button>
+                                    <button type="button" class="btn" data-action="lu-decomposition" data-target="A"
+                                        data-goto="/es/matrix-lu-decomposition-calculator.html">LU(A)</button>
+                                    <button type="button" class="btn" data-action="sine" data-target="A" data-goto="/es/matrix-sine-calculator.html"
+                                        spellcheck="false">sin(A)</button>
+                                    <button type="button" class="btn" data-action="arcsine" data-target="A"
+                                        data-goto="/es/matrix-arcsine-calculator.html" spellcheck="false">arcsin(A)</button>
+                                    <button type="button" class="btn" data-action="hermite-normal-form" data-target="A"
+                                        data-goto="/es/matrix-hermite-normal-form-calculator.html">HNF(A)</button>
+                                    <button type="button" class="btn" data-action="qr-decomposition" data-target="A"
+                                        data-goto="/es/matrix-qr-decomposition-calculator.html">QR(A)</button>
+                                    <button type="button" class="btn" data-action="cosine" data-target="A" data-goto="/es/matrix-cosine-calculator.html"
+                                        spellcheck="false">cos(A)</button>
+                                    <button type="button" class="btn" data-action="arccosine" data-target="A"
+                                        data-goto="/es/matrix-arccosine-calculator.html" spellcheck="false">arccos(A)</button>
+                                    <button type="button" class="btn" data-action="lll" data-target="A"
+                                        data-goto="/es/matrix-lll-calculator.html">LLL(A)</button>
+                                    <button type="button" class="btn" data-action="cholesky" data-target="A"
+                                        data-goto="/es/matrix-cholesky-calculator.html">Cholesky(A)</button>
+                                    <button type="button" class="btn" data-action="tangent" data-target="A"
+                                        data-goto="/es/matrix-tangent-calculator.html" spellcheck="false">tan(A)</button>
+                                    <button type="button" class="btn" data-action="arctangent" data-target="A"
+                                        data-goto="/es/matrix-arctangent-calculator.html" spellcheck="false">arctan(A)</button>
+                                </div>
+                            </section>
+                            <!-- 新按钮区结束 -->
 
-                            </div>
+                            <!-- 结果输出区域 (已删除，首页不显示计算结果) -->
+                            <!-- div id="result-container" 已移除 -->
+
+                        </div>
+                    </div>
+
+                    <!-- ========== 文章区：已替换为 NDED 新版 Intro 文章 ========== -->
+                    <div class="seo-articles-container" id="article-container">
+                        <!-- 新版文章（完整替换） -->
+                        <div class="matrix-guide" data-article="intro">
                             
-                            <div id="result-container">
-                                <!-- 结果将在这里显示 -->
+
+<div class="seo-content">
+                                <p>
+                                    Una calculadora de matrices es una de las herramientas más útiles para estudiantes, docentes,
+                                    ingenieros, investigadores y desarrolladores que trabajan con álgebra lineal. Esta
+                                    calculadora de matrices gratuita en línea te ayuda a realizar operaciones matriciales de
+                                    forma rápida y precisa, incluyendo multiplicación, suma, resta, determinante, inversa,
+                                    traspuesta, rango, traza, descomposiciones, funciones matriciales, RREF y resolución de
+                                    sistemas de ecuaciones.
+                                </p>
+
+                                <p>
+                                    Tanto si estás comprobando tareas, estudiando álgebra lineal, verificando un resultado de
+                                    investigación o probando un flujo numérico, este sitio está diseñado para hacer los cálculos
+                                    matriciales más fáciles, claros y rápidos.
+                                </p>
+
+                                <h1>1. ¿Qué es una calculadora de matrices?</h1>
+                                <p>
+                                    Una calculadora de matrices es una herramienta en línea que calcula automáticamente
+                                    operaciones matriciales. En lugar de realizar cada paso a mano, puedes introducir
+                                    matrices directamente y obtener resultados en segundos.
+                                </p>
+
+                                <p>Esta calculadora admite una amplia gama de operaciones, entre ellas:</p>
+                                <ul>
+                                    <li>Multiplicación, suma y resta de matrices</li>
+                                    <li>Determinante, inversa, traspuesta, rango y traza</li>
+                                    <li>Multiplicación escalar y potencia de matrices</li>
+                                    <li>Descomposiciones LU, QR, SVD y Cholesky</li>
+                                    <li>Funciones matriciales como exp(A), log(A), sin(A) y cos(A)</li>
+                                    <li>RREF y resolución de sistemas de ecuaciones</li>
+                                </ul>
+
+                                <p>
+                                    En comparación con el trabajo manual, una calculadora de matrices en línea ahorra
+                                    tiempo, reduce errores aritméticos y facilita mucho probar varios ejemplos con rapidez.
+                                </p>
+
+                                <h1>2. ¿Qué es una matriz?</h1>
+                                <p>
+                                    Una matriz es una disposición rectangular de números organizada en filas y columnas.
+                                    Las matrices son un objeto central del álgebra lineal y aparecen en matemáticas,
+                                    ingeniería, ciencia, economía, gráficos e inteligencia artificial.
+                                </p>
+
+                                <p>Entre las aplicaciones típicas se incluyen:</p>
+                                <ul>
+                                    <li>Ciencia de datos y aprendizaje automático</li>
+                                    <li>Gráficos por computadora y transformaciones geométricas</li>
+                                    <li>Modelos de sistemas en ingeniería</li>
+                                    <li>Resolución de sistemas lineales de ecuaciones</li>
+                                    <li>Optimización y métodos numéricos</li>
+                                </ul>
+
+                                <p>
+                                    En resumen, las matrices son una de las herramientas más importantes del trabajo técnico moderno.
+                                </p>
+
+                                <h1>3. Calculadora de matrices gratuita en línea de NDED Education Group</h1>
+                                <p>
+                                    Esta calculadora de matrices está desarrollada por <strong>NDED Education Group</strong>,
+                                    una organización educativa centrada en mejorar el aprendizaje de las matemáticas mediante
+                                    tecnología, estructura y diseño interactivo.
+                                </p>
+
+                                <p>La calculadora es completamente gratuita:</p>
+                                <ul>
+                                    <li>No requiere registro</li>
+                                    <li>No necesita instalación</li>
+                                    <li>No requiere pago</li>
+                                    <li>No hay cargos ocultos</li>
+                                </ul>
+
+                                <p>
+                                    Está disponible directamente en tu navegador tanto en ordenadores como en dispositivos móviles.
+                                </p>
+
+                                <h1>4. Cómo usar la calculadora de matrices</h1>
+                                <p>
+                                    La nueva versión de este sitio está diseñada en torno a un flujo de trabajo más fluido.
+                                </p>
+
+                                <h2>4.1 Introduce la matriz A y la matriz B</h2>
+                                <p>
+                                    Puedes escribir los valores directamente en las casillas de entrada de la matriz. La calculadora admite:
+                                </p>
+                                <ul>
+                                    <li>Números enteros</li>
+                                    <li>Decimales</li>
+                                    <li>Fracciones como <code>1/2</code></li>
+                                    <li>Constantes como <code>pi</code> y <code>e</code></li>
+                                </ul>
+
+                                <p>Las celdas vacías se tratan como <code>0</code>.</p>
+
+                                <h2>4.2 Elige una operación</h2>
+                                <p>
+                                    En escritorio puedes pulsar los botones de operación directamente. En móvil puedes usar el
+                                    selector de operación y pulsar <code>=</code>.
+                                </p>
+
+                                <h2>4.3 Ir automáticamente a la página correcta de la calculadora</h2>
+                                <p>
+                                    Cuando eliges una operación desde la página de inicio, el sitio lleva automáticamente los
+                                    valores de tu matriz a la página correcta de la calculadora.
+                                </p>
+
+                                <h2>4.4 Ver el resultado inmediatamente</h2>
+                                <p>
+                                    Después de la navegación, la página de la calculadora puede calcular el resultado
+                                    automáticamente y desplazarse a la zona de resultados, haciendo el flujo mucho más rápido y sencillo.
+                                </p>
+
+                                <h1>5. Funciones de entrada de matrices</h1>
+                                <img src="/img/matrix-input-image.png"
+                                    alt="Interfaz de entrada de matrices de la calculadora de matrices en línea" class="matrix-image">
+
+                                <p>
+                                    El sistema de entrada está diseñado para ser flexible y fácil de usar para principiantes.
+                                </p>
+
+                                <ul>
+                                    <li>Dos paneles de entrada: Matriz A y Matriz B</li>
+                                    <li>Filas y columnas ajustables</li>
+                                    <li>Generación aleatoria de matrices</li>
+                                    <li>Función de intercambio de matrices</li>
+                                    <li>Función de limpiar entrada</li>
+                                    <li>Entrada compatible con fracciones</li>
+                                    <li>Flujo móvil con selector</li>
+                                </ul>
+
+                                <p>
+                                    Este diseño ayuda a pasar rápidamente de la entrada de matrices al resultado final.
+                                </p>
+
+                                <h1>6. Operaciones matriciales disponibles</h1>
+                                <img src="/img/matrix-operation-image.png"
+                                    alt="Botones y categorías de operaciones matriciales en la calculadora"
+                                    class="matrix-image">
+
+                                <p>
+                                    Este sitio admite una amplia gama de operaciones matriciales en varias categorías.
+                                </p>
+
+                                <h2>6.1 Operaciones matriciales principales</h2>
+                                <ul>
+                                    <li>Multiplicación de matrices</li>
+                                    <li>Suma de matrices</li>
+                                    <li>Resta de matrices</li>
+                                    <li>Multiplicación escalar</li>
+                                    <li>Potencia de matrices</li>
+                                    <li>Matriz aumentada</li>
+                                    <li>Producto de Kronecker</li>
+                                </ul>
+
+                                <h2>6.2 Operaciones básicas de álgebra lineal</h2>
+                                <ul>
+                                    <li>Determinante</li>
+                                    <li>Inversa</li>
+                                    <li>Traspuesta</li>
+                                    <li>Rango</li>
+                                    <li>Traza</li>
+                                    <li>Diagonal</li>
+                                    <li>Adjunta</li>
+                                    <li>Forma triangular superior</li>
+                                    <li>RREF</li>
+                                </ul>
+
+                                <h2>6.3 Descomposiciones matriciales</h2>
+                                <ul>
+                                    <li>Descomposición LU</li>
+                                    <li>Descomposición QR</li>
+                                    <li>SVD</li>
+                                    <li>Descomposición de Cholesky</li>
+                                    <li>Pseudoinversa</li>
+                                    <li>Valores propios</li>
+                                    <li>Vectores propios</li>
+                                    <li>Forma de Jordan</li>
+                                    <li>Raíz cuadrada matricial</li>
+                                </ul>
+
+                                <h2>6.4 Funciones matriciales</h2>
+                                <ul>
+                                    <li>Exponencial</li>
+                                    <li>Logaritmo</li>
+                                    <li>Seno</li>
+                                    <li>Coseno</li>
+                                    <li>Tangente</li>
+                                    <li>Arcoseno</li>
+                                    <li>Arcocoseno</li>
+                                    <li>Arcotangente</li>
+                                </ul>
+
+                                <h2>6.5 Operaciones enteras y de retículos</h2>
+                                <ul>
+                                    <li>Forma normal de Hermite (HNF)</li>
+                                    <li>LLL</li>
+                                </ul>
+
+                                <p>
+                                    Estas funciones convierten el sitio no solo en un solucionador de matrices, sino en
+                                    una práctica caja de herramientas de álgebra lineal.
+                                </p>
+
+                                <h1>7. RREF y sistemas de ecuaciones</h1>
+                                <p>
+                                    Una de las funciones más útiles de la nueva versión es el soporte para la
+                                    <strong>forma escalonada reducida por filas (RREF)</strong> y los
+                                    <strong>sistemas de ecuaciones</strong>.
+                                </p>
+
+                                <p>
+                                    La calculadora RREF puede reducir una matriz a forma escalonada reducida por filas y mostrar
+                                    operaciones fila a fila. La calculadora de sistemas de ecuaciones usa la misma base matemática,
+                                    pero presenta el resultado de forma más intuitiva, por ejemplo:
+                                </p>
+
+                                <ul>
+                                    <li><code>x = ...</code></li>
+                                    <li><code>y = ...</code></li>
+                                    <li><code>z = ...</code></li>
+                                </ul>
+
+                                <p>También puede identificar:</p>
+                                <ul>
+                                    <li>Solución única</li>
+                                    <li>Infinitas soluciones</li>
+                                    <li>Sin solución</li>
+                                </ul>
+
+                                <p>
+                                    Esto hace que la calculadora sea útil no solo para usuarios de matrices, sino también
+                                    para estudiantes que simplemente quieren resolver ecuaciones lineales.
+                                </p>
+
+                                <h1>8. Tutorial en video</h1>
+                                <div class="video-placeholder"
+                                    style="border:1px dashed #ccc; padding:24px; text-align:center; border-radius:12px; background:#fafafa; margin:20px 0;">
+                                    <p><strong>Tutorial en video próximamente</strong></p>
+                                    <p>
+                                        Aquí se añadirá un tutorial paso a paso para mostrar cómo usar el sitio, cómo funciona
+                                        el cálculo automático entre páginas y cómo usar las funciones de RREF y sistemas de ecuaciones.
+                                    </p>
+                                </div>
+
+                                <h1>9. Juego de memoria de multiplicación de matrices</h1>
+                                <p>
+                                    Para hacer el aprendizaje de matrices más interactivo, también ofrecemos un juego de memoria
+                                    sobre las reglas de multiplicación de matrices desarrollado por NDED.
+                                </p>
+
+                                <p>
+                                    Puedes jugar aquí:
+                                    <a href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html" target="_blank"
+                                        rel="noopener noreferrer">
+                                        Juego de multiplicación de matrices
+                                    </a>
+                                </p>
+
+                                <p>
+                                    Este juego es especialmente útil para estudiantes que quieren reforzar su comprensión
+                                    de las reglas de multiplicación de matrices de una manera más visual y memorable.
+                                </p>
+
+                                <h1>10. Por qué esta nueva versión es mejor</h1>
+                                <p>
+                                    En comparación con la versión anterior, la nueva calculadora de matrices ofrece una experiencia
+                                    más eficiente y mejor organizada.
+                                </p>
+
+                                <ul>
+                                    <li>Estructura de página más limpia</li>
+                                    <li>Páginas dedicadas para las operaciones</li>
+                                    <li>Mejor flujo de trabajo en escritorio y móvil</li>
+                                    <li>Transporte automático de matrices entre páginas</li>
+                                    <li>Cálculo automático después de navegar</li>
+                                    <li>Desplazamiento automático al área de resultados</li>
+                                    <li>Mejor soporte para RREF y ecuaciones</li>
+                                    <li>Organización más clara de operaciones avanzadas</li>
+                                </ul>
+
+                                <p>
+                                    En otras palabras, esto no es solo una actualización visual. Es un flujo de trabajo
+                                    de cálculo matricial mucho mejor.
+                                </p>
+
+                                <h1>11. Preguntas frecuentes</h1>
+
+                                <p><strong>P1: ¿Necesito registrarme?</strong><br>
+                                    No. Esta calculadora de matrices es completamente gratuita y no requiere registro.</p>
+
+                                <p><strong>P2: ¿Qué tipos de números puedo introducir?</strong><br>
+                                    Puedes introducir enteros, decimales, fracciones y constantes como <code>pi</code> y <code>e</code>.</p>
+
+                                <p><strong>P3: ¿Puedo usar la calculadora en móvil?</strong><br>
+                                    Sí. El sitio incluye un selector compatible con móviles y un flujo de cálculo adaptado.</p>
+
+                                <p><strong>P4: ¿Puede mostrar pasos?</strong><br>
+                                    Sí. Algunas funciones, como RREF, pueden mostrar resultados paso a paso.</p>
+
+                                <p><strong>P5: ¿Puede resolver ecuaciones directamente?</strong><br>
+                                    Sí. La calculadora de sistemas de ecuaciones puede mostrar resultados directos como
+                                    <code>x = ...</code>, <code>y = ...</code> y <code>z = ...</code>.</p>
+
+                                <p><strong>P6: ¿Quién puede usar esta calculadora?</strong><br>
+                                    Es útil para estudiantes, docentes, investigadores, ingenieros y desarrolladores.</p>
+
+                                <h1>12. Comentarios y sugerencias</h1>
+                                <p>
+                                    Agradecemos sugerencias, comentarios e informes de errores.
+                                </p>
+
+                                <p>
+                                    Si quieres compartir ideas de mejora o informar de un problema, ponte en contacto con:
+                                </p>
+
+                                <p>
+                                    <a href="mailto:info@matrixcalcu.com">info@matrixcalcu.com</a>
+                                </p>
+
+                                <p>
+                                    NDED Education Group seguirá mejorando la calculadora para que pueda servir a más
+                                    estudiantes y usuarios de todo el mundo.
+                                </p>
                             </div>
+
                         </div>
                     </div>
-                    
-                    <!-- SEO文章容器 - 现在已填充SEO内容 -->
-                    <div class="seo-articles-container">
-                        <div class="seo-content">
-                            <p>En las matemáticas modernas, ingeniería, ciencia de datos e inteligencia artificial, las matrices se han convertido en una de las herramientas más fundamentales e importantes. Para ayudar a estudiantes, profesores, investigadores e ingenieros a realizar operaciones matriciales de manera más eficiente, hemos lanzado una calculadora de matrices en línea profesional y gratuita. Este artículo presentará de manera integral esta poderosa herramienta matricial desde los aspectos de concepto, aplicaciones, funciones, métodos de uso, etc.</p>
+                </div> <!-- calculator-main结束 -->
 
-                            <h1>1. ¿Qué es una matriz?</h1>
-                            <p>Una matriz es un arreglo rectangular de números dispuestos en filas y columnas. Las matrices son la estructura central del álgebra lineal y son omnipresentes en las matemáticas y sus campos aplicados.</p>
-                            <p>Aplicaciones típicas de las matrices:</p>
-                            <ul>
-                                <li>Ciencia de datos: tablas de datos, matrices de características, parámetros de modelos de aprendizaje automático</li>
-                                <li>Gráficos por computadora: rotación, escalado, transformación</li>
-                                <li>Ingeniería y física: resolver ecuaciones lineales, modelado de sistemas</li>
-                                <li>Matemáticas financieras: análisis de riesgos, modelos lineales</li>
-                                <li>Inteligencia artificial (IA/ML): pesos de redes neuronales, operaciones vectoriales</li>
-                            </ul>
-                            <p>En resumen, una matriz es una forma poderosa de representación de datos estructurados y la piedra angular de los sistemas matemáticos modernos.</p>
-
-                            <h1>2. ¿Qué es una calculadora de matrices?</h1>
-                            <p>Una calculadora de matrices es una herramienta en línea que puede realizar automáticamente diversas operaciones matriciales complejas, desde suma, resta, multiplicación básicas hasta descomposiciones avanzadas (como LU / QR / SVD), e incluso funciones matriciales (como exp(A), sin(A), etc.).</p>
-                            <p>En comparación con el cálculo manual:</p>
-                            <ul>
-                                <li>Rápida y precisa, menos propensa a errores</li>
-                                <li>Admite operaciones con matrices grandes</li>
-                                <li>No es necesario instalar ningún software</li>
-                                <li>Adecuada para enseñanza, investigación y proyectos de ingeniería</li>
-                            </ul>
-                            <p>Para los estudiantes, es un gran auxiliar para comprender el álgebra lineal; para ingenieros e investigadores, es una herramienta profesional para mejorar la eficiencia.</p>
-
-                            <h1>3. ¿Quién es el desarrollador de la calculadora de matrices? ¿Es gratuita?</h1>
-                            <p>La calculadora de matrices es desarrollada por NDED Education Group. Esta es una institución educativa con la misión de 'redefinir la forma en que se aprenden las matemáticas', proporcionando a los estudiantes una experiencia de aprendizaje matemático más relajada y eficiente a través de la tecnología, el diseño gamificado y cursos estructurados.</p>
-                            <p>¿Es gratuita la calculadora de matrices?</p>
-                            <p>Sí, completamente gratuita. No necesita registrarse, pagar tarifas, ni hay cargos ocultos. Cualquier usuario puede usar todas las funciones sin límites.</p>
-
-                            <h1>4. Aplicaciones de la calculadora de matrices</h1>
-                            <h2>4.1 Amplia gama de escenarios de aplicación</h2>
-                            <p>La calculadora de matrices se utiliza ampliamente en los siguientes campos:</p>
-                            <ul>
-                                <li>Aulas escolares, verificación de tareas</li>
-                                <li>Aprendizaje y enseñanza de álgebra lineal universitaria</li>
-                                <li>Descomposición y verificación de matrices para investigadores</li>
-                                <li>Cálculos numéricos en proyectos de ingeniería</li>
-                                <li>Gráficos por computadora, modelado 3D</li>
-                                <li>Procesamiento de datos en ciencia de datos y aprendizaje automático</li>
-                                <li>Verificación o depuración de algoritmos para desarrolladores</li>
-                            </ul>
-                            <p>Ya sea principiante o profesional, esta calculadora puede mejorar significativamente su eficiencia.</p>
-
-                            <h2>4.2 ¿Por qué usar una calculadora de matrices?</h2>
-                            <p>Los beneficios de usar una calculadora de matrices en línea incluyen:</p>
-                            <ul>
-                                <li>Ahorrar tiempo: el cálculo manual de matrices de alto orden consume mucho tiempo</li>
-                                <li>Reducir errores: el cálculo automático reduce en gran medida los errores humanos</li>
-                                <li>Admite operaciones complejas: como SVD, descomposición de Jordan, etc.</li>
-                                <li>Conveniente para la enseñanza: los profesores pueden usarla para demostrar procesos de cálculo</li>
-                                <li>No requiere instalación de software, disponible en cualquier momento</li>
-                            </ul>
-
-                            <h1>5. Funciones y uso de la calculadora de matrices</h1>
-                            <p>Nuestra calculadora de matrices proporciona funciones líderes en la industria y es una de las herramientas matriciales en línea más completas disponibles actualmente.</p>
-
-                            <h2>5.1 Función de entrada de matrices</h2>
-                            <img src="img/matrix-input-image.png" alt="imagen de entrada de matriz" class="matrix-image">
-                            <ul>
-                                <li>Puede ingresar dos matrices (A y B)</li>
-                                <li>Tamaño ajustable: desde 2×2 hasta 10×10</li>
-                                <li>Opciones de entrada aleatoria:
-                                    <ul>
-                                        <li>Enteros positivos de 0 a 9</li>
-                                        <li>Enteros de -10 a 10</li>
-                                        <li>Decimales de -1.0 a 1.0</li>
-                                    </ul>
-                                </li>
-                                <li>Función de intercambio de matrices (Intercambiar matrices)</li>
-                                <li>Función de borrado de matrices (Borrar)</li>
-                                <li>Interfaz de entrada intuitiva, cualquiera puede comenzar rápidamente</li>
-                            </ul>
-
-                            <h2>5.2 Operaciones matriciales potentes (Punto de venta principal)</h2>
-                            <img src="img/matrix-operation-image.png" alt="imagen de operación matricial" class="matrix-image">
-                            <p>La calculadora de matrices admite más de 40 tipos de operaciones matriciales, cubriendo cálculos básicos, avanzados y de alto nivel.</p>
-                            <p>Para facilitar la comprensión, dividimos las funciones en cinco categorías.</p>
-                            <p>(1) Operaciones básicas de matrices</p>
-                            <ul>
-                                <li>Matriz transpuesta (Aᵀ)</li>
-                                <li>Rango (rank)</li>
-                                <li>Determinante (det)</li>
-                                <li>Traza de matriz (trace)</li>
-                                <li>Multiplicación escalar (kA)</li>
-                                <li>Operación de potencia (Aⁿ)</li>
-                            </ul>
-                            <p>(2) Operaciones centrales de álgebra lineal</p>
-                            <ul>
-                                <li>Matriz inversa (inversa)</li>
-                                <li>Descomposición LU</li>
-                                <li>Descomposición QR (descomposición QR de A)</li>
-                                <li>Descomposición de Cholesky</li>
-                                <li>Pseudoinversa (pseudoinversa(A))</li>
-                                <li>Adjunta (adjunta(A))</li>
-                            </ul>
-                            <p>(3) Cálculos de funciones matriciales</p>
-                            <ul>
-                                <li>exp(A)</li>
-                                <li>log(A)</li>
-                                <li>sin(A), cos(A), tan(A)</li>
-                                <li>arcsin(A), arccos(A), arctan(A)</li>
-                                <li>A^(1/2) (raíz cuadrada de matriz)</li>
-                            </ul>
-                            <p>(4) Descomposición de matrices y análisis de valores propios</p>
-                            <ul>
-                                <li>Valores propios</li>
-                                <li>Vectores propios</li>
-                                <li>Diagonalización</li>
-                                <li>Matriz triangular superior</li>
-                                <li>Descomposición de Jordan (descomposición de Jordan de A)</li>
-                            </ul>
-                            <p>(5) Operaciones matriciales estructuradas</p>
-                            <ul>
-                                <li>Matriz aumentada (A | B)</li>
-                                <li>Producto tensorial A ⊗ B</li>
-                                <li>HNF(A) (Forma Normal de Hermite)</li>
-                                <li>LLL(A) (Reducción de Base de Reticulado)</li>
-                            </ul>
-                            <p>Estas funciones llevan su capacidad de cálculo matricial al nivel de software matemático profesional (como partes de MATLAB, NumPy, Maple), pero con un uso más fácil y sin barreras.</p>
-
-                            <h1>6. Preguntas frecuentes (FAQ)</h1>
-                            <p><strong>P1: ¿La calculadora de matrices requiere registro?</strong><br>
-                            No, es completamente gratuita, no requiere inicio de sesión.</p>
-                            <p><strong>P2: ¿Hay límite en el tamaño de la matriz?</strong><br>
-                            Admite desde 2×2 hasta 10×10, suficiente para cálculos comunes de aprendizaje e investigación.</p>
-                            <p><strong>P3: ¿Puedo ingresar decimales o números negativos?</strong><br>
-                            Sí, admite números negativos, enteros, decimales.</p>
-                            <p><strong>P4: ¿Se pueden mostrar los pasos del cálculo?</strong><br>
-                            Sí, puede elegir mostrar u ocultar los pasos de cálculo según su preferencia.</p>
-                            <p><strong>P5: ¿Son precisas las operaciones matriciales?</strong><br>
-                            Utiliza una biblioteca matemática de alta precisión, las operaciones son precisas y confiables.</p>
-
-                            <h1>7. Comentarios y sugerencias</h1>
-                            <p>Damos una calurosa bienvenida a los usuarios para que proporcionen sugerencias de funciones, informes de errores u opiniones de mejora. NDED Education Group se compromete a optimizar continuamente la calculadora de matrices para proporcionar a los usuarios globales herramientas más potentes y confiables.</p>
-                            <p>Puede contactarnos en <a href="mailto:info@matrixcalcu.com">info@matrixcalcu.com</a> para compartir su experiencia de usuario y mejorar juntos este producto.</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- 右侧容器 (问答栏完全保留) -->
+                <div class="poster-card">
+                    <p class="promo-text">
+                        Aprende multiplicación de matrices más fácilmente en solo <span>2 minutos</span> con este <span>juego gratuito</span>.
+                    </p>
                 
-                <!-- 右侧容器 - 现在包含问答栏 -->
-                <div class="right-sidebar" id="matrix-game">
-                    <div class="question-box">
-                        <h2>¿Quieres que diseñemos un juego de práctica de multiplicación de matrices?</h2>
-                        <button class="btn yes">😎 Claro, estoy listo para sufrir.</button>
-                        <button class="btn no">🙃 No, mantén las matrices lejos de mí.</button>
-                        <div class="response" id="response"></div>
-                    </div>
+                    <a class="image-container" href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html">
+                        <img src="/img/matrix-multiplication-game.png" alt="Juego de multiplicación de matrices" class="game-image">
+                
+                        <div class="play-icon-overlay">
+                            <div class="play-triangle"></div>
+                        </div>
+                    </a>
                 </div>
+
             </div>
         </div>
     </div>
-    
+
     <footer>
         <div class="container">
-            <p>&copy; 2025 Calculadora de Matrices. Todos los derechos reservados.</p>
+            <p>&copy; 2025 Calculadora de matrices. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- JavaScript代码 -->
+    <!-- JavaScript模块化引用 -->
+    <!-- ✅ 首页不包含任何核心算法脚本（已删除 addition.js） -->
+    <!-- <script src="/js/core/addition.js" type="module"></script> 已移除 -->
     <script>
-        // 全局导航函数 - 已添加URL参数传递功能
-        function goTo(pageName) {
-            const pathParts = window.location.pathname.split('/');
-            const lang = pathParts[1] || 'en'; // 默认英语
-            
-            // 获取矩阵A和B的数据
-            const matrixAData = getMatrixData('A');
-            const matrixBData = getMatrixData('B');
-            
-            // 创建URL参数
-            const params = new URLSearchParams();
-            params.append('sizeA', sizeA);
-            params.append('sizeB', sizeB);
-            params.append('matrixA', JSON.stringify(matrixAData));
-            params.append('matrixB', JSON.stringify(matrixBData));
-            
-            // 添加时间戳防止缓存
-            params.append('t', Date.now());
-            
-            window.location.href = `/${lang}/${pageName}-calculator.html?${params.toString()}`;
+        window.PAGE_MODE = 'landing';
+        window.PAGE_CONFIG = { articleKey: 'intro', opName: 'intro' };
+    </script>
+    <script src="/js/ui/matrix-input.js" type="module"></script>
+    <script src="/js/ui/matrix-output.js" type="module"></script>
+    <script src="/js/ui/validation-ui.js" type="module"></script>
+    <script src="/js/app.js" type="module"></script>
+
+    <!-- ✅ 统一跳转拦截器（捕获阶段）：带 data-goto 的按钮一律保存状态后跳转 (完全保留不动) -->
+    <script type="module">
+        const STATE_KEY = 'matrixcalcu_state_v1';
+
+        function getIntText(id, fallback = 3) {
+            const el = document.getElementById(id);
+            const n = el ? parseInt(el.textContent, 10) : NaN;
+            return Number.isFinite(n) ? n : fallback;
         }
 
-        // 获取矩阵数据的函数
-        function getMatrixData(matrixId) {
-            const container = matrixId === 'A' ? containerA : containerB;
-            const size = matrixId === 'A' ? sizeA : sizeB;
-            const inputs = container.querySelectorAll('.matrix input');
-            const data = [];
-            
-            for (let i = 0; i < size; i++) {
-                const row = [];
-                for (let j = 0; j < size; j++) {
-                    const index = i * size + j;
-                    row.push(inputs[index].value || '0'); // 空值默认为0
+        function readMatrix(containerId, rows, cols) {
+            const container = document.getElementById(containerId);
+            const inputs = container ? container.querySelectorAll('input, textarea') : [];
+            const out = Array.from({
+                length: rows
+            }, () => Array.from({
+                length: cols
+            }, () => '0'));
+            let k = 0;
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const el = inputs[k++];
+                    out[r][c] = el ? (el.value ?? '').trim() : '0';
                 }
-                data.push(row);
             }
-            return data;
+            return out;
         }
 
-        // 多语言切换函数
-        function switchLanguage(lang) {
-            let path = window.location.pathname;
-            let parts = path.split("/").filter(part => part !== "");
-            
-            // 如果在根目录，跳转到目标语言的首页
-            if (parts.length === 0) {
-                window.location.href = `/${lang}/index.html`;
+        function saveStateForNav(gotoBtn = null) {
+            const rowsA = getIntText('rows-a', 3);
+            const colsA = getIntText('cols-a', 3);
+            const rowsB = getIntText('rows-b', 3);
+            const colsB = getIntText('cols-b', 3);
+            const action = gotoBtn?.dataset?.action || '';
+            const target = gotoBtn?.dataset?.target || 'A';
+
+            const state = {
+                rowsA,
+                colsA,
+                rowsB,
+                colsB,
+                matrixA: readMatrix('matrix-container-a', rowsA, colsA),
+                matrixB: readMatrix('matrix-container-b', rowsB, colsB),
+                from: location.pathname.split('/').pop(),
+                autorun: true,
+                op: action,
+                target
+            };
+
+            if (action === 'scalar-multiplication') {
+                const el = document.getElementById('mBy-a-val');
+                state.k = (el && el.value.trim()) ? el.value.trim() : '2';
+            }
+
+            if (action === 'power') {
+                const el = document.getElementById('pow-a-val');
+                state.n = (el && el.value.trim()) ? el.value.trim() : '2';
+            }
+
+            localStorage.setItem(STATE_KEY, JSON.stringify(state));
+            return state;
+        }
+
+        // 捕获阶段拦截：压住 app.js 里可能存在的同页计算监听器
+        document.addEventListener('click', (e) => {
+            const gotoBtn = e.target.closest('[data-goto]');
+            const homeBtn = e.target.closest('#home-btn');
+
+            if (!gotoBtn && !homeBtn) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (typeof e.stopImmediatePropagation === 'function') {
+                e.stopImmediatePropagation();
+            }
+
+            if (homeBtn) {
+                localStorage.removeItem(STATE_KEY);
+                location.href = homeBtn.getAttribute('href') || 'index.html';
                 return;
             }
-            
-            // 正常情况：替换语言代码
-            parts[0] = lang;
-            let newPath = "/" + parts.join("/");
-            window.location.href = newPath;
-        }
 
-        // 矩阵计算器功能
-        let sizeA = 3;
-        let sizeB = 3; 
-        const minSize = 2;
-        const maxSize = 9; 
-        
-        const containerA = document.getElementById('matrix-container-a');
-        const containerB = document.getElementById('matrix-container-b');
-        const resultContainer = document.getElementById('result-container');
-        
-        const increaseBtnA = document.getElementById('increase-btn-a');
-        const decreaseBtnA = document.getElementById('decrease-btn-a');
-        const increaseBtnB = document.getElementById('increase-btn-b');
-        const decreaseBtnB = document.getElementById('decrease-btn-b');
-        
-        const randomOptionsA = document.getElementById('random-options-a');
-        const randomOptionsB = document.getElementById('random-options-b');
-        const swapBtn = document.getElementById('swap-ab-btn');
+            saveStateForNav(gotoBtn);
+            location.href = gotoBtn.dataset.goto;
+        }, true);
+    </script>
+    
+    <script>
+        (function () {
+            const sel = document.getElementById('mobile-op-select');
+            const disp = document.getElementById('mobile-op-display');
+            const eq = document.getElementById('mobile-op-eq');
 
-        // Helper 1: Safely extract matrix values from DOM
-        function getMatrixValues(container, size) {
-            const inputs = container.querySelectorAll('.matrix input');
-            const matrix = [];
-            let isValid = true;
-            
-            for (let i = 0; i < size; i++) {
-                const row = [];
-                for (let j = 0; j < size; j++) {
-                    const value = parseFloat(inputs[i * size + j].value); 
-                    if (isNaN(value)) {
-                        isValid = false;
-                        row.push(0); 
-                    } else {
-                        row.push(value);
-                    }
-                }
-                matrix.push(row);
+            if (!sel || !disp || !eq) return;
+
+            function updateDisplay() {
+                const opt = sel.options[sel.selectedIndex];
+                disp.textContent = (opt && opt.value) ? opt.textContent.trim() : '—';
             }
-            return { matrix, isValid };
-        }
 
-        // Helper 2: Generate random numbers
-        function generateRandomValue(type) {
-            let value;
-            switch (type) {
-                case 'pos_int': 
-                    value = Math.floor(Math.random() * 10);
-                    break;
-                case 'signed_int': 
-                    value = Math.floor(Math.random() * 21) - 10;
-                    break;
-                case 'float': 
-                    value = ((Math.random() * 2) - 1).toFixed(2); 
-                    break;
-                default:
-                    value = 0;
-            }
-            return value;
-        }
+            sel.addEventListener('change', updateDisplay);
+            updateDisplay();
 
-        // Helper 3: Fill matrix with random values
-        function fillMatrix(target, type) {
-            const container = target === 'A' ? containerA : containerB;
-            const optionsDiv = target === 'A' ? randomOptionsA : randomOptionsB;
-            const inputs = container.querySelectorAll('.matrix input');
-            if (inputs.length === 0) return;
-            inputs.forEach(input => { input.value = generateRandomValue(type); });
-            optionsDiv.style.display = 'none';
-        }
+            eq.addEventListener('click', function () {
+                const goto = sel.value;
+                if (!goto) return;
 
-        // Helper 4: Render matrix (size adjustment logic)
-        function renderMatrix(size, container, matrixId) {
-            const oldInputs = container.querySelectorAll('.matrix input');
-            const oldValues = Array.from(oldInputs).map(input => input.value);
-            const oldSize = matrixId === 'A' ? sizeA : sizeB;
-
-            container.innerHTML = ''; 
-            const newMatrixDiv = document.createElement('div');
-            newMatrixDiv.classList.add('matrix');
-            newMatrixDiv.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-
-            for (let r = 0; r < size; r++) {
-                for (let c = 0; c < size; c++) {
-                    const input = document.createElement('input');
-                    input.type = 'number';
-                    input.placeholder = '0'; 
-                    if (r < oldSize && c < oldSize) {
-                        const oldIndex = r * oldSize + c;
-                        input.value = oldValues[oldIndex] || ''; 
-                    } else {
-                        input.value = ''; 
-                    }
-                    newMatrixDiv.appendChild(input);
-                }
-            }
-            container.appendChild(newMatrixDiv);
-            
-            if (matrixId === 'A') { sizeA = size; } else { sizeB = size; }
-            updateControlState();
-        }
-
-        // Helper 5: Update control button state
-        function updateControlState() {
-            decreaseBtnA.disabled = (sizeA === minSize);
-            increaseBtnA.disabled = (sizeA === maxSize);
-            decreaseBtnA.title = `Reducir tamaño de A (Actual: ${sizeA}x${sizeA})`;
-            increaseBtnA.title = `Aumentar tamaño de A (Actual: ${sizeA}x${sizeA})`;
-
-            decreaseBtnB.disabled = (sizeB === minSize);
-            increaseBtnB.disabled = (sizeB === maxSize);
-            decreaseBtnB.title = `Reducir tamaño de B (Actual: ${sizeB}x${sizeB})`;
-            increaseBtnB.title = `Aumentar tamaño de B (Actual: ${sizeB}x${sizeB})`;
-        }
-        
-        // Helper 6: Setup random number controls
-        const setupRandomControls = (target) => {
-            const toggleBtn = document.getElementById(`toggle-random-btn-${target.toLowerCase()}`);
-            const optionsDiv = document.getElementById(`random-options-${target.toLowerCase()}`);
-            const buttons = optionsDiv.querySelectorAll('.random-option-btn');
-
-            toggleBtn.addEventListener('click', (event) => {
-                event.stopPropagation();
-                randomOptionsA.style.display = 'none'; 
-                randomOptionsB.style.display = 'none'; 
-                optionsDiv.style.display = 'flex';
+                // 触发一次“带 data-goto 的点击”，复用你现有的拦截器（保存矩阵 + 跳转）
+                const fake = document.createElement('button');
+                fake.setAttribute('data-goto', goto);
+                fake.style.display = 'none';
+                document.body.appendChild(fake);
+                fake.click();
+                fake.remove();
             });
-
-            buttons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    const type = button.getAttribute('data-type');
-                    fillMatrix(target, type);
-                });
-            });
-        };
-
-        // --- Event Listeners ---
-
-        // Size controls
-        increaseBtnA.addEventListener('click', () => { renderMatrix(sizeA + 1, containerA, 'A'); });
-        decreaseBtnA.addEventListener('click', () => { renderMatrix(sizeA - 1, containerA, 'A'); });
-        increaseBtnB.addEventListener('click', () => { renderMatrix(sizeB + 1, containerB, 'B'); });
-        decreaseBtnB.addEventListener('click', () => { renderMatrix(sizeB - 1, containerB, 'B'); });
-
-        // Swap button (保留功能)
-        swapBtn.addEventListener('click', () => {
-            if (sizeA !== sizeB) {
-                alert(`¡No se puede INTERCAMBIAR! Las matrices A (${sizeA}x${sizeA}) y B (${sizeB}x${sizeB}) deben tener el mismo tamaño.`);
-                return;
-            }
-            const inputsA = containerA.querySelectorAll('.matrix input');
-            const inputsB = containerB.querySelectorAll('.matrix input');
-            const valuesA = Array.from(inputsA).map(input => input.value);
-            const valuesB = Array.from(inputsB).map(input => input.value);
-            inputsA.forEach((input, index) => { input.value = valuesB[index]; });
-            inputsB.forEach((input, index) => { input.value = valuesA[index]; });
-        });
-        
-        // Clear buttons
-        document.getElementById('clear-btn-a').addEventListener('click', () => { containerA.querySelectorAll('.matrix input').forEach(input => { input.value = ''; }); });
-        document.getElementById('clear-btn-b').addEventListener('click', () => { containerB.querySelectorAll('.matrix input').forEach(input => { input.value = ''; }); });
-
-        // Random options global close
-        document.addEventListener('click', (event) => {
-            const isInsideA = document.getElementById('random-controls-main-a').contains(event.target);
-            const isInsideB = document.getElementById('random-controls-main-b').contains(event.target);
-            if (!isInsideA) randomOptionsA.style.display = 'none';
-            if (!isInsideB) randomOptionsB.style.display = 'none';
-        }, true); 
-
-        // 初始化矩阵计算器
-        function initMatrixCalculator() {
-            renderMatrix(sizeA, containerA, 'A');
-            renderMatrix(sizeB, containerB, 'B');
-            setupRandomControls('A');
-            setupRandomControls('B');
-            updateControlState();
-        }
-
-        // 问答栏功能
-        function initPoll() {
-            const yesBtn = document.querySelector('.question-box .yes');
-            const noBtn = document.querySelector('.question-box .no');
-            const response = document.getElementById('response');
-
-            yesBtn.addEventListener('click', () => {
-                response.textContent = "¡Bien! Hagámoslo realidad 💪";
-                response.classList.add('show');
-            });
-
-            noBtn.addEventListener('click', () => {
-                response.textContent = "¡Corre mientras puedas! La matriz está en camino 🏃‍♂️💨";
-                response.classList.add('show');
-            });
-        }
-
-        // 添加Matrix Game按钮的滚动功能
-        document.addEventListener('DOMContentLoaded', function() {
-            const matrixGameButton = document.querySelector('a[href="#matrix-game"]');
-            const rightSidebar = document.getElementById('matrix-game');
-            
-            matrixGameButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // 在移动端，滚动到右侧边栏
-                if (window.innerWidth <= 768) {
-                    rightSidebar.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    // 在桌面端，添加高亮效果来吸引用户注意
-                    rightSidebar.classList.add('highlight');
-                    
-                    // 2秒后移除高亮效果
-                    setTimeout(() => {
-                        rightSidebar.classList.remove('highlight');
-                    }, 2000);
-                }
-            });
-            
-            // 多语言选择器功能
-            const languageToggle = document.querySelector('.language-toggle');
-            const languageDropdown = document.querySelector('.language-dropdown');
-            const languageOptions = document.querySelectorAll('.language-option');
-            
-            // 切换下拉菜单显示/隐藏
-            languageToggle.addEventListener('click', function(e) {
-                e.stopPropagation();
-                languageDropdown.classList.toggle('active');
-            });
-            
-            // 选择语言时更新显示
-            languageOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    const selectedLang = this.getAttribute('data-lang');
-                    const selectedText = this.textContent;
-                    
-                    // 更新当前显示的语言
-                    languageToggle.innerHTML = `<span class="globe-icon">🌐</span> ${selectedText}`;
-                    
-                    // 更新活动状态
-                    languageOptions.forEach(opt => opt.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // 关闭下拉菜单
-                    languageDropdown.classList.remove('active');
-                });
-            });
-            
-            // 点击页面其他区域关闭下拉菜单
-            document.addEventListener('click', function() {
-                languageDropdown.classList.remove('active');
-            });
-
-            // 初始化矩阵计算器
-            initMatrixCalculator();
-
-            // 初始化问答栏
-            initPoll();
-
-            
-        });
+        })();
     </script>
 </body>
+
 </html>

@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/eigenvectors.js
 // Single-matrix: Eigenvectors (numeric, real eigenvalues only)
 //
@@ -226,7 +228,7 @@ function eigenvectorForLambda(A, lambda) {
 export function calculate(matrices) {
   const A = matrices[0];
   if (!isSquareMatrix(A))
-    throw new Error("Eigenvectors require a square matrix.");
+    throw userError('ERR_EIGENVECTORS_NOT_SQUARE');
 
   const An = toNumberMatrix(A);
   const eigenvalues = computeEigenvaluesQR(An);
@@ -254,9 +256,9 @@ export const config = {
   validate(matrices) {
     const A = matrices[0];
     if (!A || !A.length || !A[0] || !A[0].length)
-      throw new Error("Please enter Matrix A.");
+      throw userError('ERR_MATRIX_A_REQUIRED');
     if (!isSquareMatrix(A))
-      throw new Error("Eigenvectors require a square matrix.");
+      throw userError('ERR_EIGENVECTORS_NOT_SQUARE');
   }
 };
 

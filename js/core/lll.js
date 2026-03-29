@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/lll.js
 // Single-matrix operation: LLL reduction
 // Integer matrices only
@@ -12,13 +14,13 @@ function isMatrix(M) {
 
 function assertRectangular(M, name = 'Matrix') {
     if (!isMatrix(M)) {
-        throw new Error(`${name} is invalid.`);
+        throw userError('ERR_MATRIX_INVALID', { matrixName: name });
     }
 
     const cols = M[0].length;
     for (let i = 0; i < M.length; i++) {
         if (!Array.isArray(M[i]) || M[i].length !== cols) {
-            throw new Error(`${name} is invalid.`);
+            throw userError('ERR_MATRIX_INVALID', { matrixName: name });
         }
     }
 }
@@ -39,7 +41,7 @@ function normalizeIntegerMatrix(M) {
         row.map(cell => {
             const v = toIntegerValue(cell);
             if (v === null) {
-                throw new Error('LLL is defined here for integer matrices only.');
+                throw userError('ERR_LLL_INTEGER_ONLY');
             }
             return v;
         })
@@ -165,7 +167,7 @@ export const config = {
         const A = matrices[0];
 
         if (!A || !A.length) {
-            throw new Error('Please enter Matrix A.');
+            throw userError('ERR_MATRIX_A_REQUIRED');
         }
 
         assertRectangular(A, 'Matrix A');

@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // ========== Matrix Subtraction Algorithm Module ==========
 
 // ✅ 仅用于“过程矩阵”显示：永远输出整数或分数，不转小数
@@ -16,7 +18,7 @@ function toFractionString(value) {
 export const config = {
   validate(matrices) {
     const [A, B] = matrices || [];
-    if (!A || !B) throw new Error('Please enter both Matrix A and Matrix B.');
+    if (!A || !B) throw userError('ERR_BOTH_MATRICES_REQUIRED');
 
     const aRows = A.length;
     const aCols = (A[0] || []).length;
@@ -24,9 +26,12 @@ export const config = {
     const bCols = (B[0] || []).length;
 
     if (aRows !== bRows || aCols !== bCols) {
-      throw new Error(
-        `Subtraction requires matrices of the same size. Got A(${aRows}×${aCols}) and B(${bRows}×${bCols}).`
-      );
+      throw userError('ERR_SUBTRACTION_SIZE_MISMATCH', {
+        aRows,
+        aCols,
+        bRows,
+        bCols
+      });
     }
   }
 };

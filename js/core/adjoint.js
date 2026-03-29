@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/adjoint.js
 // Single-matrix operation: Adjoint / Adjugate matrix
 // Export shape matches app.js unary operation contract.
@@ -34,13 +36,13 @@ function getShape(M) {
 
 function assertRectangular(M, matrixName = 'Matrix') {
     if (!isMatrix(M)) {
-        throw new Error(`${matrixName} is invalid.`);
+        throw userError('ERR_MATRIX_INVALID', { matrixName });
     }
 
     const cols = M[0].length;
     for (let i = 0; i < M.length; i++) {
         if (!Array.isArray(M[i]) || M[i].length !== cols) {
-            throw new Error(`${matrixName} is invalid.`);
+            throw userError('ERR_MATRIX_INVALID', { matrixName });
         }
     }
 }
@@ -167,14 +169,14 @@ export const config = {
         const A = matrices[0];
 
         if (!A || !A.length) {
-            throw new Error('Please enter Matrix A.');
+            throw userError('ERR_MATRIX_A_REQUIRED');
         }
 
         assertRectangular(A, 'Matrix A');
 
         const { rows, cols } = getShape(A);
         if (rows !== cols) {
-            throw new Error('Adjoint is only defined for square matrices.');
+            throw userError('ERR_ADJOINT_NOT_SQUARE');
         }
     }
 };

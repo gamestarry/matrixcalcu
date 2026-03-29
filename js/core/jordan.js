@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/jordan.js
 // Single-matrix operation: Jordan Form
 // Practical website version:
@@ -15,12 +17,12 @@ function isMatrix(M) {
 
 function assertRectangular(M, name = 'Matrix') {
     if (!isMatrix(M)) {
-        throw new Error(`${name} is invalid.`);
+        throw userError('ERR_MATRIX_INVALID', { matrixName: name });
     }
     const cols = M[0].length;
     for (let i = 0; i < M.length; i++) {
         if (!Array.isArray(M[i]) || M[i].length !== cols) {
-            throw new Error(`${name} is invalid.`);
+            throw userError('ERR_MATRIX_INVALID', { matrixName: name });
         }
     }
 }
@@ -125,7 +127,7 @@ function nullityNumeric(M, eps = 1e-9) {
 
 function getEigenvaluesViaMath(A) {
     if (typeof math.eigs !== 'function') {
-        throw new Error('Jordan form requires math.eigs, but it is not available in this environment.');
+        throw userError('ERR_JORDAN_MATH_EIGS_UNAVAILABLE');
     }
 
     const result = math.eigs(A);
@@ -138,7 +140,7 @@ function getEigenvaluesViaMath(A) {
         // Only real Jordan form in this version
         if (typeof v === 'object' && v !== null && 're' in v) {
             if (Math.abs(v.im || 0) > 1e-9) {
-                throw new Error('Jordan form for matrices with complex eigenvalues is not supported in this version.');
+                throw userError('ERR_JORDAN_COMPLEX_UNSUPPORTED');
             }
             return Number(v.re);
         }
@@ -173,7 +175,7 @@ function jordan2x2(A) {
     const disc = tr * tr - 4 * det;
 
     if (disc < -1e-9) {
-        throw new Error('Jordan form for matrices with complex eigenvalues is not supported in this version.');
+        throw userError('ERR_JORDAN_COMPLEX_UNSUPPORTED');
     }
 
     if (Math.abs(disc) <= 1e-9) {
@@ -283,17 +285,14 @@ function jordanGeneral(A) {
         }
     }
 
-    throw new Error(
-        'Jordan form for this matrix is not supported in this version. ' +
-        'Supported cases: 1×1, all 2×2 real cases, and n×n matrices with distinct real eigenvalues.'
-    );
+    throw userError('ERR_JORDAN_UNSUPPORTED');
 }
 
 export const config = {
     validate(matrices) {
         const A = matrices[0];
         if (!A || !A.length) {
-            throw new Error('Please enter Matrix A.');
+            throw userError('ERR_MATRIX_A_REQUIRED');
         }
 
         assertRectangular(A, 'Matrix A');
@@ -301,7 +300,7 @@ export const config = {
         const rows = A.length;
         const cols = A[0].length;
         if (rows !== cols) {
-            throw new Error('Jordan form is only defined for square matrices.');
+            throw userError('ERR_JORDAN_NOT_SQUARE');
         }
     }
 };

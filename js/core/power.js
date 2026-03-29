@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/power.js
 // 单矩阵：A^n（矩阵幂）
 // 接口与 multiply.js/add.js/subtract.js 保持一致：config / calculate / generateProcessMatrix
@@ -20,7 +22,7 @@ function parseIntegerExponent(nLike) {
   const s = (nLike == null) ? '' : String(nLike).trim();
   if (s === '') return 2; // 默认 2
   // 只允许整数（支持 "3" "-2"）
-  if (!/^-?\d+$/.test(s)) throw new Error('Power requires an integer exponent n (e.g., 0, 2, 3).');
+  if (!/^-?\d+$/.test(s)) throw userError('ERR_POWER_INTEGER_EXPONENT_REQUIRED');
   const n = parseInt(s, 10);
   return n;
 }
@@ -50,7 +52,12 @@ function matrixMultiply(A, B) {
   const colsB = (B[0] || []).length;
 
   if (colsA !== rowsB) {
-    throw new Error(`Matrix multiplication not possible for power step: A is ${rowsA}×${colsA}, B is ${rowsB}×${colsB}.`);
+    throw userError('ERR_POWER_STEP_MULTIPLICATION_NOT_POSSIBLE', {
+      rowsA,
+      colsA,
+      rowsB,
+      colsB
+    });
   }
 
   const out = [];
@@ -94,25 +101,25 @@ export const config = {
   validate(matrices, value) {
     const A = Array.isArray(matrices) ? matrices[0] : matrices;
     if (!A || !A.length || !(A[0] || []).length) {
-      throw new Error('Please enter Matrix A.');
+      throw userError('ERR_MATRIX_A_REQUIRED');
     }
 
     if (!isSquareMatrix(A)) {
       const r = A.length;
       const c = (A[0] || []).length;
-      throw new Error(`Power requires a square matrix. Got A(${r}×${c}).`);
+      throw userError('ERR_POWER_NOT_SQUARE', { r, c });
     }
 
     const n = parseIntegerExponent(value);
 
     // 先做你现在最稳的版本：n 必须 >= 0
     if (n < 0) {
-      throw new Error('Power currently supports n ≥ 0. (Negative powers require matrix inverse.)');
+      throw userError('ERR_POWER_NEGATIVE_NOT_SUPPORTED_WITH_HINT');
     }
 
     // 可选：给个上限防止用户输入太大卡死页面
     if (n > 50) {
-      throw new Error('Power n is too large. Please use n ≤ 50.');
+      throw userError('ERR_POWER_N_TOO_LARGE');
     }
   }
 };
@@ -126,9 +133,9 @@ export function calculate(matrices, value) {
   if (!isSquareMatrix(A)) {
     const r = A.length;
     const c = (A[0] || []).length;
-    throw new Error(`Power requires a square matrix. Got A(${r}×${c}).`);
+    throw userError('ERR_POWER_NOT_SQUARE', { r, c });
   }
-  if (n < 0) throw new Error('Power currently supports n ≥ 0.');
+  if (n < 0) throw userError('ERR_POWER_NEGATIVE_NOT_SUPPORTED');
 
   return matrixPower(A, n);
 }

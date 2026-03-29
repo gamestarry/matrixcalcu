@@ -1,4 +1,6 @@
 // ========== 调度核心模块 ==========
+import { resolveErrorMessage } from './i18n/error-resolver.js';
+import { userError } from './i18n/user-error.js';
 // This app.js adds:
 // - Binary ops: Multiplication/Add/Subtract/Augmented/Kronecker Product
 // - Unary ops (single-matrix): generic loader/executor (Transpose/Trace/...)
@@ -16,7 +18,7 @@ if (typeof math === 'undefined') {
     };
     script.onerror = () => {
         console.error('Failed to load math.js');
-        alert('Error: Required math library failed to load. Please refresh the page.');
+        alert(resolveErrorMessage(userError('ERR_REQUIRED_MATH_LIBRARY_LOAD_FAILED')));
     };
     document.head.appendChild(script);
 }
@@ -71,9 +73,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error('Failed to load modules:', error);
         if (typeof showErrorFn === 'function') {
-            showErrorFn('Failed to load calculator modules. Please refresh the page.');
+            showErrorFn(resolveErrorMessage(userError('ERR_CALCULATOR_MODULES_LOAD_FAILED')));
         } else {
-            alert('Failed to load calculator modules. Please refresh the page.');
+            alert(resolveErrorMessage(userError('ERR_CALCULATOR_MODULES_LOAD_FAILED')));
         }
     }
 });
@@ -139,7 +141,7 @@ class MatrixApp {
             }
         } catch (error) {
             console.error('Failed to initialize app:', error);
-            this.showError('Failed to initialize calculator. Please refresh the page.');
+            this.showError(resolveErrorMessage(userError('ERR_CALCULATOR_INIT_FAILED')));
         }
     }
 
@@ -153,7 +155,7 @@ class MatrixApp {
     performBinaryCalculation(opName) {
         try {
             const op = this.ops[opName];
-            if (!op) throw new Error(`Operation not found: ${opName}`);
+            if (!op) throw userError('ERR_OPERATION_NOT_FOUND', { opName });
 
             const { config, calculate, generateProcessMatrix, symbol } = op;
             const matrices = this.getAllMatrices();
@@ -184,7 +186,7 @@ class MatrixApp {
             );
 
         } catch (error) {
-            this.showError(error.message);
+            this.showError(resolveErrorMessage(error));
         }
     }
 
@@ -196,7 +198,7 @@ class MatrixApp {
             const matrices = this.getAllMatrices();
             const A = matrices[0];
             if (!A || !A.length || !A[0] || !A[0].length) {
-                throw new Error('Please enter Matrix A.');
+                throw userError('ERR_MATRIX_A_REQUIRED');
             }
 
             const { rrefMatrix, steps } = this.rref.calculateRREFWithSteps(A);
@@ -212,7 +214,7 @@ class MatrixApp {
 
             this.showArticle('RREF');
         } catch (error) {
-            this.showError(error.message);
+            this.showError(resolveErrorMessage(error));
         }
     }
 
@@ -232,7 +234,7 @@ class MatrixApp {
 
             this.showArticle('RREF');
         } catch (error) {
-            this.showError(error.message);
+            this.showError(resolveErrorMessage(error));
         }
     }
 
@@ -461,7 +463,7 @@ class MatrixApp {
 
         const reg = this._getSingleOpRegistry();
         const meta = reg[action];
-        if (!meta?.file) throw new Error(`Single-matrix op not registered: ${action}`);
+        if (!meta?.file) throw userError('ERR_SINGLE_OP_NOT_REGISTERED', { action });
 
         const mod = await import(meta.file);
         this._singleOpModules[action] = mod;
@@ -471,7 +473,7 @@ class MatrixApp {
     async performUnaryCalculation(action, target, value = '') {
         const reg = this._getSingleOpRegistry();
         const meta = reg[action];
-        if (!meta) throw new Error(`Unknown operation: ${action}`);
+        if (!meta) throw userError('ERR_UNKNOWN_OPERATION', { action });
 
         const useTarget = target || meta.targetDefault || 'A';
 
@@ -479,7 +481,7 @@ class MatrixApp {
         const AorB = (useTarget === 'B') ? matrices[1] : matrices[0];
 
         if (!AorB || !AorB.length || !AorB[0] || !AorB[0].length) {
-            throw new Error(`Please enter Matrix ${useTarget}.`);
+            throw userError('ERR_MATRIX_TARGET_REQUIRED', { useTarget });
         }
 
         const mod = await this._loadSingleOpModule(action);
@@ -657,7 +659,7 @@ class MatrixApp {
         }
 
         this.performUnaryCalculation(action, target, value)
-            .catch(err => this.showError(err.message));
+            .catch(err => this.showError(resolveErrorMessage(err)));
     }
 
     // =====================================================
@@ -733,7 +735,7 @@ class MatrixApp {
         this._adjustMatrixSize('a', rows, cols);
 
         const containerA = document.getElementById('matrix-container-a');
-        if (!containerA) throw new Error('Matrix A container not found.');
+        if (!containerA) throw userError('ERR_MATRIX_A_CONTAINER_NOT_FOUND');
 
         const inputsA = containerA.querySelectorAll('.matrix input');
         const currentDims = this.getMatrixDimensions()?.A || { rows, cols };
@@ -797,7 +799,7 @@ class MatrixApp {
 
         } catch (error) {
             console.error('Error swapping matrices:', error);
-            this.showError('Failed to swap matrices');
+            this.showError(resolveErrorMessage(userError('ERR_SWAP_MATRICES_FAILED')));
         }
     }
 
@@ -998,7 +1000,7 @@ class MatrixApp {
                 const value = state?.value || '';
                 this.performUnaryCalculation(op, target, value)
                     .then(() => this.scrollToResults()) // ✅ 添加滚动
-                    .catch(err => this.showError(err.message));
+                    .catch(err => this.showError(resolveErrorMessage(err)));
                 return;
             }
         } catch (e) {

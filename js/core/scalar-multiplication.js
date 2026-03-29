@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/scalar-multiplication.js
 // 单矩阵：kA（Scalar Multiplication）
 // 与你现有 core 模块保持一致接口：config / calculate / generateProcessMatrix
@@ -48,7 +50,7 @@ export const config = {
   validate(matrices, value) {
     const [A] = matrices || [];
     if (!A || !A.length || !A[0] || !A[0].length) {
-      throw new Error('Please enter Matrix A.');
+      throw userError('ERR_MATRIX_A_REQUIRED');
     }
 
     // k 允许为空（当 0 处理），但如果你想强制要求输入，这里可以改为 throw

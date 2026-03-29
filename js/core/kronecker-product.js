@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/kronecker-product.js
 // Binary operation: Kronecker Product  A ⊗ B
 
@@ -61,11 +63,11 @@ export const config = {
         const B = matrices[1];
 
         if (!isMatrix(A)) {
-            throw new Error('Please enter Matrix A.');
+            throw userError('ERR_MATRIX_A_REQUIRED');
         }
 
         if (!isMatrix(B)) {
-            throw new Error('Please enter Matrix B.');
+            throw userError('ERR_MATRIX_B_REQUIRED');
         }
 
         const colsA = A[0].length;
@@ -73,13 +75,13 @@ export const config = {
 
         for (let i = 0; i < A.length; i++) {
             if (!Array.isArray(A[i]) || A[i].length !== colsA) {
-                throw new Error('Matrix A is invalid.');
+                throw userError('ERR_MATRIX_A_INVALID');
             }
         }
 
         for (let i = 0; i < B.length; i++) {
             if (!Array.isArray(B[i]) || B[i].length !== colsB) {
-                throw new Error('Matrix B is invalid.');
+                throw userError('ERR_MATRIX_B_INVALID');
             }
         }
     }

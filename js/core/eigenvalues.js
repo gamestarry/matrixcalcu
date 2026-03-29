@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/eigenvalues.js
 // Single-matrix: Eigenvalues via (shifted) QR iteration (numeric)
 // Returns a 1×n "row matrix" of eigenvalues.
@@ -267,7 +269,7 @@ export function calculate(matrices, value = '') {
     }
   }
 
-  if (!isSquareMatrix(A)) throw new Error('Eigenvalues require a square matrix.');
+  if (!isSquareMatrix(A)) throw userError('ERR_EIGENVALUES_NOT_SQUARE');
 
   const An = toNumberMatrix(A);
   const evals = computeEigenvaluesQR(An, { tol, maxIter });
@@ -280,10 +282,10 @@ export const config = {
   validate(matrices) {
     const A = matrices[0];
     if (!A || !A.length || !A[0] || !A[0].length) {
-      throw new Error('Please enter Matrix A.');
+      throw userError('ERR_MATRIX_A_REQUIRED');
     }
     if (!isSquareMatrix(A)) {
-      throw new Error('Eigenvalues require a square matrix.');
+      throw userError('ERR_EIGENVALUES_NOT_SQUARE');
     }
   }
 };

@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/svd.js
 // Single-matrix: SVD via eigen-decomposition of A^T A (Jacobi for symmetric matrix)
 // Returns { U, S, V } such that A ≈ U * S * V^T
@@ -248,8 +250,8 @@ export function calculate(matrices) {
 export const config = {
   validate(matrices) {
     const A = matrices[0];
-    if (!looksLikeMatrix(A)) throw new Error('Please enter Matrix A.');
-    if (!A.length || !A[0].length) throw new Error('Please enter Matrix A.');
+    if (!looksLikeMatrix(A)) throw userError('ERR_MATRIX_A_REQUIRED');
+    if (!A.length || !A[0].length) throw userError('ERR_MATRIX_A_REQUIRED');
   }
 };
 

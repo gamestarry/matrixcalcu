@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // js/core/inverse.js
 // 单矩阵：Inverse(A)
 // 接口：config / calculate / generateProcessMatrix
@@ -28,13 +30,13 @@ export const config = {
 
   validate(matrices) {
     const [A] = matrices || [];
-    if (!A) throw new Error('Please enter Matrix A.');
-    if (!A.length || !(A[0] || []).length) throw new Error('Please enter Matrix A.');
+    if (!A) throw userError('ERR_MATRIX_A_REQUIRED');
+    if (!A.length || !(A[0] || []).length) throw userError('ERR_MATRIX_A_REQUIRED');
 
     if (!isSquareMatrix(A)) {
       const r = A.length;
       const c = (A[0] || []).length;
-      throw new Error(`Inverse requires a square matrix. Got A(${r}×${c}).`);
+      throw userError('ERR_INVERSE_NOT_SQUARE', { r, c });
     }
 
     // ✅ det(A) ≠ 0 才可逆
@@ -43,19 +45,19 @@ export const config = {
       det = math.det(A);
     } catch (e) {
       // 有些情况下 det 可能因类型/尺寸问题报错
-      throw new Error('Failed to compute determinant. Please check Matrix A.');
+      throw userError('ERR_INVERSE_DETERMINANT_FAILED');
     }
 
     try {
       // det 可能是 Fraction/number/BigNumber
       if (math.compare(det, 0) === 0) {
-        throw new Error('Matrix A is singular (det(A) = 0), so the inverse does not exist.');
+        throw userError('ERR_INVERSE_SINGULAR');
       }
     } catch {
       // compare 失败就用 number 尝试兜底
       const dNum = Number(math.number(det));
       if (!Number.isFinite(dNum) || dNum === 0) {
-        throw new Error('Matrix A is singular (det(A) = 0), so the inverse does not exist.');
+        throw userError('ERR_INVERSE_SINGULAR');
       }
     }
   }
@@ -69,7 +71,7 @@ export function calculate(matrices) {
     return math.inv(A);
   } catch (e) {
     // 常见原因：奇异矩阵、数值类型混乱
-    throw new Error('Failed to compute inverse. Please check whether Matrix A is invertible.');
+    throw userError('ERR_INVERSE_COMPUTE_FAILED');
   }
 }
 

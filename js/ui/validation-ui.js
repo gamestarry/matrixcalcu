@@ -1,22 +1,25 @@
-// ========== 验证UI模块 ==========
+import { resolveErrorMessage } from '../i18n/error-resolver.js';
 
-// 此模块主要负责处理与用户界面相关的验证提示
-// 算法验证逻辑在 core 模块中
+// ========== 楠岃瘉UI妯″潡 ==========
+
+// 姝ゆā鍧椾富瑕佽礋璐ｅ鐞嗕笌鐢ㄦ埛鐣岄潰鐩稿叧鐨勯獙璇佹彁绀?
+// 绠楁硶楠岃瘉閫昏緫鍦?core 妯″潡涓?
 
 export function showValidationError(error) {
-    // 创建或更新错误显示
+    // 鍒涘缓鎴栨洿鏂伴敊璇樉绀?
     const errorContainer = document.getElementById('validation-error-container') || createErrorContainer();
+    const message = resolveErrorMessage(error);
     
     errorContainer.innerHTML = `
         <div class="error-message">
             <i class="fas fa-exclamation-triangle"></i>
-            ${error.message}
+            ${message}
         </div>
     `;
     
     errorContainer.style.display = 'block';
     
-    // 5秒后自动隐藏
+    // 5绉掑悗鑷姩闅愯棌
     setTimeout(() => {
         errorContainer.style.display = 'none';
     }, 5000);
@@ -34,7 +37,7 @@ function createErrorContainer() {
     container.id = 'validation-error-container';
     container.style.display = 'none';
     
-    // 插入到计算器容器的顶部
+    // 鎻掑叆鍒拌绠楀櫒瀹瑰櫒鐨勯《閮?
     const calculator = document.querySelector('.matrix-calculator');
     if (calculator) {
         calculator.insertBefore(container, calculator.firstChild);

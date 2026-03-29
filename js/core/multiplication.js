@@ -1,3 +1,5 @@
+import { userError } from '../i18n/user-error.js';
+
 // ========== Matrix Multiplication Algorithm Module ==========
 
 // ✅ 仅用于“过程矩阵”显示：永远输出整数或分数，不转小数
@@ -25,7 +27,7 @@ export const config = {
 
     validate(matrices) {
         if (!matrices || matrices.length < 2) {
-            throw new Error("Two matrices are required for multiplication.");
+            throw userError('ERR_MULTIPLICATION_TWO_MATRICES_REQUIRED');
         }
 
         const matrixA = matrices[0];
@@ -38,11 +40,12 @@ export const config = {
 
         if (colsA !== rowsB) {
             // 保持你现有的提示风格（含 <br>），不在这里强行拆 UI
-            throw new Error(
-                `Matrix multiplication is not possible!<br>` +
-                `Matrix A is ${rowsA}×${colsA}, Matrix B is ${rowsB}×${colsB}.<br>` +
-                `The number of columns in Matrix A (${colsA}) must equal the number of rows in Matrix B (${rowsB}).`
-            );
+            throw userError('ERR_MULTIPLICATION_DIMENSION_MISMATCH', {
+                rowsA,
+                colsA,
+                rowsB,
+                colsB
+            });
         }
     }
 };
