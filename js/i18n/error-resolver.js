@@ -1,5 +1,5 @@
-import errorsEn from './errors.en.js';
-import errorsEs from './errors.es.js';
+import errorsEn from './errors.en.js?v=1.0.1';
+import errorsEs from './errors.es.js?v=1.0.1';
 
 function getCurrentLanguage() {
   const path = (window.location?.pathname || '').toLowerCase();
