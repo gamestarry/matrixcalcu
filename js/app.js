@@ -1,6 +1,7 @@
 // ========== 调度核心模块 ==========
 import { resolveErrorMessage } from './i18n/error-resolver.js';
 import { userError } from './i18n/user-error.js';
+import { getStepText } from './i18n/step-text.js';
 // This app.js adds:
 // - Binary ops: Multiplication/Add/Subtract/Augmented/Kronecker Product
 // - Unary ops (single-matrix): generic loader/executor (Transpose/Trace/...)
@@ -1013,71 +1014,230 @@ class MatrixApp {
             const safeProcess = (processOrSteps == null) ? [] : processOrSteps;
             originalDisplayResult(operationName, A, B, symbol, Array.isArray(safeProcess) ? safeProcess : [], result);
 
-            if (operationName !== 'RREF') return;
-            if (!Array.isArray(processOrSteps) || !processOrSteps.length) return;
+            // =========================
+            // RREF steps
+            // =========================
+            if (operationName === 'RREF') {
+                if (!Array.isArray(processOrSteps) || !processOrSteps.length) return;
 
-            const first = processOrSteps[0];
-            const isSteps = first && typeof first === 'object' && (first.matrix || first.label);
-            if (!isSteps) return;
+                const first = processOrSteps[0];
+                const isSteps = first && typeof first === 'object' && (first.matrix || first.label);
+                if (!isSteps) return;
 
-            const history = document.getElementById('result-history');
-            if (!history || !history.firstElementChild) return;
+                const history = document.getElementById('result-history');
+                if (!history || !history.firstElementChild) return;
 
-            const card = history.firstElementChild;
-            if (this._isEquationPage()) {
-                this._appendEquationSummary(card, result);
-            }
-            if (card.querySelector('.rref-steps-container')) return;
+                const card = history.firstElementChild;
+                const finalResultContainer = card.querySelector('.final-result-container');
+                if (finalResultContainer && !card.querySelector('.eigen-steps-toggle-btn')) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'eigen-steps-toggle-btn';
+                    btn.textContent = 'Show Steps';
 
-            const wrap = document.createElement('div');
-            wrap.className = 'rref-steps-container';
-            wrap.style.marginTop = '12px';
-            wrap.style.padding = '12px';
-            wrap.style.border = '1px solid rgba(0,0,0,0.08)';
-            wrap.style.borderRadius = '10px';
-            wrap.style.background = '#fffdf4';
+                    btn.style.marginLeft = '10px';
+                    btn.style.padding = '6px 12px';
+                    btn.style.border = '1px solid rgba(0,0,0,0.12)';
+                    btn.style.borderRadius = '8px';
+                    btn.style.background = '#f5f8fc';
+                    btn.style.color = '#24476b';
+                    btn.style.cursor = 'pointer';
+                    btn.style.fontWeight = '600';
+                    btn.style.fontSize = '14px';
+                    btn.style.whiteSpace = 'nowrap';
 
-            const title = document.createElement('div');
-            title.textContent = 'RREF Steps';
-            title.style.fontWeight = '700';
-            title.style.marginBottom = '8px';
-            wrap.appendChild(title);
+                    finalResultContainer.appendChild(btn);
+                }
+                if (this._isEquationPage()) {
+                    this._appendEquationSummary(card, result);
+                }
+                if (card.querySelector('.rref-steps-container')) return;
 
-            processOrSteps.forEach((step, idx) => {
-                const item = document.createElement('details');
-                item.style.margin = '8px 0';
-                if (idx === 0) item.open = true;
+                const wrap = document.createElement('div');
+                wrap.className = 'rref-steps-container';
+                wrap.style.marginTop = '12px';
+                wrap.style.padding = '12px';
+                wrap.style.border = '1px solid rgba(0,0,0,0.08)';
+                wrap.style.borderRadius = '10px';
+                wrap.style.background = '#fffdf4';
 
-                const summary = document.createElement('summary');
-                summary.style.cursor = 'pointer';
-                summary.style.fontWeight = '600';
-                summary.textContent = step.label ? `Step ${idx + 1}: ${step.label}` : `Step ${idx + 1}`;
-                item.appendChild(summary);
+                const title = document.createElement('div');
+                title.textContent = 'RREF Steps';
+                title.style.fontWeight = '700';
+                title.style.marginBottom = '8px';
+                wrap.appendChild(title);
 
-                const table = document.createElement('table');
-                table.style.borderCollapse = 'collapse';
-                table.style.marginTop = '8px';
+                processOrSteps.forEach((step, idx) => {
+                    const item = document.createElement('details');
+                    item.style.margin = '8px 0';
+                    if (idx === 0) item.open = true;
 
-                const mat = step.matrix || [];
-                mat.forEach(row => {
-                    const tr = document.createElement('tr');
-                    row.forEach(cell => {
-                        const td = document.createElement('td');
-                        td.style.border = '1px solid rgba(0,0,0,0.08)';
-                        td.style.padding = '6px 10px';
-                        td.style.minWidth = '44px';
-                        td.style.textAlign = 'center';
-                        td.textContent = this._formatCell(cell);
-                        tr.appendChild(td);
+                    const summary = document.createElement('summary');
+                    summary.style.cursor = 'pointer';
+                    summary.style.fontWeight = '600';
+                    summary.textContent = step.label ? `Step ${idx + 1}: ${step.label}` : `Step ${idx + 1}`;
+                    item.appendChild(summary);
+
+                    const table = document.createElement('table');
+                    table.style.borderCollapse = 'collapse';
+                    table.style.marginTop = '8px';
+
+                    const mat = step.matrix || [];
+                    mat.forEach(row => {
+                        const tr = document.createElement('tr');
+                        row.forEach(cell => {
+                            const td = document.createElement('td');
+                            td.style.border = '1px solid rgba(0,0,0,0.08)';
+                            td.style.padding = '6px 10px';
+                            td.style.minWidth = '44px';
+                            td.style.textAlign = 'center';
+                            td.textContent = this._formatCell(cell);
+                            tr.appendChild(td);
+                        });
+                        table.appendChild(tr);
                     });
-                    table.appendChild(tr);
+
+                    item.appendChild(table);
+                    wrap.appendChild(item);
                 });
 
-                item.appendChild(table);
-                wrap.appendChild(item);
-            });
+                card.appendChild(wrap);
 
-            card.appendChild(wrap);
+                const toggleBtn = card.querySelector('.eigen-steps-toggle-btn');
+                if (toggleBtn) {
+                    toggleBtn.onclick = () => {
+                        const isHidden = wrap.style.display === 'none';
+                        wrap.style.display = isHidden ? 'block' : 'none';
+                        toggleBtn.textContent = isHidden ? 'Hide Steps' : 'Show Steps';
+                    };
+                };
+                return;
+            }
+
+            // =========================
+            // Eigenvectors steps
+            // =========================
+            if (operationName === 'Eigenvectors') {
+                const t = getStepText('eigenvectors');
+                if (!Array.isArray(processOrSteps) || !processOrSteps.length) return;
+
+                const history = document.getElementById('result-history');
+                if (!history || !history.firstElementChild) return;
+
+                const card = history.firstElementChild;
+                if (card.querySelector('.eigen-steps-container')) return;
+
+                // ===== 单独按钮条：放在卡片底部步骤区前面，最稳 =====
+                const btnBar = document.createElement('div');
+                btnBar.className = 'eigen-steps-btnbar';
+                btnBar.style.marginTop = '12px';
+                btnBar.style.marginBottom = '8px';
+
+                const toggleBtn = document.createElement('button');
+                toggleBtn.type = 'button';
+                toggleBtn.className = 'eigen-steps-toggle-btn';
+                toggleBtn.textContent = t.showSteps;
+
+                toggleBtn.style.padding = '6px 12px';
+                toggleBtn.style.border = '1px solid rgba(0,0,0,0.12)';
+                toggleBtn.style.borderRadius = '8px';
+                toggleBtn.style.background = '#f5f8fc';
+                toggleBtn.style.color = '#24476b';
+                toggleBtn.style.cursor = 'pointer';
+                toggleBtn.style.fontWeight = '600';
+                toggleBtn.style.fontSize = '14px';
+                toggleBtn.style.whiteSpace = 'nowrap';
+
+                btnBar.appendChild(toggleBtn);
+
+                const wrap = document.createElement('div');
+                wrap.className = 'eigen-steps-container';
+                wrap.style.display = 'none';
+                wrap.style.marginTop = '12px';
+                wrap.style.padding = '12px';
+                wrap.style.border = '1px solid rgba(0,0,0,0.08)';
+                wrap.style.borderRadius = '10px';
+                wrap.style.background = '#f8fbff';
+
+                const title = document.createElement('div');
+                title.textContent = t.stepsTitle;
+                title.style.fontWeight = '700';
+                title.style.marginBottom = '8px';
+                wrap.appendChild(title);
+
+                processOrSteps.forEach((step) => {
+                    if (step.type === 'section') {
+                        const h = document.createElement('div');
+                        h.textContent = step.title;
+                        h.style.fontWeight = '700';
+                        h.style.marginTop = '10px';
+                        wrap.appendChild(h);
+                        return;
+                    }
+
+                    if (step.type === 'subsection') {
+                        const h = document.createElement('div');
+                        h.textContent = step.title;
+                        h.style.fontWeight = '600';
+                        h.style.marginTop = '6px';
+                        wrap.appendChild(h);
+                        return;
+                    }
+
+                    if (step.type === 'text' || step.type === 'formula') {
+                        const p = document.createElement('div');
+                        p.textContent = step.text;
+                        p.style.margin = '4px 0';
+                        wrap.appendChild(p);
+                        return;
+                    }
+
+                    if (step.type === 'matrix') {
+                        const label = document.createElement('div');
+                        label.textContent = step.label;
+                        label.style.marginTop = '6px';
+                        wrap.appendChild(label);
+
+                        const table = document.createElement('table');
+                        table.style.borderCollapse = 'collapse';
+                        table.style.marginTop = '6px';
+
+                        step.matrix.forEach(row => {
+                            const tr = document.createElement('tr');
+                            row.forEach(cell => {
+                                const td = document.createElement('td');
+                                td.style.border = '1px solid rgba(0,0,0,0.08)';
+                                td.style.padding = '6px 10px';
+                                td.style.minWidth = '44px';
+                                td.style.textAlign = 'center';
+                                td.textContent = this._formatCell(cell);
+                                tr.appendChild(td);
+                            });
+                            table.appendChild(tr);
+                        });
+
+                        wrap.appendChild(table);
+                        return;
+                    }
+
+                    if (step.type === 'vector') {
+                        const v = document.createElement('div');
+                        v.style.marginTop = '6px';
+                        v.textContent = `${step.label}: [${step.vector.map(x => this._formatCell(x)).join(', ')}]`;
+                        wrap.appendChild(v);
+                    }
+                });
+
+                toggleBtn.onclick = () => {
+                    const isHidden = wrap.style.display === 'none';
+                    wrap.style.display = isHidden ? 'block' : 'none';
+                    toggleBtn.textContent = isHidden ? t.hideSteps : t.showSteps;
+                };
+
+                card.appendChild(btnBar);
+                card.appendChild(wrap);
+                return;
+            }
         };
     }
     _isEquationPage() {
@@ -1092,7 +1252,8 @@ class MatrixApp {
         const summary = this.equations.generateSolutionSummary(rrefMatrix);
 
         const wrap = document.createElement('div');
-        wrap.className = 'equation-solution-summary';
+        wrap.className = 'eigen-steps-container';
+        wrap.style.display = 'none';
         wrap.style.marginTop = '12px';
         wrap.style.padding = '12px';
         wrap.style.border = '1px solid rgba(0,0,0,0.08)';

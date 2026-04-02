@@ -1,4 +1,5 @@
 import { userError } from '../i18n/user-error.js';
+import { getStepText } from '../i18n/step-text.js';
 
 // js/core/eigenvectors.js
 // Single-matrix: Eigenvectors (numeric, real eigenvalues only)
@@ -220,7 +221,109 @@ function eigenvectorForLambda(A, lambda) {
 
   return v;
 }
+function formatStepNumber(value, digits = 4) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value.toFixed(digits);
+  }
+  return String(value);
+}
+function buildEigenSteps(A, eigenvalues, vectors) {
+  const steps = [];
+  const n = A.length;
+  const t = getStepText('eigenvectors');
 
+  // =========================
+  // Step 1: Characteristic Equation
+  // =========================
+  steps.push({
+    type: 'section',
+    title: t.step1
+  });
+
+  steps.push({
+    type: 'formula',
+    text: t.formulaCharacteristic
+  });
+
+  // 仅 2×2 展开
+  if (n === 2) {
+    const a = A[0][0], b = A[0][1];
+    const c = A[1][0], d = A[1][1];
+
+    const trace = a + d;
+    const det = a * d - b * c;
+
+    steps.push({
+      type: 'formula',
+      text: `λ² - (${trace})λ + (${det}) = 0`
+    });
+  } else {
+    steps.push({
+      type: 'text',
+      text: t.numericalNote
+    });
+  }
+
+  // =========================
+  // Step 2: Eigenvalues
+  // =========================
+  steps.push({
+    type: 'section',
+    title: t.step2
+  });
+
+  const eigenvalueTexts = eigenvalues.map((v, i) => `λ${i + 1} = ${formatStepNumber(v)}`);
+  steps.push({
+    type: 'text',
+    text: t.eigenvalueList(eigenvalueTexts)
+  });
+
+  // =========================
+  // Step 3: Eigenvectors
+  // =========================
+  steps.push({
+    type: 'section',
+    title: t.step3
+  });
+
+  for (let i = 0; i < eigenvalues.length; i++) {
+    const lambda = eigenvalues[i];
+    const v = vectors[i];
+    if (!v) continue;
+
+    const M = A.map((row, r) =>
+      row.map((val, c) => val - (r === c ? lambda : 0))
+    );
+
+    const R = rref(M);
+    const lambdaText = formatStepNumber(lambda);
+
+    steps.push({
+      type: 'subsection',
+      title: t.forLambda(lambdaText)
+    });
+
+    steps.push({
+      type: 'matrix',
+      label: t.labelMatrixMinusLambdaI,
+      matrix: M
+    });
+
+    steps.push({
+      type: 'matrix',
+      label: t.labelRref,
+      matrix: R
+    });
+
+    steps.push({
+      type: 'vector',
+      label: t.labelEigenvector,
+      vector: v
+    });
+  }
+
+  return steps;
+}
 /* ===============================
    Exports
 ================================ */
@@ -262,6 +365,13 @@ export const config = {
   }
 };
 
-export function generateProcessMatrix() {
-  return [];
+export function generateProcessMatrix(A) {
+  if (!isSquareMatrix(A)) return [];
+
+  const An = toNumberMatrix(A);
+  const eigenvalues = computeEigenvaluesQR(An);
+
+  const vectors = eigenvalues.map(λ => eigenvectorForLambda(An, λ));
+
+  return buildEigenSteps(An, eigenvalues, vectors);
 }
