@@ -52,109 +52,7 @@
 
     <link rel="stylesheet" href="/css/calculator.css">
 
-    <style>
-        /* Kronecker 文章专用样式 (整合自提供的文章，限定在 .seo-articles-container 内) */
-        .seo-articles-container {
-            font-family: Inter, "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
-            max-width: 920px;
-            margin: 0 auto;
-            padding: 0;
-            color: #111827;
-            background: #fff;
-            line-height: 1.6;
-        }
-
-        .seo-articles-container h2,
-        .seo-articles-container h3 {
-            color: #0f172a;
-            margin-top: 22px;
-        }
-
-        .seo-articles-container .matrix {
-            margin: 16px 0;
-            text-align: center;
-        }
-
-        .seo-articles-container .step {
-            background: #fbfbfb;
-            border: 1px solid #eee;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 12px 0;
-        }
-
-        .seo-articles-container details {
-            background: #fbfbfb;
-            border: 1px solid #e6e6e6;
-            padding: 12px 14px;
-            border-radius: 8px;
-            margin-top: 10px;
-        }
-
-        .seo-articles-container summary {
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .seo-articles-container ul {
-            margin-left: 18px;
-        }
-
-        .seo-articles-container .note {
-            color: #6b7280;
-            font-size: 0.95rem;
-        }
-
-        .seo-articles-container footer {
-            margin-top: 30px;
-            color: #6b7280;
-            font-size: 0.95rem;
-        }
-
-        .seo-articles-container hr {
-            border: none;
-            border-top: 1px solid #eee;
-            margin: 30px 0;
-        }
-
-        .seo-articles-container code {
-            background: #f3f4f6;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        /* 移动端样式保留 */
-        .mobile-op-selectwrap {
-            grid-column: 1 / 4;
-            position: relative;
-        }
-
-        .mobile-op-selectwrap .mobile-op-select {
-            width: 100%;
-            height: 44px;
-            opacity: 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .mobile-op-selectface {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            height: 44px;
-            border-radius: 10px;
-            border: 1px solid rgba(15, 23, 42, .14);
-            background: #fff;
-            padding: 0 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-weight: 600;
-            color: #334155;
-            pointer-events: none;
-            box-sizing: border-box;
-        }
-    </style>
+    
 </head>
 
 <body>
@@ -473,7 +371,7 @@
                     <!-- 替换为 Kronecker Product 专属 SEO 文章块 (来自用户提供的纯文章) -->
                     <div class="seo-articles-container" id="article-container" itemscope
                         itemtype="http://schema.org/Article">
-                        <main>
+                        <article class="seo-content">
                             <!-- 没有 H1，按用户文章结构 -->
                             <section>
                                 <h2>1. Definition & formula</h2>
@@ -709,7 +607,7 @@
                                     computation tools, visit matrixcalcu.com.
                                 </p>
                             </footer>
-                        </main>
+                        </article>
                     </div>
                 </div>
 

@@ -52,123 +52,7 @@
 
     <link rel="stylesheet" href="/css/calculator.css">
 
-    <style>
-        /* 原有样式保留，追加逆矩阵文章专用样式（限定在 .seo-articles-container 内） */
-        .seo-articles-container {
-            --max-width: 900px;
-            --accent: #0b5cff;
-            --muted: #6b7280;
-            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            line-height: 1.6;
-            color: #111;
-        }
-
-        .seo-articles-container .container {
-            max-width: var(--max-width);
-            margin: 36px auto;
-            padding: 20px;
-        }
-
-        .seo-articles-container header h1 {
-            font-size: 1.75rem;
-            margin: 0 0 8px;
-        }
-
-        .seo-articles-container header p.lead {
-            color: var(--muted);
-            margin: 0 0 18px;
-        }
-
-        .seo-articles-container main h2 {
-            margin-top: 28px;
-        }
-
-        .seo-articles-container .example,
-        .seo-articles-container .note,
-        .seo-articles-container .exercise {
-            background: #fbfbff;
-            border: 1px solid #eef2ff;
-            padding: 14px;
-            border-radius: 10px;
-            margin: 14px 0;
-        }
-
-        .seo-articles-container .code {
-            font-family: monospace;
-            background: #f6f7fb;
-            padding: 10px;
-            border-radius: 6px;
-            overflow: auto;
-        }
-
-        .seo-articles-container details {
-            margin: 10px 0;
-            padding: 10px;
-            background: #fff;
-            border-radius: 8px;
-            border: 1px solid #e6e6e6;
-        }
-
-        .seo-articles-container summary {
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .seo-articles-container footer {
-            margin-top: 28px;
-            padding-top: 18px;
-            border-top: 1px solid #eee;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-
-        .seo-articles-container .small {
-            font-size: 0.95rem;
-            color: var(--muted);
-        }
-
-        @media (max-width: 600px) {
-            .seo-articles-container {
-                --max-width: 96vw;
-            }
-
-            .seo-articles-container header h1 {
-                font-size: 1.4rem;
-            }
-        }
-
-        /* 原有移动端样式保留 */
-        .mobile-op-selectwrap {
-            grid-column: 1 / 4;
-            position: relative;
-        }
-
-        .mobile-op-selectwrap .mobile-op-select {
-            width: 100%;
-            height: 44px;
-            opacity: 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .mobile-op-selectface {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            height: 44px;
-            border-radius: 10px;
-            border: 1px solid rgba(15, 23, 42, .14);
-            background: #fff;
-            padding: 0 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-weight: 600;
-            color: #334155;
-            pointer-events: none;
-            box-sizing: border-box;
-        }
-    </style>
+    
 </head>
 
 <body>
@@ -514,14 +398,14 @@
                     <!-- 替换为逆矩阵专属SEO文章块 (2025-11-26版) -->
                     <div class="seo-articles-container" id="article-container" itemscope
                         itemtype="http://schema.org/Article">
-                        <header>
+                        <div class="seo-article-header">
                             <h1 itemprop="headline">Matrix Inverse (Inverse Matrix) Calculator — Guide, Examples &
                                 Practice</h1>
                             <p class="lead">Clear, concise explanations and step-by-step examples to help you compute
                                 inverse matrices and avoid common mistakes. All formulas and matrices are rendered with
                                 MathJax for crisp display.</p>
                             <p class="small">Last updated: <time datetime="2025-11-26">November 26, 2025</time></p>
-                        </header>
+                        </div>
 
                         <main itemprop="articleBody">
                             <section>
