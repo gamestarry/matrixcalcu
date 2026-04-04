@@ -69,36 +69,6 @@ body {
     z-index: 1;
 }
 
-/* 新的动态内容容器样式 */
-.dynamic-content-container {
-    background-color: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    padding: 0;
-    margin-bottom: 2rem;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.dynamic-content-container h2 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    text-align: center;
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.dynamic-content-container p {
-    color: var(--dark-color);
-    text-align: center;
-    max-width: 600px;
-    margin-bottom: 1.5rem;
-}
-
 .placeholder-content {
     text-align: center;
     color: #7f8c8d;
@@ -881,15 +851,6 @@ footer {
         /* 16px = 左右内边距之和，保证内容区域占满 */
     }
 
-    .dynamic-content-container {
-        padding: 0;
-        margin-bottom: 1rem;
-        border-radius: 4px;
-        /* 减小圆角 */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        /* 减小阴影 */
-    }
-
     .matrix-calculator {
         padding: 0;
         background-color: transparent;
@@ -1174,10 +1135,6 @@ footer {
 
     .matrix-calculator .main-calculator-container {
         gap: 10px;
-    }
-
-    .dynamic-content-container {
-        margin-bottom: 0.5rem;
     }
 
     .language-selector {
