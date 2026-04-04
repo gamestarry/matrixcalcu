@@ -63,22 +63,7 @@
 
     <!-- 外部 CSS 文件 -->
     <link rel="stylesheet" href="/css/calculator.css">
-    <!-- 隐藏按钮下拉栏 -->
-    <style>
-        @media (max-width: 980px) {
-            #mobile-op-onebar {
-                display: none !important;
-            }
-        }
-        .btn.func-mid {
-            background: #ADD8E6 !important;
-            color: #0f172a !important;
-            font-weight: 600 !important;
-        }
-        .btn.func-mid:hover {
-            background: #9fcfe0 !important;
-        }
-    </style>
+    
 </head>
 <!-- 首页专用类名 page-index (更紧凑移动端网格) -->
 
@@ -219,70 +204,6 @@
                                 0.
                             </div>
 
-                            <!-- Mobile-only: one dropdown for all operations -->
-                            <div class="mobile-op-onebar" id="mobile-op-onebar">
-                                <select class="mobile-op-select" id="mobile-op-select" aria-label="Select an operation">
-                                    <option value="">Select an operation…</option>
-
-                                    <optgroup label="Core (Two Matrices)">
-                                        <option value="matrix-multiplication-calculator.html">A × B</option>
-                                        <option value="matrix-addition-calculator.html">A + B</option>
-                                        <option value="matrix-subtraction-calculator.html">A − B</option>
-                                    </optgroup>
-
-                                    <optgroup label="Basic Linear Algebra">
-                                        <option value="matrix-determinant-calculator.html">Determinant(A)</option>
-                                        <option value="matrix-inverse-calculator.html">Inverse(A)</option>
-                                        <option value="matrix-transpose-calculator.html">Transpose(A)</option>
-                                        <option value="matrix-rank-calculator.html">Rank(A)</option>
-                                        <option value="matrix-trace-calculator.html">Trace(A)</option>
-                                        <option value="matrix-rref-calculator.html">RREF(A)</option>
-                                        <option value="matrix-diagonal-calculator.html">Diagonal(A)</option>
-                                        <option value="matrix-adjoint-calculator.html">Adjoint(A)</option>
-                                        <option value="matrix-upper-triangular-calculator.html">Upper Triangular(A)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Decompositions & Eigen">
-                                        <option value="matrix-lu-decomposition-calculator.html">LU(A)</option>
-                                        <option value="matrix-qr-decomposition-calculator.html">QR(A)</option>
-                                        <option value="matrix-svd-calculator.html">SVD(A)</option>
-                                        <option value="matrix-cholesky-calculator.html">Cholesky(A)</option>
-                                        <option value="matrix-pseudo-inverse-calculator.html">Pseudo Inverse(A)</option>
-                                        <option value="matrix-eigenvectors-calculator.html">Eigenvectors(A)</option>
-                                        <option value="matrix-eigenvalues-calculator.html">Eigenvalues(A)</option>
-                                        <option value="matrix-jordan-calculator.html">Jordan Form(A)</option>
-                                        <option value="matrix-square-root-calculator.html">√(A)</option>
-                                    </optgroup>
-
-                                    <optgroup label="Matrix Functions">
-                                        <option value="matrix-exponential-calculator.html">exp(A)</option>
-                                        <option value="matrix-logarithm-calculator.html">log(A)</option>
-                                        <option value="matrix-sine-calculator.html">sin(A)</option>
-                                        <option value="matrix-cosine-calculator.html">cos(A)</option>
-                                        <option value="matrix-tangent-calculator.html">tan(A)</option>
-                                        <option value="matrix-arcsine-calculator.html">arcsin(A)</option>
-                                        <option value="matrix-arccosine-calculator.html">arccos(A)</option>
-                                        <option value="matrix-arctangent-calculator.html">arctan(A)</option>
-                                    </optgroup>
-
-                                    <optgroup label="Structure / Integer">
-                                        <option value="matrix-augmented-calculator.html">(A | B)</option>
-                                        <option value="matrix-kronecker-calculator.html">A ⊗ B</option>
-                                        <option value="matrix-scalar-multiplication-calculator.html">Multiply by k
-                                        </option>
-                                        <option value="matrix-power-calculator.html">Power</option>
-                                        <option value="matrix-hermite-normal-form-calculator.html">HNF(A)</option>
-                                        <option value="matrix-lll-calculator.html">LLL(A)</option>
-                                        <option value="matrix-equations-calculator.html">System of Equations</option>
-                                    </optgroup>
-                                </select>
-
-                                <div class="mobile-op-display" id="mobile-op-display">—</div>
-
-                                <button type="button" class="mobile-op-eq" id="mobile-op-eq"
-                                    aria-label="Run selected operation">=</button>
-                            </div>
 
                             <!-- Operations 网格（首页：全部按钮带 data-goto 跳转） -->
                             <section class="ops ops-v2 ops-flat">
@@ -855,36 +776,6 @@
         }, true);
     </script>
     
-    <script>
-        (function () {
-            const sel = document.getElementById('mobile-op-select');
-            const disp = document.getElementById('mobile-op-display');
-            const eq = document.getElementById('mobile-op-eq');
-
-            if (!sel || !disp || !eq) return;
-
-            function updateDisplay() {
-                const opt = sel.options[sel.selectedIndex];
-                disp.textContent = (opt && opt.value) ? opt.textContent.trim() : '—';
-            }
-
-            sel.addEventListener('change', updateDisplay);
-            updateDisplay();
-
-            eq.addEventListener('click', function () {
-                const goto = sel.value;
-                if (!goto) return;
-
-                // 触发一次“带 data-goto 的点击”，复用你现有的拦截器（保存矩阵 + 跳转）
-                const fake = document.createElement('button');
-                fake.setAttribute('data-goto', goto);
-                fake.style.display = 'none';
-                document.body.appendChild(fake);
-                fake.click();
-                fake.remove();
-            });
-        })();
-    </script>
 </body>
 
 </html>
