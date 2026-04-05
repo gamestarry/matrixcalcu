@@ -2,7 +2,21 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['$$', '$$']]
+    },
+    startup: {
+        pageReady: () => {
+            return MathJax.startup.defaultPageReady();
+        }
+    }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" defer></script>
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO 首页替换：title/description/canonical -->
     <meta name="description"
@@ -29,10 +43,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- MathJax for rendering formulas (全局已包含) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    
 
     <!-- math.js 库 -->
-    <script src="/math.min.js"></script>
+    <script src="/math.min.js" defer></script>
 
     <!-- Schema.org 结构化数据 (适配首页) -->
     <script type="application/ld+json">
@@ -59,6 +73,7 @@
 
     <!-- 外部 CSS 文件 -->
     <link rel="stylesheet" href="/css/calculator.css">
+
 </head>
 <!-- 首页专用类名 page-index (更紧凑移动端网格) -->
 

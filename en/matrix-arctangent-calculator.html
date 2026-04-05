@@ -2,7 +2,21 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['$$', '$$']]
+    },
+    startup: {
+        pageReady: () => {
+            return MathJax.startup.defaultPageReady();
+        }
+    }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" defer></script>
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Use this matrix arctangent calculator to compute arctan(A) numerically for square matrices online. Supports fractions, decimals, and fast matrix input.">
@@ -24,8 +38,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
-    <script src="/math.min.js"></script>
+    
+    <script src="/math.min.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -54,6 +68,7 @@
     
     <!-- 额外样式以支持专属文章中的细节 -->
     
+
 </head>
 
 <body>
