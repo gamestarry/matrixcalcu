@@ -134,7 +134,9 @@ function renderMatrix(matrixId) {
             const input = document.createElement('input');
             input.type = 'text';
             input.placeholder = '';
-
+            input.id = `${matrixId}-${r}-${c}`;
+            input.name = `${matrixId}-${r}-${c}`;
+            
             // 恢复旧值：原样保留（包括空字符串和 "0"）
             if (r < oldRows && c < oldCols) {
                 const oldIndex = r * oldCols + c;

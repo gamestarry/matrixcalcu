@@ -1733,3 +1733,227 @@ footer {
 .seo-articles-container li {
     margin-bottom: 6px;
 }
+/*--右边栏的内链内容的样式--*/
+.related-tools {
+    margin-top: 14px;
+    padding: 14px 14px 16px;
+    background: #e3e9f6;
+    border: 1px solid #cfd7e7;
+    border-radius: 24px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.related-tools h3 {
+    margin: 2px 0 14px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #2c4667;
+}
+
+.related-tools ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.related-tools li+li {
+    margin-top: 12px;
+}
+
+.related-tools a {
+    display: block;
+    padding: 13px 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border: 1px solid #d5ddeb;
+    border-radius: 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: #3b5a7a;
+    box-shadow:
+        0 2px 6px rgba(95, 120, 160, 0.045),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.related-tools a:hover {
+    transform: translateY(-1px);
+    border-color: #c2cfe4;
+    box-shadow:
+        0 5px 12px rgba(95, 120, 160, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    color: #284663;
+}
+/*--底部内链的样式--*/
+.internal-links-note {
+    margin-top: 18px;
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: #24384f;
+}
+
+.internal-links-note a {
+    font-weight: 600;
+}
+/*--how-to页面的样式--*/
+.howto-page {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.howto-hero-card,
+.howto-section-card,
+.howto-faq-card {
+    background: #f5f8fc;
+    border: 1px solid #dbe5ef;
+    border-radius: 24px;
+    padding: 24px 22px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.howto-kicker {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #e7eef7;
+    color: #47617d;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.howto-hero-card h1 {
+    margin: 0 0 14px;
+    font-size: 2rem;
+    line-height: 1.2;
+    color: #20364f;
+}
+
+.howto-hero-card .lead {
+    margin: 0 0 18px;
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: #314960;
+}
+
+.howto-quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.howto-pill {
+    display: inline-block;
+    padding: 11px 16px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid #d9e3ee;
+    color: #3b5876;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.howto-pill-primary {
+    background: #eaf1f9;
+}
+
+.howto-section-card h2,
+.howto-learning-paths h2,
+.howto-faq-card h2 {
+    margin-top: 0;
+    margin-bottom: 14px;
+    color: #233d59;
+}
+
+.howto-note {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: #eef3f9;
+    border-left: 4px solid #8da9c4;
+    border-radius: 14px;
+    color: #314960;
+}
+
+.howto-example-box {
+    margin-top: 14px;
+    padding: 16px 18px;
+    background: #ffffff;
+    border: 1px solid #dde6ef;
+    border-radius: 18px;
+}
+
+.howto-learning-paths {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.howto-path-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.howto-path-card {
+    background: #f5f8fc;
+    border: 1px solid #dbe5ef;
+    border-radius: 22px;
+    padding: 22px 20px;
+}
+
+.howto-path-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #27425f;
+}
+
+.howto-card-link,
+.howto-main-cta {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid #d9e3ee;
+    text-decoration: none;
+    font-weight: 600;
+    color: #365472;
+}
+
+.howto-button-row {
+    margin-top: 16px;
+}
+
+.howto-mistakes-list,
+.howto-related-list {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.howto-faq-card h3 {
+    margin-top: 18px;
+    margin-bottom: 8px;
+    color: #29435f;
+}
+
+@media (max-width: 768px) {
+    .howto-path-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .howto-hero-card,
+    .howto-section-card,
+    .howto-faq-card,
+    .howto-path-card {
+        padding: 20px 16px;
+    }
+
+    .howto-hero-card h1 {
+        font-size: 1.7rem;
+    }
+}
