@@ -1957,3 +1957,131 @@ footer {
         font-size: 1.7rem;
     }
 }
+/*--乘法页面新增部分样式--*/
+.learn-matrix-section {
+    margin: 24px 0;
+    padding: 18px;
+    border-radius: 18px;
+    background: #f4f8fc;
+    border: 1px solid #dbe5ef;
+}
+
+.learn-matrix-section h2 {
+    margin-bottom: 6px;
+}
+
+.learn-subtext {
+    font-size: 0.95rem;
+    color: #5a718c;
+    margin-bottom: 16px;
+}
+
+.learn-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.learn-card {
+    display: block;
+    padding: 14px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid #dbe5ef;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.learn-card:hover {
+    border-color: #9fb7d1;
+    transform: translateY(-2px);
+}
+
+.learn-card h3 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: #2c4667;
+}
+
+.learn-card p {
+    font-size: 0.9rem;
+    color: #5a718c;
+}
+
+@media (max-width: 768px) {
+    .learn-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/*--how-to、2*2、3*3页面的右边栏样式--*/
+.calculator-card {
+    margin-top: 16px;
+    text-align: center;
+    padding: 16px;
+    border-radius: 16px;
+    background: #eaf2f9;
+    border: 1px solid #dbe5ef;
+}
+
+/* 上面那条提示 */
+.calculator-card .promo-text {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+}
+
+.calculator-card .promo-text span {
+    color: #2f6fa3;
+    font-weight: 600;
+}
+
+/* 按钮 */
+.calculator-btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: #2f6fa3;
+    color: #ffffff;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.calculator-btn:hover {
+    background: #3d82bd;
+}
+/*--首页新换的seo结构--*/
+.seo-block {
+    margin-top: 28px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #f8fbff;
+    border: 1px solid #e3ecf5;
+}
+
+.seo-block h2 {
+    margin-bottom: 10px;
+}
+
+.seo-block p {
+    margin-bottom: 10px;
+    color: #4f647d;
+}
+
+.seo-block ul {
+    padding-left: 18px;
+}
+
+.faq-block .faq-item {
+    margin-bottom: 14px;
+}
+/*--首页截图的样式--*/
+.seo-image {
+    margin-top: 12px;
+    text-align: center;
+}
+
+.seo-image img {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid #e3ecf5;
+}

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aprende la multiplicación de matrices 3x3 paso a paso con ejemplos y una calculadora.">
+    <link rel="canonical" href="https://matrixcalcu.com/es/3x3-matrix-multiplication-with-steps.html">
+
+    <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/3x3-matrix-multiplication-with-steps.html">
+    <link rel="alternate" hreflang="x-default"
+        href="https://matrixcalcu.com/es/3x3-matrix-multiplication-with-steps.html">
+
+    <meta property="og:title" content="Multiplicación de Matrices 3x3 Con Pasos (Ejemplos + Calculadora)">
+    <meta property="og:description"
+        content="Aprende la multiplicación de matrices 3x3 paso a paso con ejemplos y una calculadora.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:url" content="https://matrixcalcu.com/es/3x3-matrix-multiplication-with-steps.html">
+
+    <title>Multiplicación de Matrices 3x3 Con Pasos (Ejemplos + Calculadora)</title>
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/calculator.css">
+    <style>
+        .matrix-block,
+        .result-block {
+            text-align: center;
+        }
+
+        .matrix-label {
+            margin: 0 0 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #35577e;
+        }
+
+        .three-rule-card,
+        .three-example-shell,
+        .three-result,
+        .three-formula-box,
+        .three-tip-box {
+            padding: 20px;
+            border: 1px solid #c8d9ee;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #f7fbff 0%, #eef5fc 100%);
+        }
+
+        .three-formula-box {
+            text-align: center;
+        }
+
+        .three-formula {
+            margin: 0 0 12px;
+            font-size: 1.08rem;
+            font-weight: 800;
+            color: #24456a;
+        }
+
+        .three-formula-note {
+            margin: 0;
+            color: #456483;
+        }
+
+        .three-example-shell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .three-example .matrix {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px 14px;
+            border: 2px solid #9db7d6;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 8px 20px rgba(52, 86, 125, 0.08);
+        }
+
+        .three-example .row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .three-example .row span {
+            min-width: 42px;
+            padding: 10px 0;
+            border-radius: 10px;
+            background: #edf3fa;
+            color: #26415f;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .three-operator {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #4f6f95;
+        }
+
+        .three-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .three-detail-card {
+            padding: 18px;
+            border: 1px solid #dce7f3;
+            border-radius: 16px;
+            background: #fbfdff;
+            box-shadow: 0 8px 18px rgba(52, 86, 125, 0.06);
+        }
+
+        .three-detail-card h3 {
+            margin: 0 0 12px;
+            font-size: 1.02rem;
+            color: #35577e;
+        }
+
+        .three-detail-card p {
+            margin: 0 0 12px;
+        }
+
+        .three-expression {
+            margin: 0;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: #eef5fc;
+            color: #24456a;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .three-followup {
+            margin-top: 20px;
+            padding: 18px;
+            border: 1px solid #d6e4f1;
+            border-radius: 16px;
+            background: #f9fbfe;
+            color: #456483;
+        }
+
+        .three-result {
+            margin-top: 20px;
+            text-align: center;
+            border-color: #b9d0e8;
+            box-shadow: 0 10px 24px rgba(52, 86, 125, 0.1);
+        }
+
+        .three-result p {
+            margin: 0 0 14px;
+            color: #35577e;
+            font-weight: 700;
+        }
+
+        .three-result .matrix {
+            border-color: #86aed6;
+            box-shadow: 0 10px 24px rgba(52, 86, 125, 0.1);
+        }
+
+        .three-tip-box p:last-child,
+        .three-rule-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .howto-related-list li + li {
+            margin-top: 8px;
+        }
+
+        @media (max-width: 640px) {
+            .three-detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .three-example .row span {
+                min-width: 36px;
+                padding: 8px 0;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Cómo se multiplican matrices 3x3?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Multiplica cada fila de la primera matriz 3x3 por cada columna de la segunda matriz 3x3. Cada entrada del resultado usa tres multiplicaciones y luego suma esos productos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Por qué la multiplicación de matrices 3x3 es más difícil que la de 2x2?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Es más difícil porque cada entrada tiene más términos y hay más entradas que calcular, por lo que es más fácil perder la pista de filas, columnas o sumas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo usar una calculadora para matrices 3x3?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Una calculadora de multiplicación de matrices puede resolver rápidamente problemas 3x3, ayudarte a verificar tu trabajo y facilitar la multiplicación de matrices más grandes."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Calculadora de Matrices</h1>
+
+            <div class="language-selector">
+                <div class="language-toggle">
+                    <span class="globe-icon">Español</span> Español
+                </div>
+                <div class="language-dropdown">
+                    <a class="language-option active" href="/es/3x3-matrix-multiplication-with-steps.html"
+                        lang="es">Español</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-row-container">
+        <div class="wide-container">
+            <div class="main-row">
+                <div class="left-sidebar">
+                    <button class="mobile-nav-toggle">Navegación</button>
+                    <h3 class="nav-title">Navegación</h3>
+                    <div class="nav-buttons">
+                        <a href="/" class="nav-button" id="home-btn">Inicio</a>
+                        <a href="/es/matrix-multiplication-calculator.html" class="nav-button">Calculadora de Multiplicación de Matrices</a>
+                        <a href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html" target="_blank"
+                            rel="noopener noreferrer" class="nav-button external">Juego de Multiplicación de Matrices</a>
+                        <a href="/es/matrix-equations-calculator.html" class="nav-button">Calculadora de Sistemas de Ecuaciones</a>
+                        <a href="https://en.wikipedia.org/wiki/Matrix_multiplication" target="_blank"
+                            rel="noopener noreferrer" class="nav-button external">Wikipedia: Multiplicación de matrices</a>
+                    </div>
+                </div>
+
+                <div class="calculator-main">
+                    <div class="seo-articles-container howto-page" id="article-container">
+                        <section class="howto-hero-card">
+                            <p class="howto-kicker">Guía de Matrices 3x3</p>
+                            <h1>Multiplicación de Matrices 3x3 Paso a Paso</h1>
+                            <p class="lead">
+                                La multiplicación 3x3 sigue la misma regla fila por columna que la multiplicación 2x2, pero cada
+                                entrada del resultado requiere más aritmética. Una vez que mantengas organizadas las filas y columnas, el
+                                proceso se vuelve mucho más fácil de seguir.
+                            </p>
+
+                            <div class="howto-quick-links">
+                                <a class="howto-pill" href="/es/2x2-matrix-multiplication-calculator.html">Ver Guía 2x2</a>
+                                <a class="howto-pill howto-pill-primary"
+                                    href="/es/matrix-multiplication-calculator.html">Usar Calculadora</a>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Por Qué la Multiplicación de Matrices 3x3 es Más Compleja</h2>
+                            <div class="three-rule-card">
+                                <p>
+                                    Un problema 3x3 usa la misma regla que las matrices más pequeñas, pero cada entrada del resultado necesita
+                                    tres multiplicaciones y dos sumas.
+                                </p>
+                                <p>
+                                    También hay más entradas en la matriz final, por lo que la precisión importa más porque un
+                                    pequeño error de fila o columna puede afectar todo el resultado.
+                                </p>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Fórmula de Multiplicación de Matrices 3x3</h2>
+                            <div class="three-formula-box">
+                                <p class="three-formula">Cij = ai1b1j + ai2b2j + ai3b3j</p>
+                                <p class="three-formula-note">
+                                    En términos simples, elige una fila de A y una columna de B, multiplica las entradas correspondientes
+                                    y suma los tres productos.
+                                </p>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card three-example">
+                            <h2>Cómo Multiplicar una Matriz 3x3 Paso a Paso</h2>
+                            <p>
+                                Este ejemplo de multiplicación de matrices 3x3 muestra las matrices completas primero para que puedas ver la
+                                estructura completa de fila por columna antes de calcular el resultado.
+                            </p>
+                            <p>
+                                Calcularemos las dos primeras entradas paso a paso.
+                            </p>
+
+                            <div class="three-example-shell">
+                                <div class="matrix-block">
+                                    <p class="matrix-label">Matriz A</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>1</span><span>2</span><span>0</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>3</span><span>1</span><span>4</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>2</span><span>5</span><span>1</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="three-operator">x</div>
+
+                                <div class="matrix-block">
+                                    <p class="matrix-label">Matriz B</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>2</span><span>1</span><span>3</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>0</span><span>4</span><span>2</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>1</span><span>2</span><span>5</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="three-detail-grid">
+                                <article class="three-detail-card">
+                                    <h3>Primera entrada del resultado: c11</h3>
+                                    <p>
+                                        Toma la primera fila de A, <strong>[1, 2, 0]</strong>, y la primera columna de B,
+                                        <strong>[2, 0, 1]</strong>.
+                                    </p>
+                                    <p class="three-expression">(1 x 2) + (2 x 0) + (0 x 1) = 2</p>
+                                </article>
+
+                                <article class="three-detail-card">
+                                    <h3>Segunda entrada del resultado: c12</h3>
+                                    <p>
+                                        Mantén la misma primera fila de A, luego usa la segunda columna de B,
+                                        <strong>[1, 4, 2]</strong>.
+                                    </p>
+                                    <p class="three-expression">(1 x 1) + (2 x 4) + (0 x 2) = 9</p>
+                                </article>
+                            </div>
+
+                            <div class="three-followup">
+                                El mismo proceso fila por columna se repite para las entradas restantes.
+                                Las entradas restantes se encuentran de la misma manera: elige la fila correcta de A, emparejala
+                                con la columna correcta de B, multiplica los tres pares y suma los productos.
+                            </div>
+
+                            <div class="three-result">
+                                <p>Matriz de resultado final</p>
+                                <div class="matrix-block">
+                                    <p class="matrix-label">AB</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>2</span><span>9</span><span>7</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>10</span><span>15</span><span>31</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>5</span><span>24</span><span>21</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Consejo para Resolver Matrices 3x3</h2>
+                            <div class="three-tip-box">
+                                <p>
+                                    Trabaja en un orden fijo, por ejemplo, a lo largo de la primera fila de la matriz de resultado antes de
+                                    pasar a la siguiente fila. Eso hace que sea mucho más fácil mantener emparejadas la fila y la columna correctas.
+                                </p>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card howto-calculator-card">
+                            <h2>Usa la Calculadora de Multiplicación de Matrices</h2>
+                            <p>
+                                Si quieres respuestas rápidas, quieres comprobar tu aritmética o quieres multiplicar matrices
+                                más grandes, la calculadora principal es el siguiente paso más fácil.
+                            </p>
+                            <p>
+                                Los cálculos 3x3 pueden alargarse rápidamente — usa la calculadora para ahorrar tiempo.
+                            </p>
+
+                            <div class="howto-button-row">
+                                <a class="howto-main-cta" href="/es/matrix-multiplication-calculator.html">
+                                    Abrir la Calculadora de Multiplicación de Matrices
+                                </a>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card internal-links-block">
+                            <h2>Páginas Relacionadas de Multiplicación de Matrices</h2>
+                            <ul class="howto-related-list">
+                                <li><a href="/es/how-to-multiply-matrices.html">Cómo multiplicar matrices</a></li>
+                                <li><a href="/es/2x2-matrix-multiplication-calculator.html">Multiplicación de matrices 2x2 paso a paso</a></li>
+                                <li><a href="/es/matrix-multiplication-calculator.html">Calculadora de multiplicación de matrices</a></li>
+                                <li><a href="/es/matrix-determinant-calculator.html">Calculadora de determinante de matrices</a>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section itemscope itemtype="https://schema.org/FAQPage" class="howto-faq-card">
+                            <h2>Preguntas Frecuentes</h2>
+
+                            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                <h3 itemprop="name">¿Cómo se multiplican matrices 3x3?</h3>
+                                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                    <p itemprop="text">
+                                        Multiplica cada fila de la primera matriz 3x3 por cada columna de la segunda matriz 3x3.
+                                        Cada entrada del resultado usa tres multiplicaciones y luego suma esos productos.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                <h3 itemprop="name">¿Por qué la multiplicación de matrices 3x3 es más difícil que la de 2x2?</h3>
+                                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                    <p itemprop="text">
+                                        Es más difícil porque cada entrada tiene más términos y hay más entradas que calcular,
+                                        por lo que es más fácil perder la pista de filas, columnas o sumas.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                <h3 itemprop="name">¿Puedo usar una calculadora para matrices 3x3?</h3>
+                                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                    <p itemprop="text">
+                                        Sí. Una calculadora de multiplicación de matrices puede resolver rápidamente problemas 3x3, ayudarte
+                                        a verificar tu trabajo y facilitar la multiplicación de matrices más grandes.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="poster-card">
+                    <p class="promo-text">
+                        Aprende multiplicación de matrices más fácilmente en solo <span>2 minutos</span> con este <span>juego gratuito</span>.
+                    </p>
+
+                    <a class="image-container" href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html">
+                        <img src="/img/matrix-multiplication-game.png" alt="Juego de Multiplicación de Matrices"
+                            class="game-image">
+
+                        <div class="play-icon-overlay">
+                            <div class="play-triangle"></div>
+                        </div>
+                    </a>
+                    <div class="poster-card calculator-card">
+                        <p class="promo-text">
+                            Resuelve tu matriz al instante con nuestra <span>calculadora gratuita</span>.
+                        </p>
+                    
+                        <a class="calculator-btn" href="/es/matrix-multiplication-calculator.html">
+                            Abrir calculadora →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Calculadora de Matrices. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const navButtons = document.querySelector('.nav-buttons');
+            const languageToggle = document.querySelector('.language-toggle');
+            const languageDropdown = document.querySelector('.language-dropdown');
+
+            if (mobileNavToggle && navButtons) {
+                mobileNavToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    navButtons.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function (event) {
+                    if (!mobileNavToggle.contains(event.target) && !navButtons.contains(event.target)) {
+                        navButtons.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
+                    }
+                });
+            }
+
+            if (languageToggle && languageDropdown) {
+                languageToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    languageDropdown.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function () {
+                    languageDropdown.classList.remove('active');
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Aprende la multiplicación de matrices 2x2 paso a paso con ejemplos simples, una calculadora y recursos de práctica.">
+    <link rel="canonical" href="https://matrixcalcu.com/es/2x2-matrix-multiplication-calculator.html">
+
+    <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/2x2-matrix-multiplication-calculator.html">
+    <link rel="alternate" hreflang="x-default"
+        href="https://matrixcalcu.com/es/2x2-matrix-multiplication-calculator.html">
+
+    <meta property="og:title" content="Multiplicación de Matrices 2x2 (Paso a Paso + Calculadora + Práctica)">
+    <meta property="og:description"
+        content="Aprende la multiplicación de matrices 2x2 paso a paso con ejemplos simples, una calculadora y recursos de práctica.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:url" content="https://matrixcalcu.com/es/2x2-matrix-multiplication-calculator.html">
+
+    <title>Multiplicación de Matrices 2x2 (Paso a Paso + Calculadora + Práctica)</title>
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/calculator.css">
+    <style>
+        .matrix-block,
+        .result-block {
+            text-align: center;
+        }
+
+        .matrix-label {
+            margin: 0 0 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #35577e;
+        }
+
+        .twobytwo-rule-note {
+            margin-top: 16px;
+            padding: 16px 18px;
+            border: 1px solid #d5e3f2;
+            border-radius: 14px;
+            background: #f8fbff;
+            color: #35577e;
+        }
+
+        .twobytwo-example-shell,
+        .twobytwo-result {
+            padding: 20px;
+            border: 1px solid #c8d9ee;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #f7fbff 0%, #eef5fc 100%);
+        }
+
+        .twobytwo-example-shell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .twobytwo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .twobytwo-step {
+            padding: 16px;
+            border: 1px solid #dce7f3;
+            border-radius: 16px;
+            background: #fbfdff;
+            box-shadow: 0 8px 18px rgba(52, 86, 125, 0.06);
+        }
+
+        .twobytwo-step h3 {
+            margin: 0 0 14px;
+            font-size: 1.02rem;
+            color: #35577e;
+        }
+
+        .twobytwo-step-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .twobytwo-example .matrix {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px 14px;
+            border: 2px solid #9db7d6;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 8px 20px rgba(52, 86, 125, 0.08);
+        }
+
+        .twobytwo-example .row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .twobytwo-example .row span {
+            min-width: 42px;
+            padding: 10px 0;
+            border-radius: 10px;
+            background: #edf3fa;
+            color: #26415f;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .twobytwo-example .row span.highlight {
+            background: #d9ebff;
+            color: #0f4d92;
+            box-shadow: inset 0 0 0 2px #7db1e8;
+        }
+
+        .twobytwo-operator {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #4f6f95;
+        }
+
+        .twobytwo-formula {
+            margin: 16px 0 0;
+            text-align: center;
+            font-weight: 700;
+            color: #35577e;
+        }
+
+        .twobytwo-result {
+            margin-top: 20px;
+            text-align: center;
+            border-color: #b9d0e8;
+            box-shadow: 0 10px 24px rgba(52, 86, 125, 0.1);
+        }
+
+        .twobytwo-result p {
+            margin: 0 0 14px;
+            color: #35577e;
+            font-weight: 700;
+        }
+
+        .twobytwo-result .matrix {
+            border-color: #86aed6;
+            box-shadow: 0 10px 24px rgba(52, 86, 125, 0.1);
+        }
+
+        .practice-feature {
+            margin-top: 18px;
+            padding: 22px;
+            border: 1px solid #c5d8ec;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #f8fbff 0%, #edf5fd 100%);
+            box-shadow: 0 12px 28px rgba(52, 86, 125, 0.08);
+            text-align: center;
+        }
+
+        .practice-feature h3 {
+            margin: 0 0 10px;
+            color: #24456a;
+        }
+
+        .practice-feature p {
+            margin: 0 auto 16px;
+            max-width: 560px;
+            color: #456483;
+        }
+
+        .practice-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: #0f4d92;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 22px rgba(15, 77, 146, 0.2);
+        }
+
+        .practice-link:hover,
+        .practice-link:focus {
+            background: #0c427c;
+            color: #fff;
+        }
+
+        .howto-related-list li + li {
+            margin-top: 8px;
+        }
+
+        @media (max-width: 640px) {
+            .twobytwo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .twobytwo-example .row span {
+                min-width: 36px;
+                padding: 8px 0;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Cómo se multiplican matrices 2x2?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Multiplica cada fila de la primera matriz por cada columna de la segunda matriz, luego suma los productos para obtener las cuatro entradas de la matriz resultante."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Es fácil aprender la multiplicación de matrices 2x2?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Por lo general, es el caso más fácil de multiplicación de matrices porque solo hay cuatro cálculos de fila por columna que seguir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo usar una calculadora para matrices 2x2?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Puedes usar una calculadora de matrices para verificar respuestas 2x2 rápidamente y también pasar a matrices más grandes cuando estés listo."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Calculadora de Matrices</h1>
+
+            <div class="language-selector">
+                <div class="language-toggle">
+                    <span class="globe-icon">Español</span> Español
+                </div>
+                <div class="language-dropdown">
+                    <a class="language-option active" href="/es/2x2-matrix-multiplication-calculator.html"
+                        lang="es">Español</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-row-container">
+        <div class="wide-container">
+            <div class="main-row">
+                <div class="left-sidebar">
+                    <button class="mobile-nav-toggle">Navegación</button>
+                    <h3 class="nav-title">Navegación</h3>
+                    <div class="nav-buttons">
+                        <a href="/" class="nav-button" id="home-btn">Inicio</a>
+                        <a href="/es/matrix-multiplication-calculator.html" class="nav-button">Calculadora de Multiplicación de Matrices</a>
+                        <a href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html" target="_blank"
+                            rel="noopener noreferrer" class="nav-button external">Juego de Multiplicación de Matrices</a>
+                        <a href="/es/matrix-equations-calculator.html" class="nav-button">Calculadora de Sistemas de Ecuaciones</a>
+                        <a href="https://en.wikipedia.org/wiki/Matrix_multiplication" target="_blank"
+                            rel="noopener noreferrer" class="nav-button external">Wikipedia: Multiplicación de matrices</a>
+                    </div>
+                </div>
+
+                <div class="calculator-main">
+                    <div class="seo-articles-container howto-page" id="article-container">
+                        <section class="howto-hero-card">
+                            <p class="howto-kicker">Fundamentos de Matrices 2x2</p>
+                            <h1>Multiplicación de Matrices 2x2 Paso a Paso</h1>
+                            <p class="lead">
+                                La multiplicación 2x2 es el lugar más fácil para aprender la multiplicación de matrices. Solo necesitas
+                                cuatro cálculos de fila por columna, por lo que es una forma rápida de ver el patrón y ganar confianza.
+                            </p>
+
+                            <div class="howto-quick-links">
+                                <a class="howto-pill howto-pill-primary"
+                                    href="/es/matrix-multiplication-calculator.html">Usar Calculadora</a>
+                                <a class="howto-pill" href="/es/how-to-multiply-matrices.html">Ver Guía Completa</a>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Regla de Multiplicación de Matrices 2x2</h2>
+                            <p>
+                                Para un ejemplo 2x2, cada entrada del resultado proviene de una fila de la Matriz A y una columna de la Matriz B.
+                            </p>
+                            <div class="twobytwo-rule-note">
+                                <strong>Atajo para principiantes:</strong> toma una fila, toma una columna, multiplica los números correspondientes
+                                y suma los dos productos.
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card twobytwo-example">
+                            <h2>Multiplicación de Matrices 2x2 Paso a Paso</h2>
+                            <p>
+                                Comienza con dos matrices simples y calcula una entrada a la vez.
+                            </p>
+
+                            <div class="twobytwo-example-shell">
+                                <div class="matrix-block">
+                                    <p class="matrix-label">Matriz A</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>1</span><span>2</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>3</span><span>4</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="twobytwo-operator">×</div>
+
+                                <div class="matrix-block">
+                                    <p class="matrix-label">Matriz B</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>5</span><span>6</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>7</span><span>8</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="twobytwo-grid">
+                                <article class="twobytwo-step">
+                                    <h3>Paso 1: Primera fila × primera columna</h3>
+                                    <div class="twobytwo-step-visual">
+                                        <div class="matrix-block">
+                                            <p class="matrix-label">A</p>
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span class="highlight">1</span><span class="highlight">2</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>3</span><span>4</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="twobytwo-operator">×</div>
+
+                                        <div class="matrix-block">
+                                            <p class="matrix-label">B</p>
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span class="highlight">5</span><span>6</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span class="highlight">7</span><span>8</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="twobytwo-formula">(1×5) + (2×7) = 19</p>
+                                </article>
+
+                                <article class="twobytwo-step">
+                                    <h3>Paso 2: Primera fila × segunda columna</h3>
+                                    <div class="twobytwo-step-visual">
+                                        <div class="matrix-block">
+                                            <p class="matrix-label">A</p>
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span class="highlight">1</span><span class="highlight">2</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>3</span><span>4</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="twobytwo-operator">×</div>
+
+                                        <div class="matrix-block">
+                                            <p class="matrix-label">B</p>
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>5</span><span class="highlight">6</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>7</span><span class="highlight">8</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="twobytwo-formula">(1×6) + (2×8) = 22</p>
+                                </article>
+
+                                <article class="twobytwo-step">
+                                    <h3>Paso 3: Segunda fila × primera columna</h3>
+                                    <div class="twobytwo-step-visual">
+                                        <div class="matrix-block">
+                                            <p class="matrix-label">A</p>
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>1</span><span>2</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span class="highlight">3</span><span class="highlight">4</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="twobytwo-operator">×</div>
+
+                                        <div class="matrix-block">
+                                            <p class="matrix-label">B</p>
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span class="highlight">5</span><span>6</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span class="highlight">7</span><span>8</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="twobytwo-formula">(3×5) + (4×7) = 43</p>
+                                </article>
+
+                                <article class="twobytwo-step">
+                                    <h3>Paso 4: Segunda fila × segunda columna</h3>
+                                    <div class="twobytwo-step-visual">
+                                        <div class="matrix-block">
+                                            <p class="matrix-label">A</p>
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>1</span><span>2</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span class="highlight">3</span><span class="highlight">4</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="twobytwo-operator">×</div>
+
+                                        <div class="matrix-block">
+                                            <p class="matrix-label">B</p>
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>5</span><span class="highlight">6</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>7</span><span class="highlight">8</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="twobytwo-formula">(3×6) + (4×8) = 50</p>
+                                </article>
+                            </div>
+
+                            <div class="twobytwo-result">
+                                <p>Por lo tanto, el resultado de A × B es:</p>
+                                <div class="matrix-block">
+                                    <p class="matrix-label">AB</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>19</span><span>22</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>43</span><span>50</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Practica la Multiplicación de Matrices 2x2</h2>
+                            <p>
+                                La práctica es la forma más rápida de que la multiplicación fila por columna se sienta natural. Prueba
+                                algunas rondas y observa qué tan rápido el patrón comienza a fijarse.
+                            </p>
+
+                            <div class="practice-feature">
+                                <h3>Practica con un Juego de Matrices 2x2</h3>
+                                <p>
+                                    Usa este juego amigable para principiantes para ganar velocidad, comprobar tu comprensión y hacer
+                                    que el patrón 2x2 sea más fácil de recordar.
+                                </p>
+                                <a class="practice-link" href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html"
+                                    target="_blank" rel="noopener noreferrer">Abrir el Juego de Práctica</a>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card howto-calculator-card">
+                            <h2>Usa la Calculadora de Matrices 2x2</h2>
+                            <p>
+                                Cuando quieras una respuesta rápida o quieras pasar a tamaños de matriz más grandes, usa la calculadora
+                                principal de multiplicación de matrices para comprobar tu trabajo.
+                            </p>
+
+                            <div class="howto-button-row">
+                                <a class="howto-main-cta" href="/es/matrix-multiplication-calculator.html">
+                                    Abrir la Calculadora de Multiplicación de Matrices
+                                </a>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Errores Comunes</h2>
+                            <ul class="howto-mistakes-list">
+                                <li>Confundir qué fila de A debe coincidir con qué columna de B</li>
+                                <li>Multiplicar posiciones coincidentes directamente en lugar de usar fila por columna</li>
+                                <li>Olvidar sumar los dos productos después de multiplicar</li>
+                            </ul>
+                        </section>
+
+                        <section class="howto-section-card internal-links-block">
+                            <h2>Páginas Relacionadas de Multiplicación de Matrices</h2>
+                            <ul class="howto-related-list">
+                                <li><a href="/es/how-to-multiply-matrices.html">Cómo multiplicar matrices</a></li>
+                                <li><a href="/es/3x3-matrix-multiplication-with-steps.html">Multiplicación de matrices 3x3 con pasos</a></li>
+                                <li><a href="/es/matrix-multiplication-calculator.html">Calculadora de multiplicación de matrices</a></li>
+                            </ul>
+                        </section>
+
+                        <section itemscope itemtype="https://schema.org/FAQPage" class="howto-faq-card">
+                            <h2>Preguntas Frecuentes</h2>
+
+                            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                <h3 itemprop="name">¿Cómo se multiplican matrices 2x2?</h3>
+                                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                    <p itemprop="text">
+                                        Multiplica cada fila de la primera matriz por cada columna de la segunda matriz, luego
+                                        suma los productos para obtener las cuatro entradas de la matriz resultante.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                <h3 itemprop="name">¿Es fácil aprender la multiplicación de matrices 2x2?</h3>
+                                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                    <p itemprop="text">
+                                        Sí. Por lo general, es el caso más fácil de multiplicación de matrices porque solo hay
+                                        cuatro cálculos de fila por columna que seguir.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                <h3 itemprop="name">¿Puedo usar una calculadora para matrices 2x2?</h3>
+                                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                    <p itemprop="text">
+                                        Sí. Puedes usar una calculadora de matrices para verificar respuestas 2x2 rápidamente y también pasar
+                                        a matrices más grandes cuando estés listo.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="poster-card">
+                    <p class="promo-text">
+                        Aprende multiplicación de matrices más fácilmente en solo <span>2 minutos</span> con este <span>juego gratuito</span>.
+                    </p>
+
+                    <a class="image-container" href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html">
+                        <img src="/img/matrix-multiplication-game.png" alt="Juego de Multiplicación de Matrices"
+                            class="game-image">
+
+                        <div class="play-icon-overlay">
+                            <div class="play-triangle"></div>
+                        </div>
+                    </a>
+                    <div class="poster-card calculator-card">
+                        <p class="promo-text">
+                            Resuelve tu matriz al instante con nuestra <span>calculadora gratuita</span>.
+                        </p>
+                    
+                        <a class="calculator-btn" href="/es/matrix-multiplication-calculator.html">
+                            Abrir calculadora →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Calculadora de Matrices. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const navButtons = document.querySelector('.nav-buttons');
+            const languageToggle = document.querySelector('.language-toggle');
+            const languageDropdown = document.querySelector('.language-dropdown');
+
+            if (mobileNavToggle && navButtons) {
+                mobileNavToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    navButtons.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function (event) {
+                    if (!mobileNavToggle.contains(event.target) && !navButtons.contains(event.target)) {
+                        navButtons.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
+                    }
+                });
+            }
+
+            if (languageToggle && languageDropdown) {
+                languageToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    languageDropdown.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function () {
+                    languageDropdown.classList.remove('active');
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>
