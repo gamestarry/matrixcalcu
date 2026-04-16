@@ -1,4 +1,5 @@
 import { userError } from '../i18n/user-error.js';
+import { getStepText } from '../i18n/step-text.js';
 
 // js/core/rref.js
 // Single-matrix operation: RREF (Reduced Row Echelon Form)
@@ -130,12 +131,14 @@ export const config = {
 export function calculateRREFWithSteps(inputMatrix) {
   assertRectangular(inputMatrix, 'Matrix A');
 
+  const t = getStepText('rref');
+
   const M = normalizeMatrix(inputMatrix);
   const rows = M.length;
   const cols = M[0].length;
   const steps = [];
 
-  snapshot('Initial matrix', M, steps);
+  snapshot(t.initialMatrix, M, steps);
 
   let leadRow = 0;
 
@@ -154,7 +157,7 @@ export function calculateRREFWithSteps(inputMatrix) {
     // 2) Swap pivot row into position
     if (pivotRow !== leadRow) {
       swapRows(M, pivotRow, leadRow);
-      snapshot(`Swap R${pivotRow + 1} ↔ R${leadRow + 1}`, M, steps);
+      snapshot(t.swapRows(pivotRow + 1, leadRow + 1), M, steps);
     }
 
     // 3) Scale pivot row so pivot becomes 1
@@ -162,7 +165,7 @@ export function calculateRREFWithSteps(inputMatrix) {
     if (!isZeroValue(pivotVal) && !math.equal(pivotVal, 1)) {
       const factor = math.divide(1, pivotVal);
       scaleRow(M, leadRow, factor);
-      snapshot(`R${leadRow + 1} ← (${formatFraction(factor)})R${leadRow + 1}`, M, steps);
+      snapshot(t.scaleRow(leadRow + 1, formatFraction(factor)), M, steps);
     }
 
     // 4) Eliminate all other entries in pivot column
@@ -172,12 +175,20 @@ export function calculateRREFWithSteps(inputMatrix) {
 
       const factor = math.unaryMinus(M[r][col]);
       addRowMultiple(M, r, leadRow, factor);
-      
+
       const factorText = formatFraction(factor);
       if (factorText.startsWith('-')) {
-        snapshot(`R${r + 1} ← R${r + 1} - ${factorText.slice(1)}R${leadRow + 1}`, M, steps);
+        snapshot(
+          t.rowSubtract(r + 1, factorText.slice(1), leadRow + 1),
+          M,
+          steps
+        );
       } else {
-        snapshot(`R${r + 1} ← R${r + 1} + ${factorText}R${leadRow + 1}`, M, steps);
+        snapshot(
+          t.rowAdd(r + 1, factorText, leadRow + 1),
+          M,
+          steps
+        );
       }
     }
 

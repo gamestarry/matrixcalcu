@@ -14,6 +14,18 @@ export const STEP_TEXT = {
       labelRref: 'RREF',
       labelEigenvector: 'Eigenvector',
       eigenvalueList: (items) => items.join(', ')
+    },
+
+    rref: {
+      showSteps: 'Show Steps',
+      hideSteps: 'Hide Steps',
+      stepsTitle: 'RREF Steps',
+      step: (n) => `Step ${n}`,
+      initialMatrix: 'Initial matrix',
+      swapRows: (fromRow, toRow) => `Swap R${fromRow} ↔ R${toRow}`,
+      scaleRow: (row, factorText) => `R${row} ← (${factorText})R${row}`,
+      rowAdd: (targetRow, factorText, pivotRow) => `R${targetRow} ← R${targetRow} + ${factorText}R${pivotRow}`,
+      rowSubtract: (targetRow, factorText, pivotRow) => `R${targetRow} ← R${targetRow} - ${factorText}R${pivotRow}`
     }
   },
 
@@ -32,8 +44,20 @@ export const STEP_TEXT = {
       labelRref: 'RREF',
       labelEigenvector: 'Vector propio',
       eigenvalueList: (items) => items.join(', ')
+    },
+
+    rref: {
+      showSteps: 'Mostrar pasos',
+      hideSteps: 'Ocultar pasos',
+      stepsTitle: 'Pasos de RREF',
+      step: (n) => `Paso ${n}`,
+      initialMatrix: 'Matriz inicial',
+      swapRows: (fromRow, toRow) => `Intercambiar R${fromRow} ↔ R${toRow}`,
+      scaleRow: (row, factorText) => `R${row} ← (${factorText})R${row}`,
+      rowAdd: (targetRow, factorText, pivotRow) => `R${targetRow} ← R${targetRow} + ${factorText}R${pivotRow}`,
+      rowSubtract: (targetRow, factorText, pivotRow) => `R${targetRow} ← R${targetRow} - ${factorText}R${pivotRow}`
     }
-  }
+  },
 };
 
 export function getCurrentLang() {

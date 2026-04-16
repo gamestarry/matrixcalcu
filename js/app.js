@@ -185,6 +185,7 @@ class MatrixApp {
                 safeProcessMatrix,
                 result
             );
+            this.scrollToResults();
 
         } catch (error) {
             this.showError(resolveErrorMessage(error));
@@ -212,7 +213,7 @@ class MatrixApp {
                 steps,
                 rrefMatrix
             );
-
+            this.scrollToResults();
             this.showArticle('RREF');
         } catch (error) {
             this.showError(resolveErrorMessage(error));
@@ -232,7 +233,7 @@ class MatrixApp {
                 steps,
                 rrefMatrix
             );
-
+            this.scrollToResults();
             this.showArticle('RREF');
         } catch (error) {
             this.showError(resolveErrorMessage(error));
@@ -642,7 +643,7 @@ class MatrixApp {
             processMatrix,
             result
         );
-
+        this.scrollToResults();
         this.showArticle(meta.articleKey || meta.opName);
     }
 
@@ -1018,6 +1019,7 @@ class MatrixApp {
             // RREF steps
             // =========================
             if (operationName === 'RREF') {
+                const t = getStepText('rref');
                 if (!Array.isArray(processOrSteps) || !processOrSteps.length) return;
 
                 const first = processOrSteps[0];
@@ -1033,7 +1035,7 @@ class MatrixApp {
                     const btn = document.createElement('button');
                     btn.type = 'button';
                     btn.className = 'eigen-steps-toggle-btn';
-                    btn.textContent = 'Show Steps';
+                    btn.textContent = t.showSteps || 'Show Steps';
 
                     btn.style.marginLeft = '10px';
                     btn.style.padding = '6px 12px';
@@ -1048,6 +1050,7 @@ class MatrixApp {
 
                     finalResultContainer.appendChild(btn);
                 }
+
                 if (this._isEquationPage()) {
                     this._appendEquationSummary(card, result);
                 }
@@ -1055,6 +1058,7 @@ class MatrixApp {
 
                 const wrap = document.createElement('div');
                 wrap.className = 'rref-steps-container';
+                wrap.style.display = 'none';
                 wrap.style.marginTop = '12px';
                 wrap.style.padding = '12px';
                 wrap.style.border = '1px solid rgba(0,0,0,0.08)';
@@ -1062,7 +1066,7 @@ class MatrixApp {
                 wrap.style.background = '#fffdf4';
 
                 const title = document.createElement('div');
-                title.textContent = 'RREF Steps';
+                title.textContent = t.stepsTitle;
                 title.style.fontWeight = '700';
                 title.style.marginBottom = '8px';
                 wrap.appendChild(title);
@@ -1075,7 +1079,9 @@ class MatrixApp {
                     const summary = document.createElement('summary');
                     summary.style.cursor = 'pointer';
                     summary.style.fontWeight = '600';
-                    summary.textContent = step.label ? `Step ${idx + 1}: ${step.label}` : `Step ${idx + 1}`;
+                    summary.textContent = step.label
+                        ? `${t.step(idx + 1)}: ${step.label}`
+                        : t.step(idx + 1);
                     item.appendChild(summary);
 
                     const table = document.createElement('table');
@@ -1108,9 +1114,12 @@ class MatrixApp {
                     toggleBtn.onclick = () => {
                         const isHidden = wrap.style.display === 'none';
                         wrap.style.display = isHidden ? 'block' : 'none';
-                        toggleBtn.textContent = isHidden ? 'Hide Steps' : 'Show Steps';
+                        toggleBtn.textContent = isHidden
+                            ? (t.hideSteps || 'Hide Steps')
+                            : (t.showSteps || 'Show Steps');
                     };
-                };
+                }
+
                 return;
             }
 
