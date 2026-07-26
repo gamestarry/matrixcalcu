@@ -5,21 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Learn 2x2 matrix multiplication step by step with simple examples, a calculator, and practice resources.">
+        content="Learn how to multiply two 2x2 matrices using the standard formula. Follow worked examples step by step and check your answer with the calculator.">
     <link rel="canonical" href="https://matrixcalcu.com/en/2x2-matrix-multiplication-calculator.html">
 
     <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/2x2-matrix-multiplication-calculator.html">
+    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/2x2-matrix-multiplication-calculator.html">
     <link rel="alternate" hreflang="x-default"
         href="https://matrixcalcu.com/en/2x2-matrix-multiplication-calculator.html">
 
-    <meta property="og:title" content="2x2 Matrix Multiplication (Step-by-Step + Calculator + Practice)">
+    <meta property="og:title" content="2x2 Matrix Multiplication: Formula, Steps and Calculator | MatrixCalcu">
     <meta property="og:description"
-        content="Learn 2x2 matrix multiplication step by step with simple examples, a calculator, and practice resources.">
+        content="Learn how to multiply two 2x2 matrices using the standard formula. Follow worked examples step by step and check your answer with the calculator.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://matrixcalcu.com/en/2x2-matrix-multiplication-calculator.html">
 
-    <title>2x2 Matrix Multiplication (Step-by-Step + Calculator + Practice)</title>
+    <title>2x2 Matrix Multiplication: Formula, Steps and Calculator | MatrixCalcu</title>
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -35,6 +36,14 @@
             font-size: 0.95rem;
             font-weight: 700;
             color: #35577e;
+        }
+
+        .site-brand {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            font-weight: 700;
         }
 
         .twobytwo-rule-note {
@@ -155,6 +164,113 @@
             box-shadow: 0 10px 24px rgba(52, 86, 125, 0.1);
         }
 
+        .twobytwo-formula-card,
+        .twobytwo-position-card,
+        .twobytwo-practice-card {
+            padding: 18px;
+            border: 1px solid #d6e4f1;
+            border-radius: 16px;
+            background: #fbfdff;
+            box-shadow: 0 8px 18px rgba(52, 86, 125, 0.06);
+        }
+
+        .twobytwo-symbol-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin: 18px 0;
+        }
+
+        .twobytwo-position-map {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .twobytwo-position-card h3,
+        .twobytwo-practice-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.02rem;
+            color: #35577e;
+        }
+
+        .twobytwo-position-card p,
+        .twobytwo-practice-card p {
+            margin: 0;
+            color: #456483;
+            line-height: 1.55;
+        }
+
+        .twobytwo-entry-list li + li,
+        .twobytwo-mistake-list li + li {
+            margin-top: 8px;
+        }
+
+        .twobytwo-example figure {
+            margin: 18px 0 0;
+        }
+
+        .twobytwo-example figcaption {
+            margin-top: 12px;
+            color: #456483;
+            font-size: 0.96rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .twobytwo-example-intro {
+            margin-top: 18px;
+        }
+
+        .twobytwo-worked-grid,
+        .twobytwo-practice-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .twobytwo-worked-step {
+            padding: 16px;
+            border: 1px solid #dce7f3;
+            border-radius: 14px;
+            background: #fbfdff;
+        }
+
+        .twobytwo-worked-step h3 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            color: #35577e;
+        }
+
+        .twobytwo-worked-step p {
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        .twobytwo-note {
+            margin-top: 14px;
+            color: #456483;
+        }
+
+        .twobytwo-practice-card details {
+            margin-top: 12px;
+        }
+
+        .twobytwo-practice-card summary {
+            cursor: pointer;
+            color: #0f4d92;
+            font-weight: 700;
+        }
+
+        .twobytwo-practice-card .twobytwo-result {
+            margin-top: 12px;
+            padding: 14px;
+        }
+
         .practice-feature {
             margin-top: 18px;
             padding: 22px;
@@ -201,13 +317,31 @@
         }
 
         @media (max-width: 640px) {
+            .site-brand {
+                font-size: 1.3rem;
+                margin: 0;
+                margin-right: 10px;
+                flex: 1;
+                text-align: left;
+            }
+
             .twobytwo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .twobytwo-position-map,
+            .twobytwo-worked-grid,
+            .twobytwo-practice-grid {
                 grid-template-columns: 1fr;
             }
 
             .twobytwo-example .row span {
                 min-width: 36px;
                 padding: 8px 0;
+            }
+
+            .twobytwo-symbol-row {
+                gap: 12px;
             }
         }
     </style>
@@ -219,26 +353,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How do you multiply 2x2 matrices?",
+          "name": "How do you multiply two 2×2 matrices?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Multiply each row of the first matrix by each column of the second matrix, then add the products to get the four entries in the answer matrix."
+            "text": "Multiply each row of the first matrix by each column of the second matrix. Each entry in the product is the sum of two scalar products."
           }
         },
         {
           "@type": "Question",
-          "name": "Is 2x2 matrix multiplication easy to learn?",
+          "name": "Can any two 2×2 matrices be multiplied?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. It is usually the easiest matrix multiplication case because there are only four row-by-column calculations to follow."
+            "text": "Yes. Any two 2×2 matrices can be multiplied because the number of columns in the first matrix is 2 and the number of rows in the second matrix is also 2."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I use a calculator for 2x2 matrices?",
+          "name": "Is the product of two 2×2 matrices always 2×2?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. You can use a matrix calculator to check 2x2 answers quickly and also move on to larger matrices when you are ready."
+            "text": "Yes. A 2×2 matrix times another 2×2 matrix gives a 2×2 product matrix."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does AB equal BA for 2×2 matrices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not always. Matrix multiplication usually depends on order, so AB and BA can be different even when both products are defined."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a 2×2 matrix contain fractions or negative numbers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The same 2×2 multiplication formula works with integers, decimals, negative numbers, and fractions."
           }
         }
       ]
@@ -249,7 +399,7 @@
 <body>
     <header>
         <div class="container">
-            <h1>Matrix Calculator</h1>
+            <div class="site-brand">Matrix Calculator</div>
 
             <div class="language-selector">
                 <div class="language-toggle">
@@ -286,11 +436,10 @@
                     <div class="seo-articles-container howto-page" id="article-container">
                         <section class="howto-hero-card">
                             <p class="howto-kicker">2x2 Matrix Basics</p>
-                            <h1>2x2 Matrix Multiplication Step by Step</h1>
+                            <h1>2×2 Matrix Multiplication</h1>
                             <p class="lead">
-                                2x2 multiplication is the easiest place to learn matrix multiplication. You only need
-                                four row-by-column calculations, so it is a fast way to see the pattern and build
-                                confidence.
+                                Learn the formula for multiplying 2x2 matrices, follow complete worked examples, and
+                                use the main matrix multiplication calculator to check your answer.
                             </p>
 
                             <div class="howto-quick-links">
@@ -301,19 +450,104 @@
                         </section>
 
                         <section class="howto-section-card">
-                            <h2>2x2 Matrix Multiplication Rule</h2>
+                            <h2>Quick Answer</h2>
                             <p>
-                                For a 2x2 example, each answer entry comes from one row of Matrix A and one column of
-                                Matrix B.
+                                To multiply two 2×2 matrices, calculate each entry of the result by multiplying one row
+                                of the first matrix by one column of the second matrix and adding the two products.
+                                Every pair of 2×2 matrices can be multiplied, and the result is still a 2×2 matrix.
                             </p>
                             <div class="twobytwo-rule-note">
-                                <strong>Beginner shortcut:</strong> take a row, take a column, multiply the matching
-                                numbers, and add the two products.
+                                <strong>Beginner rule:</strong> take a row from Matrix A, take a column from Matrix B,
+                                multiply matching entries, then add.
                             </div>
                         </section>
 
                         <section class="howto-section-card twobytwo-example">
-                            <h2>Step-by-Step 2x2 Matrix Multiplication</h2>
+                            <h2>The 2×2 Matrix Multiplication Formula</h2>
+                            <p>
+                                Write the two matrices with letters first. This shows exactly where each entry in the
+                                product comes from.
+                            </p>
+
+                            <div class="twobytwo-symbol-row">
+                                <div class="matrix-block">
+                                    <p class="matrix-label">A</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>a</span><span>b</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>c</span><span>d</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="twobytwo-operator">×</div>
+                                <div class="matrix-block">
+                                    <p class="matrix-label">B</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>e</span><span>f</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>g</span><span>h</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="twobytwo-operator">=</div>
+                                <div class="matrix-block">
+                                    <p class="matrix-label">AB</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>ae + bg</span><span>af + bh</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>ce + dg</span><span>cf + dh</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="twobytwo-entry-list">
+                                <li>The top-left entry comes from row 1 of A and column 1 of B.</li>
+                                <li>The top-right entry comes from row 1 of A and column 2 of B.</li>
+                                <li>The bottom-left entry comes from row 2 of A and column 1 of B.</li>
+                                <li>The bottom-right entry comes from row 2 of A and column 2 of B.</li>
+                            </ul>
+                        </section>
+
+                        <section class="howto-section-card twobytwo-example">
+                            <h2>Teaching Figure: Where Each Entry Comes From</h2>
+                            <p>
+                                The four positions in the answer each use a different row-and-column pairing.
+                            </p>
+
+                            <figure>
+                                <div class="twobytwo-grid">
+                                    <article class="twobytwo-step">
+                                        <h3>c11 = row 1 of A × column 1 of B</h3>
+                                        <p class="twobytwo-formula">This goes in the top-left position.</p>
+                                    </article>
+                                    <article class="twobytwo-step">
+                                        <h3>c12 = row 1 of A × column 2 of B</h3>
+                                        <p class="twobytwo-formula">This goes in the top-right position.</p>
+                                    </article>
+                                    <article class="twobytwo-step">
+                                        <h3>c21 = row 2 of A × column 1 of B</h3>
+                                        <p class="twobytwo-formula">This goes in the bottom-left position.</p>
+                                    </article>
+                                    <article class="twobytwo-step">
+                                        <h3>c22 = row 2 of A × column 2 of B</h3>
+                                        <p class="twobytwo-formula">This goes in the bottom-right position.</p>
+                                    </article>
+                                </div>
+                                <figcaption>
+                                    Each result position is tied to one row from A and one column from B.
+                                </figcaption>
+                            </figure>
+                        </section>
+
+                        <section class="howto-section-card twobytwo-example">
+                            <h2>Worked Example 1: Basic Integer Matrices</h2>
                             <p>
                                 Start with two simple matrices and compute one entry at a time.
                             </p>
@@ -376,7 +610,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="twobytwo-formula">(1×5) + (2×7) = 19</p>
+                                    <p class="twobytwo-formula">c11 = (1×5) + (2×7) = 19</p>
                                 </article>
 
                                 <article class="twobytwo-step">
@@ -408,7 +642,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="twobytwo-formula">(1×6) + (2×8) = 22</p>
+                                    <p class="twobytwo-formula">c12 = (1×6) + (2×8) = 22</p>
                                 </article>
 
                                 <article class="twobytwo-step">
@@ -440,7 +674,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="twobytwo-formula">(3×5) + (4×7) = 43</p>
+                                    <p class="twobytwo-formula">c21 = (3×5) + (4×7) = 43</p>
                                 </article>
 
                                 <article class="twobytwo-step">
@@ -472,7 +706,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="twobytwo-formula">(3×6) + (4×8) = 50</p>
+                                    <p class="twobytwo-formula">c22 = (3×6) + (4×8) = 50</p>
                                 </article>
                             </div>
 
@@ -492,18 +726,319 @@
                             </div>
                         </section>
 
+                        <section class="howto-section-card twobytwo-example">
+                            <h2>Worked Example 2: Negative Numbers</h2>
+                            <p>
+                                The formula does not change when negative numbers appear. Keep each sign attached to
+                                its number while you multiply.
+                            </p>
+
+                            <div class="twobytwo-example-shell">
+                                <div class="matrix-block">
+                                    <p class="matrix-label">Matrix A</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>2</span><span>-1</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>3</span><span>4</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="twobytwo-operator">×</div>
+                                <div class="matrix-block">
+                                    <p class="matrix-label">Matrix B</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>1</span><span>5</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>-2</span><span>3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="twobytwo-worked-grid">
+                                <article class="twobytwo-worked-step">
+                                    <h3>c11 uses row 1 of A and column 1 of B</h3>
+                                    <p>c11 = (2×1) + ((-1)×(-2)) = 4</p>
+                                </article>
+                                <article class="twobytwo-worked-step">
+                                    <h3>c12 uses row 1 of A and column 2 of B</h3>
+                                    <p>c12 = (2×5) + ((-1)×3) = 7</p>
+                                </article>
+                                <article class="twobytwo-worked-step">
+                                    <h3>c21 uses row 2 of A and column 1 of B</h3>
+                                    <p>c21 = (3×1) + (4×(-2)) = -5</p>
+                                </article>
+                                <article class="twobytwo-worked-step">
+                                    <h3>c22 uses row 2 of A and column 2 of B</h3>
+                                    <p>c22 = (3×5) + (4×3) = 27</p>
+                                </article>
+                            </div>
+
+                            <div class="twobytwo-result">
+                                <p>So the result of A × B is:</p>
+                                <div class="matrix-block">
+                                    <p class="matrix-label">AB</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>4</span><span>7</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>-5</span><span>27</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card twobytwo-example">
+                            <h2>Worked Example 3: Fractions</h2>
+                            <p>
+                                Fractions work the same way. The main matrix multiplication calculator can help you
+                                check fraction inputs such as <code>1/2</code> and <code>-1/3</code>.
+                            </p>
+
+                            <div class="twobytwo-example-shell">
+                                <div class="matrix-block">
+                                    <p class="matrix-label">Matrix A</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>1/2</span><span>1</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>2</span><span>-1/3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="twobytwo-operator">×</div>
+                                <div class="matrix-block">
+                                    <p class="matrix-label">Matrix B</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>2</span><span>0</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>3</span><span>6</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="twobytwo-worked-grid">
+                                <article class="twobytwo-worked-step">
+                                    <h3>c11 uses row 1 of A and column 1 of B</h3>
+                                    <p>c11 = (1/2×2) + (1×3) = 4</p>
+                                </article>
+                                <article class="twobytwo-worked-step">
+                                    <h3>c12 uses row 1 of A and column 2 of B</h3>
+                                    <p>c12 = (1/2×0) + (1×6) = 6</p>
+                                </article>
+                                <article class="twobytwo-worked-step">
+                                    <h3>c21 uses row 2 of A and column 1 of B</h3>
+                                    <p>c21 = (2×2) + ((-1/3)×3) = 3</p>
+                                </article>
+                                <article class="twobytwo-worked-step">
+                                    <h3>c22 uses row 2 of A and column 2 of B</h3>
+                                    <p>c22 = (2×0) + ((-1/3)×6) = -2</p>
+                                </article>
+                            </div>
+
+                            <div class="twobytwo-result">
+                                <p>So the result of A × B is:</p>
+                                <div class="matrix-block">
+                                    <p class="matrix-label">AB</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span>4</span><span>6</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>3</span><span>-2</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
                         <section class="howto-section-card">
-                            <h2>Practice 2x2 Matrix Multiplication</h2>
+                            <h2>A Simple Position Pattern</h2>
+                            <p>
+                                This position pattern helps you remember which row and column create each answer entry.
+                                It is not a shortcut that skips the calculation.
+                            </p>
+
+                            <div class="twobytwo-position-map">
+                                <article class="twobytwo-position-card">
+                                    <h3>Top-left</h3>
+                                    <p>row 1 × column 1</p>
+                                </article>
+                                <article class="twobytwo-position-card">
+                                    <h3>Top-right</h3>
+                                    <p>row 1 × column 2</p>
+                                </article>
+                                <article class="twobytwo-position-card">
+                                    <h3>Bottom-left</h3>
+                                    <p>row 2 × column 1</p>
+                                </article>
+                                <article class="twobytwo-position-card">
+                                    <h3>Bottom-right</h3>
+                                    <p>row 2 × column 2</p>
+                                </article>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card twobytwo-example">
+                            <h2>Practice Problems</h2>
+                            <p>
+                                Try each multiplication first, then open the answer.
+                            </p>
+
+                            <div class="twobytwo-practice-grid">
+                                <article class="twobytwo-practice-card">
+                                    <h3>Practice 1</h3>
+                                    <div class="twobytwo-symbol-row">
+                                        <div class="matrix-block">
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>1</span><span>0</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>2</span><span>1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="twobytwo-operator">×</div>
+                                        <div class="matrix-block">
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>3</span><span>4</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>5</span><span>6</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <details>
+                                        <summary>Show answer</summary>
+                                        <div class="twobytwo-result">
+                                            <div class="matrix-block">
+                                                <p class="matrix-label">Answer</p>
+                                                <div class="matrix">
+                                                    <div class="row">
+                                                        <span>3</span><span>4</span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <span>11</span><span>14</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </details>
+                                </article>
+
+                                <article class="twobytwo-practice-card">
+                                    <h3>Practice 2</h3>
+                                    <div class="twobytwo-symbol-row">
+                                        <div class="matrix-block">
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>2</span><span>-1</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>0</span><span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="twobytwo-operator">×</div>
+                                        <div class="matrix-block">
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>1</span><span>4</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>-2</span><span>5</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <details>
+                                        <summary>Show answer</summary>
+                                        <div class="twobytwo-result">
+                                            <div class="matrix-block">
+                                                <p class="matrix-label">Answer</p>
+                                                <div class="matrix">
+                                                    <div class="row">
+                                                        <span>4</span><span>3</span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <span>-6</span><span>15</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </details>
+                                </article>
+
+                                <article class="twobytwo-practice-card">
+                                    <h3>Practice 3</h3>
+                                    <div class="twobytwo-symbol-row">
+                                        <div class="matrix-block">
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>1/2</span><span>0</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>1</span><span>2</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="twobytwo-operator">×</div>
+                                        <div class="matrix-block">
+                                            <div class="matrix">
+                                                <div class="row">
+                                                    <span>4</span><span>2</span>
+                                                </div>
+                                                <div class="row">
+                                                    <span>3</span><span>-1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <details>
+                                        <summary>Show answer</summary>
+                                        <div class="twobytwo-result">
+                                            <div class="matrix-block">
+                                                <p class="matrix-label">Answer</p>
+                                                <div class="matrix">
+                                                    <div class="row">
+                                                        <span>2</span><span>1</span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <span>10</span><span>0</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </details>
+                                </article>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Practice 2×2 Matrix Multiplication</h2>
                             <p>
                                 Practice is the fastest way to make row-by-column multiplication feel natural. Try a
                                 few rounds and see how quickly the pattern starts to stick.
                             </p>
 
                             <div class="practice-feature">
-                                <h3>Practice with a 2x2 Matrix Game</h3>
+                                <h3>Practice with a 2×2 Matrix Game</h3>
                                 <p>
                                     Use this beginner-friendly game to build speed, check your understanding, and make
-                                    the 2x2 pattern easier to remember.
+                                    the 2×2 pattern easier to remember.
                                 </p>
                                 <a class="practice-link" href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html"
                                     target="_blank" rel="noopener noreferrer">Open the Practice Game</a>
@@ -511,10 +1046,11 @@
                         </section>
 
                         <section class="howto-section-card howto-calculator-card">
-                            <h2>Use the 2x2 Matrix Calculator</h2>
+                            <h2>Check Your Answer With the Calculator</h2>
                             <p>
-                                When you want a quick answer or want to move on to larger matrix sizes, use the main
-                                matrix multiplication calculator to check your work.
+                                This page teaches the 2×2 method without embedding a calculator. To check your work,
+                                open the main matrix multiplication calculator and enter integers, decimals, negative
+                                numbers, or fractions.
                             </p>
 
                             <div class="howto-button-row">
@@ -525,16 +1061,19 @@
                         </section>
 
                         <section class="howto-section-card">
-                            <h2>Common Mistakes</h2>
-                            <ul class="howto-mistakes-list">
-                                <li>Mixing up which row from A should match which column from B</li>
-                                <li>Multiplying matching positions directly instead of using row by column</li>
-                                <li>Forgetting to add the two products after multiplying</li>
+                            <h2>Common 2×2 Mistakes</h2>
+                            <ul class="twobytwo-mistake-list">
+                                <li>Multiplying entries in the same positions.</li>
+                                <li>Using a row from both matrices instead of a row and a column.</li>
+                                <li>Putting a correct number in the wrong result position.</li>
+                                <li>Losing a negative sign.</li>
+                                <li>Forgetting to add the two scalar products.</li>
+                                <li>Assuming AB = BA.</li>
                             </ul>
                         </section>
 
                         <section class="howto-section-card internal-links-block">
-                            <h2>Related Matrix Multiplication Pages</h2>
+                            <h2>Related Guides</h2>
                             <ul class="howto-related-list">
                                 <li><a href="/en/how-to-multiply-matrices.html">How to multiply matrices</a></li>
                                 <li><a href="/en/3x3-matrix-multiplication-with-steps.html">3x3 matrix multiplication
@@ -548,31 +1087,50 @@
                             <h2>Frequently Asked Questions</h2>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">How do you multiply 2x2 matrices?</h3>
+                                <h3 itemprop="name">How do you multiply two 2×2 matrices?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
-                                        Multiply each row of the first matrix by each column of the second matrix, then
-                                        add the products to get the four entries in the answer matrix.
+                                        Multiply each row of the first matrix by each column of the second matrix. Each
+                                        entry in the product is the sum of two scalar products.
                                     </p>
                                 </div>
                             </div>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">Is 2x2 matrix multiplication easy to learn?</h3>
+                                <h3 itemprop="name">Can any two 2×2 matrices be multiplied?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
-                                        Yes. It is usually the easiest matrix multiplication case because there are only
-                                        four row-by-column calculations to follow.
+                                        Yes. Any two 2×2 matrices can be multiplied because the number of columns in the
+                                        first matrix is 2 and the number of rows in the second matrix is also 2.
                                     </p>
                                 </div>
                             </div>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">Can I use a calculator for 2x2 matrices?</h3>
+                                <h3 itemprop="name">Is the product of two 2×2 matrices always 2×2?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
-                                        Yes. You can use a matrix calculator to check 2x2 answers quickly and also move
-                                        on to larger matrices when you are ready.
+                                        Yes. A 2×2 matrix times another 2×2 matrix gives a 2×2 product matrix.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                <h3 itemprop="name">Does AB equal BA for 2×2 matrices?</h3>
+                                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                    <p itemprop="text">
+                                        Not always. Matrix multiplication usually depends on order, so AB and BA can be
+                                        different even when both products are defined.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                <h3 itemprop="name">Can a 2×2 matrix contain fractions or negative numbers?</h3>
+                                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                    <p itemprop="text">
+                                        Yes. The same 2×2 multiplication formula works with integers, decimals,
+                                        negative numbers, and fractions.
                                     </p>
                                 </div>
                             </div>
