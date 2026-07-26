@@ -20,21 +20,20 @@ window.MathJax = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO 矩阵乘法专页 (修改) -->
     <meta name="description"
-        content="Use this free matrix multiplication calculator to multiply 2x2, 3x3, and larger matrices online. Get instant results, step-by-step solutions, examples, and matrix multiplication formulas.">
+        content="Multiply two matrices online and see the result step by step. Supports compatible rectangular matrices, integers, decimals, fractions, and negative numbers.">
     <link rel="canonical" href="https://matrixcalcu.com/en/matrix-multiplication-calculator.html">
 
     <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-multiplication-calculator.html" />
     <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-multiplication-calculator.html" />
     <link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/en/matrix-multiplication-calculator.html" />
-    <meta property="og:title" content="Matrix Multiplication Calculator With Steps (2x2, 3x3, Online Free)">
+    <meta property="og:title" content="Matrix Multiplication Calculator With Steps | MatrixCalcu">
     <meta property="og:description"
-        content="Use this free matrix multiplication calculator to multiply 2x2, 3x3, and larger matrices online. Get instant results, step-by-step solutions, examples, and matrix multiplication formulas.">
-    <link rel="canonical" href="https://matrixcalcu.com/en/matrix-multiplication-calculator.html">
+        content="Multiply two matrices online and see the result step by step. Supports compatible rectangular matrices, integers, decimals, fractions, and negative numbers.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://matrixcalcu.com/en/matrix-multiplication-calculator.html">
 
-    <title>Matrix Multiplication Calculator With Steps (2x2, 3x3, Online Free)</title>
+    <title>Matrix Multiplication Calculator With Steps | MatrixCalcu</title>
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
@@ -65,16 +64,140 @@ window.MathJax = {
     }
     </script>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I multiply two matrices with this calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Choose the row and column counts for A and B, enter the values, then click A × B. The calculator displays the product matrix and calculation steps."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What matrix sizes can be multiplied?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Matrix A can be multiplied by matrix B when the number of columns in A equals the number of rows in B. For more detail, see the matrix multiplication guide."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the calculator show steps?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The result area includes step-by-step row-by-column calculations for the matrix product."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I enter fractions and decimals?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can enter whole numbers, negative numbers, decimals, and fractions such as 1/2 or -3/4."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why can't my two matrices be multiplied?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The most common reason is a dimension mismatch: the number of columns in A does not equal the number of rows in B. Check the row and column settings before calculating."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is matrix multiplication commutative?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually no. AB and BA can give different results, and one order may be defined while the other is not. The how-to guide explains the rule in more detail."
+          }
+        }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="/css/calculator.css">
 
-    
+    <style>
+        .site-brand {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            font-weight: 700;
+        }
+
+        .tool-guide-grid,
+        .tool-dimension-list,
+        .tool-feature-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .tool-dimension-list {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin: 16px 0;
+        }
+
+        .tool-dimension-card {
+            padding: 14px;
+            border: 1px solid #d6e4f1;
+            border-radius: 12px;
+            background: #fbfdff;
+        }
+
+        .tool-dimension-card strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #24456a;
+        }
+
+        .tool-feature-list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .tool-feature-list li {
+            padding: 12px 14px;
+            border: 1px solid #d6e4f1;
+            border-radius: 12px;
+            background: #fbfdff;
+        }
+
+        .tool-note-box {
+            padding: 14px 16px;
+            border: 1px solid #c8d9ee;
+            border-radius: 12px;
+            background: #f7fbff;
+        }
+
+        @media (max-width: 640px) {
+            .site-brand {
+                font-size: 1.3rem;
+                margin: 0;
+                flex: 1;
+                text-align: left;
+            }
+
+            .tool-dimension-list,
+            .tool-feature-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 
 </head>
 
 <body>
     <header>
         <div class="container">
-            <h1>Matrix Calculator</h1>
+            <div class="site-brand">Matrix Calculator</div>
 
             <div class="language-selector">
                 <div class="language-toggle">
@@ -195,8 +318,7 @@ window.MathJax = {
                             </div>
 
                             <div class="input-hint">
-                                Supports: fractions (1/2), decimals (0.5), constants (pi, e). Empty cells are treated as
-                                0.
+                                Enter matrices A and B, choose their dimensions, and calculate A × B. The number of columns in matrix A must equal the number of rows in matrix B. Supports integers, negative numbers, decimals, and fractions such as 1/2.
                             </div>
 
                             <div class="mobile-op-onebar" id="mobile-op-onebar">
@@ -410,24 +532,24 @@ window.MathJax = {
                             <section class="learn-matrix-section">
                                 <h2>Learn Matrix Multiplication</h2>
                                 <p class="learn-subtext">
-                                    New to matrix multiplication? Start with a simple guide, then practice with step-by-step examples.
+                                    Need the method behind the calculator? Use these focused guides for the rules and worked examples.
                                 </p>
                             
                                 <div class="learn-grid">
                             
                                     <a href="/en/how-to-multiply-matrices.html" class="learn-card">
-                                        <h3>Full Guide</h3>
-                                        <p>Understand the rules and concepts of matrix multiplication.</p>
+                                        <h3>How to Multiply Matrices</h3>
+                                        <p>Learn how matrix multiplication works before checking your answer here.</p>
                                     </a>
                             
                                     <a href="/en/2x2-matrix-multiplication-calculator.html" class="learn-card">
-                                        <h3>2x2 Step-by-Step</h3>
-                                        <p>Start with the easiest example and learn the process quickly.</p>
+                                        <h3>2x2 Matrix Multiplication</h3>
+                                        <p>Follow a complete 2×2 example with every entry explained.</p>
                                     </a>
                             
                                     <a href="/en/3x3-matrix-multiplication-with-steps.html" class="learn-card">
-                                        <h3>3x3 With Steps</h3>
-                                        <p>See detailed steps for more complex matrix multiplication.</p>
+                                        <h3>3x3 Matrix Multiplication With Steps</h3>
+                                        <p>See all nine steps in a 3×3 example.</p>
                                     </a>
                             
                                 </div>
@@ -444,139 +566,121 @@ window.MathJax = {
                     </div>
 
                     <div class="seo-articles-container" id="article-container">
-                        <!-- 替换为矩阵乘法专属SEO文章内容 (从提供的文章提取，移除多余样式和脚本) -->
                         <article class="seo-content">
                             <section>
-                                <h1>Matrix Multiplication Calculator With Steps (2x2, 3x3, and More)</h1>
+                                <h1>Matrix Multiplication Calculator</h1>
                                 <p class="lead">
-                                    Use this free <strong>matrix multiplication calculator with steps</strong> to multiply
-                                    <strong>2x2 matrices, 3x3 matrices, and larger matrices online</strong>. Enter your matrix values,
-                                    click calculate, and get the result instantly with <strong>step-by-step solutions</strong>,
-                                    formulas, and examples. This online tool supports integers, decimals, and negative numbers.
+                                    Use this <strong>matrix multiplication calculator with steps</strong> to multiply
+                                    compatible rectangular matrices online. Enter matrix A and matrix B, run A × B, and
+                                    review both the result matrix and the row-by-column calculations.
                                 </p>
                             </section>
                         
                             <section>
-                                <h2>Matrix Multiplication Calculator for 2x2, 3x3, and Larger Matrices</h2>
+                                <h2>How to Use the Matrix Multiplication Calculator</h2>
+                                <ol>
+                                    <li>Choose the number of rows and columns for matrix A.</li>
+                                    <li>Choose the number of rows and columns for matrix B.</li>
+                                    <li>Enter the matrix values.</li>
+                                    <li>Click A × B.</li>
+                                    <li>Review the result and calculation steps.</li>
+                                </ol>
                                 <p>
-                                    This online matrix multiplication calculator works for <strong>2x2 matrix multiplication</strong>,
-                                    <strong>3x3 matrix multiplication</strong>, and larger matrices. Whether you need a
-                                    <strong>matrix multiplication calculator with solution</strong>, a
-                                    <strong>step-by-step matrix multiplication example</strong>, or a fast way to
-                                    <strong>multiply matrices online free</strong>, this tool is designed to help.
+                                    The calculator is designed for quick matrix products and step-by-step verification,
+                                    not as a replacement for the full tutorial pages.
                                 </p>
-                                <ul>
-                                    <li><strong>2x2 Matrix Multiplication Calculator:</strong> Multiply small matrices quickly and check each
-                                        entry step by step.</li>
-                                    <li><strong>3x3 Matrix Multiplication Calculator:</strong> Solve larger examples online with clear
-                                        intermediate steps.</li>
-                                    <li><strong>Matrix Multiplication With Steps:</strong> Understand how each row and column produce the final
-                                        result.</li>
-                                    <li><strong>Multiply Matrices Online Free:</strong> No signup, no download, instant results.</li>
+                            </section>
+                        
+                            <section>
+                                <h2>Matrix Dimension Requirement</h2>
+                                <p>
+                                    If A is m×n and B is n×p, then AB is defined and the result is m×p. In other words,
+                                    the columns of A must match the rows of B.
+                                </p>
+                                <div class="tool-dimension-list">
+                                    <div class="tool-dimension-card">
+                                        <strong>2×3 × 3×2</strong>
+                                        <span>valid, result 2×2</span>
+                                    </div>
+                                    <div class="tool-dimension-card">
+                                        <strong>3×1 × 1×3</strong>
+                                        <span>valid, result 3×3</span>
+                                    </div>
+                                    <div class="tool-dimension-card">
+                                        <strong>2×3 × 2×2</strong>
+                                        <span>not valid</span>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h2>Supported Inputs</h2>
+                                <ul class="tool-feature-list">
+                                    <li>whole numbers</li>
+                                    <li>negative numbers</li>
+                                    <li>decimals</li>
+                                    <li>fractions such as 1/2 and -3/4</li>
+                                    <li>compatible rectangular matrices</li>
                                 </ul>
                             </section>
-                        
+
                             <section>
-                                <h2>How to Multiply Matrices: Rules, Formula, and Step-by-Step Method</h2>
-                                <p>Matrix multiplication is the core operation in linear algebra. Unlike scalar
-                                    multiplication, multiplying matrices involves the <strong>dot product</strong> of
-                                    rows and columns.</p>
-
-                                <h3>1. The Condition for Multiplication</h3>
-                                <p>Can you multiply any two matrices? No. You must check the dimensions first:</p>
-
-                                <div class="rule-box">
-                                    <strong>The Rule:</strong> The number of <strong>Columns</strong> in the first
-                                    matrix \( A \) must equal the number of <strong>Rows</strong> in the second matrix
-                                    \( B \).
-                                </div>
-
-                                <p>If Matrix \( A \) is size \( m \times n \) and Matrix \( B \) is size \( n \times p
-                                    \), the resulting Matrix \( C \) will be size \( m \times p \).</p>
-                                <div class="math-display">
-                                    $$ (m \times \mathbf{n}) \cdot (\mathbf{n} \times p) \rightarrow (m \times p) $$
-                                </div>
-
-                                <h3>2. The Formula</h3>
-                                <p>Let \( C = AB \). The element at row \( i \) and column \( j \) in the resulting
-                                    matrix \( C \) is calculated using the following summation:</p>
-                                <div class="math-display">
-                                    $$ c_{ij} = \sum_{k=1}^{n} a_{ik}b_{kj} = a_{i1}b_{1j} + a_{i2}b_{2j} + \dots +
-                                    a_{in}b_{nj} $$
-                                </div>
-                                <p>In simple terms: <strong>Multiply the elements of Row \( i \) from the first matrix
-                                        by the corresponding elements of Column \( j \) from the second matrix, then add
-                                        them up.</strong></p>
+                                <h2>Results and Calculation Steps</h2>
+                                <p>
+                                    After you calculate A × B, the result appears in the Calculation Results area below
+                                    the operation buttons. The step area shows the row-by-column calculations used to
+                                    produce the entries of the product matrix, which is useful when checking homework or
+                                    manual work.
+                                </p>
+                                <p>
+                                    Fraction and decimal output follows the calculator's current calculation behavior.
+                                    Use the displayed steps to verify how each result entry was formed.
+                                </p>
                             </section>
 
                             <section>
-                                <h2>Matrix Multiplication Example (Step-by-Step)</h2>
-                                <p>To clarify the process, let's multiply two \( 2 \times 2 \) matrices.</p>
-                                <p><strong>Problem:</strong> Calculate \( A \times B \).</p>
-                                <div class="math-display">
-                                    $$ A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}, \quad B = \begin{bmatrix} 5 & 6
-                                    \\ 7 & 8 \end{bmatrix} $$
-                                </div>
-
-                                <h3>Calculation Process:</h3>
-
-                                <div class="step-card">
-                                    <h4>Step 1: Top-Left Element \( c_{11} \)</h4>
-                                    <p>Dot product of \( A \)'s <strong>1st Row</strong> [1, 2] and \( B \)'s
-                                        <strong>1st Column</strong> [5, 7]:
-                                    </p>
-                                    <p>$$ c_{11} = (1 \times 5) + (2 \times 7) = 5 + 14 = \mathbf{19} $$</p>
-                                </div>
-
-                                <div class="step-card">
-                                    <h4>Step 2: Top-Right Element \( c_{12} \)</h4>
-                                    <p>Dot product of \( A \)'s <strong>1st Row</strong> [1, 2] and \( B \)'s
-                                        <strong>2nd Column</strong> [6, 8]:
-                                    </p>
-                                    <p>$$ c_{12} = (1 \times 6) + (2 \times 8) = 6 + 16 = \mathbf{22} $$</p>
-                                </div>
-
-                                <div class="step-card">
-                                    <h4>Step 3: Bottom-Left Element \( c_{21} \)</h4>
-                                    <p>Dot product of \( A \)'s <strong>2nd Row</strong> [3, 4] and \( B \)'s
-                                        <strong>1st Column</strong> [5, 7]:
-                                    </p>
-                                    <p>$$ c_{21} = (3 \times 5) + (4 \times 7) = 15 + 28 = \mathbf{43} $$</p>
-                                </div>
-
-                                <div class="step-card">
-                                    <h4>Step 4: Bottom-Right Element \( c_{22} \)</h4>
-                                    <p>Dot product of \( A \)'s <strong>2nd Row</strong> [3, 4] and \( B \)'s
-                                        <strong>2nd Column</strong> [6, 8]:
-                                    </p>
-                                    <p>$$ c_{22} = (3 \times 6) + (4 \times 8) = 18 + 32 = \mathbf{50} $$</p>
-                                </div>
-
-                                <h3>Final Result:</h3>
-                                <div class="math-display">
-                                    $$ C = \begin{bmatrix} 19 & 22 \\ 43 & 50 \end{bmatrix} $$
-                                </div>
-                            </section>
-
-                            <section>
-                                <h2>Key Properties of Matrix Multiplication</h2>
+                                <h2>Common Input and Dimension Errors</h2>
                                 <ul>
-                                    <li>
-                                        <strong>Not Commutative (Order Matters):</strong>
-                                        This is the most common mistake. Unlike regular numbers where \( 2 \times 3 = 3
-                                        \times 2 \), in matrices:
-                                        $$ AB \neq BA $$
-                                        Changing the order often results in a different value or an undefined operation.
-                                    </li>
-                                    <li>
-                                        <strong>Associative Property:</strong>
-                                        $$ (AB)C = A(BC) $$
-                                    </li>
-                                    <li>
-                                        <strong>Identity Matrix:</strong>
-                                        Multiplying by the Identity Matrix \( I \) leaves the matrix unchanged:
-                                        $$ AI = IA = A $$
-                                    </li>
+                                    <li>Matrix A columns do not equal Matrix B rows.</li>
+                                    <li>A matrix cell is empty.</li>
+                                    <li>A value is entered in an unsupported format.</li>
+                                    <li>A fraction has zero as its denominator.</li>
+                                    <li>Rows and columns are set incorrectly.</li>
+                                </ul>
+                            </section>
+
+                            <section>
+                                <h2>Short Example</h2>
+                                <div class="tool-note-box">
+                                    A 2×3 matrix can be multiplied by a 3×1 matrix, producing a 2×1 result.
+                                </div>
+                                <p>
+                                    For complete worked examples, use the tutorial links below instead of treating this
+                                    calculator page as a long lesson.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2>Learn Matrix Multiplication</h2>
+                                <p>
+                                    Learn how matrix multiplication works in the general guide, follow a complete 2×2
+                                    example, or see all nine steps in a 3×3 example.
+                                </p>
+                                <ul>
+                                    <li><a href="/en/how-to-multiply-matrices.html">Learn how matrix multiplication works</a></li>
+                                    <li><a href="/en/2x2-matrix-multiplication-calculator.html">Follow a complete 2×2 example</a></li>
+                                    <li><a href="/en/3x3-matrix-multiplication-with-steps.html">See all nine steps in a 3×3 example</a></li>
+                                </ul>
+                            </section>
+
+                            <section>
+                                <h2>Why Use This Calculator?</h2>
+                                <ul class="tool-feature-list">
+                                    <li>quick result</li>
+                                    <li>step-by-step verification</li>
+                                    <li>fractions and decimals</li>
+                                    <li>rectangular matrix support</li>
+                                    <li>useful for checking manual work</li>
                                 </ul>
                             </section>
 
@@ -584,57 +688,68 @@ window.MathJax = {
                                 <h2>Frequently Asked Questions (FAQ)</h2>
 
                                 <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                    <h3 itemprop="name">Q: Why do I get a "Dimension Error"?</h3>
+                                    <h3 itemprop="name">How do I multiply two matrices with this calculator?</h3>
                                     <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                        <p itemprop="text">This happens when the dimensions are incompatible. Ensure the
-                                            number of <strong>columns in the first matrix</strong> exactly equals the
-                                            number of <strong>rows in the second matrix</strong>. For example, a \( 2
-                                            \times 3 \) matrix cannot be multiplied by another \( 2 \times 3 \) matrix.
+                                        <p itemprop="text">
+                                            Choose the row and column counts for A and B, enter the values, then click
+                                            A × B. The calculator displays the product matrix and calculation steps.
                                         </p>
                                     </div>
                                 </div>
 
                                 <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                    <h3 itemprop="name">Q: Is Matrix Multiplication Commutative?</h3>
+                                    <h3 itemprop="name">What matrix sizes can be multiplied?</h3>
                                     <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                        <p itemprop="text">No, matrix multiplication is generally <strong>not
-                                                commutative</strong>. This means \( AB \) is usually not equal to \( BA
-                                            \).</p>
+                                        <p itemprop="text">
+                                            Matrix A can be multiplied by matrix B when the number of columns in A equals
+                                            the number of rows in B. For more detail, see the
+                                            <a href="/en/how-to-multiply-matrices.html">matrix multiplication guide</a>.
+                                        </p>
                                     </div>
                                 </div>
 
                                 <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                    <h3 itemprop="name">Q: What is this used for in real life?</h3>
-                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                        <p itemprop="text">It is fundamental in Computer Graphics (for 3D rotations and
-                                            scaling), Physics simulations, Quantum Mechanics, and formatting weights in
-                                            Neural Networks (AI).</p>
-                                    </div>
-                                </div>
-                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                    <h3 itemprop="name">Q: Can this calculator solve 2x2 and 3x3 matrix multiplication?</h3>
+                                    <h3 itemprop="name">Does the calculator show steps?</h3>
                                     <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                         <p itemprop="text">
-                                            Yes. This matrix multiplication calculator can solve 2x2, 3x3, and larger matrices as long as the number of
-                                            columns in the first matrix equals the number of rows in the second matrix. It provides instant results and
-                                            works for a wide range of matrix sizes.
+                                            Yes. The result area includes step-by-step row-by-column calculations for
+                                            the matrix product.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                    <h3 itemprop="name">Can I enter fractions and decimals?</h3>
+                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                        <p itemprop="text">
+                                            Yes. You can enter whole numbers, negative numbers, decimals, and fractions
+                                            such as 1/2 or -3/4.
                                         </p>
                                     </div>
                                 </div>
                                 
                                 <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                    <h3 itemprop="name">Q: Does this matrix multiplication calculator show step-by-step solutions?</h3>
+                                    <h3 itemprop="name">Why can't my two matrices be multiplied?</h3>
                                     <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                         <p itemprop="text">
-                                            Yes. This page includes step-by-step explanations, formulas, and worked examples to help you understand how
-                                            matrix multiplication is performed. You can follow each step to see how rows and columns are combined to
-                                            produce the final result.
+                                            The most common reason is a dimension mismatch: the number of columns in A
+                                            does not equal the number of rows in B. Check the row and column settings
+                                            before calculating.
                                         </p>
                                     </div>
                                 </div>
-                                <!-- INTERNAL_LINKS_BOTTOM_START -->
-<p class="internal-links-note">Matrix multiplication is closely related to <a href="/en/matrix-rref-calculator.html">row reduction (RREF)</a>, <a href="/en/matrix-upper-triangular-calculator.html">upper triangular form</a>, and <a href="/en/matrix-lu-decomposition-calculator.html">LU decomposition</a>.</p>
-<!-- INTERNAL_LINKS_BOTTOM_END -->
+
+                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                    <h3 itemprop="name">Is matrix multiplication commutative?</h3>
+                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                        <p itemprop="text">
+                                            Usually no. AB and BA can give different results, and one order may be
+                                            defined while the other is not. The
+                                            <a href="/en/how-to-multiply-matrices.html">how-to guide</a> explains the
+                                            rule in more detail.
+                                        </p>
+                                    </div>
+                                </div>
                             </section>
                         </article>
                         
