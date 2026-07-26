@@ -5,20 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Learn how to multiply matrices step by step with clear rules and examples. Includes 2x2 and 3x3 cases.">
+        content="Learn how to multiply matrices using the row-by-column rule. Understand dimension compatibility, result size, worked examples, and common mistakes.">
     <link rel="canonical" href="https://matrixcalcu.com/en/how-to-multiply-matrices.html">
 
     <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/how-to-multiply-matrices.html">
+    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/how-to-multiply-matrices.html">
     <link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/en/how-to-multiply-matrices.html">
 
-    <meta property="og:title" content="How to Multiply Matrices (Step-by-Step Guide + Examples)">
+    <meta property="og:title" content="How to Multiply Matrices: Rules, Steps and Examples | MatrixCalcu">
     <meta property="og:description"
-        content="Learn how to multiply matrices step by step with clear rules and examples. Includes 2x2 and 3x3 cases.">
+        content="Learn how to multiply matrices using the row-by-column rule. Understand dimension compatibility, result size, worked examples, and common mistakes.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://matrixcalcu.com/en/how-to-multiply-matrices.html">
 
-    <title>How to Multiply Matrices (Step-by-Step Guide + Examples)</title>
+    <title>How to Multiply Matrices: Rules, Steps and Examples | MatrixCalcu</title>
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -47,6 +48,15 @@
             font-size: 0.95rem;
             font-weight: 700;
             color: #35577e;
+        }
+
+        .site-brand {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            font-weight: 700;
+            line-height: 1.2;
         }
 
         .matrix-rule-visual .matrix {
@@ -107,6 +117,162 @@
             color: #35577e;
         }
 
+        .dimension-figure,
+        .rectangular-example {
+            margin: 18px 0 0;
+        }
+
+        .dimension-grid,
+        .example-step-grid,
+        .result-size-grid,
+        .next-step-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .dimension-grid,
+        .next-step-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .example-step-grid,
+        .result-size-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-top: 18px;
+        }
+
+        .dimension-card,
+        .example-step-card,
+        .result-size-card,
+        .next-step-card {
+            padding: 18px;
+            border: 1px solid #d6e4f1;
+            border-radius: 16px;
+            background: #fbfdff;
+            box-shadow: 0 8px 18px rgba(52, 86, 125, 0.06);
+        }
+
+        .dimension-card.valid {
+            border-color: #9fc8ad;
+            background: #f5fbf7;
+        }
+
+        .dimension-card.invalid {
+            border-color: #dfb1aa;
+            background: #fff8f7;
+        }
+
+        .dimension-expression,
+        .example-expression,
+        .result-size-rule {
+            margin: 12px 0;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #eef5fc;
+            color: #24456a;
+            font-weight: 700;
+            text-align: center;
+            overflow-wrap: anywhere;
+        }
+
+        .dim-match {
+            color: #0f6b37;
+            box-shadow: inset 0 -0.25em 0 rgba(96, 177, 122, 0.24);
+        }
+
+        .dim-mismatch {
+            color: #9a2f21;
+            box-shadow: inset 0 -0.25em 0 rgba(210, 99, 82, 0.2);
+        }
+
+        .dimension-pair {
+            display: grid;
+            grid-template-columns: minmax(130px, 1fr) auto minmax(130px, 1fr);
+            gap: 10px;
+            align-items: stretch;
+            margin: 12px 0;
+        }
+
+        .dimension-matrix {
+            padding: 12px;
+            border: 1px solid #d6e4f1;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .dimension-matrix strong,
+        .dimension-check strong,
+        .dimension-result strong,
+        .dimension-conclusion strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #243d5a;
+        }
+
+        .dimension-matrix p,
+        .dimension-check p,
+        .dimension-result p,
+        .dimension-conclusion p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .dimension-times {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7f94;
+            font-weight: 700;
+        }
+
+        .dimension-unit {
+            white-space: nowrap;
+        }
+
+        .dimension-check,
+        .dimension-result,
+        .dimension-conclusion {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .dimension-card.valid .dimension-check {
+            border: 1px solid #9fc8ad;
+        }
+
+        .dimension-card.invalid .dimension-check {
+            border: 1px solid #dfb1aa;
+        }
+
+        .dimension-result {
+            border: 1px solid #d6e4f1;
+        }
+
+        .dimension-conclusion {
+            border: 1px solid #dfb1aa;
+        }
+
+        .dimension-figure figcaption,
+        .rectangular-example figcaption {
+            margin-top: 12px;
+            color: #456483;
+            font-size: 0.96rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .rectangular-example .matrix-rule-visual {
+            margin-top: 14px;
+        }
+
+        .example-step-card h3,
+        .next-step-card h3 {
+            margin: 0 0 10px;
+            color: #35577e;
+        }
+
         @media (max-width: 640px) {
             .matrix-rule-visual {
                 gap: 12px;
@@ -122,6 +288,28 @@
                 min-width: 36px;
                 padding: 8px 0;
             }
+
+            .site-brand {
+                font-size: 1.3rem;
+                margin: 0;
+                flex: 1;
+                text-align: left;
+            }
+
+            .dimension-grid,
+            .example-step-grid,
+            .result-size-grid,
+            .next-step-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dimension-pair {
+                grid-template-columns: 1fr;
+            }
+
+            .dimension-times {
+                min-height: 24px;
+            }
         }
     </style>
 
@@ -132,34 +320,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is the rule for matrix multiplication?",
+          "name": "Can any two matrices be multiplied?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The rule is that the number of columns in the first matrix must equal the number of rows in the second matrix. Each entry in the answer comes from multiplying a row by a column and adding the products."
+            "text": "No. Two matrices can be multiplied only when the number of columns in the first matrix equals the number of rows in the second matrix."
           }
         },
         {
           "@type": "Question",
-          "name": "When can you multiply matrices?",
+          "name": "How do you know the size of the result matrix?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You can multiply matrices when their inner dimensions match. For example, a 2x3 matrix can multiply a 3x4 matrix."
+            "text": "If A is an m by n matrix and B is an n by p matrix, then AB is an m by p matrix. The outside dimensions become the result size."
           }
         },
         {
           "@type": "Question",
-          "name": "Why is matrix multiplication not commutative?",
+          "name": "What does row by column mean?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Matrix multiplication is not commutative because changing the order changes which rows and columns are paired. As a result, AB and BA usually produce different results."
+            "text": "Row by column means choosing one row from the first matrix, choosing one column from the second matrix, multiplying matching entries, and adding the products."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I use a calculator for larger matrices?",
+          "name": "Does the order of matrix multiplication matter?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. A matrix multiplication calculator is a practical way to check larger matrices quickly and accurately."
+            "text": "Yes. Matrix multiplication order matters because AB and BA can have different sizes, different values, or one order may be undefined."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is matrix multiplication the same as multiplying matching entries?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Matrix multiplication uses dot products of rows and columns. It is not the same as multiplying entries in the same positions."
           }
         }
       ]
@@ -170,7 +366,7 @@
 <body>
     <header>
         <div class="container">
-            <h1>Matrix Calculator</h1>
+            <div class="site-brand">Matrix Calculator</div>
 
             <div class="language-selector">
                 <div class="language-toggle">
@@ -206,11 +402,11 @@
                     <div class="seo-articles-container howto-page" id="article-container">
                         <section class="howto-hero-card">
                             <p class="howto-kicker">Matrix Multiplication Guide</p>
-                            <h1>How to Multiply Matrices Step by Step</h1>
+                            <h1>How to Multiply Matrices</h1>
                             <p class="lead">
-                                Learn the matrix multiplication rule in a clean, beginner-friendly way. This page shows
-                                when multiplication is allowed, how row-by-column multiplication works, and where to go
-                                next for 2x2, 3x3, and larger examples.
+                                To multiply two matrices, take each row of the first matrix and calculate its dot
+                                product with each column of the second matrix. The number of columns in the first matrix
+                                must equal the number of rows in the second matrix.
                             </p>
 
                             <div class="howto-quick-links">
@@ -224,67 +420,153 @@
                         </section>
 
                         <section class="howto-section-card">
-                            <h2>Matrix Multiplication Rule</h2>
+                            <h2>Quick Answer</h2>
                             <p>
-                                Two matrices can be multiplied only when they are compatible. That means the number of
-                                columns in the first matrix must be equal to the number of rows in the second matrix.
+                                Matrix multiplication is based on matching rows from the first matrix with columns from
+                                the second matrix. Each entry in the result is a dot product.
                             </p>
                             <p>
-                                Once that rule is satisfied, each number in the result comes from taking one row from
-                                the first matrix and one column from the second matrix, multiplying the matching
-                                entries, and adding those products together.
-                            </p>
-                            <div class="howto-note">
-                                <strong>Beginner shortcut:</strong> matrix multiplication is <strong>row by
-                                    column</strong>, not element by element.
-                            </div>
-
-                            <div class="matrix-rule-visual">
-
-                                <div class="matrix-block">
-                                    <p class="matrix-label">Matrix A (row)</p>
-                                    <div class="matrix">
-                                        <div class="row">
-                                            <span class="highlight">1</span><span class="highlight">2</span>
-                                        </div>
-                                        <div class="row">
-                                            <span>3</span><span>4</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="operator">×</div>
-
-                                <div class="matrix-block">
-                                    <p class="matrix-label">Matrix B (column)</p>
-                                    <div class="matrix">
-                                        <div class="row">
-                                            <span class="highlight">5</span><span>6</span>
-                                        </div>
-                                        <div class="row">
-                                            <span class="highlight">7</span><span>8</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="arrow">→</div>
-
-                                <div class="result-block">
-                                    <p class="matrix-label">Result</p>
-                                    <div class="result-box">19</div>
-                                </div>
-
-                            </div>
-
-                            <p class="matrix-formula">
-                                (1×5) + (2×7) = 19
+                                Before doing any arithmetic, check the dimensions. If A is m×n and B is n×p, then AB is
+                                defined and the result has size m×p.
                             </p>
                         </section>
 
                         <section class="howto-section-card">
-                            <h2>Quick Example</h2>
+                            <h2>When Can Two Matrices Be Multiplied?</h2>
                             <p>
-                                Here is a simple 2x2 example:
+                                If A is an m×n matrix and B is an n×p matrix, then:
+                            </p>
+                            <p class="result-size-rule">(m×n)(n×p) = m×p</p>
+                            <ul class="howto-mistakes-list">
+                                <li>The two inner dimensions n must be the same.</li>
+                                <li>The outside dimensions m and p determine the size of the result matrix.</li>
+                            </ul>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Can These Matrices Be Multiplied?</h2>
+                            <figure class="dimension-figure">
+                                <div class="dimension-grid">
+                                    <div class="dimension-card valid">
+                                        <h3>Compatible</h3>
+                                        <div class="dimension-pair">
+                                            <div class="dimension-matrix">
+                                                <strong>Matrix A</strong>
+                                                <p><span class="dimension-unit">2 rows</span> × <span
+                                                        class="dimension-unit dim-match">3 columns</span></p>
+                                            </div>
+                                            <div class="dimension-times">×</div>
+                                            <div class="dimension-matrix">
+                                                <strong>Matrix B</strong>
+                                                <p><span class="dimension-unit dim-match">3 rows</span> × <span
+                                                        class="dimension-unit">2 columns</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="dimension-check">
+                                            <strong>Columns of A = Rows of B</strong>
+                                            <p><span class="dim-match">3 columns = 3 rows</span> ✓</p>
+                                        </div>
+                                        <div class="dimension-result">
+                                            <strong>Result size:</strong>
+                                            <p>Rows of A × Columns of B</p>
+                                            <p>2 rows × 2 columns</p>
+                                        </div>
+                                    </div>
+                                    <div class="dimension-card invalid">
+                                        <h3>Not Compatible</h3>
+                                        <div class="dimension-pair">
+                                            <div class="dimension-matrix">
+                                                <strong>Matrix A</strong>
+                                                <p><span class="dimension-unit">2 rows</span> × <span
+                                                        class="dimension-unit dim-mismatch">3 columns</span></p>
+                                            </div>
+                                            <div class="dimension-times">×</div>
+                                            <div class="dimension-matrix">
+                                                <strong>Matrix B</strong>
+                                                <p><span class="dimension-unit dim-mismatch">2 rows</span> × <span
+                                                        class="dimension-unit">2 columns</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="dimension-check">
+                                            <strong>Columns of A ≠ Rows of B</strong>
+                                            <p><span class="dim-mismatch">3 columns ≠ 2 rows</span> ✕</p>
+                                        </div>
+                                        <div class="dimension-conclusion">
+                                            <strong>Conclusion:</strong>
+                                            <p>The product AB is not defined.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <figcaption>
+                                    Check the two inner dimensions first. If they match, the outside dimensions become
+                                    the size of the answer.
+                                </figcaption>
+                            </figure>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>The Row-by-Column Rule</h2>
+                            <ol class="howto-mistakes-list">
+                                <li>Choose one row from matrix A.</li>
+                                <li>Choose one column from matrix B.</li>
+                                <li>Multiply corresponding entries.</li>
+                                <li>Add the products.</li>
+                            </ol>
+
+                            <figure class="dimension-figure">
+                                <div class="matrix-rule-visual">
+                                    <div class="matrix-block">
+                                        <p class="matrix-label">Matrix A row 1</p>
+                                        <div class="matrix">
+                                            <div class="row">
+                                                <span class="highlight">1</span><span class="highlight">2</span><span
+                                                    class="highlight">3</span>
+                                            </div>
+                                            <div class="row">
+                                                <span>4</span><span>5</span><span>6</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="operator">×</div>
+
+                                    <div class="matrix-block">
+                                        <p class="matrix-label">Matrix B column 1</p>
+                                        <div class="matrix">
+                                            <div class="row">
+                                                <span class="highlight">7</span><span>8</span>
+                                            </div>
+                                            <div class="row">
+                                                <span class="highlight">9</span><span>10</span>
+                                            </div>
+                                            <div class="row">
+                                                <span class="highlight">11</span><span>12</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="arrow">→</div>
+
+                                    <div class="result-block">
+                                        <p class="matrix-label">Result entry c11</p>
+                                        <div class="result-box">58</div>
+                                    </div>
+                                </div>
+                                <figcaption>
+                                    Row 1 of A and column 1 of B produce c11 in the result matrix.
+                                </figcaption>
+                            </figure>
+
+                            <p class="matrix-formula">
+                                (1×7) + (2×9) + (3×11) = 58
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Complete Rectangular Matrix Example</h2>
+                            <p>
+                                A is 2×3. B is 3×2. The inner dimensions match, so the product is defined. The result
+                                will be a 2×2 matrix.
                             </p>
 
                             <style>
@@ -434,10 +716,10 @@
                                         <p class="matrix-label">Matrix A</p>
                                         <div class="matrix">
                                             <div class="row">
-                                                <span>1</span><span>2</span>
+                                                <span>1</span><span>2</span><span>3</span>
                                             </div>
                                             <div class="row">
-                                                <span>3</span><span>4</span>
+                                                <span>4</span><span>5</span><span>6</span>
                                             </div>
                                         </div>
                                     </div>
@@ -448,10 +730,13 @@
                                         <p class="matrix-label">Matrix B</p>
                                         <div class="matrix">
                                             <div class="row">
-                                                <span>5</span><span>6</span>
+                                                <span>7</span><span>8</span>
                                             </div>
                                             <div class="row">
-                                                <span>7</span><span>8</span>
+                                                <span>9</span><span>10</span>
+                                            </div>
+                                            <div class="row">
+                                                <span>11</span><span>12</span>
                                             </div>
                                         </div>
                                     </div>
@@ -459,209 +744,104 @@
 
                                 <div class="quick-example-grid">
                                     <article class="quick-example-step">
-                                        <h3>Step 1: First row × first column</h3>
-                                        <div class="quick-example-step-visual">
-                                            <div class="matrix-block">
-                                                <p class="matrix-label">A</p>
-                                                <div class="matrix">
-                                                    <div class="row">
-                                                        <span class="highlight">1</span><span class="highlight">2</span>
-                                                    </div>
-                                                    <div class="row">
-                                                        <span>3</span><span>4</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="quick-example-operator">×</div>
-
-                                            <div class="matrix-block">
-                                                <p class="matrix-label">B</p>
-                                                <div class="matrix">
-                                                    <div class="row">
-                                                        <span class="highlight">5</span><span>6</span>
-                                                    </div>
-                                                    <div class="row">
-                                                        <span class="highlight">7</span><span>8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="quick-example-formula">(1×5) + (2×7) = 19</p>
+                                        <h3>c11: row 1 × column 1</h3>
+                                        <p>Use row 1 of A, <strong>[1, 2, 3]</strong>, and column 1 of B,
+                                            <strong>[7, 9, 11]</strong>.</p>
+                                        <p class="quick-example-formula">c11 = (1×7) + (2×9) + (3×11) = 58</p>
                                     </article>
 
                                     <article class="quick-example-step">
-                                        <h3>Step 2: First row × second column</h3>
-                                        <div class="quick-example-step-visual">
-                                            <div class="matrix-block">
-                                                <p class="matrix-label">A</p>
-                                                <div class="matrix">
-                                                    <div class="row">
-                                                        <span class="highlight">1</span><span class="highlight">2</span>
-                                                    </div>
-                                                    <div class="row">
-                                                        <span>3</span><span>4</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="quick-example-operator">×</div>
-
-                                            <div class="matrix-block">
-                                                <p class="matrix-label">B</p>
-                                                <div class="matrix">
-                                                    <div class="row">
-                                                        <span>5</span><span class="highlight">6</span>
-                                                    </div>
-                                                    <div class="row">
-                                                        <span>7</span><span class="highlight">8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="quick-example-formula">(1×6) + (2×8) = 22</p>
+                                        <h3>c12: row 1 × column 2</h3>
+                                        <p>Use row 1 of A, <strong>[1, 2, 3]</strong>, and column 2 of B,
+                                            <strong>[8, 10, 12]</strong>.</p>
+                                        <p class="quick-example-formula">c12 = (1×8) + (2×10) + (3×12) = 64</p>
                                     </article>
 
                                     <article class="quick-example-step">
-                                        <h3>Step 3: Second row × first column</h3>
-                                        <div class="quick-example-step-visual">
-                                            <div class="matrix-block">
-                                                <p class="matrix-label">A</p>
-                                                <div class="matrix">
-                                                    <div class="row">
-                                                        <span>1</span><span>2</span>
-                                                    </div>
-                                                    <div class="row">
-                                                        <span class="highlight">3</span><span class="highlight">4</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="quick-example-operator">×</div>
-
-                                            <div class="matrix-block">
-                                                <p class="matrix-label">B</p>
-                                                <div class="matrix">
-                                                    <div class="row">
-                                                        <span class="highlight">5</span><span>6</span>
-                                                    </div>
-                                                    <div class="row">
-                                                        <span class="highlight">7</span><span>8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="quick-example-formula">(3×5) + (4×7) = 43</p>
+                                        <h3>c21: row 2 × column 1</h3>
+                                        <p>Use row 2 of A, <strong>[4, 5, 6]</strong>, and column 1 of B,
+                                            <strong>[7, 9, 11]</strong>.</p>
+                                        <p class="quick-example-formula">c21 = (4×7) + (5×9) + (6×11) = 139</p>
                                     </article>
 
                                     <article class="quick-example-step">
-                                        <h3>Step 4: Second row × second column</h3>
-                                        <div class="quick-example-step-visual">
-                                            <div class="matrix-block">
-                                                <p class="matrix-label">A</p>
-                                                <div class="matrix">
-                                                    <div class="row">
-                                                        <span>1</span><span>2</span>
-                                                    </div>
-                                                    <div class="row">
-                                                        <span class="highlight">3</span><span class="highlight">4</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="quick-example-operator">×</div>
-
-                                            <div class="matrix-block">
-                                                <p class="matrix-label">B</p>
-                                                <div class="matrix">
-                                                    <div class="row">
-                                                        <span>5</span><span class="highlight">6</span>
-                                                    </div>
-                                                    <div class="row">
-                                                        <span>7</span><span class="highlight">8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="quick-example-formula">(3×6) + (4×8) = 50</p>
+                                        <h3>c22: row 2 × column 2</h3>
+                                        <p>Use row 2 of A, <strong>[4, 5, 6]</strong>, and column 2 of B,
+                                            <strong>[8, 10, 12]</strong>.</p>
+                                        <p class="quick-example-formula">c22 = (4×8) + (5×10) + (6×12) = 154</p>
                                     </article>
                                 </div>
 
                                 <div class="quick-example-result">
-                                    <p>So the result of A × B is:</p>
+                                    <p>Final result</p>
                                     <div class="matrix-block">
                                         <p class="matrix-label">AB</p>
                                         <div class="matrix">
                                             <div class="row">
-                                                <span>19</span><span>22</span>
+                                                <span>58</span><span>64</span>
                                             </div>
                                             <div class="row">
-                                                <span>43</span><span>50</span>
+                                                <span>139</span><span>154</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <p class="quick-example-cta">
-                                    Want to practice more? Try the <a
-                                        href="/en/2x2-matrix-multiplication-calculator.html">2x2 matrix multiplication
-                                        tool</a>.
-                                </p>
                             </div>
                         </section>
 
-                        <section class="howto-learning-paths">
-                            <h2>Choose Your Learning Path</h2>
-
-                            <div class="howto-path-grid">
-                                <article class="howto-path-card">
-                                    <h3>How to Multiply 2x2 Matrices</h3>
-                                    <p>
-                                        Start with the most common beginner case. Learn the pattern, see a clear worked
-                                        example, and build confidence with the basics.
-                                    </p>
-                                    <a class="howto-card-link" href="/en/2x2-matrix-multiplication-calculator.html">
-                                        Explore 2x2 Matrix Multiplication
-                                    </a>
-                                </article>
-
-                                <article class="howto-path-card">
-                                    <h3>How to Multiply 3x3 Matrices</h3>
-                                    <p>
-                                        Move to a larger example with more row-by-column steps. This is the best next
-                                        step once the 2x2 method feels natural.
-                                    </p>
-                                    <a class="howto-card-link" href="/en/3x3-matrix-multiplication-with-steps.html">
-                                        Explore 3x3 Matrix Multiplication
-                                    </a>
-                                </article>
+                        <section class="howto-section-card">
+                            <h2>How to Determine the Result Size</h2>
+                            <p class="result-size-rule">If A is m×n and B is n×p, then AB is m×p.</p>
+                            <div class="result-size-grid">
+                                <div class="result-size-card">3×4 × 4×2 → 3×2</div>
+                                <div class="result-size-card">1×3 × 3×1 → 1×1</div>
+                                <div class="result-size-card">3×1 × 1×3 → 3×3</div>
                             </div>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Why Matrix Multiplication Order Matters</h2>
+                            <p>
+                                Matrix multiplication order matters because AB is usually not the same as BA. In this
+                                page's example, AB has size 2×2, while BA would have size 3×3. Since the sizes are
+                                already different, the two products cannot be equal.
+                            </p>
+                            <p>
+                                In some cases AB is defined but BA is not defined at all, so always check dimensions
+                                before changing the order.
+                            </p>
                         </section>
 
                         <section class="howto-section-card howto-calculator-card">
-                            <h2>Use a Matrix Multiplication Calculator</h2>
-                            <p>
-                                After you understand the rule, a calculator is the fastest way to multiply larger
-                                matrices or check your work.
-                            </p>
-                            <p>
-                                Use the main matrix multiplication calculator when you want quick results, larger input
-                                sizes, and a reliable way to verify each answer.
-                            </p>
-
-                            <div class="howto-button-row">
-                                <a class="howto-main-cta" href="/en/matrix-multiplication-calculator.html">
-                                    Go to the Matrix Multiplication Calculator
-                                </a>
+                            <h2>Choose the Right Next Step</h2>
+                            <div class="next-step-grid">
+                                <article class="next-step-card">
+                                    <h3>Need an answer now?</h3>
+                                    <a class="howto-card-link" href="/en/matrix-multiplication-calculator.html">Matrix
+                                        Multiplication Calculator</a>
+                                </article>
+                                <article class="next-step-card">
+                                    <h3>Learning two 2×2 matrices?</h3>
+                                    <a class="howto-card-link" href="/en/2x2-matrix-multiplication-calculator.html">2×2
+                                        Matrix Multiplication</a>
+                                </article>
+                                <article class="next-step-card">
+                                    <h3>Learning a full 3×3 example?</h3>
+                                    <a class="howto-card-link" href="/en/3x3-matrix-multiplication-with-steps.html">3×3
+                                        Matrix Multiplication With Steps</a>
+                                </article>
                             </div>
                         </section>
 
                         <section class="howto-section-card">
                             <h2>Common Mistakes</h2>
                             <ul class="howto-mistakes-list">
-                                <li>Trying to multiply matrices with incompatible dimensions</li>
-                                <li>Confusing matrix multiplication with element-wise multiplication</li>
-                                <li>Mixing up row order and column order when computing an entry</li>
+                                <li>Multiplying entries in the same positions instead of using rows and columns.</li>
+                                <li>Forgetting to check the inner dimensions.</li>
+                                <li>Writing the wrong size for the result matrix.</li>
+                                <li>Using a row from both matrices instead of a row and a column.</li>
+                                <li>Assuming AB = BA.</li>
+                                <li>Dropping one term when multiplying rectangular matrices.</li>
                             </ul>
                         </section>
 
@@ -671,14 +851,12 @@
                                 Continue with one of these related matrix multiplication pages:
                             </p>
                             <ul class="howto-related-list">
+                                <li><a href="/en/matrix-multiplication-calculator.html">matrix multiplication
+                                        calculator</a></li>
                                 <li><a href="/en/2x2-matrix-multiplication-calculator.html">2x2 matrix multiplication
                                         step by step</a></li>
                                 <li><a href="/en/3x3-matrix-multiplication-with-steps.html">3x3 matrix multiplication
                                         with steps</a></li>
-                                <li><a href="/en/matrix-multiplication-calculator.html">matrix multiplication
-                                        calculator</a></li>
-                                <li><a href="/en/matrix-multiplication-practice.html">matrix multiplication
-                                        practice</a></li>
                             </ul>
                         </section>
 
@@ -686,41 +864,51 @@
                             <h2>Frequently Asked Questions</h2>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">What is the rule for matrix multiplication?</h3>
+                                <h3 itemprop="name">Can any two matrices be multiplied?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
-                                        The number of columns in the first matrix must equal the number of rows in the
-                                        second matrix. Each result entry comes from row-by-column multiplication.
+                                        No. Two matrices can be multiplied only when the number of columns in the first
+                                        matrix equals the number of rows in the second matrix.
                                     </p>
                                 </div>
                             </div>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">When can you multiply matrices?</h3>
+                                <h3 itemprop="name">How do you know the size of the result matrix?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
-                                        You can multiply matrices when the inner dimensions match. For example, a 2x3
-                                        matrix can multiply a 3x4 matrix.
+                                        If A is an m×n matrix and B is an n×p matrix, then AB is an m×p matrix. The
+                                        outside dimensions become the result size.
                                     </p>
                                 </div>
                             </div>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">Why is matrix multiplication not commutative?</h3>
+                                <h3 itemprop="name">What does row by column mean?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
-                                        Matrix multiplication is not commutative because changing the order changes the
-                                        row and column pairings. That is why AB and BA usually give different results.
+                                        Row by column means choosing one row from the first matrix, choosing one column
+                                        from the second matrix, multiplying matching entries, and adding the products.
                                     </p>
                                 </div>
                             </div>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">Can I use a calculator for larger matrices?</h3>
+                                <h3 itemprop="name">Does the order of matrix multiplication matter?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
-                                        Yes. A matrix multiplication calculator is a convenient way to solve larger
-                                        problems quickly and to check your work.
+                                        Yes. Matrix multiplication order matters because AB and BA can have different
+                                        sizes, different values, or one order may be undefined.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                <h3 itemprop="name">Is matrix multiplication the same as multiplying matching entries?</h3>
+                                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                    <p itemprop="text">
+                                        No. Matrix multiplication uses dot products of rows and columns. It is not the
+                                        same as multiplying entries in the same positions.
                                     </p>
                                 </div>
                             </div>
