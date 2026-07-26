@@ -4,21 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn 3x3 matrix multiplication step by step with examples and a calculator.">
+    <meta name="description"
+        content="Learn 3x3 matrix multiplication step by step. See how all nine entries of the product matrix are calculated using rows and columns.">
     <link rel="canonical" href="https://matrixcalcu.com/en/3x3-matrix-multiplication-with-steps.html">
 
     <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/3x3-matrix-multiplication-with-steps.html">
+    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/3x3-matrix-multiplication-with-steps.html">
     <link rel="alternate" hreflang="x-default"
         href="https://matrixcalcu.com/en/3x3-matrix-multiplication-with-steps.html">
 
-    <meta property="og:title" content="3x3 Matrix Multiplication With Steps (Examples + Calculator)">
+    <meta property="og:title" content="3x3 Matrix Multiplication With Steps and Example | MatrixCalcu">
     <meta property="og:description"
-        content="Learn 3x3 matrix multiplication step by step with examples and a calculator.">
+        content="Learn 3x3 matrix multiplication step by step. See how all nine entries of the product matrix are calculated using rows and columns.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://matrixcalcu.com/en/3x3-matrix-multiplication-with-steps.html">
 
-    <title>3x3 Matrix Multiplication With Steps (Examples + Calculator)</title>
+    <title>3x3 Matrix Multiplication With Steps and Example | MatrixCalcu</title>
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -36,10 +38,20 @@
             color: #35577e;
         }
 
+        .site-brand {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
         .three-rule-card,
         .three-example-shell,
         .three-result,
         .three-formula-box,
+        .three-workload-box,
         .three-tip-box {
             padding: 20px;
             border: 1px solid #c8d9ee;
@@ -72,6 +84,18 @@
             margin-top: 18px;
         }
 
+        .three-example-figure {
+            margin: 18px 0 0;
+        }
+
+        .three-example-figure figcaption {
+            margin-top: 12px;
+            color: #456483;
+            font-size: 0.96rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
         .three-example .matrix {
             display: inline-flex;
             flex-direction: column;
@@ -98,6 +122,12 @@
             text-align: center;
         }
 
+        .three-example .row span.highlight {
+            background: #d9ebff;
+            color: #0f4d92;
+            box-shadow: inset 0 0 0 2px #7db1e8;
+        }
+
         .three-operator {
             font-size: 1.7rem;
             font-weight: 700;
@@ -106,7 +136,7 @@
 
         .three-detail-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 18px;
             margin-top: 20px;
         }
@@ -137,15 +167,20 @@
             color: #24456a;
             font-weight: 700;
             text-align: center;
+            overflow-wrap: anywhere;
         }
 
-        .three-followup {
-            margin-top: 20px;
-            padding: 18px;
-            border: 1px solid #d6e4f1;
-            border-radius: 16px;
-            background: #f9fbfe;
-            color: #456483;
+        .three-position-map .matrix {
+            border-color: #86aed6;
+        }
+
+        .three-position-map .row span {
+            font-size: 0.92rem;
+        }
+
+        .three-workload-box ul,
+        .three-mistakes-list {
+            margin-bottom: 0;
         }
 
         .three-result {
@@ -180,9 +215,21 @@
                 grid-template-columns: 1fr;
             }
 
+            .site-brand {
+                font-size: 1.3rem;
+                margin: 0;
+                flex: 1;
+                text-align: left;
+            }
+
             .three-example .row span {
                 min-width: 36px;
                 padding: 8px 0;
+            }
+
+            .three-example-shell {
+                gap: 12px;
+                padding: 16px 12px;
             }
         }
     </style>
@@ -224,7 +271,7 @@
 <body>
     <header>
         <div class="container">
-            <h1>Matrix Calculator</h1>
+            <div class="site-brand">Matrix Calculator</div>
 
             <div class="language-selector">
                 <div class="language-toggle">
@@ -261,11 +308,10 @@
                     <div class="seo-articles-container howto-page" id="article-container">
                         <section class="howto-hero-card">
                             <p class="howto-kicker">3x3 Matrix Guide</p>
-                            <h1>3x3 Matrix Multiplication Step by Step</h1>
+                            <h1>3×3 Matrix Multiplication Step by Step</h1>
                             <p class="lead">
-                                3x3 multiplication follows the same row-by-column rule as 2x2 multiplication, but each
-                                answer entry takes more arithmetic. Once you keep the rows and columns organized, the
-                                process becomes much easier to follow.
+                                3x3 multiplication follows the row-by-column rule. The product matrix has 9 entries, and
+                                each entry is one dot product between a row of Matrix A and a column of Matrix B.
                             </p>
 
                             <div class="howto-quick-links">
@@ -277,46 +323,55 @@
                         </section>
 
                         <section class="howto-section-card">
-                            <h2>Why 3x3 Matrix Multiplication Is More Complex</h2>
+                            <h2>Quick Explanation</h2>
+                            <p>
+                                A 3x3 matrix multiplication problem uses the row-by-column rule. To build the final
+                                product matrix, calculate 9 entries: each one comes from one row of A and one column of B.
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>When Two 3x3 Matrices Can Be Multiplied</h2>
                             <div class="three-rule-card">
                                 <p>
-                                    A 3x3 problem uses the same rule as smaller matrices, but each answer entry needs
-                                    three multiplications and two additions.
+                                    Two 3x3 matrices can always be multiplied by each other because the inner dimensions
+                                    match: the first matrix has 3 columns, and the second matrix has 3 rows.
                                 </p>
                                 <p>
-                                    There are also more entries in the final matrix, so accuracy matters more because a
-                                    small row-or-column mistake can affect the whole result.
+                                    The result is also a 3x3 matrix. That means you need to calculate 9 separate entries:
+                                    c11, c12, c13, c21, c22, c23, c31, c32, and c33.
                                 </p>
                             </div>
                         </section>
 
                         <section class="howto-section-card">
-                            <h2>3x3 Matrix Multiplication Formula</h2>
+                            <h2>General Formula</h2>
                             <div class="three-formula-box">
-                                <p class="three-formula">Cij = ai1b1j + ai2b2j + ai3b3j</p>
+                                <p class="three-formula">cᵢⱼ = aᵢ₁b₁ⱼ + aᵢ₂b₂ⱼ + aᵢ₃b₃ⱼ</p>
                                 <p class="three-formula-note">
-                                    In simple terms, pick one row from A and one column from B, multiply the matching
-                                    entries, and add all three products.
+                                    The index i tells you which row of A to use. The index j tells you which column of B
+                                    to use. Multiply the three matching pairs, then add the products.
                                 </p>
                             </div>
                         </section>
 
                         <section class="howto-section-card three-example">
-                            <h2>How to Multiply a 3x3 Matrix Step by Step</h2>
+                            <h2>Existing Worked Example</h2>
                             <p>
-                                This 3x3 matrix multiplication example shows the full matrices first so you can see the
-                                complete row-by-column structure before calculating the result.
+                                We will keep the example matrices from this page and calculate every entry of AB.
                             </p>
                             <p>
-                                We’ll compute the first two entries step by step.
+                                We will calculate all nine entries step by step.
                             </p>
 
+                            <figure class="three-example-figure">
                             <div class="three-example-shell">
                                 <div class="matrix-block">
                                     <p class="matrix-label">Matrix A</p>
                                     <div class="matrix">
                                         <div class="row">
-                                            <span>1</span><span>2</span><span>0</span>
+                                            <span class="highlight">1</span><span class="highlight">2</span><span
+                                                class="highlight">0</span>
                                         </div>
                                         <div class="row">
                                             <span>3</span><span>1</span><span>4</span>
@@ -327,49 +382,148 @@
                                     </div>
                                 </div>
 
-                                <div class="three-operator">x</div>
+                                <div class="three-operator">×</div>
 
                                 <div class="matrix-block">
                                     <p class="matrix-label">Matrix B</p>
                                     <div class="matrix">
                                         <div class="row">
-                                            <span>2</span><span>1</span><span>3</span>
+                                            <span class="highlight">2</span><span>1</span><span>3</span>
                                         </div>
                                         <div class="row">
-                                            <span>0</span><span>4</span><span>2</span>
+                                            <span class="highlight">0</span><span>4</span><span>2</span>
                                         </div>
                                         <div class="row">
-                                            <span>1</span><span>2</span><span>5</span>
+                                            <span class="highlight">1</span><span>2</span><span>5</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="three-operator">=</div>
+
+                                <div class="matrix-block three-position-map">
+                                    <p class="matrix-label">Result positions</p>
+                                    <div class="matrix">
+                                        <div class="row">
+                                            <span class="highlight">c11</span><span>c12</span><span>c13</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>c21</span><span>c22</span><span>c23</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>c31</span><span>c32</span><span>c33</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                                <figcaption>
+                                    The highlighted first row of A and first column of B produce c11. The result matrix
+                                    has 9 positions, so the same row-by-column idea is repeated for all entries.
+                                </figcaption>
+                            </figure>
 
+                        </section>
+
+                        <section class="howto-section-card three-example">
+                            <h2>Calculate the First Row</h2>
                             <div class="three-detail-grid">
                                 <article class="three-detail-card">
-                                    <h3>First result entry: c11</h3>
+                                    <h3>c11</h3>
                                     <p>
-                                        Take the first row of A, <strong>[1, 2, 0]</strong>, and the first column of B,
+                                        Use row 1 of A, <strong>[1, 2, 0]</strong>, and column 1 of B,
                                         <strong>[2, 0, 1]</strong>.
                                     </p>
-                                    <p class="three-expression">(1 x 2) + (2 x 0) + (0 x 1) = 2</p>
+                                    <p class="three-expression">(1 × 2) + (2 × 0) + (0 × 1) = 2</p>
                                 </article>
 
                                 <article class="three-detail-card">
-                                    <h3>Second result entry: c12</h3>
+                                    <h3>c12</h3>
                                     <p>
-                                        Keep the same first row of A, then use the second column of B,
+                                        Use row 1 of A, <strong>[1, 2, 0]</strong>, and column 2 of B,
                                         <strong>[1, 4, 2]</strong>.
                                     </p>
-                                    <p class="three-expression">(1 x 1) + (2 x 4) + (0 x 2) = 9</p>
+                                    <p class="three-expression">(1 × 1) + (2 × 4) + (0 × 2) = 9</p>
+                                </article>
+
+                                <article class="three-detail-card">
+                                    <h3>c13</h3>
+                                    <p>
+                                        Use row 1 of A, <strong>[1, 2, 0]</strong>, and column 3 of B,
+                                        <strong>[3, 2, 5]</strong>.
+                                    </p>
+                                    <p class="three-expression">(1 × 3) + (2 × 2) + (0 × 5) = 7</p>
                                 </article>
                             </div>
+                        </section>
 
-                            <div class="three-followup">
-                                The same row-by-column process is repeated for the remaining entries.
-                                The remaining entries are found the same way: choose the correct row from A, match it
-                                with the correct column from B, multiply the three pairs, and add the products.
+                        <section class="howto-section-card three-example">
+                            <h2>Calculate the Second Row</h2>
+                            <div class="three-detail-grid">
+                                <article class="three-detail-card">
+                                    <h3>c21</h3>
+                                    <p>
+                                        Use row 2 of A, <strong>[3, 1, 4]</strong>, and column 1 of B,
+                                        <strong>[2, 0, 1]</strong>.
+                                    </p>
+                                    <p class="three-expression">(3 × 2) + (1 × 0) + (4 × 1) = 10</p>
+                                </article>
+
+                                <article class="three-detail-card">
+                                    <h3>c22</h3>
+                                    <p>
+                                        Use row 2 of A, <strong>[3, 1, 4]</strong>, and column 2 of B,
+                                        <strong>[1, 4, 2]</strong>.
+                                    </p>
+                                    <p class="three-expression">(3 × 1) + (1 × 4) + (4 × 2) = 15</p>
+                                </article>
+
+                                <article class="three-detail-card">
+                                    <h3>c23</h3>
+                                    <p>
+                                        Use row 2 of A, <strong>[3, 1, 4]</strong>, and column 3 of B,
+                                        <strong>[3, 2, 5]</strong>.
+                                    </p>
+                                    <p class="three-expression">(3 × 3) + (1 × 2) + (4 × 5) = 31</p>
+                                </article>
                             </div>
+                        </section>
+
+                        <section class="howto-section-card three-example">
+                            <h2>Calculate the Third Row</h2>
+                            <div class="three-detail-grid">
+                                <article class="three-detail-card">
+                                    <h3>c31</h3>
+                                    <p>
+                                        Use row 3 of A, <strong>[2, 5, 1]</strong>, and column 1 of B,
+                                        <strong>[2, 0, 1]</strong>.
+                                    </p>
+                                    <p class="three-expression">(2 × 2) + (5 × 0) + (1 × 1) = 5</p>
+                                </article>
+
+                                <article class="three-detail-card">
+                                    <h3>c32</h3>
+                                    <p>
+                                        Use row 3 of A, <strong>[2, 5, 1]</strong>, and column 2 of B,
+                                        <strong>[1, 4, 2]</strong>.
+                                    </p>
+                                    <p class="three-expression">(2 × 1) + (5 × 4) + (1 × 2) = 24</p>
+                                </article>
+
+                                <article class="three-detail-card">
+                                    <h3>c33</h3>
+                                    <p>
+                                        Use row 3 of A, <strong>[2, 5, 1]</strong>, and column 3 of B,
+                                        <strong>[3, 2, 5]</strong>.
+                                    </p>
+                                    <p class="three-expression">(2 × 3) + (5 × 2) + (1 × 5) = 21</p>
+                                </article>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card three-example">
+                            <h2>Assemble the Result Matrix</h2>
+                            <p>
+                                Put each calculated entry into its matching position in the product matrix.
+                            </p>
 
                             <div class="three-result">
                                 <p>Final result matrix</p>
@@ -391,24 +545,37 @@
                         </section>
 
                         <section class="howto-section-card">
-                            <h2>Tip for Solving 3x3 Matrices</h2>
-                            <div class="three-tip-box">
-                                <p>
-                                    Work in a fixed order, such as across the first row of the result matrix before
-                                    moving down to the next row. That makes it much easier to keep the correct row and
-                                    column paired together.
-                                </p>
+                            <h2>How Much Work Is Involved?</h2>
+                            <div class="three-workload-box">
+                                <ul>
+                                    <li>Each result entry needs 3 scalar multiplications and 2 additions.</li>
+                                    <li>A 3x3 product matrix has 9 result entries.</li>
+                                    <li>Altogether, a full 3x3 multiplication uses 27 scalar multiplications and 18 additions.</li>
+                                </ul>
                             </div>
                         </section>
 
+                        <section class="howto-section-card">
+                            <h2>Common 3x3 Mistakes</h2>
+                            <ul class="three-mistakes-list">
+                                <li>Leaving out the third term in a dot product.</li>
+                                <li>Copying the wrong row from A or the wrong column from B.</li>
+                                <li>Putting a correct value into the wrong result position.</li>
+                                <li>Multiplying matrices entry by entry instead of row by column.</li>
+                                <li>Making a sign error in the middle of the arithmetic.</li>
+                            </ul>
+                        </section>
+
                         <section class="howto-section-card howto-calculator-card">
-                            <h2>Use the Matrix Multiplication Calculator</h2>
+                            <h2>Calculator CTA</h2>
                             <p>
-                                If you want quick answers, want to check your arithmetic, or want to multiply larger
-                                matrices, the main calculator is the easiest next step.
+                                A full 3x3 multiplication has many small arithmetic steps. Use the main Matrix
+                                Multiplication Calculator when you want to check every entry, compare your work, or try
+                                larger matrices.
                             </p>
                             <p>
-                                3x3 calculations can get long quickly — use the calculator to save time.
+                                The calculator keeps the same row-by-column logic and gives you a faster way to verify
+                                the final product.
                             </p>
 
                             <div class="howto-button-row">
@@ -419,15 +586,13 @@
                         </section>
 
                         <section class="howto-section-card internal-links-block">
-                            <h2>Related Matrix Multiplication Pages</h2>
+                            <h2>Related Guides</h2>
                             <ul class="howto-related-list">
-                                <li><a href="/en/how-to-multiply-matrices.html">How to multiply matrices</a></li>
+                                <li><a href="/en/how-to-multiply-matrices.html">How to Multiply Matrices</a></li>
                                 <li><a href="/en/2x2-matrix-multiplication-calculator.html">2x2 matrix multiplication
                                         step by step</a></li>
                                 <li><a href="/en/matrix-multiplication-calculator.html">Matrix multiplication
                                         calculator</a></li>
-                                <li><a href="/en/matrix-determinant-calculator.html">Matrix determinant calculator</a>
-                                </li>
                             </ul>
                         </section>
 
