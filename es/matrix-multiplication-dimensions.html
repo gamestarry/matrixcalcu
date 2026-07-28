@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Comprueba si dos matrices se pueden multiplicar, compara sus dimensiones internas, determina el tamaño del resultado y verifica si B × A también está definida.">
+    <link rel="canonical" href="https://matrixcalcu.com/es/matrix-multiplication-dimensions.html">
+
+    <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-multiplication-dimensions.html">
+    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-multiplication-dimensions.html">
+    <link rel="alternate" hreflang="x-default"
+        href="https://matrixcalcu.com/en/matrix-multiplication-dimensions.html">
+
+    <meta property="og:title" content="Comprobador de Dimensiones para Multiplicación de Matrices | MatrixCalcu">
+    <meta property="og:description"
+        content="Comprueba si dos matrices se pueden multiplicar, compara sus dimensiones internas, determina el tamaño del resultado y verifica si B × A también está definida.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:url" content="https://matrixcalcu.com/es/matrix-multiplication-dimensions.html">
+
+    <title>Comprobador de Dimensiones para Multiplicación de Matrices | MatrixCalcu</title>
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/calculator.css">
+    <link rel="stylesheet" href="/css/matrix-dimensions.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Comprobador de Dimensiones para Multiplicación de Matrices",
+      "description": "Comprueba si dos dimensiones de matrices son compatibles para la multiplicación y determina el tamaño del resultado.",
+      "url": "https://matrixcalcu.com/es/matrix-multiplication-dimensions.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "MatrixCalcu"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Por qué deben coincidir las dimensiones internas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Las columnas de la primera matriz deben coincidir con las filas de la segunda matriz porque cada entrada del resultado se construye con una fila y una columna que tienen el mismo número de términos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué tamaño tiene el resultado de una multiplicación de matrices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Si A es m por n y B es n por p, entonces A × B está definida y el tamaño del resultado es m por p."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puede existir A × B cuando B × A no existe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. A × B depende de las columnas de A y las filas de B, mientras que B × A depende de las columnas de B y las filas de A."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Importa el orden de la multiplicación de matrices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. El orden de la multiplicación de matrices normalmente importa. Incluso cuando A × B y B × A existen, sus tamaños de resultado o sus valores pueden ser diferentes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué tamaños de matriz puede probar este comprobador?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Este comprobador prueba cantidades de filas y columnas de 1 a 9, igual que los controles de tamaño de la calculadora de matrices actual."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body class="dimension-page">
+    <header>
+        <div class="container">
+            <div class="site-brand">Matrix Calculator</div>
+
+            <div class="language-selector">
+                <button class="language-toggle" aria-label="Seleccionar idioma">
+                    <span class="globe-icon" aria-hidden="true">&#127760;</span> Español
+                </button>
+                <div class="language-dropdown">
+                    <a class="language-option" href="/en/matrix-multiplication-dimensions.html" lang="en">English</a>
+                    <a class="language-option active" href="/es/matrix-multiplication-dimensions.html" lang="es">Español</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-row-container">
+        <div class="wide-container">
+            <div class="main-row">
+                <div class="left-sidebar">
+                    <button class="mobile-nav-toggle">Navegación</button>
+                    <h3 class="nav-title">Navegación</h3>
+                    <div class="nav-buttons">
+                        <a href="/es/" class="nav-button" id="home-btn">Inicio</a>
+                        <a href="/es/matrix-multiplication-calculator.html" class="nav-button">Calculadora de
+                            Multiplicación de Matrices</a>
+                        <a href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html" target="_blank"
+                            rel="noopener noreferrer" class="nav-button external">Juego de Multiplicación de
+                            Matrices</a>
+                        <a href="/es/matrix-equations-calculator.html" class="nav-button">Calculadora de Sistemas de
+                            Ecuaciones</a>
+                        <a href="https://es.wikipedia.org/wiki/Matriz_(matem%C3%A1ticas)" target="_blank"
+                            class="nav-button external">Wikipedia: Matriz</a>
+                    </div>
+                </div>
+
+                <main class="calculator-main">
+                    <div class="dimension-checker">
+                        <section class="dimension-checker__hero">
+                            <p class="dimension-checker__eyebrow">Herramienta de tamaño de matrices</p>
+                            <h1>Comprobador de Dimensiones para Multiplicación de Matrices</h1>
+                            <p class="lead">
+                                Elige las filas y columnas de la matriz A y la matriz B para comprobar si A &times; B
+                                está definida, qué tamaño tendrá el resultado y si B &times; A también es posible.
+                            </p>
+                        </section>
+
+                        <section class="dimension-tool" aria-labelledby="dimension-tool-title">
+                            <h2 id="dimension-tool-title">¿Se pueden multiplicar estas matrices?</h2>
+
+                            <div class="dimension-controls">
+                                <article class="dimension-card">
+                                    <h2>Matriz A</h2>
+                                    <p class="dimension-current-size">Tamaño actual: <span id="dimension-a-size">2
+                                            &times; 3</span></p>
+
+                                    <div class="dimension-control-row">
+                                        <span class="dimension-control-label">Filas</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-decrease-rowsA" data-dimension-control="rowsA"
+                                            data-dimension-delta="-1" aria-label="Disminuir filas de la matriz A">-</button>
+                                        <span class="dimension-value" id="dimension-rows-a">2</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-increase-rowsA" data-dimension-control="rowsA"
+                                            data-dimension-delta="1" aria-label="Aumentar filas de la matriz A">+</button>
+                                    </div>
+
+                                    <div class="dimension-control-row">
+                                        <span class="dimension-control-label">Columnas</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-decrease-colsA" data-dimension-control="colsA"
+                                            data-dimension-delta="-1" aria-label="Disminuir columnas de la matriz A">-</button>
+                                        <span class="dimension-value" id="dimension-cols-a">3</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-increase-colsA" data-dimension-control="colsA"
+                                            data-dimension-delta="1" aria-label="Aumentar columnas de la matriz A">+</button>
+                                    </div>
+                                </article>
+
+                                <article class="dimension-card">
+                                    <h2>Matriz B</h2>
+                                    <p class="dimension-current-size">Tamaño actual: <span id="dimension-b-size">3
+                                            &times; 2</span></p>
+
+                                    <div class="dimension-control-row">
+                                        <span class="dimension-control-label">Filas</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-decrease-rowsB" data-dimension-control="rowsB"
+                                            data-dimension-delta="-1" aria-label="Disminuir filas de la matriz B">-</button>
+                                        <span class="dimension-value" id="dimension-rows-b">3</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-increase-rowsB" data-dimension-control="rowsB"
+                                            data-dimension-delta="1" aria-label="Aumentar filas de la matriz B">+</button>
+                                    </div>
+
+                                    <div class="dimension-control-row">
+                                        <span class="dimension-control-label">Columnas</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-decrease-colsB" data-dimension-control="colsB"
+                                            data-dimension-delta="-1" aria-label="Disminuir columnas de la matriz B">-</button>
+                                        <span class="dimension-value" id="dimension-cols-b">2</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-increase-colsB" data-dimension-control="colsB"
+                                            data-dimension-delta="1" aria-label="Aumentar columnas de la matriz B">+</button>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <div class="dimension-results">
+                                <article class="dimension-result dimension-result--possible" id="dimension-result-ab"
+                                    aria-live="polite">
+                                    <h2>A &times; B</h2>
+                                    <p class="dimension-status" id="dimension-status-ab">A &times; B está definida</p>
+                                    <div class="dimension-facts">
+                                        <p id="dimension-matrix-a-ab">Matriz A: 2 &times; 3</p>
+                                        <p id="dimension-matrix-b-ab">Matriz B: 3 &times; 2</p>
+                                        <p class="dimension-fact"><strong>Dimensiones internas</strong>
+                                            <span class="dimension-comparison" id="dimension-inner-ab">3 = 3</span>
+                                        </p>
+                                        <p class="dimension-fact"><strong>Dimensiones del resultado</strong>
+                                            <span id="dimension-output-ab">2 &times; 2</span>
+                                        </p>
+                                    </div>
+                                    <p class="dimension-explanation" id="dimension-explanation-ab">
+                                        Las dimensiones internas coinciden, por lo que A &times; B está definida. El
+                                        resultado conserva las filas de A y las columnas de B.
+                                    </p>
+                                    <div class="dimension-suggestion" id="dimension-suggestion-ab" hidden>
+                                        <p>Para que A &times; B esté definida:</p>
+                                        <ul>
+                                            <li id="dimension-suggestion-b-rows">Cambia la matriz B para que tenga 3 filas.</li>
+                                            <li id="dimension-suggestion-a-cols">Cambia la matriz A para que tenga 3 columnas.</li>
+                                        </ul>
+                                    </div>
+                                </article>
+
+                                <article class="dimension-result dimension-result--possible" id="dimension-result-ba"
+                                    aria-live="polite">
+                                    <h2>B &times; A</h2>
+                                    <p class="dimension-status" id="dimension-status-ba">B &times; A también está definida</p>
+                                    <div class="dimension-facts">
+                                        <p class="dimension-fact"><strong>Dimensiones internas</strong>
+                                            <span class="dimension-comparison" id="dimension-inner-ba">2 = 2</span>
+                                        </p>
+                                        <p class="dimension-fact"><strong>Dimensiones del resultado</strong>
+                                            <span id="dimension-output-ba">3 &times; 3</span>
+                                        </p>
+                                    </div>
+                                    <p class="dimension-explanation" id="dimension-explanation-ba">
+                                        El orden inverso está definido para estas dimensiones, aunque puede producir un
+                                        tamaño de resultado diferente.
+                                    </p>
+                                </article>
+                            </div>
+
+                            <div class="dimension-cta-row">
+                                <button type="button" class="dimension-cta" id="open-multiplication-calculator"
+                                    aria-label="Abrir la calculadora de multiplicación de matrices con estas dimensiones">
+                                    Abrir la calculadora de multiplicación de matrices
+                                </button>
+                            </div>
+                        </section>
+
+                        <section class="dimension-section">
+                            <h2>Ejemplos Comunes de Dimensiones de Matrices</h2>
+                            <ul class="dimension-examples">
+                                <li>(2 &times; 3)(3 &times; 2) &rarr; Resultado: 2 &times; 2</li>
+                                <li>(3 &times; 3)(3 &times; 1) &rarr; Resultado: 3 &times; 1</li>
+                                <li>(3 &times; 1)(1 &times; 3) &rarr; Resultado: 3 &times; 3</li>
+                                <li>(2 &times; 2)(2 &times; 1) &rarr; Resultado: 2 &times; 1</li>
+                                <li>(2 &times; 3)(2 &times; 2) &rarr; No definida porque 3 &ne; 2</li>
+                            </ul>
+                        </section>
+
+                        <section class="dimension-section">
+                            <h2>Cómo Comprobar las Dimensiones de una Multiplicación de Matrices</h2>
+                            <div class="dimension-teaching-grid">
+                                <article class="dimension-mini-card">
+                                    <h3>Comprueba las dimensiones internas</h3>
+                                    <p>
+                                        Para A &times; B, compara el número de columnas de A con el número de filas de
+                                        B. El producto está definido solo cuando esos dos números coinciden.
+                                    </p>
+                                </article>
+                                <article class="dimension-mini-card">
+                                    <h3>Lee el tamaño del resultado</h3>
+                                    <p>
+                                        Cuando A es m &times; n y B es n &times; p, el resultado conserva las filas de A
+                                        y las columnas de B, por lo que A &times; B es m &times; p.
+                                    </p>
+                                </article>
+                            </div>
+                        </section>
+
+                        <section class="dimension-section">
+                            <h2>¿Importa el Orden de las Matrices?</h2>
+                            <p>
+                                Sí. Que A &times; B sea posible no significa que B &times; A también sea posible. Incluso
+                                cuando ambos productos están definidos, sus dimensiones de resultado pueden ser
+                                diferentes, y la multiplicación de matrices normalmente no es conmutativa.
+                            </p>
+                        </section>
+
+                        <section class="dimension-section">
+                            <h2>Preguntas Frecuentes</h2>
+                            <div class="dimension-faq">
+                                <article>
+                                    <h3>¿Por qué deben coincidir las dimensiones internas?</h3>
+                                    <p>
+                                        Las columnas de la primera matriz deben coincidir con las filas de la segunda
+                                        matriz porque cada entrada del resultado se construye con una fila y una columna
+                                        que tienen el mismo número de términos.
+                                    </p>
+                                </article>
+                                <article>
+                                    <h3>¿Qué tamaño tiene el resultado de una multiplicación de matrices?</h3>
+                                    <p>
+                                        Si A es m por n y B es n por p, entonces A &times; B está definida y el tamaño
+                                        del resultado es m por p.
+                                    </p>
+                                </article>
+                                <article>
+                                    <h3>¿Puede existir A &times; B cuando B &times; A no existe?</h3>
+                                    <p>
+                                        Sí. A &times; B depende de las columnas de A y las filas de B, mientras que B
+                                        &times; A depende de las columnas de B y las filas de A.
+                                    </p>
+                                </article>
+                                <article>
+                                    <h3>¿Importa el orden de la multiplicación de matrices?</h3>
+                                    <p>
+                                        Sí. El orden de la multiplicación de matrices normalmente importa. Incluso cuando
+                                        A &times; B y B &times; A existen, sus tamaños de resultado o sus valores pueden
+                                        ser diferentes.
+                                    </p>
+                                </article>
+                                <article>
+                                    <h3>¿Qué tamaños de matriz puede probar este comprobador?</h3>
+                                    <p>
+                                        Este comprobador prueba cantidades de filas y columnas de 1 a 9, igual que los
+                                        controles de tamaño de la calculadora de matrices actual.
+                                    </p>
+                                </article>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+
+                <aside class="right-sidebar dimension-sidebar">
+                    <section class="dimension-resource-card">
+                        <h2>Guías Relacionadas de Multiplicación de Matrices</h2>
+                        <ul>
+                            <li><a href="/es/how-to-multiply-matrices.html">Cómo multiplicar matrices</a></li>
+                            <li><a href="/es/2x2-matrix-multiplication-calculator.html">Multiplicación de matrices
+                                    2x2</a></li>
+                            <li><a href="/es/3x3-matrix-multiplication-with-steps.html">Multiplicación de matrices 3x3
+                                    con pasos</a></li>
+                            <li><a href="/es/matrix-multiplication-calculator.html">Calculadora de Multiplicación de
+                                    Matrices</a></li>
+                            <li><a href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html" target="_blank"
+                                    rel="noopener noreferrer">Juego de Multiplicación de Matrices</a></li>
+                        </ul>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Matrix Calculator. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/js/matrix-dimensions.js" defer></script>
+    <script src="/js/matrix-dimensions-i18n.js" defer></script>
+    <script src="/js/matrix-dimensions-page.js" defer></script>
+</body>
+
+</html>

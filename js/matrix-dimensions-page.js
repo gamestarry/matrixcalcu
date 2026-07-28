@@ -2,7 +2,6 @@
     'use strict';
 
     const STATE_KEY = 'matrixcalcu_state_v1';
-    const CALCULATOR_URL = '/en/matrix-multiplication-calculator.html';
 
     const state = {
         rowsA: 2,
@@ -18,6 +17,24 @@
     function setText(id, value) {
         const el = get(id);
         if (el) el.textContent = value;
+    }
+
+    function t(key, params) {
+        const i18n = window.MatrixDimensionsI18n;
+        if (i18n && typeof i18n.t === 'function') {
+            return i18n.t(key, params);
+        }
+        return '';
+    }
+
+    function getUrls() {
+        const i18n = window.MatrixDimensionsI18n;
+        if (i18n && typeof i18n.getUrls === 'function') {
+            return i18n.getUrls();
+        }
+        return {
+            calculatorUrl: ''
+        };
     }
 
     function setStatus(card, isPossible) {
@@ -42,46 +59,62 @@
         const possible = result.canMultiplyAB;
         setStatus(get('dimension-result-ab'), possible);
 
-        setText('dimension-status-ab', possible ? 'A x B is possible' : 'A x B is not possible');
-        setText('dimension-matrix-a-ab', `Matrix A: ${formatSize(result.rowsA, result.colsA)}`);
-        setText('dimension-matrix-b-ab', `Matrix B: ${formatSize(result.rowsB, result.colsB)}`);
+        setText('dimension-status-ab', possible ? t('pageAbPossible') : t('pageAbNotPossible'));
+        setText('dimension-matrix-a-ab', t('pageMatrixSize', {
+            matrix: t('matrixA'),
+            size: formatSize(result.rowsA, result.colsA)
+        }));
+        setText('dimension-matrix-b-ab', t('pageMatrixSize', {
+            matrix: t('matrixB'),
+            size: formatSize(result.rowsB, result.colsB)
+        }));
         setText('dimension-inner-ab', formatComparison(result.innerAB.left, result.innerAB.right, result.innerAB.matches));
 
         const resultText = possible
             ? formatSize(result.resultAB.rows, result.resultAB.cols)
-            : 'Not defined';
+            : t('notDefined');
         setText('dimension-output-ab', resultText);
 
         setText(
             'dimension-explanation-ab',
             possible
-                ? 'The inner dimensions match, so A x B is defined. The result keeps the rows of A and the columns of B.'
-                : 'For A x B to be defined, the number of columns in Matrix A must equal the number of rows in Matrix B.'
+                ? t('pageAbPossibleExplanation')
+                : t('pageAbNotPossibleExplanation', {
+                    colsA: result.colsA,
+                    rowsB: result.rowsB
+                })
         );
 
         const suggestion = get('dimension-suggestion-ab');
         if (suggestion) suggestion.hidden = possible;
-        setText('dimension-suggestion-b-rows', `Change Matrix B to have ${result.suggestionsAB.requiredRowsB} rows.`);
-        setText('dimension-suggestion-a-cols', `Change Matrix A to have ${result.suggestionsAB.requiredColsA} columns.`);
+        setText('dimension-suggestion-b-rows', t('pageSuggestionBRows', {
+            rows: result.suggestionsAB.requiredRowsB
+        }));
+        setText('dimension-suggestion-a-cols', t('pageSuggestionAColumns', {
+            columns: result.suggestionsAB.requiredColsA
+        }));
     }
 
     function renderBA(result) {
         const possible = result.canMultiplyBA;
         setStatus(get('dimension-result-ba'), possible);
 
-        setText('dimension-status-ba', possible ? 'B x A is also possible' : 'B x A is not possible');
+        setText('dimension-status-ba', possible ? t('pageBaPossible') : t('pageBaNotPossible'));
         setText('dimension-inner-ba', formatComparison(result.innerBA.left, result.innerBA.right, result.innerBA.matches));
 
         const resultText = possible
             ? formatSize(result.resultBA.rows, result.resultBA.cols)
-            : 'Not defined';
+            : t('notDefined');
         setText('dimension-output-ba', resultText);
 
         setText(
             'dimension-explanation-ba',
             possible
-                ? 'The reverse order is defined for these dimensions, but it may produce a different result size.'
-                : 'The reverse order is not defined because the columns of Matrix B do not equal the rows of Matrix A.'
+                ? t('pageBaPossibleExplanation')
+                : t('pageBaNotPossibleExplanation', {
+                    colsB: result.colsB,
+                    rowsA: result.rowsA
+                })
         );
     }
 
@@ -169,7 +202,7 @@
                     console.warn('Unable to save matrix dimensions before navigation.');
                 }
 
-                window.location.href = CALCULATOR_URL;
+                window.location.href = getUrls().calculatorUrl;
             });
         }
     }
