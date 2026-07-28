@@ -103,6 +103,7 @@ class MatrixApp {
 
         this.currentOperation = 'Multiplication';
         this.rrefMode = 'matrix'; // 'matrix' | 'equation'
+        this._linearSystemVariableNamesOverride = null;
 
         // ✅ cache: single-op action -> imported module
         this._singleOpModules = {};
@@ -130,6 +131,8 @@ class MatrixApp {
                     this.eqUI.setMode('equation');
                 }
             }
+
+            this._initLinearSystemABMode();
 
             const isLanding = window.PAGE_MODE === 'landing';
             const cfg = window.PAGE_CONFIG || {};
@@ -237,6 +240,57 @@ class MatrixApp {
             this.showArticle('RREF');
         } catch (error) {
             this.showError(resolveErrorMessage(error));
+        }
+    }
+
+    performLinearSystemFromAB() {
+        const abMode = window.LinearSystemABMode;
+        const isEnglishEquationPage = window.PAGE_MODE === 'equation' && /\/en\/matrix-equations-calculator\.html$/.test(window.location.pathname);
+        if (!isEnglishEquationPage || !abMode) return;
+
+        let dims = null;
+        try {
+            dims = this.getMatrixDimensions();
+            const validation = abMode.validateDimensions(dims);
+            if (!validation.ok) {
+                abMode.renderDimensionStatus(validation);
+                abMode.appendValidationResult({
+                    messages: validation.messages,
+                    dimensions: dims
+                });
+                return;
+            }
+
+            const matrices = this.getAllMatrices();
+            const augmented = abMode.buildAugmentedMatrix(matrices[0], matrices[1]);
+            const { rrefMatrix, steps } = this.rref.calculateRREFWithSteps(augmented);
+
+            this._linearSystemVariableNamesOverride = abMode.getVariableNames(validation.variableCount);
+            this.displayResult(
+                'RREF',
+                augmented,
+                null,
+                '→',
+                steps,
+                rrefMatrix
+            );
+            this.scrollToResults();
+            this.showArticle('RREF');
+            abMode.renderDimensionStatus(validation);
+        } catch (error) {
+            if (abMode && typeof abMode.renderError === 'function') {
+                abMode.renderError(error && error.message, dims);
+                if (typeof abMode.appendValidationResult === 'function') {
+                    abMode.appendValidationResult({
+                        messages: [error && error.message ? error.message : abMode.messages.invalidMatrix],
+                        dimensions: dims
+                    });
+                }
+            } else {
+                this.showError(resolveErrorMessage(error));
+            }
+        } finally {
+            this._linearSystemVariableNamesOverride = null;
         }
     }
 
@@ -722,6 +776,22 @@ class MatrixApp {
         this.eqUI.initEquationUI();
         this.eqUI.setMode('matrix');
         this._showRrefPanel(false);
+    }
+
+    _initLinearSystemABMode() {
+        if (
+            window.PAGE_MODE !== 'equation' ||
+            !/\/en\/matrix-equations-calculator\.html$/.test(window.location.pathname) ||
+            !window.LinearSystemABMode ||
+            typeof window.LinearSystemABMode.init !== 'function'
+        ) {
+            return;
+        }
+
+        window.LinearSystemABMode.init({
+            solve: () => this.performLinearSystemFromAB(),
+            getDimensions: () => this.getMatrixDimensions()
+        });
     }
 
     _showRrefPanel(show) {
@@ -1322,6 +1392,10 @@ class MatrixApp {
     }
 
     _getEquationVariableNames(variableCount) {
+        if (Array.isArray(this._linearSystemVariableNamesOverride)) {
+            return this._linearSystemVariableNamesOverride.slice(0, variableCount);
+        }
+
         const fallbackNames = ['x', 'y', 'z', 'w', 'u', 'v', 't', 's', 'r', 'q', 'p', 'k', 'm', 'n'];
         const names = [];
 
