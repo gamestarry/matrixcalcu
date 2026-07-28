@@ -1256,6 +1256,30 @@ class MatrixApp {
 
     _appendEquationSummary(card, rrefMatrix) {
         if (!card || card.querySelector('.equation-solution-summary')) return;
+
+        const variableCount = this._getRrefVariableCount(rrefMatrix);
+        if (
+            window.PAGE_MODE === 'equation' &&
+            variableCount > 0 &&
+            window.LinearSystemAnalysis &&
+            window.LinearSystemSummary
+        ) {
+            try {
+                const analysis = window.LinearSystemAnalysis.analyzeRref(rrefMatrix, variableCount);
+                window.LinearSystemSummary.render({
+                    analysis,
+                    variableNames: this._getEquationVariableNames(variableCount),
+                    target: card
+                });
+                return;
+            } catch (error) {
+                if (!this._linearSystemSummaryWarned) {
+                    console.warn('[LinearSystemSummary] Falling back to legacy summary.', error);
+                    this._linearSystemSummaryWarned = true;
+                }
+            }
+        }
+
         if (!this.equations || typeof this.equations.generateSolutionSummary !== 'function') return;
 
         const summary = this.equations.generateSolutionSummary(rrefMatrix);
@@ -1289,6 +1313,30 @@ class MatrixApp {
             card.appendChild(wrap);
         }
     }
+
+    _getRrefVariableCount(rrefMatrix) {
+        if (!Array.isArray(rrefMatrix) || !rrefMatrix.length || !Array.isArray(rrefMatrix[0])) {
+            return 0;
+        }
+        return Math.max(0, rrefMatrix[0].length - 1);
+    }
+
+    _getEquationVariableNames(variableCount) {
+        const fallbackNames = ['x', 'y', 'z', 'w', 'u', 'v', 't', 's', 'r', 'q', 'p', 'k', 'm', 'n'];
+        const names = [];
+
+        for (let index = 0; index < variableCount; index++) {
+            const input = document.getElementById(`eq-0-c-${index}`);
+            let label = '';
+            if (input && input.nextElementSibling) {
+                label = (input.nextElementSibling.textContent || '').trim();
+            }
+            names.push(label || fallbackNames[index] || `x${index + 1}`);
+        }
+
+        return names;
+    }
+
     _formatCell(v) {
         try { return math.format(v); } catch { return String(v); }
     }

@@ -1,0 +1,124 @@
+.linear-system-summary {
+    margin-top: 14px;
+    padding: 16px;
+    border: 1px solid rgba(37, 99, 235, 0.22);
+    border-left-width: 4px;
+    border-radius: 14px;
+    background: #f8fbff;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    color: #172033;
+}
+
+.linear-system-summary--unique {
+    border-left-color: #16a34a;
+}
+
+.linear-system-summary--none {
+    border-left-color: #f97316;
+}
+
+.linear-system-summary--infinite {
+    border-left-color: #2563eb;
+}
+
+.linear-system-summary__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.linear-system-summary__title {
+    margin: 0;
+    color: #102a56;
+    font-size: 1.05rem;
+    line-height: 1.2;
+}
+
+.linear-system-summary__status {
+    width: max-content;
+    max-width: 100%;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #eaf2ff;
+    color: #1e3a8a;
+    font-size: 0.88rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.linear-system-summary--unique .linear-system-summary__status {
+    background: #e9f9ef;
+    color: #166534;
+}
+
+.linear-system-summary--none .linear-system-summary__status {
+    background: #fff4e8;
+    color: #9a3412;
+}
+
+.linear-system-summary--infinite .linear-system-summary__status {
+    background: #eef2ff;
+    color: #3730a3;
+}
+
+.linear-system-summary__block {
+    margin-top: 12px;
+}
+
+.linear-system-summary__block-title {
+    margin-bottom: 8px;
+    color: #334155;
+    font-weight: 800;
+}
+
+.linear-system-summary__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.linear-system-summary__row {
+    display: grid;
+    grid-template-columns: minmax(56px, auto) minmax(0, 1fr);
+    gap: 10px;
+    align-items: baseline;
+    padding: 9px 10px;
+    border: 1px solid rgba(37, 99, 235, 0.12);
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.linear-system-summary__label {
+    color: #1d4ed8;
+    font-weight: 800;
+}
+
+.linear-system-summary__value {
+    overflow-wrap: anywhere;
+    color: #111827;
+    font-family: Consolas, "Liberation Mono", Menlo, monospace;
+    font-weight: 700;
+}
+
+.linear-system-summary__text {
+    margin: 8px 0 0;
+    color: #334155;
+    line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+    .linear-system-summary {
+        padding: 14px;
+    }
+
+    .linear-system-summary__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .linear-system-summary__row {
+        grid-template-columns: minmax(48px, auto) minmax(0, 1fr);
+    }
+}
