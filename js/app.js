@@ -245,8 +245,7 @@ class MatrixApp {
 
     performLinearSystemFromAB() {
         const abMode = window.LinearSystemABMode;
-        const isEnglishEquationPage = window.PAGE_MODE === 'equation' && /\/en\/matrix-equations-calculator\.html$/.test(window.location.pathname);
-        if (!isEnglishEquationPage || !abMode) return;
+        if (!this._isEnglishEquationPage() || !abMode) return;
 
         let dims = null;
         try {
@@ -780,8 +779,7 @@ class MatrixApp {
 
     _initLinearSystemABMode() {
         if (
-            window.PAGE_MODE !== 'equation' ||
-            !/\/en\/matrix-equations-calculator\.html$/.test(window.location.pathname) ||
+            !this._isEnglishEquationPage() ||
             !window.LinearSystemABMode ||
             typeof window.LinearSystemABMode.init !== 'function'
         ) {
@@ -792,6 +790,13 @@ class MatrixApp {
             solve: () => this.performLinearSystemFromAB(),
             getDimensions: () => this.getMatrixDimensions()
         });
+    }
+
+    _isEnglishEquationPage() {
+        const lang = (document.documentElement.lang || '').toLowerCase();
+        const path = window.location.pathname || '';
+        return window.PAGE_MODE === 'equation' &&
+            (lang.startsWith('en') || path.indexOf('/en/matrix-equations-calculator') !== -1);
     }
 
     _showRrefPanel(show) {

@@ -35,9 +35,15 @@
     let statusRef = null;
     let labelState = null;
     let observerRef = null;
+    let initialized = false;
+    let autoInitStarted = false;
+    let autoObserverRef = null;
 
     function isEquationPage() {
-        return !!(root && root.PAGE_MODE === "equation" && root.document);
+        if (!root || root.PAGE_MODE !== "equation" || !root.document) return false;
+        const lang = (root.document.documentElement && root.document.documentElement.lang || "").toLowerCase();
+        const path = root.location && root.location.pathname || "";
+        return lang.startsWith("en") || path.indexOf("/en/matrix-equations-calculator") !== -1;
     }
 
     function dimensionsFromShape(A, b) {
@@ -397,8 +403,10 @@
     }
 
     function init(options) {
+        if (options && typeof options === "object") {
+            optionsRef = Object.assign({}, optionsRef, options);
+        }
         if (!isEquationPage()) return false;
-        optionsRef = options || {};
         panelRef = root.document.getElementById("rref-panel");
         if (!panelRef) return false;
 
@@ -410,13 +418,52 @@
         bindModeButtons();
         setMode(MODE_EQUATION);
         observeDimensionChanges();
+        initialized = true;
+        if (autoObserverRef) {
+            autoObserverRef.disconnect();
+            autoObserverRef = null;
+        }
         return true;
+    }
+
+    function tryAutoInit() {
+        if (initialized || !isEquationPage()) return;
+        if (init()) return;
+        if (autoObserverRef || !root.MutationObserver || !root.document || !root.document.body) return;
+
+        autoObserverRef = new MutationObserver(() => {
+            if (initialized) {
+                autoObserverRef.disconnect();
+                autoObserverRef = null;
+                return;
+            }
+            init();
+        });
+        autoObserverRef.observe(root.document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    function startAutoInit() {
+        if (autoInitStarted) return;
+        autoInitStarted = true;
+        if (!root.document || typeof root.document.addEventListener !== "function") return;
+
+        if (root.document.readyState === "loading") {
+            root.document.addEventListener("DOMContentLoaded", tryAutoInit, { once: true });
+        } else if (typeof root.queueMicrotask === "function") {
+            root.queueMicrotask(tryAutoInit);
+        } else {
+            setTimeout(tryAutoInit, 0);
+        }
     }
 
     const api = {
         init,
         getMode: () => currentMode,
         setMode,
+        tryAutoInit,
         renderDimensionStatus,
         renderError,
         appendValidationResult,
@@ -428,5 +475,6 @@
     };
 
     root.LinearSystemABMode = api;
+    startAutoInit();
     if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);
