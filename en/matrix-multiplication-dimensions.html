@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Check whether two matrices can be multiplied, compare their inner dimensions, find the result size, and see whether B x A is also possible.">
+    <link rel="canonical" href="https://matrixcalcu.com/en/matrix-multiplication-dimensions.html">
+
+    <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-multiplication-dimensions.html">
+    <link rel="alternate" hreflang="x-default"
+        href="https://matrixcalcu.com/en/matrix-multiplication-dimensions.html">
+
+    <meta property="og:title" content="Matrix Multiplication Dimensions Checker | MatrixCalcu">
+    <meta property="og:description"
+        content="Check whether two matrices can be multiplied, compare their inner dimensions, find the result size, and see whether B x A is also possible.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://matrixcalcu.com/en/matrix-multiplication-dimensions.html">
+
+    <title>Matrix Multiplication Dimensions Checker | MatrixCalcu</title>
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/calculator.css">
+    <link rel="stylesheet" href="/css/matrix-dimensions.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Matrix Multiplication Dimensions Checker",
+      "description": "Check whether two matrix dimensions are compatible for multiplication and find the result size.",
+      "url": "https://matrixcalcu.com/en/matrix-multiplication-dimensions.html",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "MatrixCalcu"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why must the inner dimensions match?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The columns of the first matrix must match the rows of the second matrix because each result entry is built from one row and one column with the same number of terms."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size is the result of matrix multiplication?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If A is m by n and B is n by p, then A x B is defined and the result size is m by p."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can A x B exist when B x A does not?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. A x B depends on the columns of A and rows of B, while B x A depends on the columns of B and rows of A."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the order of matrix multiplication matter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Matrix multiplication order usually matters. Even when both A x B and B x A exist, their result sizes or values can be different."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What matrix sizes can this checker test?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This checker tests row and column counts from 1 to 9, matching the current matrix calculator size controls."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body class="dimension-page">
+    <header>
+        <div class="container">
+            <div class="site-brand">Matrix Calculator</div>
+
+            <div class="language-selector">
+                <div class="language-toggle" aria-label="Current language: English">
+                    <span class="globe-icon" aria-hidden="true">&#127760;</span> English
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-row-container">
+        <div class="wide-container">
+            <div class="main-row">
+                <div class="left-sidebar">
+                    <button class="mobile-nav-toggle">Navigation</button>
+                    <h3 class="nav-title">Navigation</h3>
+                    <div class="nav-buttons">
+                        <a href="/" class="nav-button" id="home-btn">Home</a>
+                        <a href="matrix-multiplication-calculator.html" class="nav-button">Matrix Multiplication
+                            Calculator</a>
+                        <a href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html" target="_blank"
+                            rel="noopener noreferrer" class="nav-button external">Matrix Multiplication Game</a>
+                        <a href="matrix-equations-calculator.html" class="nav-button">System of Equations Calculator</a>
+                        <a href="https://en.wikipedia.org/wiki/Matrix_(mathematics)" target="_blank"
+                            class="nav-button external">Wikipedia: Matrix</a>
+                    </div>
+                </div>
+
+                <main class="calculator-main">
+                    <div class="dimension-checker">
+                        <section class="dimension-checker__hero">
+                            <p class="dimension-checker__eyebrow">Matrix size tool</p>
+                            <h1>Matrix Multiplication Dimensions Checker</h1>
+                            <p class="lead">
+                                Choose the rows and columns of Matrix A and Matrix B to check whether A &times; B is
+                                defined, what size the result will be, and whether B &times; A is also possible.
+                            </p>
+                        </section>
+
+                        <section class="dimension-tool" aria-labelledby="dimension-tool-title">
+                            <h2 id="dimension-tool-title">Can These Matrices Be Multiplied?</h2>
+
+                            <div class="dimension-controls">
+                                <article class="dimension-card">
+                                    <h2>Matrix A</h2>
+                                    <p class="dimension-current-size">Current size: <span id="dimension-a-size">2
+                                            &times; 3</span></p>
+
+                                    <div class="dimension-control-row">
+                                        <span class="dimension-control-label">Rows</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-decrease-rowsA" data-dimension-control="rowsA"
+                                            data-dimension-delta="-1" aria-label="Decrease Matrix A rows">-</button>
+                                        <span class="dimension-value" id="dimension-rows-a">2</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-increase-rowsA" data-dimension-control="rowsA"
+                                            data-dimension-delta="1" aria-label="Increase Matrix A rows">+</button>
+                                    </div>
+
+                                    <div class="dimension-control-row">
+                                        <span class="dimension-control-label">Columns</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-decrease-colsA" data-dimension-control="colsA"
+                                            data-dimension-delta="-1" aria-label="Decrease Matrix A columns">-</button>
+                                        <span class="dimension-value" id="dimension-cols-a">3</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-increase-colsA" data-dimension-control="colsA"
+                                            data-dimension-delta="1" aria-label="Increase Matrix A columns">+</button>
+                                    </div>
+                                </article>
+
+                                <article class="dimension-card">
+                                    <h2>Matrix B</h2>
+                                    <p class="dimension-current-size">Current size: <span id="dimension-b-size">3
+                                            &times; 2</span></p>
+
+                                    <div class="dimension-control-row">
+                                        <span class="dimension-control-label">Rows</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-decrease-rowsB" data-dimension-control="rowsB"
+                                            data-dimension-delta="-1" aria-label="Decrease Matrix B rows">-</button>
+                                        <span class="dimension-value" id="dimension-rows-b">3</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-increase-rowsB" data-dimension-control="rowsB"
+                                            data-dimension-delta="1" aria-label="Increase Matrix B rows">+</button>
+                                    </div>
+
+                                    <div class="dimension-control-row">
+                                        <span class="dimension-control-label">Columns</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-decrease-colsB" data-dimension-control="colsB"
+                                            data-dimension-delta="-1" aria-label="Decrease Matrix B columns">-</button>
+                                        <span class="dimension-value" id="dimension-cols-b">2</span>
+                                        <button type="button" class="dimension-control-button"
+                                            id="dimension-increase-colsB" data-dimension-control="colsB"
+                                            data-dimension-delta="1" aria-label="Increase Matrix B columns">+</button>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <div class="dimension-results">
+                                <article class="dimension-result dimension-result--possible" id="dimension-result-ab"
+                                    aria-live="polite">
+                                    <h2>A &times; B</h2>
+                                    <p class="dimension-status" id="dimension-status-ab">A &times; B is possible</p>
+                                    <div class="dimension-facts">
+                                        <p id="dimension-matrix-a-ab">Matrix A: 2 &times; 3</p>
+                                        <p id="dimension-matrix-b-ab">Matrix B: 3 &times; 2</p>
+                                        <p class="dimension-fact"><strong>Inner dimensions</strong>
+                                            <span class="dimension-comparison" id="dimension-inner-ab">3 = 3</span>
+                                        </p>
+                                        <p class="dimension-fact"><strong>Result dimensions</strong>
+                                            <span id="dimension-output-ab">2 &times; 2</span>
+                                        </p>
+                                    </div>
+                                    <p class="dimension-explanation" id="dimension-explanation-ab">
+                                        The inner dimensions match, so A &times; B is defined. The result keeps the rows
+                                        of A and the columns of B.
+                                    </p>
+                                    <div class="dimension-suggestion" id="dimension-suggestion-ab" hidden>
+                                        <p>To make A &times; B possible:</p>
+                                        <ul>
+                                            <li id="dimension-suggestion-b-rows">Change Matrix B to have 3 rows.</li>
+                                            <li id="dimension-suggestion-a-cols">Change Matrix A to have 3 columns.</li>
+                                        </ul>
+                                    </div>
+                                </article>
+
+                                <article class="dimension-result dimension-result--possible" id="dimension-result-ba"
+                                    aria-live="polite">
+                                    <h2>B &times; A</h2>
+                                    <p class="dimension-status" id="dimension-status-ba">B &times; A is also possible</p>
+                                    <div class="dimension-facts">
+                                        <p class="dimension-fact"><strong>Inner dimensions</strong>
+                                            <span class="dimension-comparison" id="dimension-inner-ba">2 = 2</span>
+                                        </p>
+                                        <p class="dimension-fact"><strong>Result dimensions</strong>
+                                            <span id="dimension-output-ba">3 &times; 3</span>
+                                        </p>
+                                    </div>
+                                    <p class="dimension-explanation" id="dimension-explanation-ba">
+                                        The reverse order is defined for these dimensions, but it may produce a
+                                        different result size.
+                                    </p>
+                                </article>
+                            </div>
+
+                            <div class="dimension-cta-row">
+                                <button type="button" class="dimension-cta" id="open-multiplication-calculator"
+                                    aria-label="Open the Matrix Multiplication Calculator with these dimensions">
+                                    Open the Matrix Multiplication Calculator
+                                </button>
+                            </div>
+                        </section>
+
+                        <section class="dimension-section">
+                            <h2>Common Matrix Size Examples</h2>
+                            <ul class="dimension-examples">
+                                <li>(2 &times; 3)(3 &times; 2) &rarr; Result: 2 &times; 2</li>
+                                <li>(3 &times; 3)(3 &times; 1) &rarr; Result: 3 &times; 1</li>
+                                <li>(3 &times; 1)(1 &times; 3) &rarr; Result: 3 &times; 3</li>
+                                <li>(2 &times; 2)(2 &times; 1) &rarr; Result: 2 &times; 1</li>
+                                <li>(2 &times; 3)(2 &times; 2) &rarr; Not defined because 3 &ne; 2</li>
+                            </ul>
+                        </section>
+
+                        <section class="dimension-section">
+                            <h2>How to Check Matrix Multiplication Dimensions</h2>
+                            <div class="dimension-teaching-grid">
+                                <article class="dimension-mini-card">
+                                    <h3>Check the inner dimensions</h3>
+                                    <p>
+                                        For A &times; B, compare the number of columns in A with the number of rows in
+                                        B. The product is defined only when those two numbers match.
+                                    </p>
+                                </article>
+                                <article class="dimension-mini-card">
+                                    <h3>Read the result size</h3>
+                                    <p>
+                                        When A is m &times; n and B is n &times; p, the result keeps the rows of A and
+                                        the columns of B, so A &times; B is m &times; p.
+                                    </p>
+                                </article>
+                            </div>
+                        </section>
+
+                        <section class="dimension-section">
+                            <h2>Does Matrix Order Matter?</h2>
+                            <p>
+                                Yes. A &times; B being possible does not mean B &times; A is possible. Even when both
+                                products are defined, their result dimensions can be different, and matrix multiplication
+                                is usually not commutative.
+                            </p>
+                        </section>
+
+                        <section class="dimension-section">
+                            <h2>Frequently Asked Questions</h2>
+                            <div class="dimension-faq">
+                                <article>
+                                    <h3>Why must the inner dimensions match?</h3>
+                                    <p>
+                                        The columns of the first matrix must match the rows of the second matrix because
+                                        each result entry is built from one row and one column with the same number of
+                                        terms.
+                                    </p>
+                                </article>
+                                <article>
+                                    <h3>What size is the result of matrix multiplication?</h3>
+                                    <p>
+                                        If A is m by n and B is n by p, then A &times; B is defined and the result size
+                                        is m by p.
+                                    </p>
+                                </article>
+                                <article>
+                                    <h3>Can A &times; B exist when B &times; A does not?</h3>
+                                    <p>
+                                        Yes. A &times; B depends on the columns of A and rows of B, while B &times; A
+                                        depends on the columns of B and rows of A.
+                                    </p>
+                                </article>
+                                <article>
+                                    <h3>Does the order of matrix multiplication matter?</h3>
+                                    <p>
+                                        Yes. Matrix multiplication order usually matters. Even when both A &times; B and
+                                        B &times; A exist, their result sizes or values can be different.
+                                    </p>
+                                </article>
+                                <article>
+                                    <h3>What matrix sizes can this checker test?</h3>
+                                    <p>
+                                        This checker tests row and column counts from 1 to 9, matching the current matrix
+                                        calculator size controls.
+                                    </p>
+                                </article>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+
+                <aside class="right-sidebar dimension-sidebar">
+                    <section class="dimension-resource-card">
+                        <h2>Related Matrix Multiplication Guides</h2>
+                        <ul>
+                            <li><a href="/en/how-to-multiply-matrices.html">How to Multiply Matrices</a></li>
+                            <li><a href="/en/2x2-matrix-multiplication-calculator.html">2x2 Matrix Multiplication</a>
+                            </li>
+                            <li><a href="/en/3x3-matrix-multiplication-with-steps.html">3x3 Matrix Multiplication With
+                                    Steps</a></li>
+                            <li><a href="/en/matrix-multiplication-calculator.html">Matrix Multiplication Calculator</a>
+                            </li>
+                            <li><a href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html" target="_blank"
+                                    rel="noopener noreferrer">Matrix Multiplication Game</a></li>
+                        </ul>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Matrix Calculator. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/matrix-dimensions.js" defer></script>
+    <script src="/js/matrix-dimensions-page.js" defer></script>
+</body>
+
+</html>

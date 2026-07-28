@@ -1,0 +1,370 @@
+.dimension-page .site-brand {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    font-weight: 700;
+}
+
+.dimension-page .language-toggle {
+    user-select: none;
+}
+
+.dimension-checker {
+    max-width: 100%;
+    margin: 0 auto 2rem;
+    padding: 8px 0 24px;
+    color: #111;
+}
+
+.dimension-checker__hero,
+.dimension-card,
+.dimension-result,
+.dimension-section {
+    background: #fff;
+    border: 1px solid #d9e2ec;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.06);
+}
+
+.dimension-checker__hero {
+    padding: 24px;
+    margin-bottom: 18px;
+}
+
+.dimension-checker__eyebrow {
+    margin-bottom: 6px;
+    color: #1A66A0;
+    font-weight: 700;
+}
+
+.dimension-checker h1 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+    color: #2c3e50;
+    letter-spacing: 0;
+}
+
+.dimension-checker .lead {
+    margin-bottom: 0;
+    max-width: 760px;
+}
+
+.dimension-tool {
+    display: grid;
+    gap: 18px;
+}
+
+.dimension-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.dimension-card {
+    padding: 18px;
+}
+
+.dimension-card h2,
+.dimension-section h2,
+.dimension-result h2 {
+    margin: 0 0 14px;
+    color: #2c3e50;
+    font-size: 1.25rem;
+}
+
+.dimension-current-size {
+    margin-bottom: 14px;
+    font-weight: 700;
+    color: #4a5568;
+}
+
+.dimension-control-row {
+    display: grid;
+    grid-template-columns: 90px 40px minmax(54px, 1fr) 40px;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.dimension-control-label {
+    color: #4a5568;
+    font-weight: 700;
+}
+
+.dimension-control-button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #b8c5d1;
+    border-radius: 6px;
+    background: #fdfefe;
+    color: #1A66A0;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.dimension-control-button:disabled {
+    color: #9aa7b3;
+    cursor: not-allowed;
+    background: #f1f4f7;
+}
+
+.dimension-value {
+    min-width: 54px;
+    padding: 8px 12px;
+    border: 1px solid #d9e2ec;
+    border-radius: 6px;
+    background: #f8fafc;
+    text-align: center;
+    font-weight: 800;
+    color: #2c3e50;
+}
+
+.dimension-results {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 16px;
+}
+
+.dimension-result {
+    padding: 18px;
+    border-left-width: 5px;
+}
+
+.dimension-result--possible {
+    border-left-color: #1f8f5f;
+}
+
+.dimension-result--blocked {
+    border-left-color: #c2410c;
+}
+
+.dimension-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #eef6fb;
+    color: #1A66A0;
+    font-weight: 800;
+}
+
+.dimension-result--possible .dimension-status::before {
+    content: "OK";
+    font-size: 0.75rem;
+}
+
+.dimension-result--blocked .dimension-status::before {
+    content: "Check";
+    font-size: 0.75rem;
+}
+
+.dimension-facts {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.dimension-fact {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.dimension-fact strong {
+    color: #4a5568;
+}
+
+.dimension-comparison {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #2c3e50;
+    white-space: nowrap;
+}
+
+.dimension-explanation {
+    margin: 12px 0 0;
+    color: #334155;
+}
+
+.dimension-suggestion {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #fff8e1;
+    border: 1px solid #ffd54f;
+}
+
+.dimension-suggestion p {
+    margin-bottom: 8px;
+    font-weight: 800;
+}
+
+.dimension-suggestion ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.dimension-cta-row {
+    display: flex;
+    justify-content: center;
+}
+
+.dimension-cta {
+    border: 0;
+    border-radius: 6px;
+    background: #1A66A0;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 800;
+    padding: 12px 18px;
+    min-height: 46px;
+}
+
+.dimension-section {
+    padding: 20px;
+    margin-top: 18px;
+}
+
+.dimension-examples {
+    display: grid;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dimension-examples li {
+    padding: 10px 12px;
+    border: 1px solid #edf2f7;
+    border-radius: 6px;
+    background: #f8fafc;
+}
+
+.dimension-teaching-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.dimension-mini-card {
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+    padding: 14px;
+    background: #fdfefe;
+}
+
+.dimension-mini-card h3 {
+    margin: 0 0 8px;
+    color: #2c3e50;
+}
+
+.dimension-faq {
+    display: grid;
+    gap: 14px;
+}
+
+.dimension-faq h3 {
+    margin: 0 0 6px;
+    color: #2c3e50;
+    font-size: 1.05rem;
+}
+
+.dimension-sidebar {
+    align-self: flex-start;
+}
+
+.dimension-resource-card h2 {
+    margin: 0 0 12px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #d9dee3;
+    color: #2c3e50;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.dimension-resource-card ul {
+    display: grid;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dimension-resource-card a {
+    display: block;
+    padding: 10px 12px;
+    border: 1px solid #d6e4f1;
+    border-radius: 6px;
+    background: #fdfefe;
+    color: #1A66A0;
+    font-weight: 700;
+    line-height: 1.35;
+    text-decoration: none;
+}
+
+.dimension-resource-card a:hover {
+    border-color: #3a97e8;
+    background: #f4f9ff;
+}
+
+@media (max-width: 900px) {
+    .dimension-controls,
+    .dimension-results,
+    .dimension-teaching-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dimension-page .site-brand {
+        font-size: 1.3rem;
+        margin: 0;
+        flex: 1;
+        text-align: left;
+    }
+
+    .dimension-page .left-sidebar:focus-within .nav-buttons {
+        display: flex;
+    }
+
+    .dimension-checker {
+        padding-top: 0;
+    }
+
+    .dimension-sidebar {
+        align-self: stretch;
+    }
+}
+
+@media (max-width: 560px) {
+    .dimension-checker {
+        padding: 0 0 16px;
+    }
+
+    .dimension-checker__hero,
+    .dimension-card,
+    .dimension-result,
+    .dimension-section {
+        padding: 16px;
+    }
+
+    .dimension-checker h1 {
+        font-size: 1.65rem;
+    }
+
+    .dimension-control-row {
+        grid-template-columns: 1fr 40px 56px 40px;
+    }
+
+    .dimension-fact {
+        display: grid;
+        gap: 4px;
+    }
+}

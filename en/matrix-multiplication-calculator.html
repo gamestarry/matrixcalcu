@@ -122,6 +122,7 @@ window.MathJax = {
     </script>
 
     <link rel="stylesheet" href="/css/calculator.css">
+    <link rel="stylesheet" href="/css/matrix-dimensions-inline.css">
 
     <style>
         .site-brand {
@@ -320,6 +321,55 @@ window.MathJax = {
                             <div class="input-hint">
                                 Enter matrices A and B, choose their dimensions, and calculate A × B. The number of columns in matrix A must equal the number of rows in matrix B. Supports integers, negative numbers, decimals, and fractions such as 1/2.
                             </div>
+
+                            <section class="dimension-inline dimension-inline--valid" id="dimension-inline-summary"
+                                aria-live="polite" aria-label="Matrix multiplication dimension status">
+                                <div class="dimension-inline__grid">
+                                    <p class="dimension-inline__status" id="dimension-inline-status">A × B is valid</p>
+                                    <p class="dimension-inline__item" id="dimension-inline-inner">Inner dimensions: 3 = 3</p>
+                                    <p class="dimension-inline__item" id="dimension-inline-result">Result size: 3 × 3</p>
+                                    <p class="dimension-inline__reverse" id="dimension-inline-reverse">B × A: valid, result 3 × 3</p>
+                                    <a class="dimension-inline__link" href="/en/matrix-multiplication-dimensions.html">Check other matrix dimensions</a>
+                                </div>
+                            </section>
+
+                            <section class="dimension-detail" id="dimension-detail-explanation" aria-live="polite" hidden>
+                                <button type="button" class="dimension-detail__close" id="dimension-detail-close"
+                                    aria-label="Close dimension explanation">×</button>
+                                <h2 class="dimension-detail__title">Matrix multiplication is not possible</h2>
+                                <div class="dimension-detail__sizes">
+                                    <span id="dimension-detail-a-size">Matrix A: 3 × 3</span>
+                                    <span id="dimension-detail-b-size">Matrix B: 3 × 3</span>
+                                </div>
+                                <div class="dimension-detail__grid">
+                                    <div class="dimension-detail__panel">
+                                        <h3>Why A × B is not defined</h3>
+                                        <p>A × B requires the number of columns in Matrix A to equal the number of rows in Matrix B.</p>
+                                        <p>Matrix A columns: <span id="dimension-detail-a-cols">3</span></p>
+                                        <p>Matrix B rows: <span id="dimension-detail-b-rows">3</span></p>
+                                        <p class="dimension-detail__comparison" id="dimension-detail-ab-comparison">3 = 3</p>
+                                    </div>
+                                    <div class="dimension-detail__panel">
+                                        <h3>How to make A × B possible</h3>
+                                        <ul class="dimension-detail__suggestions">
+                                            <li id="dimension-detail-suggestion-b">Change Matrix B to have 3 rows</li>
+                                            <li>or</li>
+                                            <li id="dimension-detail-suggestion-a">Change Matrix A to have 3 columns</li>
+                                        </ul>
+                                    </div>
+                                    <div class="dimension-detail__panel">
+                                        <h3>What about B × A?</h3>
+                                        <p id="dimension-detail-ba-status">B × A is possible.</p>
+                                        <p>Inner dimensions: <span class="dimension-detail__comparison" id="dimension-detail-ba-inner">3 = 3</span></p>
+                                        <p>Result dimensions: <span id="dimension-detail-ba-result">3 × 3</span></p>
+                                    </div>
+                                    <div class="dimension-detail__panel">
+                                        <h3>Full checker</h3>
+                                        <p>Use the full dimensions checker to test other row and column combinations before entering matrix values.</p>
+                                        <a class="dimension-detail__link" href="/en/matrix-multiplication-dimensions.html">Open the full Dimensions Checker</a>
+                                    </div>
+                                </div>
+                            </section>
 
                             <div class="mobile-op-onebar" id="mobile-op-onebar">
                                 <div class="mobile-op-selectwrap">
@@ -799,6 +849,8 @@ window.MathJax = {
     </script>
 
     <!-- 核心算法脚本改为 multiplication.js (根据用户要求) -->
+    <script src="/js/matrix-dimensions.js" defer></script>
+    <script src="/js/matrix-dimensions-inline.js" defer></script>
     <script src="/js/core/multiplication.js?v=1.0.1" type="module"></script>
     <script src="/js/ui/matrix-input.js" type="module"></script>
     <script src="/js/ui/matrix-output.js?v=1.0.1" type="module"></script>
