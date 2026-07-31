@@ -269,7 +269,7 @@ class MatrixApp {
                 'RREF',
                 augmented,
                 null,
-                '→',
+                '->',
                 steps,
                 rrefMatrix
             );
@@ -285,6 +285,75 @@ class MatrixApp {
                         dimensions: dims
                     });
                 }
+            } else {
+                this.showError(resolveErrorMessage(error));
+            }
+        } finally {
+            this._linearSystemVariableNamesOverride = null;
+        }
+    }
+
+    performLinearSystemFromAugmented() {
+        const abMode = window.LinearSystemABMode;
+        if (!this._isEnglishEquationPage() || !abMode) return;
+
+        let dims = null;
+        try {
+            dims = this.getMatrixDimensions();
+            const validation = abMode.validateAugmentedDimensions(dims);
+            if (!validation.ok) {
+                const suggestion = validation.code === 'augmented-column-count'
+                    ? abMode.messages.augmentedAddColumn
+                    : abMode.messages.augmentedCheckDimensions;
+                abMode.renderAugmentedDimensionStatus(validation);
+                abMode.appendValidationResult({
+                    title: abMode.messages.augmentedResultTitle,
+                    messages: validation.messages,
+                    dimensions: dims,
+                    suggestion,
+                    sourceMode: 'augmented'
+                });
+                return;
+            }
+
+            const matrices = this.getAllMatrices();
+            const augmented = abMode.readAugmentedMatrix(matrices[0], dims);
+            const variableCount = augmented[0].length - 1;
+            const { rrefMatrix, steps } = this.rref.calculateRREFWithSteps(augmented);
+
+            this._linearSystemVariableNamesOverride = abMode.getVariableNames(variableCount);
+            this.displayResult(
+                'RREF',
+                augmented,
+                null,
+                '->',
+                steps,
+                rrefMatrix
+            );
+            this.scrollToResults();
+            this.showArticle('RREF');
+            abMode.renderAugmentedDimensionStatus(validation);
+        } catch (error) {
+            if (abMode && typeof abMode.appendValidationResult === 'function') {
+                const message = error && error.message ? error.message : abMode.messages.augmentedUnreadable;
+                let suggestion = abMode.messages.augmentedCheckDimensions;
+                if (message === abMode.messages.augmentedInvalidEntries) {
+                    suggestion = abMode.messages.augmentedCheckEntries;
+                } else if (message === abMode.messages.augmentedMinColumns) {
+                    suggestion = abMode.messages.augmentedAddColumn;
+                }
+
+                abMode.renderAugmentedDimensionStatus(Object.assign(
+                    abMode.validateAugmentedDimensions(dims),
+                    { ok: false, code: 'input-error', message, messages: [message] }
+                ));
+                abMode.appendValidationResult({
+                    title: abMode.messages.augmentedResultTitle,
+                    messages: [message],
+                    dimensions: dims,
+                    suggestion,
+                    sourceMode: 'augmented'
+                });
             } else {
                 this.showError(resolveErrorMessage(error));
             }
@@ -788,7 +857,14 @@ class MatrixApp {
 
         window.LinearSystemABMode.init({
             solve: () => this.performLinearSystemFromAB(),
-            getDimensions: () => this.getMatrixDimensions()
+            solveAugmented: () => this.performLinearSystemFromAugmented(),
+            getDimensions: () => this.getMatrixDimensions(),
+            setRrefMode: (mode) => {
+                this.rrefMode = mode === 'equation' ? 'equation' : 'matrix';
+                if (this.eqUI && typeof this.eqUI.setMode === 'function') {
+                    this.eqUI.setMode(this.rrefMode);
+                }
+            }
         });
     }
 

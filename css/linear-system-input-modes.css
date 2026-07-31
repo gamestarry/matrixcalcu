@@ -7,6 +7,24 @@
     display: block;
 }
 
+.linear-system-mode-tabs {
+    flex-wrap: wrap;
+}
+
+.linear-system-mode-tabs button {
+    white-space: normal;
+}
+
+.linear-system-mode-tabs button[aria-selected="true"] {
+    box-shadow: 0 6px 14px rgba(11, 105, 255, 0.18);
+}
+
+.linear-system-input-mode [hidden],
+#matrix-area-b[hidden],
+.swap-mid-col[hidden] {
+    display: none;
+}
+
 .linear-system-ab-title {
     color: #111827;
     font-size: 1rem;
@@ -76,6 +94,23 @@
 .linear-system-ab-solve:focus-visible {
     outline: 3px solid rgba(37, 99, 235, 0.32);
     outline-offset: 2px;
+}
+
+.linear-system-augmented {
+    color: #334155;
+}
+
+.linear-system-augmented-status .linear-system-ab-message {
+    line-height: 1.4;
+}
+
+#matrix-container-a .matrix input.linear-system-augmented-divider {
+    border-left: 3px solid rgba(15, 23, 42, 0.45);
+    background: #f8fafc;
+}
+
+#matrix-container-a .matrix input.linear-system-augmented-divider:focus {
+    border-left-color: #0b69ff;
 }
 
 .linear-system-ab-result-error {
