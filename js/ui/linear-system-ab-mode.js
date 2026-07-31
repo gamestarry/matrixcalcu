@@ -418,6 +418,15 @@
         if (swap) swap.hidden = hidden;
     }
 
+    function syncEquationPanelVisibility() {
+        const matrixMode = root.document.getElementById("rref-matrix-mode");
+        const equationMode = root.document.getElementById("rref-equation-mode");
+        const showEquations = currentMode === MODE_EQUATION;
+
+        if (matrixMode) matrixMode.style.display = showEquations ? "none" : "block";
+        if (equationMode) equationMode.style.display = showEquations ? "block" : "none";
+    }
+
     function updateAugmentedColumnMarkers() {
         const container = root.document.getElementById("matrix-container-a");
         if (!container) return;
@@ -585,11 +594,12 @@
     function setMode(mode) {
         currentMode = mode === MODE_AUGMENTED ? MODE_AUGMENTED : (mode === MODE_AB || mode === "matrix" ? MODE_AB : MODE_EQUATION);
         if (typeof optionsRef.setRrefMode === "function") {
-            optionsRef.setRrefMode("matrix");
+            optionsRef.setRrefMode(currentMode === MODE_EQUATION ? MODE_EQUATION : "matrix");
         }
         setTabState();
         setPanelVisibility();
         setMatrixAreaVisibility();
+        syncEquationPanelVisibility();
         updateMatrixLabels();
         updateAugmentedColumnMarkers();
         if (currentMode === MODE_AB) renderDimensionStatus();
