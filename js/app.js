@@ -245,7 +245,7 @@ class MatrixApp {
 
     performLinearSystemFromAB() {
         const abMode = window.LinearSystemABMode;
-        if (!this._isEnglishEquationPage() || !abMode) return;
+        if (!this._isSupportedEquationPage() || !abMode) return;
 
         let dims = null;
         try {
@@ -295,7 +295,7 @@ class MatrixApp {
 
     performLinearSystemFromAugmented() {
         const abMode = window.LinearSystemABMode;
-        if (!this._isEnglishEquationPage() || !abMode) return;
+        if (!this._isSupportedEquationPage() || !abMode) return;
 
         let dims = null;
         try {
@@ -848,7 +848,7 @@ class MatrixApp {
 
     _initLinearSystemABMode() {
         if (
-            !this._isEnglishEquationPage() ||
+            !this._isSupportedEquationPage() ||
             !window.LinearSystemABMode ||
             typeof window.LinearSystemABMode.init !== 'function'
         ) {
@@ -868,11 +868,12 @@ class MatrixApp {
         });
     }
 
-    _isEnglishEquationPage() {
+    _isSupportedEquationPage() {
         const lang = (document.documentElement.lang || '').toLowerCase();
         const path = window.location.pathname || '';
-        return window.PAGE_MODE === 'equation' &&
-            (lang.startsWith('en') || path.indexOf('/en/matrix-equations-calculator') !== -1);
+        const supportedLang = lang.startsWith('en') || lang.startsWith('es');
+        const supportedPath = /^\/(?:en|es)\/matrix-equations-calculator(?:\.html)?$/.test(path);
+        return window.PAGE_MODE === 'equation' && supportedLang && supportedPath;
     }
 
     _showRrefPanel(show) {

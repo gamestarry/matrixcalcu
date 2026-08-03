@@ -63,7 +63,9 @@
         if (!root || root.PAGE_MODE !== "equation" || !root.document) return false;
         const lang = (root.document.documentElement && root.document.documentElement.lang || "").toLowerCase();
         const path = root.location && root.location.pathname || "";
-        return lang.startsWith("en") || path.indexOf("/en/matrix-equations-calculator") !== -1;
+        const supportedLang = lang.startsWith("en") || lang.startsWith("es");
+        const supportedPath = /^\/(?:en|es)\/matrix-equations-calculator(?:\.html)?$/.test(path);
+        return supportedLang && supportedPath;
     }
 
     function dimensionsFromShape(A, b) {
