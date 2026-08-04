@@ -78,6 +78,7 @@ class FakeElement {
 const fakeHistory = new FakeElement('div');
 fakeHistory.id = 'result-history';
 globalThis.document = {
+    documentElement: { lang: 'en' },
     createElement: (tagName) => new FakeElement(tagName),
     getElementById: (id) => id === 'result-history' ? fakeHistory : null
 };
@@ -92,6 +93,16 @@ function findFirst(node, predicate) {
         if (found) return found;
     }
     return null;
+}
+
+function collectText(node) {
+    const own = node.textContent || '';
+    const childText = (node.children || []).map(collectText).join('\n');
+    return [own, childText].filter(Boolean).join('\n');
+}
+
+function setLang(lang) {
+    globalThis.document.documentElement.lang = lang;
 }
 
 function runTests() {
@@ -192,6 +203,96 @@ function runTests() {
     assert.deepStrictEqual(abMode.getVariableNames(5), ['x', 'y', 'z', 'w', 'u']);
     assert.strictEqual(abMode.getVariableNames(16)[15], 'x16');
     rows.push(['T10', 'generate variable names for A columns', 'pass']);
+
+    setLang('en');
+    const enRecord = abMode.appendValidationResult({
+        messages: [abMode.messages.bSingleColumn],
+        dimensions: { A: { rows: 2, cols: 2 }, B: { rows: 2, cols: 2 } }
+    });
+    let text = collectText(enRecord);
+    assert.ok(text.includes('Cannot solve A x = b'));
+    assert.ok(text.includes('Input error'));
+    assert.ok(text.includes('This attempt was not calculated.'));
+    assert.ok(text.includes('Vector b must have exactly one column.'));
+    assert.ok(text.includes('Set Matrix B to one column, then try again.'));
+    assert.ok(text.includes('Current dimensions:'));
+    rows.push(['T11', 'render English A and b input error record', 'pass']);
+
+    setLang('es');
+    const esBRecord = abMode.appendValidationResult({
+        messages: [abMode.messages.bSingleColumn],
+        dimensions: { A: { rows: 2, cols: 2 }, B: { rows: 2, cols: 2 } }
+    });
+    text = collectText(esBRecord);
+    assert.ok(text.includes('No se puede resolver A x = b'));
+    assert.ok(text.includes('Error de entrada'));
+    assert.ok(text.includes('Este intento no se calculó.'));
+    assert.ok(text.includes('La matriz B debe tener una sola columna para utilizarse como vector b.'));
+    assert.ok(text.includes('Ajusta la matriz B a una sola columna e inténtalo de nuevo.'));
+    assert.ok(text.includes('Dimensiones actuales:'));
+    assert.ok(text.includes('A: 2 x 2'));
+    assert.ok(text.includes('b: 2 x 2'));
+    rows.push(['T12', 'render Spanish A y b non-column b error record with dimensions', 'pass']);
+
+    const esRowRecord = abMode.appendValidationResult({
+        messages: [abMode.messages.rowMismatch],
+        dimensions: { A: { rows: 2, cols: 2 }, B: { rows: 3, cols: 1 } }
+    });
+    text = collectText(esRowRecord);
+    assert.ok(text.includes('El número de filas de A y b debe coincidir.'));
+    assert.ok(text.includes('Haz que A y b tengan el mismo número de filas e inténtalo de nuevo.'));
+    rows.push(['T13', 'render Spanish A y b row mismatch error record', 'pass']);
+
+    setLang('fr');
+    const fallbackRecord = abMode.appendValidationResult({
+        messages: [abMode.messages.bSingleColumn],
+        dimensions: { A: { rows: 2, cols: 2 }, B: { rows: 2, cols: 2 } }
+    });
+    text = collectText(fallbackRecord);
+    assert.ok(text.includes('Cannot solve A x = b'));
+    assert.ok(text.includes('Input error'));
+    assert.ok(text.includes('This attempt was not calculated.'));
+    rows.push(['T14', 'fallback to English for unsupported language in error records', 'pass']);
+
+    setLang('es');
+    const augmentedColumnRecord = abMode.appendValidationResult({
+        title: abMode.messages.augmentedResultTitle,
+        messages: [abMode.messages.augmentedMinColumns],
+        dimensions: { A: { rows: 3, cols: 1 } },
+        suggestion: abMode.messages.augmentedAddColumn,
+        sourceMode: 'augmented'
+    });
+    text = collectText(augmentedColumnRecord);
+    assert.ok(text.includes('No se puede resolver la matriz aumentada'));
+    assert.ok(text.includes('Una matriz aumentada debe tener al menos dos columnas: una o más columnas de variables y una columna de constantes.'));
+    assert.ok(text.includes('Añade al menos una columna más e inténtalo de nuevo.'));
+    assert.ok(text.includes('Dimensiones actuales:'));
+    assert.ok(text.includes('3 x 1'));
+    rows.push(['T15', 'render Spanish augmented minimum-column error record', 'pass']);
+
+    const augmentedUnreadableRecord = abMode.appendValidationResult({
+        title: abMode.messages.augmentedResultTitle,
+        messages: [abMode.messages.augmentedUnreadable],
+        dimensions: { A: { rows: 2, cols: 3 } },
+        suggestion: abMode.messages.augmentedCheckDimensions,
+        sourceMode: 'augmented'
+    });
+    text = collectText(augmentedUnreadableRecord);
+    assert.ok(text.includes('No se pudo leer la matriz aumentada.'));
+    assert.ok(text.includes('Comprueba las dimensiones de la matriz e inténtalo de nuevo.'));
+    rows.push(['T16', 'render Spanish augmented unreadable error record', 'pass']);
+
+    const augmentedInvalidRecord = abMode.appendValidationResult({
+        title: abMode.messages.augmentedResultTitle,
+        messages: [abMode.messages.augmentedInvalidEntries],
+        dimensions: { A: { rows: 2, cols: 3 } },
+        suggestion: abMode.messages.augmentedCheckEntries,
+        sourceMode: 'augmented'
+    });
+    text = collectText(augmentedInvalidRecord);
+    assert.ok(text.includes('Una o más entradas de la matriz aumentada no son válidas.'));
+    assert.ok(text.includes('Comprueba las entradas e inténtalo de nuevo.'));
+    rows.push(['T17', 'render Spanish augmented invalid-entry error record', 'pass']);
 
     return rows;
 }

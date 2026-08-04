@@ -77,6 +77,22 @@
             matrixAName: "Matrix A",
             vectorBName: "Vector b",
             augmentedName: "Augmented matrix",
+            resultStatus: "Input error",
+            notCalculated: "This attempt was not calculated.",
+            abResultTitle: "Cannot solve A x = b",
+            augmentedResultTitle: "Cannot solve the augmented matrix",
+            currentDimensions: "Current dimensions:",
+            setBColumn: "Set Matrix B to one column, then try again.",
+            matchRows: "Make the number of rows in A and b match, then try again.",
+            missingDimensions: "Matrix dimensions are not available yet.",
+            emptyMatrix: "Matrix A and vector b must contain at least one row.",
+            invalidMatrix: "Matrix A and vector b must contain valid finite values.",
+            augmentedMinColumnsResult: "At least two columns are required: one variable column and one constants column.",
+            augmentedUnreadable: "The augmented matrix could not be read.",
+            augmentedInvalidEntries: "One or more entries in the augmented matrix are invalid.",
+            augmentedAddColumn: "Add at least one more column, then try again.",
+            augmentedCheckDimensions: "Check the matrix dimensions and try again.",
+            augmentedCheckEntries: "Check the entries and try again.",
             equationSingular: "equation",
             equationPlural: "equations",
             variableSingular: "variable",
@@ -115,6 +131,22 @@
             matrixAName: "Matriz A",
             vectorBName: "Vector b",
             augmentedName: "Matriz aumentada",
+            resultStatus: "Error de entrada",
+            notCalculated: "Este intento no se calculó.",
+            abResultTitle: "No se puede resolver A x = b",
+            augmentedResultTitle: "No se puede resolver la matriz aumentada",
+            currentDimensions: "Dimensiones actuales:",
+            setBColumn: "Ajusta la matriz B a una sola columna e inténtalo de nuevo.",
+            matchRows: "Haz que A y b tengan el mismo número de filas e inténtalo de nuevo.",
+            missingDimensions: "Las dimensiones de las matrices todavía no están disponibles.",
+            emptyMatrix: "La matriz A y el vector b deben contener al menos una fila.",
+            invalidMatrix: "Una o más entradas de la matriz no son válidas.",
+            augmentedMinColumnsResult: "Una matriz aumentada debe tener al menos dos columnas: una o más columnas de variables y una columna de constantes.",
+            augmentedUnreadable: "No se pudo leer la matriz aumentada.",
+            augmentedInvalidEntries: "Una o más entradas de la matriz aumentada no son válidas.",
+            augmentedAddColumn: "Añade al menos una columna más e inténtalo de nuevo.",
+            augmentedCheckDimensions: "Comprueba las dimensiones de la matriz e inténtalo de nuevo.",
+            augmentedCheckEntries: "Comprueba las entradas e inténtalo de nuevo.",
             equationSingular: "ecuación",
             equationPlural: "ecuaciones",
             variableSingular: "variable",
@@ -169,6 +201,28 @@
         if (message === MESSAGES.rowMismatch) return uiText("rowMismatch");
         if (message === MESSAGES.bSingleColumn) return uiText("bSingleColumn");
         if (message === MESSAGES.augmentedMinColumns) return uiText("augmentedMinColumns");
+        return message;
+    }
+
+    function resultMessage(message) {
+        if (!isSpanishUi()) return message;
+        if (message === MESSAGES.resultStatus) return uiText("resultStatus");
+        if (message === MESSAGES.notCalculated) return uiText("notCalculated");
+        if (message === MESSAGES.abResultTitle) return uiText("abResultTitle");
+        if (message === MESSAGES.augmentedResultTitle) return uiText("augmentedResultTitle");
+        if (message === MESSAGES.setBColumn) return uiText("setBColumn");
+        if (message === MESSAGES.matchRows) return uiText("matchRows");
+        if (message === MESSAGES.missingDimensions) return uiText("missingDimensions");
+        if (message === MESSAGES.emptyMatrix) return uiText("emptyMatrix");
+        if (message === MESSAGES.rowMismatch) return uiText("rowMismatch");
+        if (message === MESSAGES.bSingleColumn) return uiText("bSingleColumn");
+        if (message === MESSAGES.invalidMatrix) return uiText("invalidMatrix");
+        if (message === MESSAGES.augmentedMinColumns) return uiText("augmentedMinColumnsResult");
+        if (message === MESSAGES.augmentedUnreadable) return uiText("augmentedUnreadable");
+        if (message === MESSAGES.augmentedInvalidEntries) return uiText("augmentedInvalidEntries");
+        if (message === MESSAGES.augmentedAddColumn) return uiText("augmentedAddColumn");
+        if (message === MESSAGES.augmentedCheckDimensions) return uiText("augmentedCheckDimensions");
+        if (message === MESSAGES.augmentedCheckEntries) return uiText("augmentedCheckEntries");
         return message;
     }
 
@@ -652,7 +706,7 @@
         const topControls = root.document.createElement("div");
         topControls.classList.add("result-top-controls");
 
-        const marker = createText("div", "linear-system-ab-result-marker", MESSAGES.resultStatus);
+        const marker = createText("div", "linear-system-ab-result-marker", uiText("resultStatus"));
         topControls.appendChild(marker);
 
         const actionButtons = root.document.createElement("div");
@@ -674,22 +728,22 @@
 
         const body = root.document.createElement("div");
         body.className = "linear-system-ab-result-body";
-        body.appendChild(createText("h3", "linear-system-ab-result-title", data.title || (sourceMode === MODE_AUGMENTED ? MESSAGES.augmentedResultTitle : MESSAGES.abResultTitle)));
-        body.appendChild(createText("div", "linear-system-ab-result-status", data.status || MESSAGES.resultStatus));
-        body.appendChild(createText("p", "linear-system-ab-not-calculated", MESSAGES.notCalculated));
+        body.appendChild(createText("h3", "linear-system-ab-result-title", resultMessage(data.title || (sourceMode === MODE_AUGMENTED ? MESSAGES.augmentedResultTitle : MESSAGES.abResultTitle))));
+        body.appendChild(createText("div", "linear-system-ab-result-status", resultMessage(data.status || MESSAGES.resultStatus)));
+        body.appendChild(createText("p", "linear-system-ab-not-calculated", uiText("notCalculated")));
 
         const list = root.document.createElement(messages.length > 1 ? "ul" : "div");
         list.className = "linear-system-ab-result-reasons";
         messages.forEach(message => {
             const item = root.document.createElement(messages.length > 1 ? "li" : "div");
-            item.textContent = message;
+            item.textContent = resultMessage(message);
             list.appendChild(item);
         });
         body.appendChild(list);
 
         const dims = root.document.createElement("div");
         dims.className = "linear-system-ab-result-dimensions";
-        dims.appendChild(createText("div", "linear-system-ab-result-dimensions-title", "Current dimensions:"));
+        dims.appendChild(createText("div", "linear-system-ab-result-dimensions-title", uiText("currentDimensions")));
         if (sourceMode === MODE_AUGMENTED) {
             dims.appendChild(createText("div", "", `${dimensions.rowsA || 0} x ${dimensions.colsA || 0}`));
         } else {
@@ -700,11 +754,11 @@
 
         const suggestion = data.suggestion || "";
         if (suggestion) {
-            body.appendChild(createText("p", "linear-system-ab-result-next", suggestion));
+            body.appendChild(createText("p", "linear-system-ab-result-next", resultMessage(suggestion)));
         } else if (messages.includes(MESSAGES.bSingleColumn)) {
-            body.appendChild(createText("p", "linear-system-ab-result-next", MESSAGES.setBColumn));
+            body.appendChild(createText("p", "linear-system-ab-result-next", uiText("setBColumn")));
         } else if (messages.includes(MESSAGES.rowMismatch)) {
-            body.appendChild(createText("p", "linear-system-ab-result-next", MESSAGES.matchRows));
+            body.appendChild(createText("p", "linear-system-ab-result-next", uiText("matchRows")));
         }
 
         resultBlock.appendChild(body);
