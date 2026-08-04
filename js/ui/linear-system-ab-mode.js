@@ -44,6 +44,85 @@
         augmentedCheckEntries: "Check the entries and try again."
     };
 
+    const UI_MESSAGES = {
+        en: {
+            panelTitle: "Solve a System of Linear Equations",
+            equationTab: "Equations",
+            abTab: "A and b",
+            augmentedTab: "Augmented Matrix",
+            abTitle: "Solve A x = b",
+            coefficientHint: "Matrix A contains the coefficients.",
+            constantsHint: "Matrix b contains the constants and must be a single-column vector.",
+            abSolve: "Solve A x = b",
+            matrixALabel: "Coefficient Matrix A",
+            vectorBLabel: "Vector b",
+            augmentedMatrixLabel: "Augmented Matrix [A|b]",
+            augmentedTitle: "Solve from an Augmented Matrix",
+            augmentedHint1: "Enter the full augmented matrix [A|b].",
+            augmentedHint2: "The last column is the constants column b.",
+            augmentedHint3: "All preceding columns contain the coefficients.",
+            augmentedHint4: "The number of variables equals the number of columns minus one.",
+            augmentedSolve: "Solve Augmented Matrix",
+            ready: "Ready to solve A x = b.",
+            augmentedReady: "Ready to solve.",
+            augmentedFinalColumn: "The final column is b.",
+            underdetermined: "This is an underdetermined system.",
+            underdeterminedMaybe: "It may have no solution or infinitely many solutions.",
+            overdetermined: "This is an overdetermined system.",
+            rowMismatch: "The number of rows in A and b must match.",
+            bSingleColumn: "Matrix B must have one column to be used as vector b.",
+            useControls: "Use the existing Matrix B column controls to set b to one column.",
+            augmentedMinColumns: "At least two columns are required.",
+            augmentedMinColumnsHelp: "One variable column and one constants column are required.",
+            matrixAName: "Matrix A",
+            vectorBName: "Vector b",
+            augmentedName: "Augmented matrix",
+            equationSingular: "equation",
+            equationPlural: "equations",
+            variableSingular: "variable",
+            variablePlural: "variables",
+            inWord: "in"
+        },
+        es: {
+            panelTitle: "Resolver un sistema de ecuaciones lineales",
+            equationTab: "Ecuaciones",
+            abTab: "A y b",
+            augmentedTab: "Matriz aumentada",
+            abTitle: "Resolver A x = b",
+            coefficientHint: "La matriz A contiene los coeficientes.",
+            constantsHint: "El vector b contiene los términos constantes.",
+            abSolve: "Resolver A x = b",
+            matrixALabel: "Matriz A",
+            vectorBLabel: "Vector b",
+            augmentedMatrixLabel: "Matriz aumentada [A|b]",
+            augmentedTitle: "Resolver desde una matriz aumentada",
+            augmentedHint1: "Introduce la matriz aumentada completa [A|b].",
+            augmentedHint2: "La última columna corresponde al vector de constantes b.",
+            augmentedHint3: "Las columnas anteriores contienen los coeficientes.",
+            augmentedHint4: "El número de variables es igual al número de columnas menos uno.",
+            augmentedSolve: "Resolver la matriz aumentada",
+            ready: "Listo para resolver A x = b.",
+            augmentedReady: "Lista para resolver.",
+            augmentedFinalColumn: "La última columna es b.",
+            underdetermined: "Este sistema tiene menos ecuaciones que variables.",
+            underdeterminedMaybe: "Puede no tener solución o tener infinitas soluciones.",
+            overdetermined: "Este sistema tiene más ecuaciones que variables.",
+            rowMismatch: "El número de filas de A y b debe coincidir.",
+            bSingleColumn: "La matriz B debe tener una sola columna para utilizarse como vector b.",
+            useControls: "Usa los controles de columnas de la matriz B para dejar b con una sola columna.",
+            augmentedMinColumns: "Se necesitan al menos dos columnas.",
+            augmentedMinColumnsHelp: "Se necesita al menos una columna de variables y una columna de constantes.",
+            matrixAName: "Matriz A",
+            vectorBName: "Vector b",
+            augmentedName: "Matriz aumentada",
+            equationSingular: "ecuación",
+            equationPlural: "ecuaciones",
+            variableSingular: "variable",
+            variablePlural: "variables",
+            inWord: "con"
+        }
+    };
+
     let currentMode = MODE_EQUATION;
     let optionsRef = {};
     let panelRef = null;
@@ -58,6 +137,40 @@
     let initialized = false;
     let autoInitStarted = false;
     let autoObserverRef = null;
+
+    function getUiMessages() {
+        const lang = (root.document && root.document.documentElement && root.document.documentElement.lang || "en").toLowerCase();
+        return lang.startsWith("es") ? UI_MESSAGES.es : UI_MESSAGES.en;
+    }
+
+    function uiText(key) {
+        const messages = getUiMessages();
+        return messages[key] || UI_MESSAGES.en[key] || key;
+    }
+
+    function isSpanishUi() {
+        return getUiMessages() === UI_MESSAGES.es;
+    }
+
+    function formatSystemSize(equationCount, variableCount) {
+        const messages = getUiMessages();
+        const equationWord = equationCount === 1 ? messages.equationSingular : messages.equationPlural;
+        const variableWord = variableCount === 1 ? messages.variableSingular : messages.variablePlural;
+        return `${equationCount} ${equationWord} ${messages.inWord} ${variableCount} ${variableWord}.`;
+    }
+
+    function statusMessage(message) {
+        if (message === MESSAGES.ready) return uiText("ready");
+        if (message === MESSAGES.augmentedReady) return uiText("augmentedReady");
+        if (message === MESSAGES.augmentedFinalColumn) return uiText("augmentedFinalColumn");
+        if (message === MESSAGES.underdetermined || message === "This is an underdetermined system.") return uiText("underdetermined");
+        if (message === "It may have no solution or infinitely many solutions.") return uiText("underdeterminedMaybe");
+        if (message === MESSAGES.overdetermined || message === "This is an overdetermined system.") return uiText("overdetermined");
+        if (message === MESSAGES.rowMismatch) return uiText("rowMismatch");
+        if (message === MESSAGES.bSingleColumn) return uiText("bSingleColumn");
+        if (message === MESSAGES.augmentedMinColumns) return uiText("augmentedMinColumns");
+        return message;
+    }
 
     function isEquationPage() {
         if (!root || root.PAGE_MODE !== "equation" || !root.document) return false;
@@ -262,9 +375,9 @@
 
         const abPanel = root.document.createElement("div");
         abPanel.id = "linear-system-ab-panel";
-        abPanel.appendChild(createText("div", "linear-system-ab-title", MESSAGES.abTitle));
-        abPanel.appendChild(createText("p", "linear-system-ab-text", MESSAGES.coefficientHint));
-        abPanel.appendChild(createText("p", "linear-system-ab-text", MESSAGES.constantsHint));
+        abPanel.appendChild(createText("div", "linear-system-ab-title", uiText("abTitle")));
+        abPanel.appendChild(createText("p", "linear-system-ab-text", uiText("coefficientHint")));
+        abPanel.appendChild(createText("p", "linear-system-ab-text", uiText("constantsHint")));
 
         statusRef = createText("div", "linear-system-ab-status", "");
         statusRef.id = "linear-system-ab-status";
@@ -279,7 +392,7 @@
         solve.type = "button";
         solve.id = "linear-system-ab-solve-btn";
         solve.className = "linear-system-ab-solve";
-        solve.textContent = MESSAGES.abSolve;
+        solve.textContent = uiText("abSolve");
         solve.addEventListener("click", () => {
             if (typeof optionsRef.solve === "function") optionsRef.solve();
         });
@@ -291,8 +404,8 @@
         augmentedPanel.id = "linear-system-augmented-panel";
         augmentedPanel.className = "linear-system-augmented";
         augmentedPanel.hidden = true;
-        augmentedPanel.appendChild(createText("div", "linear-system-ab-title", MESSAGES.augmentedTitle));
-        [MESSAGES.augmentedHint1, MESSAGES.augmentedHint2, MESSAGES.augmentedHint3, MESSAGES.augmentedHint4].forEach(text => {
+        augmentedPanel.appendChild(createText("div", "linear-system-ab-title", uiText("augmentedTitle")));
+        [uiText("augmentedHint1"), uiText("augmentedHint2"), uiText("augmentedHint3"), uiText("augmentedHint4")].forEach(text => {
             augmentedPanel.appendChild(createText("p", "linear-system-ab-text", text));
         });
 
@@ -309,7 +422,7 @@
         augmentedSolve.type = "button";
         augmentedSolve.id = "linear-system-augmented-solve-btn";
         augmentedSolve.className = "linear-system-ab-solve";
-        augmentedSolve.textContent = MESSAGES.augmentedSolve;
+        augmentedSolve.textContent = uiText("augmentedSolve");
         augmentedSolve.addEventListener("click", () => {
             if (typeof optionsRef.solveAugmented === "function") optionsRef.solveAugmented();
         });
@@ -322,25 +435,26 @@
         if (!panelRef || panelRef.dataset.abTitleUpdated === "1") return;
         const title = panelRef.firstElementChild && panelRef.firstElementChild.firstElementChild;
         if (title) {
-            title.textContent = MESSAGES.panelTitle;
+            title.textContent = uiText("panelTitle");
             panelRef.dataset.abTitleUpdated = "1";
         }
     }
 
     function setTabState() {
         if (matrixTabRef) {
-            matrixTabRef.textContent = "A and b";
+            matrixTabRef.textContent = uiText("abTab");
             matrixTabRef.setAttribute("role", "tab");
             matrixTabRef.setAttribute("aria-selected", currentMode === MODE_AB ? "true" : "false");
             setInlineTabStyle(matrixTabRef, currentMode === MODE_AB);
         }
         if (equationTabRef) {
-            equationTabRef.textContent = "Equations";
+            equationTabRef.textContent = uiText("equationTab");
             equationTabRef.setAttribute("role", "tab");
             equationTabRef.setAttribute("aria-selected", currentMode === MODE_EQUATION ? "true" : "false");
             setInlineTabStyle(equationTabRef, currentMode === MODE_EQUATION);
         }
         if (augmentedTabRef) {
+            augmentedTabRef.textContent = uiText("augmentedTab");
             augmentedTabRef.setAttribute("role", "tab");
             augmentedTabRef.setAttribute("aria-selected", currentMode === MODE_AUGMENTED ? "true" : "false");
             setInlineTabStyle(augmentedTabRef, currentMode === MODE_AUGMENTED);
@@ -367,7 +481,7 @@
         augmentedTabRef = root.document.createElement("button");
         augmentedTabRef.type = "button";
         augmentedTabRef.dataset.rrefMode = "augmented";
-        augmentedTabRef.textContent = MESSAGES.augmentedTab;
+        augmentedTabRef.textContent = uiText("augmentedTab");
         const source = matrixTabRef || equationTabRef;
         if (source) {
             augmentedTabRef.style.cssText = source.style.cssText;
@@ -394,11 +508,11 @@
         }
 
         if (currentMode === MODE_AB) {
-            replaceLabelText(labelA, "Coefficient Matrix A");
-            replaceLabelText(labelB, "Vector b");
+            replaceLabelText(labelA, uiText("matrixALabel"));
+            replaceLabelText(labelB, uiText("vectorBLabel"));
         } else if (currentMode === MODE_AUGMENTED) {
-            replaceLabelText(labelA, "Augmented Matrix [A|b]");
-            replaceLabelText(labelB, "Vector b");
+            replaceLabelText(labelA, uiText("augmentedMatrixLabel"));
+            replaceLabelText(labelB, uiText("vectorBLabel"));
         } else {
             replaceLabelText(labelA, (labelState.a || "A").trim());
             replaceLabelText(labelB, (labelState.b || "B").trim());
@@ -458,15 +572,18 @@
         statusRef.classList.toggle("is-ready", !!result.ok);
         statusRef.replaceChildren();
 
-        const dims = createText("div", "linear-system-ab-dims", `A: ${result.rowsA || 0} x ${result.colsA || 0}; b: ${result.rowsB || 0} x ${result.colsB || 0}`);
+        const dims = createText("div", "linear-system-ab-dims", `${uiText("matrixAName")}: ${result.rowsA || 0} x ${result.colsA || 0}; ${uiText("vectorBName")}: ${result.rowsB || 0} x ${result.colsB || 0}`);
         statusRef.appendChild(dims);
+        if (isSpanishUi() && result.equationCount && result.variableCount) {
+            statusRef.appendChild(createText("div", "linear-system-ab-message", formatSystemSize(result.equationCount, result.variableCount)));
+        }
 
         result.messages.forEach(message => {
-            statusRef.appendChild(createText("div", "linear-system-ab-message", message));
+            statusRef.appendChild(createText("div", "linear-system-ab-message", statusMessage(message)));
         });
 
         if (!result.ok && result.messages.includes(MESSAGES.bSingleColumn)) {
-            statusRef.appendChild(createText("div", "linear-system-ab-help", MESSAGES.useControls));
+            statusRef.appendChild(createText("div", "linear-system-ab-help", uiText("useControls")));
         }
 
         return result;
@@ -482,15 +599,22 @@
         augmentedStatusRef.replaceChildren();
 
         if (!result.ok) {
-            augmentedStatusRef.appendChild(createText("div", "linear-system-ab-dims", `Augmented matrix: ${result.rowsA || 0} x ${result.colsA || 0}`));
-            result.messages.forEach(message => {
-                augmentedStatusRef.appendChild(createText("div", "linear-system-ab-message", message));
-            });
+            augmentedStatusRef.appendChild(createText("div", "linear-system-ab-dims", `${uiText("augmentedName")}: ${result.rowsA || 0} x ${result.colsA || 0}`));
+            if (result.code === "augmented-column-count") {
+                augmentedStatusRef.appendChild(createText("div", "linear-system-ab-message", uiText("augmentedMinColumns")));
+                augmentedStatusRef.appendChild(createText("div", "linear-system-ab-help", uiText("augmentedMinColumnsHelp")));
+            } else {
+                result.messages.forEach(message => {
+                    augmentedStatusRef.appendChild(createText("div", "linear-system-ab-message", statusMessage(message)));
+                });
+            }
             return result;
         }
 
-        result.messages.forEach((message, index) => {
-            augmentedStatusRef.appendChild(createText("div", index === 0 ? "linear-system-ab-dims" : "linear-system-ab-message", message));
+        augmentedStatusRef.appendChild(createText("div", "linear-system-ab-dims", `${uiText("augmentedName")}: ${result.rowsA || 0} x ${result.colsA || 0}`));
+        augmentedStatusRef.appendChild(createText("div", "linear-system-ab-message", formatSystemSize(result.equationCount || 0, result.variableCount || 0)));
+        result.messages.slice(2).forEach(message => {
+            augmentedStatusRef.appendChild(createText("div", "linear-system-ab-message", statusMessage(message)));
         });
         return result;
     }

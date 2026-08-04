@@ -4,6 +4,45 @@
 
 const VARS = ['x','y','z','w','u','v','t','s','r','q','p','k','m','n'];
 
+const TEXT = {
+  en: {
+    panelTitle: 'RREF: Equation Input Mode',
+    matrixMode: 'Matrix Mode',
+    equationMode: 'Equation Mode',
+    matrixHint: '<b>Matrix Input Mode:</b> Enter values in <b>Matrix A</b>, then click the <b>RREF</b> button.',
+    equations: 'Equations',
+    range: '(2-10)',
+    calculate: 'Calculate RREF',
+    update: 'Update Matrix Inputs',
+    load: 'Load from Matrix A',
+    tip: 'Tip: Equation Mode maps to an <b>augmented matrix</b> [A|b]. Use <b>Update Matrix Inputs</b> to sync into Matrix A.',
+    equationLabel: 'Equation'
+  },
+  es: {
+    panelTitle: 'RREF: modo de ecuaciones',
+    matrixMode: 'Modo matriz',
+    equationMode: 'Modo ecuaciones',
+    matrixHint: '<b>Modo matriz:</b> introduce los valores en la <b>matriz A</b> y haz clic en <b>RREF</b>.',
+    equations: 'Ecuaciones',
+    range: '(2-10)',
+    calculate: 'Calcular RREF',
+    update: 'Actualizar las matrices',
+    load: 'Cargar desde la matriz A',
+    tip: 'Consejo: el modo de ecuaciones se convierte en una <b>matriz aumentada</b> [A|b]. Usa <b>Actualizar las matrices</b> para sincronizarlo con la matriz A.',
+    equationLabel: 'Ecuación'
+  }
+};
+
+function t(key) {
+  const lang = ((document.documentElement && document.documentElement.lang) || 'en').toLowerCase();
+  const path = window.location && window.location.pathname || '';
+  const useSpanish = lang.startsWith('es') &&
+    window.PAGE_MODE === 'equation' &&
+    /^\/es\/matrix-equations-calculator(?:\.html)?$/.test(path);
+  const dict = useSpanish ? TEXT.es : TEXT.en;
+  return dict[key] || TEXT.en[key] || key;
+}
+
 let state = {
   mode: 'matrix',
   equations: 3,   // 2..10
@@ -31,39 +70,39 @@ export function ensureRrefPanelExists() {
 
   panel.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; background:#f5f7ff; border-bottom:1px solid rgba(0,0,0,0.06);">
-      <div style="font-weight:800;">RREF: Equation Input Mode</div>
+      <div style="font-weight:800;">${t('panelTitle')}</div>
       <div style="display:flex; gap:8px;">
-        <button type="button" data-rref-mode="matrix" style="padding:8px 10px; border-radius:10px; border:1px solid rgba(0,0,0,0.1); background:#fff; font-weight:700; cursor:pointer;">Matrix Mode</button>
-        <button type="button" data-rref-mode="equation" style="padding:8px 10px; border-radius:10px; border:1px solid rgba(0,0,0,0.1); background:#fff; font-weight:700; cursor:pointer;">Equation Mode</button>
+        <button type="button" data-rref-mode="matrix" style="padding:8px 10px; border-radius:10px; border:1px solid rgba(0,0,0,0.1); background:#fff; font-weight:700; cursor:pointer;">${t('matrixMode')}</button>
+        <button type="button" data-rref-mode="equation" style="padding:8px 10px; border-radius:10px; border:1px solid rgba(0,0,0,0.1); background:#fff; font-weight:700; cursor:pointer;">${t('equationMode')}</button>
       </div>
     </div>
 
     <div id="rref-panel-body" style="padding:14px;">
       <div id="rref-matrix-mode" style="display:block;">
         <div style="color:#334155; line-height:1.5;">
-          <b>Matrix Input Mode:</b> Enter values in <b>Matrix A</b>, then click the <b>RREF</b> button.
+          ${t('matrixHint')}
         </div>
       </div>
 
       <div id="rref-equation-mode" style="display:none;">
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-          <div style="font-weight:700;">Equations</div>
+          <div style="font-weight:700;">${t('equations')}</div>
           <button type="button" id="rref-eq-minus" style="width:34px; height:34px; border-radius:10px; border:1px solid rgba(0,0,0,0.12); background:#fff; font-weight:800; cursor:pointer;">−</button>
           <div id="rref-eq-count" style="min-width:20px; text-align:center; font-weight:800;">3</div>
           <button type="button" id="rref-eq-plus" style="width:34px; height:34px; border-radius:10px; border:1px solid rgba(0,0,0,0.12); background:#fff; font-weight:800; cursor:pointer;">+</button>
-          <div style="color:#64748b;">(2–10)</div>
+          <div style="color:#64748b;">${t('range')}</div>
         </div>
 
         <div id="rref-equations-container"></div>
 
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-          <button type="button" id="rref-calc-btn" style="padding:10px 14px; border-radius:12px; border:0; background:#6d28d9; color:#fff; font-weight:800; cursor:pointer;">Calculate RREF</button>
-          <button type="button" id="rref-update-matrix-btn" style="padding:10px 14px; border-radius:12px; border:0; background:#2563eb; color:#fff; font-weight:800; cursor:pointer;">Update Matrix Inputs</button>
-          <button type="button" id="rref-load-from-matrix-btn" style="padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.12); background:#fff; font-weight:800; cursor:pointer;">Load from Matrix A</button>
+          <button type="button" id="rref-calc-btn" style="padding:10px 14px; border-radius:12px; border:0; background:#6d28d9; color:#fff; font-weight:800; cursor:pointer;">${t('calculate')}</button>
+          <button type="button" id="rref-update-matrix-btn" style="padding:10px 14px; border-radius:12px; border:0; background:#2563eb; color:#fff; font-weight:800; cursor:pointer;">${t('update')}</button>
+          <button type="button" id="rref-load-from-matrix-btn" style="padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.12); background:#fff; font-weight:800; cursor:pointer;">${t('load')}</button>
         </div>
 
         <div style="margin-top:12px; color:#64748b; font-size:13px; line-height:1.4;">
-          Tip: Equation Mode maps to an <b>augmented matrix</b> [A|b]. Use <b>Update Matrix Inputs</b> to sync into Matrix A.
+          ${t('tip')}
         </div>
       </div>
     </div>
@@ -180,7 +219,7 @@ function _renderEquations() {
     row.style.background = '#f8fafc';
 
     const label = document.createElement('div');
-    label.textContent = `Equation ${i + 1}:`;
+    label.textContent = `${t('equationLabel')} ${i + 1}:`;
     label.style.fontWeight = '800';
     label.style.width = '110px';
     row.appendChild(label);
