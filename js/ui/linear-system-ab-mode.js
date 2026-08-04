@@ -79,6 +79,8 @@
             augmentedName: "Augmented matrix",
             resultStatus: "Input error",
             notCalculated: "This attempt was not calculated.",
+            deleteTitle: "Delete this record",
+            deleteAria: "Delete this input error record",
             abResultTitle: "Cannot solve A x = b",
             augmentedResultTitle: "Cannot solve the augmented matrix",
             currentDimensions: "Current dimensions:",
@@ -132,6 +134,8 @@
             vectorBName: "Vector b",
             augmentedName: "Matriz aumentada",
             resultStatus: "Error de entrada",
+            deleteTitle: "Eliminar este registro",
+            deleteAria: "Eliminar este registro de error de entrada",
             notCalculated: "Este intento no se calculó.",
             abResultTitle: "No se puede resolver A x = b",
             augmentedResultTitle: "No se puede resolver la matriz aumentada",
@@ -715,8 +719,8 @@
         const deleteButton = root.document.createElement("button");
         deleteButton.type = "button";
         deleteButton.className = "delete-btn";
-        deleteButton.title = "Delete this record";
-        deleteButton.setAttribute("aria-label", "Delete this input error record");
+        deleteButton.title = uiText("deleteTitle");
+        deleteButton.setAttribute("aria-label", uiText("deleteAria"));
         deleteButton.textContent = "x";
         deleteButton.addEventListener("click", () => {
             resultBlock.remove();

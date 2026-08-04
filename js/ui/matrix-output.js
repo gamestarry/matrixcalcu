@@ -11,6 +11,65 @@ let globalOutputFormat = {
 // 存储结果块原始数据的映射
 const resultMatrixCache = new Map();
 
+const OUTPUT_TEXT = {
+    en: {
+        fraction: 'Fraction',
+        decimal: 'Decimal',
+        digits: 'Digits',
+        showProcess: 'Show Calculation Process',
+        hideProcess: 'Hide Calculation Process',
+        shareTitle: 'Share this calculation',
+        deleteTitle: 'Delete this record',
+        copyLink: 'Copy Link',
+        shareX: 'Share to X',
+        shareReddit: 'Share to Reddit',
+        emailResult: 'Email Result',
+        copiedAlert: 'Link copied to clipboard!',
+        tweetText: (operation) => `Check out this matrix ${operation.toLowerCase()} calculation!`,
+        redditTitle: (operation) => `Matrix ${operation} Calculation`,
+        emailSubject: (operation) => `Matrix Calculation - ${operation}`,
+        matrixA: (rows, cols) => `Matrix A (${rows}×${cols}):`,
+        matrixB: (rows, cols) => `Matrix B (${rows}×${cols}):`,
+        operation: 'Operation',
+        result: (rows, cols) => `Result (${rows}×${cols}):`,
+        viewFullCalculation: 'View full calculation'
+    },
+    es: {
+        fraction: 'Fracción',
+        decimal: 'Decimal',
+        digits: 'Decimales',
+        showProcess: 'Mostrar proceso de cálculo',
+        hideProcess: 'Ocultar proceso de cálculo',
+        shareTitle: 'Compartir este cálculo',
+        deleteTitle: 'Eliminar este registro',
+        copyLink: 'Copiar enlace',
+        shareX: 'Compartir en X',
+        shareReddit: 'Compartir en Reddit',
+        emailResult: 'Enviar resultado por correo',
+        copiedAlert: 'Enlace copiado al portapapeles.',
+        tweetText: (operation) => `Revisa este cálculo de matrices: ${operation}.`,
+        redditTitle: (operation) => `Cálculo de matrices: ${operation}`,
+        emailSubject: (operation) => `Cálculo de matrices - ${operation}`,
+        matrixA: (rows, cols) => `Matriz A (${rows}×${cols}):`,
+        matrixB: (rows, cols) => `Matriz B (${rows}×${cols}):`,
+        operation: 'Operación',
+        result: (rows, cols) => `Resultado (${rows}×${cols}):`,
+        viewFullCalculation: 'Ver el cálculo completo'
+    }
+};
+
+function isSpanishEquationPage() {
+    const lang = (document.documentElement?.lang || '').toLowerCase();
+    const path = (window.location?.pathname || '').replace(/\\/g, '/');
+    return lang.startsWith('es') &&
+        window.PAGE_MODE === 'equation' &&
+        /\/es\/matrix-equations-calculator(?:\.html)?$/.test(path);
+}
+
+function outputText() {
+    return isSpanishEquationPage() ? OUTPUT_TEXT.es : OUTPUT_TEXT.en;
+}
+
 /**
  * ✅ 按你的规则做“默认输出跟输入走（分数优先）”
  * - 只要输入框原始字符串里出现过 "/" => fraction
@@ -79,20 +138,21 @@ function createFormatSelector(resultId, defaultFormat) {
     container.dataset.resultId = resultId;
 
     const formatType = (defaultFormat === 'decimal') ? 'decimal' : 'fraction';
+    const t = outputText();
 
     container.innerHTML = `
     <div class="seg-control">
       <input type="radio" id="f-frac-${resultId}" name="fmt-${resultId}" value="fraction" ${formatType === 'fraction' ? 'checked' : ''}>
-      <label for="f-frac-${resultId}">Fraction</label>
+      <label for="f-frac-${resultId}">${t.fraction}</label>
 
       <input type="radio" id="f-dec-${resultId}" name="fmt-${resultId}" value="decimal" ${formatType === 'decimal' ? 'checked' : ''}>
-      <label for="f-dec-${resultId}">Decimal</label>
+      <label for="f-dec-${resultId}">${t.decimal}</label>
 
       <span class="seg-glider" style="${formatType === 'decimal' ? 'transform: translateX(82px);' : ''}"></span>
     </div>
 
     <div class="precision-drawer" style="${formatType === 'decimal' ? 'opacity: 1; transform: translateY(0); pointer-events: auto;' : 'opacity: 0; transform: translateY(-10px); pointer-events: none;'}">
-      <span>Digits</span>
+      <span>${t.digits}</span>
       <input type="number" id="dec-prec-${resultId}" value="${globalOutputFormat.precision}" min="0" max="9">
     </div>
   `;
@@ -208,6 +268,7 @@ export function displayResult(operation, matrixA, matrixB, operator, processMatr
     if (errorMessage) {
         resultBlock.innerHTML = `<div class="error-message">${errorMessage}</div>`;
     } else {
+        const t = outputText();
         const formatSelector = createFormatSelector(resultId, detectedFormat);
 
         const topControls = document.createElement('div');
@@ -216,17 +277,17 @@ export function displayResult(operation, matrixA, matrixB, operator, processMatr
         const actionButtons = document.createElement('div');
         actionButtons.classList.add('action-buttons');
         actionButtons.innerHTML = `
-      <button class="toggle-process-btn" title="Show Calculation Process"><i class="fas fa-eye"></i></button>
+      <button class="toggle-process-btn" title="${t.showProcess}" aria-label="${t.showProcess}"><i class="fas fa-eye"></i></button>
       <div class="share-dropdown">
-        <button class="share-btn" title="Share this calculation"><i class="fas fa-share-alt"></i></button>
+        <button class="share-btn" title="${t.shareTitle}" aria-label="${t.shareTitle}"><i class="fas fa-share-alt"></i></button>
         <div class="share-menu">
-          <button class="share-option copy-link">Copy Link</button>
-          <button class="share-option share-x">Share to X</button>
-          <button class="share-option share-reddit">Share to Reddit</button>
-          <button class="share-option share-email">Email Result</button>
+          <button class="share-option copy-link">${t.copyLink}</button>
+          <button class="share-option share-x">${t.shareX}</button>
+          <button class="share-option share-reddit">${t.shareReddit}</button>
+          <button class="share-option share-email">${t.emailResult}</button>
         </div>
       </div>
-      <button class="delete-btn" title="Delete this record"><i class="fas fa-times"></i></button>
+      <button class="delete-btn" title="${t.deleteTitle}" aria-label="${t.deleteTitle}"><i class="fas fa-times"></i></button>
     `;
 
         topControls.appendChild(formatSelector);
@@ -403,16 +464,19 @@ function setupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, op
 
     const toggleProcessBtn = resultBlock.querySelector('.toggle-process-btn');
     if (toggleProcessBtn) {
+        const t = outputText();
         const processOnlyContainer = resultBlock.querySelector('.process-only-container');
         toggleProcessBtn.addEventListener('click', () => {
             if (processOnlyContainer.style.display === 'none') {
                 processOnlyContainer.style.display = 'flex';
                 toggleProcessBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
-                toggleProcessBtn.title = 'Hide Calculation Process';
+                toggleProcessBtn.title = t.hideProcess;
+                toggleProcessBtn.setAttribute('aria-label', t.hideProcess);
             } else {
                 processOnlyContainer.style.display = 'none';
                 toggleProcessBtn.innerHTML = '<i class="fas fa-eye"></i>';
-                toggleProcessBtn.title = 'Show Calculation Process';
+                toggleProcessBtn.title = t.showProcess;
+                toggleProcessBtn.setAttribute('aria-label', t.showProcess);
             }
         });
     }
@@ -421,6 +485,7 @@ function setupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, op
     const shareMenu = resultBlock.querySelector('.share-menu');
 
     if (shareBtn) {
+        const t = outputText();
         shareBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             shareMenu.classList.toggle('active');
@@ -430,14 +495,14 @@ function setupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, op
         copyLinkBtn.addEventListener('click', () => {
             const shareURL = generateShareURL(matrixA, matrixB, operation);
             navigator.clipboard.writeText(shareURL).then(() => {
-                alert('Link copied to clipboard!');
+                alert(t.copiedAlert);
                 shareMenu.classList.remove('active');
             });
         });
 
         const shareXBtn = resultBlock.querySelector('.share-x');
         shareXBtn.addEventListener('click', () => {
-            const text = `Check out this matrix ${operation.toLowerCase()} calculation!`;
+            const text = t.tweetText(operation);
             const url = generateShareURL(matrixA, matrixB, operation);
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
             shareMenu.classList.remove('active');
@@ -445,7 +510,7 @@ function setupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, op
 
         const shareRedditBtn = resultBlock.querySelector('.share-reddit');
         shareRedditBtn.addEventListener('click', () => {
-            const title = `Matrix ${operation} Calculation`;
+            const title = t.redditTitle(operation);
             const url = generateShareURL(matrixA, matrixB, operation);
             window.open(`https://www.reddit.com/submit?title=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
             shareMenu.classList.remove('active');
@@ -453,7 +518,7 @@ function setupResultBlockFunctionality(resultBlock, matrixA, matrixB, result, op
 
         const shareEmailBtn = resultBlock.querySelector('.share-email');
         shareEmailBtn.addEventListener('click', () => {
-            const subject = `Matrix Calculation - ${operation}`;
+            const subject = t.emailSubject(operation);
             const body = generateEmailBody(matrixA, matrixB, result, operation);
             window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
             shareMenu.classList.remove('active');
@@ -490,12 +555,13 @@ function generateEmailBody(matrixA, matrixB, result, operation) {
     const colsA = parseInt(document.getElementById('cols-a')?.textContent) || 3;
     const rowsB = parseInt(document.getElementById('rows-b')?.textContent) || 3;
     const colsB = parseInt(document.getElementById('cols-b')?.textContent) || 3;
+    const t = outputText();
 
-    let body = `Matrix A (${rowsA}×${colsA}):\n${matrixToString(matrixA)}\n\n`;
-    body += `Matrix B (${rowsB}×${colsB}):\n${matrixToString(matrixB)}\n\n`;
-    body += `Operation: ${operation}\n\n`;
-    body += `Result (${rowsA}×${colsB}):\n${matrixToString(result)}\n\n`;
-    body += `View full calculation: ${generateShareURL(matrixA, matrixB, operation)}`;
+    let body = `${t.matrixA(rowsA, colsA)}\n${matrixToString(matrixA)}\n\n`;
+    body += `${t.matrixB(rowsB, colsB)}\n${matrixToString(matrixB)}\n\n`;
+    body += `${t.operation}: ${operation}\n\n`;
+    body += `${t.result(rowsA, colsB)}\n${matrixToString(result)}\n\n`;
+    body += `${t.viewFullCalculation}: ${generateShareURL(matrixA, matrixB, operation)}`;
 
     return body;
 }

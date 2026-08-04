@@ -216,6 +216,9 @@ function runTests() {
     assert.ok(text.includes('Vector b must have exactly one column.'));
     assert.ok(text.includes('Set Matrix B to one column, then try again.'));
     assert.ok(text.includes('Current dimensions:'));
+    const enDeleteButton = findFirst(enRecord, node => node.className === 'delete-btn');
+    assert.strictEqual(enDeleteButton.title, 'Delete this record');
+    assert.strictEqual(enDeleteButton.attributes['aria-label'], 'Delete this input error record');
     rows.push(['T11', 'render English A and b input error record', 'pass']);
 
     setLang('es');
@@ -232,6 +235,9 @@ function runTests() {
     assert.ok(text.includes('Dimensiones actuales:'));
     assert.ok(text.includes('A: 2 x 2'));
     assert.ok(text.includes('b: 2 x 2'));
+    const esDeleteButton = findFirst(esBRecord, node => node.className === 'delete-btn');
+    assert.strictEqual(esDeleteButton.title, 'Eliminar este registro');
+    assert.strictEqual(esDeleteButton.attributes['aria-label'], 'Eliminar este registro de error de entrada');
     rows.push(['T12', 'render Spanish A y b non-column b error record with dimensions', 'pass']);
 
     const esRowRecord = abMode.appendValidationResult({
