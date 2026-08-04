@@ -19,19 +19,19 @@ window.MathJax = {
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO Equations专页 -->
-    <meta name="description" content="Usa esta calculadora de ecuaciones lineales para resolver sistemas de ecuaciones en línea. Admite fracciones, decimales y entrada rápida de matrices con resultados instantáneos.">
+    <meta name="description" content="Resuelve sistemas de ecuaciones lineales con ecuaciones, A y b o una matriz aumentada. Consulta pasos de RREF y soluciones únicas, inexistentes o infinitas.">
     <link rel="canonical" href="https://matrixcalcu.com/es/matrix-equations-calculator.html">
 
     <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/matrix-equations-calculator.html" />
     <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/matrix-equations-calculator.html" />
     <link rel="alternate" hreflang="x-default" href="https://matrixcalcu.com/en/matrix-equations-calculator.html" />
-    <meta property="og:title" content="System of Equations Calculator - Solve Linear Equations Online">
-    <meta property="og:description" content="Usa esta calculadora de ecuaciones lineales para resolver sistemas de ecuaciones en línea. Admite fracciones, decimales y entrada rápida de matrices con resultados instantáneos.">
+    <meta property="og:title" content="Calculadora de Sistemas de Ecuaciones con Pasos | MatrixCalcu">
+    <meta property="og:description" content="Resuelve sistemas de ecuaciones lineales con ecuaciones, A y b o una matriz aumentada. Consulta pasos de RREF y soluciones únicas, inexistentes o infinitas.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:url" content="https://matrixcalcu.com/es/matrix-equations-calculator.html">
 
-    <title>System of Equations Calculator - Solve Linear Equations Online</title>
+    <title>Calculadora de Sistemas de Ecuaciones con Pasos | MatrixCalcu</title>
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
@@ -44,8 +44,8 @@ window.MathJax = {
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Calculadora de matrices | Ecuaciones lineales",
-      "description": "Calculadora de ecuaciones lineales con resultados paso a paso.",
+      "name": "Calculadora de Sistemas de Ecuaciones con Pasos | MatrixCalcu",
+      "description": "Resuelve sistemas de ecuaciones lineales con ecuaciones, A y b o una matriz aumentada. Consulta pasos de RREF y soluciones únicas, inexistentes o infinitas.",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "Any",
       "browserRequirements": "Requires JavaScript",
@@ -62,6 +62,71 @@ window.MathJax = {
     }
     </script>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Cómo se resuelve un sistema de ecuaciones con matrices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Escribe los coeficientes como matriz A y los términos constantes como vector b, o introduce la matriz aumentada [A|b]. La calculadora reduce esa matriz a RREF y lee la solución a partir de los pivotes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuál es la diferencia entre A y b y una matriz aumentada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A y b mantiene separados la matriz de coeficientes y el vector de constantes. Una matriz aumentada coloca todo en una sola matriz, con la última columna como b. Ambas formas representan el mismo sistema lineal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿La calculadora muestra los pasos de reducción por filas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. La calculadora aplica eliminación de Gauss-Jordan y muestra las operaciones por filas que llevan a la forma escalonada reducida por filas, junto con el resumen de la solución."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puede un sistema tener infinitas soluciones?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Un sistema consistente tiene infinitas soluciones cuando al menos una variable queda libre. En ese caso, el resumen expresa las respuestas con parámetros como t1 o t2."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo detecta la calculadora que no hay solución?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Después de la reducción por filas, una fila con todos los coeficientes en cero y una constante distinta de cero indica contradicción. La calculadora informa ese caso como sin solución."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo introducir fracciones?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Puedes introducir fracciones como 1/2 o -3/4 y decimales como 0.5. El área de resultados permite alternar la visualización entre fracción y decimal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Tiene que haber el mismo número de ecuaciones y variables?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Puede haber menos ecuaciones que variables, más ecuaciones que variables o la misma cantidad. La RREF determina si el sistema real es consistente y cuántas soluciones tiene."
+          }
+        }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="/css/calculator.css">
     <link rel="stylesheet" href="/css/linear-system-summary.css">
     <link rel="stylesheet" href="/css/linear-system-input-modes.css">
@@ -73,7 +138,7 @@ window.MathJax = {
 <body>
     <header>
         <div class="container">
-            <h1>Calculadora de matrices</h1>
+            <div style="font-size: 2.5rem; margin-bottom: 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); position: relative; font-weight: 700; line-height: 1.2;">Calculadora de matrices</div>
 
             <div class="language-selector">
                 <div class="language-toggle">
@@ -106,6 +171,19 @@ window.MathJax = {
                 </div>
 
                 <div class="calculator-main">
+                    <div class="seo-articles-container system-equations-intro">
+                        <section class="seo-content">
+                            <h1>Calculadora de sistemas de ecuaciones con matrices</h1>
+                            <p>
+                                Usa esta calculadora de sistemas de ecuaciones con matrices para resolver sistemas
+                                lineales de tres formas: introduciendo los coeficientes de las ecuaciones, usando la
+                                matriz A y el vector b, o escribiendo la matriz aumentada completa [A|b]. La calculadora
+                                obtiene la forma escalonada reducida por filas, muestra los pasos de reducción y determina
+                                si el sistema tiene una solución única, ninguna solución o infinitas soluciones. Admite
+                                fracciones y decimales.
+                            </p>
+                        </section>
+                    </div>
                     <div class="dynamic-content-container" id="dynamic-content">
                         <div class="matrix-calculator">
                             <div class="main-calculator-container main-2m-with-swap">
@@ -398,7 +476,7 @@ window.MathJax = {
                                     <button type="button" class="btn" data-action="arctangent" data-target="A"
                                         data-goto="matrix-arctangent-calculator.html" spellcheck="false">arctan(A)</button>
                                 </div>
-                            </section>>
+                            </section>
 
                             <div id="result-container">
                                 <div class="result-header">
@@ -412,193 +490,207 @@ window.MathJax = {
 
                     <div class="seo-articles-container" id="article-container">
                         <article class="seo-content">
-                            <h1>Calculadora de sistemas de ecuaciones - Resuelve sistemas lineales paso a paso</h1>
-
                             <section>
-                                <h2>1. ¿Qué es un sistema de ecuaciones?</h2>
+                                <h2>Cómo usar la calculadora de sistemas de ecuaciones</h2>
+                                <ol>
+                                    <li>Elige un método de entrada.</li>
+                                    <li>Introduce el sistema.</li>
+                                    <li>Pulsa el botón correspondiente para resolverlo.</li>
+                                    <li>Revisa la RREF, los pasos y el resumen de la solución.</li>
+                                </ol>
+
+                                <h3>Ecuaciones</h3>
                                 <p>
-                                    A <strong>system of equations</strong> is a collection of two or more equations that
-                                    share the same variables. In linear algebra, solving a system means finding the values
-                                    of the variables that satisfy all equations at the same time.
+                                    Usa el modo Ecuaciones cuando quieras introducir los coeficientes y términos
+                                    constantes fila por fila. Este modo trabaja con campos estructurados para cada
+                                    ecuación; no es un analizador de ecuaciones escritas como texto libre.
                                 </p>
-                                <p>Por ejemplo:</p>
-                                <div class="matrix-block">
-                                    $$
-                                    \begin{cases}
-                                    x + y = 3 \\
-                                    2x + 3y = 8
-                                    \end{cases}
-                                    $$
-                                </div>
+
+                                <h3>A y b</h3>
                                 <p>
-                                    This system has the unique solution:
-                                    \(x = 1,\; y = 2\).
+                                    Usa A y b cuando ya tienes la matriz de coeficientes A y el vector de constantes b
+                                    del sistema <strong>Ax = b</strong>. La calculadora conserva ambas entradas separadas
+                                    y forma internamente la matriz aumentada.
+                                </p>
+
+                                <h3>Matriz aumentada</h3>
+                                <p>
+                                    Usa Matriz aumentada si el sistema ya está escrito como <strong>[A|b]</strong>. La
+                                    última columna se toma como el vector b, y las columnas anteriores son los coeficientes
+                                    de las variables.
                                 </p>
                             </section>
 
                             <section>
-                                <h2>2. ¿Cómo resuelve ecuaciones esta calculadora?</h2>
+                                <h2>Cómo resuelve la calculadora un sistema lineal</h2>
                                 <p>
-                                    This calculator converts a linear system into an <strong>augmented matrix</strong>,
-                                    then applies <strong>Gauss–Jordan elimination</strong> to compute the
-                                    <strong>Reduced Row Echelon Form (RREF)</strong>.
+                                    Cada método de entrada se convierte en una matriz aumentada [A|b], o se lee directamente
+                                    con esa forma. Después, la calculadora aplica eliminación de Gauss-Jordan para obtener
+                                    la forma escalonada reducida por filas.
                                 </p>
                                 <p>
-                                    In other words, the system of equations calculator is powered by the same row-reduction
-                                    logic used in the RREF calculator.
+                                    A partir de la RREF identifica variables pivote, variables libres y filas
+                                    contradictorias. Con esa estructura determina si el sistema tiene solución única, no
+                                    tiene solución o admite una solución paramétrica con infinitas soluciones.
                                 </p>
-                                <div class="matrix-block">
-                                    $$
-                                    \begin{cases}
-                                    x + y = 3 \\
-                                    2x + 3y = 8
-                                    \end{cases}
-                                    \quad \Longrightarrow \quad
-                                    \left[
-                                    \begin{array}{cc|c}
-                                    1 & 1 & 3 \\
-                                    2 & 3 & 8
-                                    \end{array}
-                                    \right]
-                                    $$
-                                </div>
                             </section>
 
                             <section>
-                                <h2>3. Posibles tipos de soluciones</h2>
-                                <ul>
-                                    <li><strong>Unique solution:</strong> one exact answer for every variable.</li>
-                                    <li><strong>Infinitely many solutions:</strong> at least one free variable remains.</li>
-                                    <li><strong>No solution:</strong> the equations are inconsistent.</li>
-                                </ul>
-                                <p>Examples:</p>
+                                <h2>Cómo interpretar el resultado</h2>
 
                                 <h3>Solución única</h3>
-                                <div class="matrix-block">
-                                    $$
-                                    \begin{cases}
-                                    x + y = 3 \\
-                                    2x + 3y = 8
-                                    \end{cases}
-                                    $$
-                                </div>
-
-                                <h3>Infinitas soluciones</h3>
-                                <div class="matrix-block">
-                                    $$
-                                    \begin{cases}
-                                    x + y = 2 \\
-                                    2x + 2y = 4
-                                    \end{cases}
-                                    $$
-                                </div>
+                                <p>
+                                    Hay solución única cuando el sistema es consistente y cada columna de variable tiene
+                                    un pivote. El resumen muestra un valor exacto para cada variable.
+                                </p>
 
                                 <h3>Sin solución</h3>
+                                <p>
+                                    La calculadora detecta que no hay solución cuando la RREF contiene una fila
+                                    contradictoria como esta:
+                                </p>
                                 <div class="matrix-block">
-                                    $$
-                                    \begin{cases}
-                                    x + y = 2 \\
-                                    x + y = 3
-                                    \end{cases}
-                                    $$
+                                    <pre>[0  0  ...  0 | c]</pre>
                                 </div>
+                                <p>
+                                    con c distinto de 0. Esa fila indica que las ecuaciones originales no pueden cumplirse
+                                    al mismo tiempo.
+                                </p>
+
+                                <h3>Infinitas soluciones</h3>
+                                <p>
+                                    Hay infinitas soluciones cuando el sistema es consistente, pero al menos una variable
+                                    queda libre. En ese caso se usan parámetros como <strong>t1</strong> o
+                                    <strong>t2</strong> para expresar todas las soluciones.
+                                </p>
                             </section>
 
                             <section>
-                                <h2>4. ¿Por qué usar una matriz aumentada?</h2>
+                                <h2>¿El sistema tiene que ser cuadrado?</h2>
                                 <p>
-                                    Writing a system as an augmented matrix makes elimination cleaner and faster.
-                                    It also helps reveal:
+                                    No. La calculadora acepta sistemas con menos ecuaciones que variables, con más
+                                    ecuaciones que variables o con la misma cantidad de ecuaciones y variables.
                                 </p>
                                 <ul>
-                                    <li>pivot columns,</li>
-                                    <li>free variables,</li>
-                                    <li>inconsistencies,</li>
-                                    <li>and the final solution structure.</li>
+                                    <li>Un sistema con menos ecuaciones puede no tener solución o tener infinitas soluciones.</li>
+                                    <li>Un sistema con más ecuaciones puede ser consistente o inconsistente.</li>
+                                    <li>El resultado final se decide por la RREF, no solo por el tamaño del sistema.</li>
                                 </ul>
                             </section>
 
                             <section>
-                                <h2>5. Errores comunes</h2>
+                                <h2>Fracciones y decimales</h2>
+                                <p>
+                                    Puedes introducir fracciones como <strong>1/2</strong> o <strong>-3/4</strong>, y
+                                    decimales como <strong>0.5</strong>. Las celdas vacías siguen el comportamiento de la
+                                    calculadora y se tratan como 0.
+                                </p>
+                                <p>
+                                    La reducción por filas conserva valores exactos siempre que es posible. En el área de
+                                    resultados puedes alternar entre visualización en fracción y decimal. La página no
+                                    promete álgebra simbólica libre más allá de los campos estructurados disponibles.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2>Ejemplo: resolver un sistema 2 x 2</h2>
+                                <p>Considera el sistema:</p>
+                                <div class="matrix-block">
+                                    <pre>x + y = 3
+x - y = 1</pre>
+                                </div>
+                                <p>Las entradas A y b correspondientes son:</p>
+                                <div class="matrix-block">
+                                    <pre>A = [ 1   1
+      1  -1 ]
+
+b = [ 3
+      1 ]</pre>
+                                </div>
+                                <p>El mismo sistema como matriz aumentada es:</p>
+                                <div class="matrix-block">
+                                    <pre>[ 1   1 | 3
+  1  -1 | 1 ]</pre>
+                                </div>
+                                <p>La solución es <strong>x = 2</strong> y <strong>y = 1</strong>.</p>
+                            </section>
+
+                            <section>
+                                <h2>Herramientas de matrices relacionadas</h2>
+                                <p>
+                                    Estas páginas cubren tareas cercanas, pero no duplican esta calculadora:
+                                </p>
                                 <ul>
-                                    <li>Introducir los coeficientes en el orden incorrecto de las columnas.</li>
-                                    <li>Olvidar los términos constantes del lado derecho.</li>
-                                    <li>Suponer que todo sistema tiene una solución única.</li>
-                                    <li>Ignoring contradictory rows such as \(0=1\).</li>
+                                    <li><a href="/es/matrix-rref-calculator.html">Calculadora RREF</a>: reduce por filas una matriz general.</li>
+                                    <li><a href="/es/matrix-augmented-calculator.html">Calculadora de matriz aumentada</a>: combina A y B para formar [A|B].</li>
+                                    <li><a href="/es/matrix-inverse-calculator.html">Calculadora de matriz inversa</a>: estudia matrices cuadradas invertibles.</li>
+                                    <li><a href="/es/matrix-rank-calculator.html">Calculadora del rango de una matriz</a>: ayuda a analizar rango y consistencia.</li>
                                 </ul>
-                            </section>
-
-                            <section>
-                                <h2>6. Problemas de práctica</h2>
-                                <p>Haz clic para ver respuestas de ejemplo.</p>
-
-                                <h3>Ejercicio 1</h3>
-                                <div class="matrix-block">
-                                    $$
-                                    \begin{cases}
-                                    x + y = 5 \\
-                                    2x - y = 1
-                                    \end{cases}
-                                    $$
-                                </div>
-                                <details>
-                                    <summary>Mostrar respuesta</summary>
-                                    <p>\(x = 2,\; y = 3\)</p>
-                                </details>
-
-                                <h3>Ejercicio 2</h3>
-                                <div class="matrix-block">
-                                    $$
-                                    \begin{cases}
-                                    x + y + z = 6 \\
-                                    2x + y + z = 7 \\
-                                    x + 2y + 3z = 14
-                                    \end{cases}
-                                    $$
-                                </div>
-                                <details>
-                                    <summary>Mostrar respuesta</summary>
-                                    <p>\(x = 1,\; y = 2,\; z = 3\)</p>
-                                </details>
-
-                                <h3>Ejercicio 3</h3>
-                                <div class="matrix-block">
-                                    $$
-                                    \begin{cases}
-                                    x + y = 2 \\
-                                    2x + 2y = 4
-                                    \end{cases}
-                                    $$
-                                </div>
-                                <details>
-                                    <summary>Mostrar respuesta</summary>
-                                    <p>Infinitas soluciones.</p>
-                                </details>
-
-                                <h3>Ejercicio 4</h3>
-                                <div class="matrix-block">
-                                    $$
-                                    \begin{cases}
-                                    x + y = 2 \\
-                                    x + y = 3
-                                    \end{cases}
-                                    $$
-                                </div>
-                                <details>
-                                    <summary>Mostrar respuesta</summary>
-                                    <p>Sin solución.</p>
-                                </details>
-                            </section>
-                            <!-- INTERNAL_LINKS_BOTTOM_START -->
-<p class="internal-links-note">Para resolver ecuaciones matriciales con mayor eficiencia, también puedes usar la <a href="/es/matrix-rref-calculator.html">calculadora RREF</a>, la <a href="/es/matrix-augmented-calculator.html">calculadora de matriz aumentada</a> y la <a href="/es/matrix-determinant-calculator.html">calculadora de determinante</a>.</p>
+                                <!-- INTERNAL_LINKS_BOTTOM_START -->
+<p class="internal-links-note">Para flujos relacionados, usa la <a href="/es/matrix-rref-calculator.html">calculadora RREF</a>, la <a href="/es/matrix-augmented-calculator.html">calculadora de matriz aumentada</a> y la <a href="/es/matrix-rank-calculator.html">calculadora del rango de una matriz</a>.</p>
 <!-- INTERNAL_LINKS_BOTTOM_END -->
+                            </section>
+
+                            <section itemscope itemtype="https://schema.org/FAQPage">
+                                <h2>Preguntas frecuentes</h2>
+
+                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                    <h3 itemprop="name">¿Cómo se resuelve un sistema de ecuaciones con matrices?</h3>
+                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                        <p itemprop="text">Escribe los coeficientes como matriz A y los términos constantes como vector b, o introduce la matriz aumentada [A|b]. La calculadora reduce esa matriz a RREF y lee la solución a partir de los pivotes.</p>
+                                    </div>
+                                </div>
+
+                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                    <h3 itemprop="name">¿Cuál es la diferencia entre A y b y una matriz aumentada?</h3>
+                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                        <p itemprop="text">A y b mantiene separados la matriz de coeficientes y el vector de constantes. Una matriz aumentada coloca todo en una sola matriz, con la última columna como b. Ambas formas representan el mismo sistema lineal.</p>
+                                    </div>
+                                </div>
+
+                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                    <h3 itemprop="name">¿La calculadora muestra los pasos de reducción por filas?</h3>
+                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                        <p itemprop="text">Sí. La calculadora aplica eliminación de Gauss-Jordan y muestra las operaciones por filas que llevan a la forma escalonada reducida por filas, junto con el resumen de la solución.</p>
+                                    </div>
+                                </div>
+
+                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                    <h3 itemprop="name">¿Puede un sistema tener infinitas soluciones?</h3>
+                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                        <p itemprop="text">Sí. Un sistema consistente tiene infinitas soluciones cuando al menos una variable queda libre. En ese caso, el resumen expresa las respuestas con parámetros como t1 o t2.</p>
+                                    </div>
+                                </div>
+
+                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                    <h3 itemprop="name">¿Cómo detecta la calculadora que no hay solución?</h3>
+                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                        <p itemprop="text">Después de la reducción por filas, una fila con todos los coeficientes en cero y una constante distinta de cero indica contradicción. La calculadora informa ese caso como sin solución.</p>
+                                    </div>
+                                </div>
+
+                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                    <h3 itemprop="name">¿Puedo introducir fracciones?</h3>
+                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                        <p itemprop="text">Sí. Puedes introducir fracciones como 1/2 o -3/4 y decimales como 0.5. El área de resultados permite alternar la visualización entre fracción y decimal.</p>
+                                    </div>
+                                </div>
+
+                                <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                                    <h3 itemprop="name">¿Tiene que haber el mismo número de ecuaciones y variables?</h3>
+                                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                        <p itemprop="text">No. Puede haber menos ecuaciones que variables, más ecuaciones que variables o la misma cantidad. La RREF determina si el sistema real es consistente y cuántas soluciones tiene.</p>
+                                    </div>
+                                </div>
+                            </section>
+
                             <hr />
 
                             <footer>
                                 <p>
-                                    Copyright Notice: This article is original content from the Matrix Calculator website.
-                                    Please credit the source when sharing or reproducing it. For more matrix computation tools,
-                                    visit matrixcalcu.com.
+                                    Aviso de derechos de autor: este artículo es contenido original del sitio Matrix
+                                    Calculator. Al compartirlo o reproducirlo, cita la fuente. Para más herramientas de
+                                    cálculo de matrices, visita matrixcalcu.com.
                                 </p>
                             </footer>
                         </article>
