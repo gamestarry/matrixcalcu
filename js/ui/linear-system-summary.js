@@ -3,6 +3,52 @@
 
     const SUMMARY_ID = "linear-system-solution-summary";
     const DEFAULT_VARIABLES = ["x", "y", "z", "w", "u", "v", "t", "s", "r", "q", "p", "k", "m", "n"];
+    const TEXT = {
+        en: {
+            title: "Solution Summary",
+            unique: "Unique solution",
+            none: "No solution",
+            infinite: "Infinitely many solutions",
+            pivotVariables: "Pivot variables",
+            freeVariables: "Free variables",
+            noneValue: "None",
+            inconsistent: "The system is inconsistent.",
+            contradictionEquation: "A row in the reduced matrix represents: 0 = 1",
+            contradictoryRow: "Contradictory row",
+            contradictoryRows: "Contradictory rows",
+            row: "Row",
+            rows: "Rows",
+            let: "Let:",
+            parametricSolution: "Parametric solution:"
+        },
+        es: {
+            title: "Resumen de la solución",
+            unique: "Solución única",
+            none: "Sin solución",
+            infinite: "Infinitas soluciones",
+            pivotVariables: "Variables pivote",
+            freeVariables: "Variables libres",
+            noneValue: "Ninguna",
+            inconsistent: "El sistema es inconsistente.",
+            contradictionEquation: "Una fila de la matriz reducida representa: 0 = 1",
+            contradictoryRow: "Fila contradictoria",
+            contradictoryRows: "Filas contradictorias",
+            row: "Fila",
+            rows: "Filas",
+            let: "Sea:",
+            parametricSolution: "Solución paramétrica:"
+        }
+    };
+
+    function getMessages() {
+        const lang = (root && root.document && root.document.documentElement && root.document.documentElement.lang || "").toLowerCase();
+        return lang.startsWith("es") ? TEXT.es : TEXT.en;
+    }
+
+    function text(key) {
+        const messages = getMessages();
+        return messages[key] || TEXT.en[key] || key;
+    }
 
     function getMath() {
         if (!root || !root.math) {
@@ -78,7 +124,7 @@
     }
 
     function namesForColumns(columns, variableNames) {
-        if (!columns || !columns.length) return "None";
+        if (!columns || !columns.length) return text("noneValue");
         return columns.map((index) => variableName(variableNames, index)).join(", ");
     }
 
@@ -149,33 +195,33 @@
         }
 
         appendVariableGrid(section, null, entries);
-        appendParagraph(section, `Pivot variables: ${namesForColumns(analysis.pivotColumns, variableNames)}`);
-        appendParagraph(section, `Free variables: ${namesForColumns(analysis.freeColumns, variableNames)}`);
+        appendParagraph(section, `${text("pivotVariables")}: ${namesForColumns(analysis.pivotColumns, variableNames)}`);
+        appendParagraph(section, `${text("freeVariables")}: ${namesForColumns(analysis.freeColumns, variableNames)}`);
     }
 
     function renderNone(section, analysis) {
-        appendParagraph(section, "The system is inconsistent.");
-        appendParagraph(section, "A row in the reduced matrix represents: 0 = 1");
+        appendParagraph(section, text("inconsistent"));
+        appendParagraph(section, text("contradictionEquation"));
 
         if (analysis.inconsistentRows && analysis.inconsistentRows.length) {
             const rows = analysis.inconsistentRows.map((rowIndex) => rowIndex + 1);
-            const label = rows.length === 1 ? "Contradictory row" : "Contradictory rows";
+            const label = rows.length === 1 ? text("contradictoryRow") : text("contradictoryRows");
             const value = rows.length === 1
-                ? `Row ${rows[0]}`
-                : `Rows ${rows.join(", ")}`;
+                ? `${text("row")} ${rows[0]}`
+                : `${text("rows")} ${rows.join(", ")}`;
             appendParagraph(section, `${label}: ${value}`);
         }
     }
 
     function renderInfinite(section, analysis, variableNames) {
-        appendParagraph(section, `Pivot variables: ${namesForColumns(analysis.pivotColumns, variableNames)}`);
-        appendParagraph(section, `Free variables: ${namesForColumns(analysis.freeColumns, variableNames)}`);
+        appendParagraph(section, `${text("pivotVariables")}: ${namesForColumns(analysis.pivotColumns, variableNames)}`);
+        appendParagraph(section, `${text("freeVariables")}: ${namesForColumns(analysis.freeColumns, variableNames)}`);
 
         const parameterRows = analysis.parameters.map((parameter) => ({
             label: variableName(variableNames, parameter.variableIndex),
             value: parameter.name
         }));
-        appendVariableGrid(section, "Let:", parameterRows);
+        appendVariableGrid(section, text("let"), parameterRows);
 
         const expressionRows = analysis.expressions
             .slice()
@@ -184,7 +230,7 @@
                 label: variableName(variableNames, expression.variableIndex),
                 value: expression.isFree ? expression.parameterName : formatExpression(expression)
             }));
-        appendVariableGrid(section, "Parametric solution:", expressionRows);
+        appendVariableGrid(section, text("parametricSolution"), expressionRows);
     }
 
     function render(options) {
@@ -215,20 +261,20 @@
 
         const title = document.createElement("h3");
         title.classList.add("linear-system-summary__title");
-        title.textContent = "Solution Summary";
+        title.textContent = text("title");
 
         const status = document.createElement("div");
         status.classList.add("linear-system-summary__status");
 
         if (analysis.solutionType === "unique") {
             section.classList.add("linear-system-summary--unique");
-            status.textContent = "Unique solution";
+            status.textContent = text("unique");
         } else if (analysis.solutionType === "none") {
             section.classList.add("linear-system-summary--none");
-            status.textContent = "No solution";
+            status.textContent = text("none");
         } else if (analysis.solutionType === "infinite") {
             section.classList.add("linear-system-summary--infinite");
-            status.textContent = "Infinitely many solutions";
+            status.textContent = text("infinite");
         } else {
             throw new Error(`Unsupported solution type: ${String(analysis.solutionType)}`);
         }
