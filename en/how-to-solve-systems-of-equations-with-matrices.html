@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Learn how to write a linear system as Ax = b, build an augmented matrix, use Gauss-Jordan elimination, and identify unique, no, or infinitely many solutions.">
+    <link rel="canonical" href="https://matrixcalcu.com/en/how-to-solve-systems-of-equations-with-matrices.html">
+
+    <link rel="alternate" hreflang="en"
+        href="https://matrixcalcu.com/en/how-to-solve-systems-of-equations-with-matrices.html">
+    <link rel="alternate" hreflang="x-default"
+        href="https://matrixcalcu.com/en/how-to-solve-systems-of-equations-with-matrices.html">
+
+    <meta property="og:title" content="How to Solve Systems of Equations with Matrices | MatrixCalcu">
+    <meta property="og:description"
+        content="Learn how to write a linear system as Ax = b, build an augmented matrix, use Gauss-Jordan elimination, and identify unique, no, or infinitely many solutions.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url"
+        content="https://matrixcalcu.com/en/how-to-solve-systems-of-equations-with-matrices.html">
+
+    <title>How to Solve Systems of Equations with Matrices | MatrixCalcu</title>
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/calculator.css">
+    <style>
+        .site-brand {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .on-this-page,
+        .quick-answer,
+        .step-block,
+        .equation-block,
+        .matrix-example {
+            border: 1px solid #d6e4f1;
+            border-radius: 14px;
+            background: #fbfdff;
+        }
+
+        .on-this-page {
+            padding: 18px;
+        }
+
+        .on-this-page h2 {
+            margin-top: 0;
+        }
+
+        .on-this-page ul {
+            columns: 2;
+            gap: 24px;
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+
+        .on-this-page a,
+        .inline-tool-link {
+            color: #0f4d92;
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .quick-answer,
+        .step-block {
+            padding: 18px;
+            margin-top: 16px;
+        }
+
+        .equation-block,
+        .matrix-example {
+            margin: 16px 0;
+            padding: 16px;
+            overflow-x: auto;
+        }
+
+        .equation-block pre,
+        .matrix-example pre {
+            margin: 0;
+            min-width: max-content;
+            color: #243d5a;
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .matrix-equation,
+        .augmented-matrix {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: fit-content;
+            max-width: 100%;
+            margin: 16px 0;
+            padding: 16px;
+            overflow-x: auto;
+            border: 1px solid #d6e4f1;
+            border-radius: 14px;
+            background: #fbfdff;
+        }
+
+        .matrix-part {
+            display: grid;
+            gap: 8px;
+            justify-items: center;
+            flex: 0 0 auto;
+        }
+
+        .matrix-label {
+            color: #35577e;
+            font-size: 0.92rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .matrix-operator {
+            flex: 0 0 auto;
+            color: #4f6f95;
+            font-size: 1.35rem;
+            font-weight: 800;
+        }
+
+        .matrix-visual {
+            display: inline-flex;
+            align-items: stretch;
+            gap: 0.55rem;
+            color: #243d5a;
+            font-family: Consolas, "Liberation Mono", Menlo, monospace;
+            vertical-align: middle;
+        }
+
+        .matrix-bracket {
+            width: 0.55rem;
+            flex: 0 0 0.55rem;
+            color: #35577e;
+        }
+
+        .matrix-bracket-left {
+            border-left: 2px solid currentColor;
+            border-top: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+        }
+
+        .matrix-bracket-right {
+            border-right: 2px solid currentColor;
+            border-top: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-auto-rows: minmax(1.55rem, auto);
+            align-content: center;
+            column-gap: 0.85rem;
+            row-gap: 0.28rem;
+            font-family: Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 1rem;
+            line-height: 1.2;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .matrix-grid.two-column {
+            grid-template-columns: repeat(2, minmax(2rem, auto));
+        }
+
+        .matrix-grid.one-column {
+            grid-template-columns: minmax(2rem, auto);
+        }
+
+        .matrix-grid.augmented-grid {
+            grid-template-columns: repeat(2, minmax(2rem, auto)) minmax(2rem, auto);
+            row-gap: 0;
+        }
+
+        .matrix-grid.augmented-three-grid {
+            grid-template-columns: repeat(3, minmax(2rem, auto)) minmax(2rem, auto);
+            row-gap: 0;
+        }
+
+        .matrix-grid.three-column {
+            grid-template-columns: repeat(3, minmax(2rem, auto));
+        }
+
+        .matrix-grid span {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            min-width: 2rem;
+            min-height: 1.55rem;
+        }
+
+        .constant-column {
+            margin-left: 0.25rem;
+            padding-left: 0.8rem;
+            border-left: 2px solid currentColor;
+        }
+
+        .matrix-equation-caption {
+            margin: -4px 0 16px;
+            color: #456483;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .step-label {
+            margin: 0 0 8px;
+            color: #35577e;
+            font-weight: 700;
+        }
+
+        .solution-type-grid,
+        .related-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .related-tools-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .solution-type-card,
+        .related-tool-card {
+            padding: 16px;
+            border: 1px solid #d6e4f1;
+            border-radius: 14px;
+            background: #ffffff;
+        }
+
+        .solution-type-card h3,
+        .related-tool-card h3 {
+            margin-top: 0;
+            color: #35577e;
+        }
+
+        .related-tool-card a {
+            color: #0f4d92;
+            font-weight: 700;
+        }
+
+        .howto-cta-note {
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        @media (max-width: 760px) {
+            .site-brand {
+                font-size: 1.3rem;
+                margin: 0;
+                flex: 1;
+                text-align: left;
+            }
+
+            .on-this-page ul,
+            .solution-type-grid,
+            .related-tools-grid {
+                columns: 1;
+                grid-template-columns: 1fr;
+            }
+
+            .howto-quick-links {
+                align-items: stretch;
+            }
+
+            .howto-pill {
+                text-align: center;
+                overflow-wrap: anywhere;
+            }
+
+            .matrix-equation {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: auto;
+                padding: 14px;
+            }
+
+            .augmented-matrix {
+                width: auto;
+                padding: 14px;
+            }
+
+            .matrix-operator {
+                font-size: 1.15rem;
+            }
+
+            .matrix-visual {
+                gap: 0.45rem;
+            }
+
+            .matrix-bracket {
+                width: 0.45rem;
+                flex-basis: 0.45rem;
+            }
+
+            .matrix-grid {
+                column-gap: 0.62rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do you solve a system of equations using matrices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Write the system as an augmented matrix, use row operations to reach RREF, then read the variable values or identify the solution type."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does Ax = b mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A is the coefficient matrix, x is the column vector of unknown variables, and b is the column vector of constants."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between a coefficient matrix and an augmented matrix?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The coefficient matrix contains only variable coefficients. The augmented matrix adds the constants column after a separator."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is RREF useful for solving a system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RREF isolates pivots, exposes contradictions, and shows whether variables are fixed or free."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does RREF show that a system has no solution?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A row such as [0 0 | 1] means 0 = 1, so the system is inconsistent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a rectangular system of equations be solved?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Rectangular systems can be solved with RREF; the final rows and pivots determine the solution type."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use fractions in the system of equations calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The calculator accepts fractions such as 1/2 and -3/4, along with decimals."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site-brand">Matrix Calculator</div>
+
+            <div class="language-selector">
+                <div class="language-toggle">
+                    <span class="globe-icon">English</span> English
+                </div>
+                <div class="language-dropdown">
+                    <a class="language-option active" href="/en/how-to-solve-systems-of-equations-with-matrices.html"
+                        lang="en">English</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-row-container">
+        <div class="wide-container">
+            <div class="main-row">
+                <div class="left-sidebar">
+                    <button class="mobile-nav-toggle">Navigation</button>
+                    <h3 class="nav-title">Navigation</h3>
+                    <div class="nav-buttons">
+                        <a href="/" class="nav-button" id="home-btn">Home</a>
+                        <a href="/en/matrix-equations-calculator.html" class="nav-button">System of Equations
+                            Calculator</a>
+                        <a href="/en/matrix-rref-calculator.html" class="nav-button">RREF Calculator</a>
+                        <a href="/en/matrix-augmented-calculator.html" class="nav-button">Augmented Matrix
+                            Calculator</a>
+                        <a href="/en/matrix-rank-calculator.html" class="nav-button">Matrix Rank Calculator</a>
+                        <a href="/en/matrix-inverse-calculator.html" class="nav-button">Matrix Inverse Calculator</a>
+                    </div>
+                </div>
+
+                <div class="calculator-main">
+                    <div class="seo-articles-container howto-page" id="article-container">
+                        <section class="howto-hero-card">
+                            <p class="howto-kicker">Linear Systems Guide</p>
+                            <h1>How to Solve Systems of Equations with Matrices</h1>
+                            <p class="lead">
+                                This tutorial shows how to write a linear system as Ax = b, build an augmented matrix,
+                                use Gauss-Jordan elimination, reach RREF, and identify the three possible solution
+                                types: unique, no solution, or infinitely many solutions.
+                            </p>
+
+                            <div class="howto-quick-links">
+                                <a class="howto-pill howto-pill-primary"
+                                    href="/en/matrix-equations-calculator.html">Open the System of Equations
+                                    Calculator</a>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card on-this-page">
+                            <h2>On this page</h2>
+                            <ul>
+                                <li><a href="#quick-answer">Quick answer</a></li>
+                                <li><a href="#understanding-axb">Understanding Ax = b</a></li>
+                                <li><a href="#augmented-matrix">Building an augmented matrix</a></li>
+                                <li><a href="#gauss-jordan">Gauss-Jordan elimination</a></li>
+                                <li><a href="#complete-2x2-example">Complete 2x2 example</a></li>
+                                <li><a href="#three-variable-example">Three-variable example</a></li>
+                                <li><a href="#solution-types">Solution types</a></li>
+                                <li><a href="#fractions-decimals">Fractions and decimals</a></li>
+                                <li><a href="#common-mistakes">Common mistakes</a></li>
+                                <li><a href="#faq">FAQ</a></li>
+                            </ul>
+                        </section>
+
+                        <section class="howto-section-card" id="quick-answer">
+                            <h2>Quick answer</h2>
+                            <div class="quick-answer">
+                                <ol>
+                                    <li>Write the equations in a consistent variable order.</li>
+                                    <li>Place the coefficients in matrix A.</li>
+                                    <li>Place the constants in vector b.</li>
+                                    <li>Form the augmented matrix [A|b].</li>
+                                    <li>Use row operations to reduce it to RREF.</li>
+                                    <li>Read the solution or identify a contradiction/free variables.</li>
+                                </ol>
+                            </div>
+                            <p>
+                                When you want to check the final result, open the
+                                <a class="inline-tool-link" href="/en/matrix-equations-calculator.html">System of
+                                    Equations Calculator</a>.
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card" id="understanding-axb">
+                            <h2>What does Ax = b mean?</h2>
+                            <p>
+                                In a linear system, A is the coefficient matrix, x is the column vector of unknown
+                                variables, and b is the constants vector. For example:
+                            </p>
+                            <div class="equation-block">
+                                <pre><code>x + y = 5
+2x - y = 1</code></pre>
+                            </div>
+                            <p>The same system can be written as Ax = b:</p>
+                            <div class="matrix-equation" aria-label="A times x equals b">
+                                <div class="matrix-part">
+                                    <div class="matrix-label">A</div>
+                                    <div class="matrix-visual" aria-label="A equals 1 1, 2 negative 1">
+                                        <div class="matrix-bracket matrix-bracket-left"></div>
+                                        <div class="matrix-grid two-column">
+                                            <span>1</span><span>1</span>
+                                            <span>2</span><span>-1</span>
+                                        </div>
+                                        <div class="matrix-bracket matrix-bracket-right"></div>
+                                    </div>
+                                </div>
+                                <div class="matrix-operator">&times;</div>
+                                <div class="matrix-part">
+                                    <div class="matrix-label">x</div>
+                                    <div class="matrix-visual" aria-label="x vector">
+                                        <div class="matrix-bracket matrix-bracket-left"></div>
+                                        <div class="matrix-grid one-column">
+                                            <span>x</span>
+                                            <span>y</span>
+                                        </div>
+                                        <div class="matrix-bracket matrix-bracket-right"></div>
+                                    </div>
+                                </div>
+                                <div class="matrix-operator">=</div>
+                                <div class="matrix-part">
+                                    <div class="matrix-label">b</div>
+                                    <div class="matrix-visual" aria-label="b equals 5, 1">
+                                        <div class="matrix-bracket matrix-bracket-left"></div>
+                                        <div class="matrix-grid one-column">
+                                            <span>5</span>
+                                            <span>1</span>
+                                        </div>
+                                        <div class="matrix-bracket matrix-bracket-right"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="matrix-equation-caption">Coefficient matrix &times; variable vector = constants vector</p>
+                        </section>
+
+                        <section class="howto-section-card" id="augmented-matrix">
+                            <h2>How to build an augmented matrix</h2>
+                            <p>
+                                To solve the system by row reduction, place the constants vector beside the coefficient
+                                matrix:
+                            </p>
+                            <div class="augmented-matrix" aria-label="Augmented matrix A vertical bar b">
+                                <div class="matrix-operator">[A | b] =</div>
+                                <div class="matrix-visual">
+                                    <div class="matrix-bracket matrix-bracket-left"></div>
+                                    <div class="matrix-grid augmented-grid">
+                                        <span>1</span><span>1</span><span class="constant-column">5</span>
+                                        <span>2</span><span>-1</span><span class="constant-column">1</span>
+                                    </div>
+                                    <div class="matrix-bracket matrix-bracket-right"></div>
+                                </div>
+                            </div>
+                            <ul class="howto-mistakes-list">
+                                <li>The variable order must remain consistent.</li>
+                                <li>Each equation becomes one row.</li>
+                                <li>The last column contains constants.</li>
+                                <li>The vertical bar is a visual separator, not an extra matrix entry.</li>
+                            </ul>
+                            <p>
+                                The <a class="inline-tool-link" href="/en/matrix-augmented-calculator.html">Augmented
+                                    Matrix Calculator</a> can help combine or check an augmented matrix structure.
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card" id="gauss-jordan">
+                            <h2>Gauss-Jordan elimination</h2>
+                            <p>
+                                Gauss-Jordan elimination uses row operations that preserve the solution set of the
+                                system. The legal row operations are:
+                            </p>
+                            <ol class="howto-mistakes-list">
+                                <li>Swap two rows.</li>
+                                <li>Multiply a row by a nonzero number.</li>
+                                <li>Add a multiple of one row to another row.</li>
+                            </ol>
+                            <p>
+                                The goal is to reduce the augmented matrix to reduced row echelon form (RREF). For
+                                row-reduction help, use the
+                                <a class="inline-tool-link" href="/en/matrix-rref-calculator.html">RREF Calculator</a>.
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card" id="complete-2x2-example">
+                            <h2>Complete example: solve a 2x2 system</h2>
+                            <p>Start with the system:</p>
+                            <div class="equation-block">
+                                <pre><code>x + y = 5
+2x - y = 1</code></pre>
+                            </div>
+                            <p>The augmented matrix is:</p>
+                            <div class="matrix-example">
+                                <div class="matrix-visual">
+                                    <div class="matrix-bracket matrix-bracket-left"></div>
+                                    <div class="matrix-grid augmented-grid">
+                                        <span>1</span><span>1</span><span class="constant-column">5</span>
+                                        <span>2</span><span>-1</span><span class="constant-column">1</span>
+                                    </div>
+                                    <div class="matrix-bracket matrix-bracket-right"></div>
+                                </div>
+                            </div>
+
+                            <div class="step-block">
+                                <p class="step-label">Step 1: R2 -> R2 - 2R1</p>
+                                <div class="matrix-example">
+                                    <div class="matrix-visual">
+                                        <div class="matrix-bracket matrix-bracket-left"></div>
+                                        <div class="matrix-grid augmented-grid">
+                                            <span>1</span><span>1</span><span class="constant-column">5</span>
+                                            <span>0</span><span>-3</span><span class="constant-column">-9</span>
+                                        </div>
+                                        <div class="matrix-bracket matrix-bracket-right"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step-block">
+                                <p class="step-label">Step 2: R2 -> (-1/3)R2</p>
+                                <div class="matrix-example">
+                                    <div class="matrix-visual">
+                                        <div class="matrix-bracket matrix-bracket-left"></div>
+                                        <div class="matrix-grid augmented-grid">
+                                            <span>1</span><span>1</span><span class="constant-column">5</span>
+                                            <span>0</span><span>1</span><span class="constant-column">3</span>
+                                        </div>
+                                        <div class="matrix-bracket matrix-bracket-right"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step-block">
+                                <p class="step-label">Step 3: R1 -> R1 - R2</p>
+                                <div class="matrix-example">
+                                    <div class="matrix-visual">
+                                        <div class="matrix-bracket matrix-bracket-left"></div>
+                                        <div class="matrix-grid augmented-grid">
+                                            <span>1</span><span>0</span><span class="constant-column">2</span>
+                                            <span>0</span><span>1</span><span class="constant-column">3</span>
+                                        </div>
+                                        <div class="matrix-bracket matrix-bracket-right"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p>The RREF tells us:</p>
+                            <div class="equation-block">
+                                <pre><code>x = 2
+y = 3</code></pre>
+                            </div>
+                            <p>Check the solution in the original equations:</p>
+                            <div class="equation-block">
+                                <pre><code>2 + 3 = 5
+2(2) - 3 = 1</code></pre>
+                            </div>
+                            <p class="howto-cta-note">
+                                <a class="howto-pill howto-pill-primary"
+                                    href="/en/matrix-equations-calculator.html">Check this system with the System of
+                                    Equations Calculator</a>
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card" id="three-variable-example">
+                            <h2>Example with three variables</h2>
+                            <p>The same method works for more variables. For this system:</p>
+                            <div class="equation-block">
+                                <pre><code>x + y + z = 6
+2x - y + z = 3
+x + 2y - z = 2</code></pre>
+                            </div>
+                            <p>The augmented matrix is:</p>
+                            <div class="matrix-example">
+                                <div class="matrix-visual">
+                                    <div class="matrix-bracket matrix-bracket-left"></div>
+                                    <div class="matrix-grid augmented-three-grid">
+                                        <span>1</span><span>1</span><span>1</span><span class="constant-column">6</span>
+                                        <span>2</span><span>-1</span><span>1</span><span class="constant-column">3</span>
+                                        <span>1</span><span>2</span><span>-1</span><span class="constant-column">2</span>
+                                    </div>
+                                    <div class="matrix-bracket matrix-bracket-right"></div>
+                                </div>
+                            </div>
+                            <p>After row reduction, the RREF is:</p>
+                            <div class="matrix-example">
+                                <div class="matrix-visual">
+                                    <div class="matrix-bracket matrix-bracket-left"></div>
+                                    <div class="matrix-grid augmented-three-grid">
+                                        <span>1</span><span>0</span><span>0</span><span class="constant-column">1</span>
+                                        <span>0</span><span>1</span><span>0</span><span class="constant-column">2</span>
+                                        <span>0</span><span>0</span><span>1</span><span class="constant-column">3</span>
+                                    </div>
+                                    <div class="matrix-bracket matrix-bracket-right"></div>
+                                </div>
+                            </div>
+                            <p>
+                                Therefore x = 1, y = 2, and z = 3. The matrix size grows, but the logic does not
+                                change. The calculator can show the intermediate steps if you want to inspect them.
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card" id="solution-types">
+                            <h2>How RREF reveals the solution type</h2>
+                            <p>
+                                RREF determines the solution type even when the system is rectangular. Count pivots,
+                                check for contradictions, and look for free variables.
+                            </p>
+                            <div class="solution-type-grid">
+                                <article class="solution-type-card">
+                                    <h3>Unique solution</h3>
+                                    <ul>
+                                        <li>Every variable column has a pivot.</li>
+                                        <li>There is no contradictory row.</li>
+                                        <li>There are no free variables.</li>
+                                    </ul>
+                                    <div class="matrix-example">
+                                        <div class="matrix-visual">
+                                            <div class="matrix-bracket matrix-bracket-left"></div>
+                                            <div class="matrix-grid augmented-grid">
+                                                <span>1</span><span>0</span><span class="constant-column">2</span>
+                                                <span>0</span><span>1</span><span class="constant-column">3</span>
+                                            </div>
+                                            <div class="matrix-bracket matrix-bracket-right"></div>
+                                        </div>
+                                    </div>
+                                </article>
+
+                                <article class="solution-type-card">
+                                    <h3>No solution</h3>
+                                    <p>A row like this creates a contradiction:</p>
+                                    <div class="matrix-example">
+                                        <div class="matrix-visual">
+                                            <div class="matrix-bracket matrix-bracket-left"></div>
+                                            <div class="matrix-grid augmented-grid">
+                                                <span>0</span><span>0</span><span class="constant-column">1</span>
+                                            </div>
+                                            <div class="matrix-bracket matrix-bracket-right"></div>
+                                        </div>
+                                    </div>
+                                    <p>It means 0 = 1, so the system is inconsistent.</p>
+                                </article>
+
+                                <article class="solution-type-card">
+                                    <h3>Infinitely many solutions</h3>
+                                    <ul>
+                                        <li>The system is consistent.</li>
+                                        <li>At least one variable has no pivot.</li>
+                                        <li>That variable becomes a free parameter.</li>
+                                        <li>Answers may use parameters such as t1 or t2.</li>
+                                    </ul>
+                                </article>
+                            </div>
+                            <p>
+                                The <a class="inline-tool-link" href="/en/matrix-rank-calculator.html">Matrix Rank
+                                    Calculator</a> can help study consistency, but this tutorial mainly uses RREF to
+                                read the solution type.
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card" id="fractions-decimals">
+                            <h2>Fractions and decimals</h2>
+                            <p>
+                                Fractions often preserve exact values, while converting to decimals too early can
+                                introduce rounding. The calculator accepts fractions such as 1/2 and -3/4, and empty
+                                cells in the calculator are treated as zero.
+                            </p>
+                            <div class="equation-block">
+                                <pre><code>(1/2)x + y = 3
+x - (1/3)y = 1</code></pre>
+                            </div>
+                            <div class="matrix-example">
+                                <div class="matrix-visual">
+                                    <div class="matrix-bracket matrix-bracket-left"></div>
+                                    <div class="matrix-grid augmented-grid">
+                                        <span>1/2</span><span>1</span><span class="constant-column">3</span>
+                                        <span>1</span><span>-1/3</span><span class="constant-column">1</span>
+                                    </div>
+                                    <div class="matrix-bracket matrix-bracket-right"></div>
+                                </div>
+                            </div>
+                            <p>The exact solution is:</p>
+                            <div class="equation-block">
+                                <pre><code>x = 12/7
+y = 15/7</code></pre>
+                            </div>
+                            <p>
+                                Check: (1/2)(12/7) + 15/7 = 3, and 12/7 - (1/3)(15/7) = 1.
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Can I solve Ax = b with an inverse matrix?</h2>
+                            <p>
+                                When A is an invertible square matrix, you can write x = A^-1b. But not every matrix is
+                                invertible, and non-square matrices do not use the ordinary matrix inverse.
+                                Gauss-Jordan elimination and RREF are more general for linear systems, so you should
+                                not force the inverse method for every problem.
+                            </p>
+                            <p>
+                                For square invertible matrices, the
+                                <a class="inline-tool-link" href="/en/matrix-inverse-calculator.html">Matrix Inverse
+                                    Calculator</a> can help compute A^-1.
+                            </p>
+                        </section>
+
+                        <section class="howto-section-card" id="common-mistakes">
+                            <h2>Common mistakes</h2>
+                            <ul class="howto-mistakes-list">
+                                <li>Changing the variable order between equations.</li>
+                                <li>Placing constants inside matrix A.</li>
+                                <li>Applying a row operation to only part of a row.</li>
+                                <li>Confusing REF with RREF.</li>
+                                <li>Rounding decimals too early.</li>
+                                <li>Assuming every system has one solution.</li>
+                                <li>Assuming the matrix must be square.</li>
+                                <li>Reading a free variable as zero without justification.</li>
+                            </ul>
+                        </section>
+
+                        <section class="howto-section-card howto-calculator-card">
+                            <h2>Check your work with the calculator</h2>
+                            <p>
+                                The main calculator supports equations, A and b, augmented matrices, RREF steps,
+                                unique/no/infinite solution types, fractions, and decimals.
+                            </p>
+                            <div class="howto-quick-links">
+                                <a class="howto-pill howto-pill-primary"
+                                    href="/en/matrix-equations-calculator.html">Open the System of Equations
+                                    Calculator</a>
+                            </div>
+                        </section>
+
+                        <section class="howto-section-card">
+                            <h2>Related matrix tools</h2>
+                            <div class="related-tools-grid">
+                                <article class="related-tool-card">
+                                    <h3><a href="/en/matrix-equations-calculator.html">System of Equations
+                                            Calculator</a></h3>
+                                    <p>Solve linear systems from equations, A and b, or an augmented matrix.</p>
+                                </article>
+                                <article class="related-tool-card">
+                                    <h3><a href="/en/matrix-rref-calculator.html">RREF Calculator</a></h3>
+                                    <p>Reduce a matrix to RREF and review the row-reduction steps.</p>
+                                </article>
+                                <article class="related-tool-card">
+                                    <h3><a href="/en/matrix-augmented-calculator.html">Augmented Matrix Calculator</a>
+                                    </h3>
+                                    <p>Build or check the augmented matrix layout for a system.</p>
+                                </article>
+                                <article class="related-tool-card">
+                                    <h3><a href="/en/matrix-rank-calculator.html">Matrix Rank Calculator</a></h3>
+                                    <p>Study rank when comparing coefficient and augmented matrices.</p>
+                                </article>
+                                <article class="related-tool-card">
+                                    <h3><a href="/en/matrix-inverse-calculator.html">Matrix Inverse Calculator</a></h3>
+                                    <p>Compute the inverse of a square invertible matrix.</p>
+                                </article>
+                                <article class="related-tool-card">
+                                    <h3><a href="/en/how-to-multiply-matrices.html">How to Multiply Matrices</a></h3>
+                                    <p>Learn the row-by-column rule used in matrix products.</p>
+                                </article>
+                            </div>
+                        </section>
+
+                        <section class="howto-faq-card" id="faq">
+                            <h2>Frequently Asked Questions</h2>
+
+                            <div>
+                                <h3>How do you solve a system of equations using matrices?</h3>
+                                <p>
+                                    Write the system as an augmented matrix, use row operations to reach RREF, then read
+                                    the variable values or identify the solution type.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3>What does Ax = b mean?</h3>
+                                <p>
+                                    A is the coefficient matrix, x is the column vector of unknown variables, and b is
+                                    the column vector of constants.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3>What is the difference between a coefficient matrix and an augmented matrix?</h3>
+                                <p>
+                                    The coefficient matrix contains only variable coefficients. The augmented matrix adds
+                                    the constants column after a separator.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3>Why is RREF useful for solving a system?</h3>
+                                <p>
+                                    RREF isolates pivots, exposes contradictions, and shows whether variables are fixed
+                                    or free.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3>How does RREF show that a system has no solution?</h3>
+                                <p>
+                                    A row such as [0 0 | 1] means 0 = 1, so the system is inconsistent.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3>Can a rectangular system of equations be solved?</h3>
+                                <p>
+                                    Yes. Rectangular systems can be solved with RREF; the final rows and pivots
+                                    determine the solution type.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3>Can I use fractions in the system of equations calculator?</h3>
+                                <p>
+                                    Yes. The calculator accepts fractions such as 1/2 and -3/4, along with decimals.
+                                </p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="poster-card">
+                    <p class="promo-text">
+                        Solve your system with matrices and review <span>RREF steps</span> using this
+                        <span>free calculator</span>.
+                    </p>
+
+                    <div class="poster-card calculator-card">
+                        <p class="promo-text">
+                            Enter equations, A and b, or an augmented matrix.
+                        </p>
+
+                        <a class="calculator-btn" href="/en/matrix-equations-calculator.html">
+                            Open System Calculator
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Matrix Calculator. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const navButtons = document.querySelector('.nav-buttons');
+            const languageToggle = document.querySelector('.language-toggle');
+            const languageDropdown = document.querySelector('.language-dropdown');
+
+            if (mobileNavToggle && navButtons) {
+                mobileNavToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    navButtons.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function (event) {
+                    if (!mobileNavToggle.contains(event.target) && !navButtons.contains(event.target)) {
+                        navButtons.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
+                    }
+                });
+            }
+
+            if (languageToggle && languageDropdown) {
+                languageToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    languageDropdown.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function () {
+                    languageDropdown.classList.remove('active');
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>
