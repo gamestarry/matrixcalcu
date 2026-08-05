@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Learn how to write a linear system as Ax = b, build an augmented matrix, use Gauss-Jordan elimination, and identify unique, no, or infinitely many solutions.">
-    <link rel="canonical" href="https://matrixcalcu.com/en/how-to-solve-systems-of-equations-with-matrices.html">
+        content="Aprende a escribir un sistema lineal como Ax = b, formar una matriz aumentada, usar la eliminación de Gauss-Jordan e identificar soluciones únicas, inexistentes o infinitas.">
+    <link rel="canonical" href="https://matrixcalcu.com/es/how-to-solve-systems-of-equations-with-matrices.html">
 
     <link rel="alternate" hreflang="en"
         href="https://matrixcalcu.com/en/how-to-solve-systems-of-equations-with-matrices.html">
@@ -15,15 +15,15 @@
     <link rel="alternate" hreflang="x-default"
         href="https://matrixcalcu.com/en/how-to-solve-systems-of-equations-with-matrices.html">
 
-    <meta property="og:title" content="How to Solve Systems of Equations with Matrices | MatrixCalcu">
+    <meta property="og:title" content="Cómo Resolver Sistemas de Ecuaciones con Matrices | MatrixCalcu">
     <meta property="og:description"
-        content="Learn how to write a linear system as Ax = b, build an augmented matrix, use Gauss-Jordan elimination, and identify unique, no, or infinitely many solutions.">
+        content="Aprende a escribir un sistema lineal como Ax = b, formar una matriz aumentada, usar la eliminación de Gauss-Jordan e identificar soluciones únicas, inexistentes o infinitas.">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:locale" content="es_ES">
     <meta property="og:url"
-        content="https://matrixcalcu.com/en/how-to-solve-systems-of-equations-with-matrices.html">
+        content="https://matrixcalcu.com/es/how-to-solve-systems-of-equations-with-matrices.html">
 
-    <title>How to Solve Systems of Equations with Matrices | MatrixCalcu</title>
+    <title>Cómo Resolver Sistemas de Ecuaciones con Matrices | MatrixCalcu</title>
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -316,58 +316,58 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How do you solve a system of equations using matrices?",
+          "name": "¿Cómo se resuelve un sistema de ecuaciones usando matrices?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Write the system as an augmented matrix, use row operations to reach RREF, then read the variable values or identify the solution type."
+            "text": "Escribe el sistema como una matriz aumentada, usa operaciones por filas para llegar a la RREF y luego lee los valores de las variables o identifica el tipo de solución."
           }
         },
         {
           "@type": "Question",
-          "name": "What does Ax = b mean?",
+          "name": "¿Qué significa Ax = b?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A is the coefficient matrix, x is the column vector of unknown variables, and b is the column vector of constants."
+            "text": "A es la matriz de coeficientes, x es el vector columna de incógnitas y b es el vector columna de constantes."
           }
         },
         {
           "@type": "Question",
-          "name": "What is the difference between a coefficient matrix and an augmented matrix?",
+          "name": "¿Cuál es la diferencia entre una matriz de coeficientes y una matriz aumentada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The coefficient matrix contains only variable coefficients. The augmented matrix adds the constants column after a separator."
+            "text": "La matriz de coeficientes contiene solo los coeficientes de las variables. La matriz aumentada agrega la columna de constantes después de un separador."
           }
         },
         {
           "@type": "Question",
-          "name": "Why is RREF useful for solving a system?",
+          "name": "¿Por qué es útil la RREF para resolver un sistema?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "RREF isolates pivots, exposes contradictions, and shows whether variables are fixed or free."
+            "text": "La RREF aísla pivotes, muestra contradicciones e indica si las variables quedan determinadas o libres."
           }
         },
         {
           "@type": "Question",
-          "name": "How does RREF show that a system has no solution?",
+          "name": "¿Cómo muestra la RREF que un sistema no tiene solución?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A row such as [0 0 | 1] means 0 = 1, so the system is inconsistent."
+            "text": "Una fila como [0 0 | 1] significa 0 = 1, por lo que el sistema es inconsistente."
           }
         },
         {
           "@type": "Question",
-          "name": "Can a rectangular system of equations be solved?",
+          "name": "¿Se puede resolver un sistema rectangular de ecuaciones?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Rectangular systems can be solved with RREF; the final rows and pivots determine the solution type."
+            "text": "Sí. Los sistemas rectangulares se pueden resolver con RREF; las filas finales y los pivotes determinan el tipo de solución."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I use fractions in the system of equations calculator?",
+          "name": "¿Puedo usar fracciones en la calculadora de sistemas de ecuaciones?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. The calculator accepts fractions such as 1/2 and -3/4, along with decimals."
+            "text": "Sí. La calculadora acepta fracciones como 1/2 y -3/4, además de decimales."
           }
         }
       ]
@@ -378,16 +378,16 @@
 <body>
     <header>
         <div class="container">
-            <div class="site-brand">Matrix Calculator</div>
+            <div class="site-brand">Calculadora de Matrices</div>
 
             <div class="language-selector">
                 <div class="language-toggle">
-                    <span class="globe-icon">English</span>
+                    <span class="globe-icon">Español</span>
                 </div>
                 <div class="language-dropdown">
-                    <a class="language-option active" href="/en/how-to-solve-systems-of-equations-with-matrices.html"
+                    <a class="language-option" href="/en/how-to-solve-systems-of-equations-with-matrices.html"
                         lang="en">English</a>
-                    <a class="language-option" href="/es/how-to-solve-systems-of-equations-with-matrices.html"
+                    <a class="language-option active" href="/es/how-to-solve-systems-of-equations-with-matrices.html"
                         lang="es">Español</a>
                 </div>
             </div>
@@ -398,88 +398,88 @@
         <div class="wide-container">
             <div class="main-row">
                 <div class="left-sidebar">
-                    <button class="mobile-nav-toggle">Navigation</button>
-                    <h3 class="nav-title">Navigation</h3>
+                    <button class="mobile-nav-toggle">Navegación</button>
+                    <h3 class="nav-title">Navegación</h3>
                     <div class="nav-buttons">
-                        <a href="/" class="nav-button" id="home-btn">Home</a>
-                        <a href="/en/matrix-equations-calculator.html" class="nav-button">System of Equations
-                            Calculator</a>
-                        <a href="/en/matrix-rref-calculator.html" class="nav-button">RREF Calculator</a>
-                        <a href="/en/matrix-augmented-calculator.html" class="nav-button">Augmented Matrix
-                            Calculator</a>
-                        <a href="/en/matrix-rank-calculator.html" class="nav-button">Matrix Rank Calculator</a>
-                        <a href="/en/matrix-inverse-calculator.html" class="nav-button">Matrix Inverse Calculator</a>
+                        <a href="/" class="nav-button" id="home-btn">Inicio</a>
+                        <a href="/es/matrix-equations-calculator.html" class="nav-button">Calculadora de sistemas de
+                            ecuaciones</a>
+                        <a href="/es/matrix-rref-calculator.html" class="nav-button">Calculadora RREF</a>
+                        <a href="/es/matrix-augmented-calculator.html" class="nav-button">Calculadora de matriz
+                            aumentada</a>
+                        <a href="/es/matrix-rank-calculator.html" class="nav-button">Calculadora del rango de una matriz</a>
+                        <a href="/es/matrix-inverse-calculator.html" class="nav-button">Calculadora de matriz inversa</a>
                     </div>
                 </div>
 
                 <div class="calculator-main">
                     <div class="seo-articles-container howto-page" id="article-container">
                         <section class="howto-hero-card">
-                            <p class="howto-kicker">Linear Systems Guide</p>
-                            <h1>How to Solve Systems of Equations with Matrices</h1>
+                            <p class="howto-kicker">Guía de sistemas lineales</p>
+                            <h1>Cómo resolver sistemas de ecuaciones con matrices</h1>
                             <p class="lead">
-                                This tutorial shows how to write a linear system as Ax = b, build an augmented matrix,
-                                use Gauss-Jordan elimination, reach RREF, and identify the three possible solution
-                                types: unique, no solution, or infinitely many solutions.
+                                Este tutorial muestra cómo escribir un sistema lineal como Ax = b, construir una matriz
+                                aumentada, usar la eliminación de Gauss-Jordan, llegar a la RREF e identificar los tres
+                                tipos posibles de solución: solución única, sin solución o infinitas soluciones.
                             </p>
 
                             <div class="howto-quick-links">
                                 <a class="howto-pill howto-pill-primary"
-                                    href="/en/matrix-equations-calculator.html">Open the System of Equations
-                                    Calculator</a>
+                                    href="/es/matrix-equations-calculator.html">Abrir la calculadora de sistemas de
+                                    ecuaciones</a>
                             </div>
                         </section>
 
                         <section class="howto-section-card on-this-page">
-                            <h2>On this page</h2>
+                            <h2>En esta página</h2>
                             <ul>
-                                <li><a href="#quick-answer">Quick answer</a></li>
-                                <li><a href="#understanding-axb">Understanding Ax = b</a></li>
-                                <li><a href="#augmented-matrix">Building an augmented matrix</a></li>
-                                <li><a href="#gauss-jordan">Gauss-Jordan elimination</a></li>
-                                <li><a href="#complete-2x2-example">Complete 2x2 example</a></li>
-                                <li><a href="#three-variable-example">Three-variable example</a></li>
-                                <li><a href="#solution-types">Solution types</a></li>
-                                <li><a href="#fractions-decimals">Fractions and decimals</a></li>
-                                <li><a href="#common-mistakes">Common mistakes</a></li>
-                                <li><a href="#faq">FAQ</a></li>
+                                <li><a href="#quick-answer">Respuesta rápida</a></li>
+                                <li><a href="#understanding-axb">Entender Ax = b</a></li>
+                                <li><a href="#augmented-matrix">Construir una matriz aumentada</a></li>
+                                <li><a href="#gauss-jordan">Eliminación de Gauss-Jordan</a></li>
+                                <li><a href="#complete-2x2-example">Ejemplo completo 2x2</a></li>
+                                <li><a href="#three-variable-example">Ejemplo con tres variables</a></li>
+                                <li><a href="#solution-types">Tipos de solución</a></li>
+                                <li><a href="#fractions-decimals">Fracciones y decimales</a></li>
+                                <li><a href="#common-mistakes">Errores comunes</a></li>
+                                <li><a href="#faq">Preguntas frecuentes</a></li>
                             </ul>
                         </section>
 
                         <section class="howto-section-card" id="quick-answer">
-                            <h2>Quick answer</h2>
+                            <h2>Respuesta rápida</h2>
                             <div class="quick-answer">
                                 <ol>
-                                    <li>Write the equations in a consistent variable order.</li>
-                                    <li>Place the coefficients in matrix A.</li>
-                                    <li>Place the constants in vector b.</li>
-                                    <li>Form the augmented matrix [A|b].</li>
-                                    <li>Use row operations to reduce it to RREF.</li>
-                                    <li>Read the solution or identify a contradiction/free variables.</li>
+                                    <li>Escribe las ecuaciones en un orden de variables consistente.</li>
+                                    <li>Coloca los coeficientes en la matriz A.</li>
+                                    <li>Coloca las constantes en el vector b.</li>
+                                    <li>Forma la matriz aumentada [A|b].</li>
+                                    <li>Usa operaciones por filas para reducirla a RREF.</li>
+                                    <li>Lee la solución o identifica una contradicción o variables libres.</li>
                                 </ol>
                             </div>
                             <p>
-                                When you want to check the final result, open the
-                                <a class="inline-tool-link" href="/en/matrix-equations-calculator.html">System of
-                                    Equations Calculator</a>.
+                                Cuando quieras comprobar el resultado final, abre la
+                                <a class="inline-tool-link" href="/es/matrix-equations-calculator.html">calculadora de
+                                    sistemas de ecuaciones</a>.
                             </p>
                         </section>
 
                         <section class="howto-section-card" id="understanding-axb">
-                            <h2>What does Ax = b mean?</h2>
+                            <h2>¿Qué significa Ax = b?</h2>
                             <p>
-                                In a linear system, A is the coefficient matrix, x is the column vector of unknown
-                                variables, and b is the constants vector. For example:
+                                En un sistema lineal, A es la matriz de coeficientes, x es el vector columna de
+                                incógnitas y b es el vector de constantes. Por ejemplo:
                             </p>
                             <div class="equation-block">
                                 <pre><code>x + y = 5
 2x - y = 1</code></pre>
                             </div>
-                            <p>The same system can be written as Ax = b:</p>
-                            <div class="matrix-equation" aria-label="A times x equals b">
+                            <p>El mismo sistema se puede escribir como Ax = b:</p>
+                            <div class="matrix-equation" aria-label="A por x igual a b">
                                 <div class="matrix-part">
                                     <div class="matrix-label">A</div>
-                                    <div class="matrix-visual" aria-label="A equals 1 1, 2 negative 1">
+                                    <div class="matrix-visual" aria-label="A igual a 1 1, 2 menos 1">
                                         <div class="matrix-bracket matrix-bracket-left"></div>
                                         <div class="matrix-grid two-column">
                                             <span>1</span><span>1</span>
@@ -491,7 +491,7 @@
                                 <div class="matrix-operator">&times;</div>
                                 <div class="matrix-part">
                                     <div class="matrix-label">x</div>
-                                    <div class="matrix-visual" aria-label="x vector">
+                                    <div class="matrix-visual" aria-label="vector x">
                                         <div class="matrix-bracket matrix-bracket-left"></div>
                                         <div class="matrix-grid one-column">
                                             <span>x</span>
@@ -503,7 +503,7 @@
                                 <div class="matrix-operator">=</div>
                                 <div class="matrix-part">
                                     <div class="matrix-label">b</div>
-                                    <div class="matrix-visual" aria-label="b equals 5, 1">
+                                    <div class="matrix-visual" aria-label="b igual a 5, 1">
                                         <div class="matrix-bracket matrix-bracket-left"></div>
                                         <div class="matrix-grid one-column">
                                             <span>5</span>
@@ -513,16 +513,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="matrix-equation-caption">Coefficient matrix &times; variable vector = constants vector</p>
+                            <p class="matrix-equation-caption">Matriz de coeficientes &times; vector de incógnitas = vector de constantes</p>
                         </section>
 
                         <section class="howto-section-card" id="augmented-matrix">
-                            <h2>How to build an augmented matrix</h2>
+                            <h2>Cómo construir una matriz aumentada</h2>
                             <p>
-                                To solve the system by row reduction, place the constants vector beside the coefficient
-                                matrix:
+                                Para resolver el sistema por reducción por filas, coloca el vector de constantes junto
+                                a la matriz de coeficientes:
                             </p>
-                            <div class="augmented-matrix" aria-label="Augmented matrix A vertical bar b">
+                            <div class="augmented-matrix" aria-label="Matriz aumentada A barra vertical b">
                                 <div class="matrix-operator">[A | b] =</div>
                                 <div class="matrix-visual">
                                     <div class="matrix-bracket matrix-bracket-left"></div>
@@ -534,43 +534,44 @@
                                 </div>
                             </div>
                             <ul class="howto-mistakes-list">
-                                <li>The variable order must remain consistent.</li>
-                                <li>Each equation becomes one row.</li>
-                                <li>The last column contains constants.</li>
-                                <li>The vertical bar is a visual separator, not an extra matrix entry.</li>
+                                <li>El orden de las variables debe mantenerse consistente.</li>
+                                <li>Cada ecuación se convierte en una fila.</li>
+                                <li>La última columna contiene las constantes.</li>
+                                <li>La barra vertical es un separador visual, no una entrada adicional de la matriz.</li>
                             </ul>
                             <p>
-                                The <a class="inline-tool-link" href="/en/matrix-augmented-calculator.html">Augmented
-                                    Matrix Calculator</a> can help combine or check an augmented matrix structure.
+                                La <a class="inline-tool-link" href="/es/matrix-augmented-calculator.html">Calculadora
+                                    de matriz aumentada</a> puede ayudarte a combinar o comprobar la estructura de una
+                                matriz aumentada.
                             </p>
                         </section>
 
                         <section class="howto-section-card" id="gauss-jordan">
-                            <h2>Gauss-Jordan elimination</h2>
+                            <h2>Eliminación de Gauss-Jordan</h2>
                             <p>
-                                Gauss-Jordan elimination uses row operations that preserve the solution set of the
-                                system. The legal row operations are:
+                                La eliminación de Gauss-Jordan usa operaciones por filas que conservan el conjunto de
+                                soluciones del sistema. Las operaciones por filas permitidas son:
                             </p>
                             <ol class="howto-mistakes-list">
-                                <li>Swap two rows.</li>
-                                <li>Multiply a row by a nonzero number.</li>
-                                <li>Add a multiple of one row to another row.</li>
+                                <li>Intercambiar dos filas.</li>
+                                <li>Multiplicar una fila por un número distinto de cero.</li>
+                                <li>Sumar un múltiplo de una fila a otra fila.</li>
                             </ol>
                             <p>
-                                The goal is to reduce the augmented matrix to reduced row echelon form (RREF). For
-                                row-reduction help, use the
-                                <a class="inline-tool-link" href="/en/matrix-rref-calculator.html">RREF Calculator</a>.
+                                El objetivo es reducir la matriz aumentada a la forma escalonada reducida por filas
+                                (RREF). Para ayuda con la reducción por filas, usa la
+                                <a class="inline-tool-link" href="/es/matrix-rref-calculator.html">Calculadora RREF</a>.
                             </p>
                         </section>
 
                         <section class="howto-section-card" id="complete-2x2-example">
-                            <h2>Complete example: solve a 2x2 system</h2>
-                            <p>Start with the system:</p>
+                            <h2>Ejemplo completo: resolver un sistema 2x2</h2>
+                            <p>Comienza con el sistema:</p>
                             <div class="equation-block">
                                 <pre><code>x + y = 5
 2x - y = 1</code></pre>
                             </div>
-                            <p>The augmented matrix is:</p>
+                            <p>La matriz aumentada es:</p>
                             <div class="matrix-example">
                                 <div class="matrix-visual">
                                     <div class="matrix-bracket matrix-bracket-left"></div>
@@ -583,7 +584,7 @@
                             </div>
 
                             <div class="step-block">
-                                <p class="step-label">Step 1: R2 -> R2 - 2R1</p>
+                                <p class="step-label">Paso 1: R2 -> R2 - 2R1</p>
                                 <div class="matrix-example">
                                     <div class="matrix-visual">
                                         <div class="matrix-bracket matrix-bracket-left"></div>
@@ -597,7 +598,7 @@
                             </div>
 
                             <div class="step-block">
-                                <p class="step-label">Step 2: R2 -> (-1/3)R2</p>
+                                <p class="step-label">Paso 2: R2 -> (-1/3)R2</p>
                                 <div class="matrix-example">
                                     <div class="matrix-visual">
                                         <div class="matrix-bracket matrix-bracket-left"></div>
@@ -611,7 +612,7 @@
                             </div>
 
                             <div class="step-block">
-                                <p class="step-label">Step 3: R1 -> R1 - R2</p>
+                                <p class="step-label">Paso 3: R1 -> R1 - R2</p>
                                 <div class="matrix-example">
                                     <div class="matrix-visual">
                                         <div class="matrix-bracket matrix-bracket-left"></div>
@@ -624,32 +625,32 @@
                                 </div>
                             </div>
 
-                            <p>The RREF tells us:</p>
+                            <p>La RREF nos dice:</p>
                             <div class="equation-block">
                                 <pre><code>x = 2
 y = 3</code></pre>
                             </div>
-                            <p>Check the solution in the original equations:</p>
+                            <p>Comprueba la solución en las ecuaciones originales:</p>
                             <div class="equation-block">
                                 <pre><code>2 + 3 = 5
 2(2) - 3 = 1</code></pre>
                             </div>
                             <p class="howto-cta-note">
                                 <a class="howto-pill howto-pill-primary"
-                                    href="/en/matrix-equations-calculator.html">Check this system with the System of
-                                    Equations Calculator</a>
+                                    href="/es/matrix-equations-calculator.html">Comprobar este sistema con la
+                                    calculadora de sistemas de ecuaciones</a>
                             </p>
                         </section>
 
                         <section class="howto-section-card" id="three-variable-example">
-                            <h2>Example with three variables</h2>
-                            <p>The same method works for more variables. For this system:</p>
+                            <h2>Ejemplo con tres variables</h2>
+                            <p>El mismo método funciona con más variables. Para este sistema:</p>
                             <div class="equation-block">
                                 <pre><code>x + y + z = 6
 2x - y + z = 3
 x + 2y - z = 2</code></pre>
                             </div>
-                            <p>The augmented matrix is:</p>
+                            <p>La matriz aumentada es:</p>
                             <div class="matrix-example">
                                 <div class="matrix-visual">
                                     <div class="matrix-bracket matrix-bracket-left"></div>
@@ -661,7 +662,7 @@ x + 2y - z = 2</code></pre>
                                     <div class="matrix-bracket matrix-bracket-right"></div>
                                 </div>
                             </div>
-                            <p>After row reduction, the RREF is:</p>
+                            <p>Después de la reducción por filas, la RREF es:</p>
                             <div class="matrix-example">
                                 <div class="matrix-visual">
                                     <div class="matrix-bracket matrix-bracket-left"></div>
@@ -674,24 +675,24 @@ x + 2y - z = 2</code></pre>
                                 </div>
                             </div>
                             <p>
-                                Therefore x = 1, y = 2, and z = 3. The matrix size grows, but the logic does not
-                                change. The calculator can show the intermediate steps if you want to inspect them.
+                                Por lo tanto, x = 1, y = 2 y z = 3. El tamaño de la matriz aumenta, pero la lógica no
+                                cambia. La calculadora puede mostrar los pasos intermedios si quieres revisarlos.
                             </p>
                         </section>
 
                         <section class="howto-section-card" id="solution-types">
-                            <h2>How RREF reveals the solution type</h2>
+                            <h2>Cómo revela la RREF el tipo de solución</h2>
                             <p>
-                                RREF determines the solution type even when the system is rectangular. Count pivots,
-                                check for contradictions, and look for free variables.
+                                La RREF determina el tipo de solución incluso cuando el sistema es rectangular. Cuenta
+                                los pivotes, revisa si hay contradicciones y busca variables libres.
                             </p>
                             <div class="solution-type-grid">
                                 <article class="solution-type-card">
-                                    <h3>Unique solution</h3>
+                                    <h3>Solución única</h3>
                                     <ul>
-                                        <li>Every variable column has a pivot.</li>
-                                        <li>There is no contradictory row.</li>
-                                        <li>There are no free variables.</li>
+                                        <li>Cada columna de variable tiene un pivote.</li>
+                                        <li>No hay una fila contradictoria.</li>
+                                        <li>No hay variables libres.</li>
                                     </ul>
                                     <div class="matrix-example">
                                         <div class="matrix-visual">
@@ -706,8 +707,8 @@ x + 2y - z = 2</code></pre>
                                 </article>
 
                                 <article class="solution-type-card">
-                                    <h3>No solution</h3>
-                                    <p>A row like this creates a contradiction:</p>
+                                    <h3>Sin solución</h3>
+                                    <p>Una fila como esta crea una contradicción:</p>
                                     <div class="matrix-example">
                                         <div class="matrix-visual">
                                             <div class="matrix-bracket matrix-bracket-left"></div>
@@ -717,32 +718,32 @@ x + 2y - z = 2</code></pre>
                                             <div class="matrix-bracket matrix-bracket-right"></div>
                                         </div>
                                     </div>
-                                    <p>It means 0 = 1, so the system is inconsistent.</p>
+                                    <p>Significa 0 = 1, por lo que el sistema es inconsistente.</p>
                                 </article>
 
                                 <article class="solution-type-card">
-                                    <h3>Infinitely many solutions</h3>
+                                    <h3>Infinitas soluciones</h3>
                                     <ul>
-                                        <li>The system is consistent.</li>
-                                        <li>At least one variable has no pivot.</li>
-                                        <li>That variable becomes a free parameter.</li>
-                                        <li>Answers may use parameters such as t1 or t2.</li>
+                                        <li>El sistema es consistente.</li>
+                                        <li>Al menos una variable no tiene pivote.</li>
+                                        <li>Esa variable se convierte en un parámetro libre.</li>
+                                        <li>Las respuestas pueden usar parámetros como t1 o t2.</li>
                                     </ul>
                                 </article>
                             </div>
                             <p>
-                                The <a class="inline-tool-link" href="/en/matrix-rank-calculator.html">Matrix Rank
-                                    Calculator</a> can help study consistency, but this tutorial mainly uses RREF to
-                                read the solution type.
+                                La <a class="inline-tool-link" href="/es/matrix-rank-calculator.html">Calculadora del
+                                    rango de una matriz</a> puede ayudar a estudiar la consistencia, pero este tutorial
+                                usa principalmente RREF para leer el tipo de solución.
                             </p>
                         </section>
 
                         <section class="howto-section-card" id="fractions-decimals">
-                            <h2>Fractions and decimals</h2>
+                            <h2>Fracciones y decimales</h2>
                             <p>
-                                Fractions often preserve exact values, while converting to decimals too early can
-                                introduce rounding. The calculator accepts fractions such as 1/2 and -3/4, and empty
-                                cells in the calculator are treated as zero.
+                                Las fracciones suelen conservar valores exactos, mientras que convertir a decimales
+                                demasiado pronto puede introducir redondeo. La calculadora acepta fracciones como 1/2 y
+                                -3/4, y las celdas vacías en la calculadora se tratan como cero.
                             </p>
                             <div class="equation-block">
                                 <pre><code>(1/2)x + y = 3
@@ -758,144 +759,145 @@ x - (1/3)y = 1</code></pre>
                                     <div class="matrix-bracket matrix-bracket-right"></div>
                                 </div>
                             </div>
-                            <p>The exact solution is:</p>
+                            <p>La solución exacta es:</p>
                             <div class="equation-block">
                                 <pre><code>x = 12/7
 y = 15/7</code></pre>
                             </div>
                             <p>
-                                Check: (1/2)(12/7) + 15/7 = 3, and 12/7 - (1/3)(15/7) = 1.
+                                Comprobación: (1/2)(12/7) + 15/7 = 3, y 12/7 - (1/3)(15/7) = 1.
                             </p>
                         </section>
 
                         <section class="howto-section-card">
-                            <h2>Can I solve Ax = b with an inverse matrix?</h2>
+                            <h2>¿Puedo resolver Ax = b con una matriz inversa?</h2>
                             <p>
-                                When A is an invertible square matrix, you can write x = A^-1b. But not every matrix is
-                                invertible, and non-square matrices do not use the ordinary matrix inverse.
-                                Gauss-Jordan elimination and RREF are more general for linear systems, so you should
-                                not force the inverse method for every problem.
+                                Cuando A es una matriz cuadrada invertible, puedes escribir x = A^-1b. Pero no toda
+                                matriz es invertible, y las matrices no cuadradas no usan la matriz inversa ordinaria.
+                                La eliminación de Gauss-Jordan y la RREF son más generales para sistemas lineales, así
+                                que no conviene forzar el método de la inversa en todos los problemas.
                             </p>
                             <p>
-                                For square invertible matrices, the
-                                <a class="inline-tool-link" href="/en/matrix-inverse-calculator.html">Matrix Inverse
-                                    Calculator</a> can help compute A^-1.
+                                Para matrices cuadradas invertibles, la
+                                <a class="inline-tool-link" href="/es/matrix-inverse-calculator.html">Calculadora de
+                                    matriz inversa</a> puede ayudarte a calcular A^-1.
                             </p>
                         </section>
 
                         <section class="howto-section-card" id="common-mistakes">
-                            <h2>Common mistakes</h2>
+                            <h2>Errores comunes</h2>
                             <ul class="howto-mistakes-list">
-                                <li>Changing the variable order between equations.</li>
-                                <li>Placing constants inside matrix A.</li>
-                                <li>Applying a row operation to only part of a row.</li>
-                                <li>Confusing REF with RREF.</li>
-                                <li>Rounding decimals too early.</li>
-                                <li>Assuming every system has one solution.</li>
-                                <li>Assuming the matrix must be square.</li>
-                                <li>Reading a free variable as zero without justification.</li>
+                                <li>Cambiar el orden de las variables entre ecuaciones.</li>
+                                <li>Colocar constantes dentro de la matriz A.</li>
+                                <li>Aplicar una operación por filas solo a una parte de la fila.</li>
+                                <li>Confundir REF con RREF.</li>
+                                <li>Redondear decimales demasiado pronto.</li>
+                                <li>Suponer que todo sistema tiene una solución.</li>
+                                <li>Suponer que la matriz debe ser cuadrada.</li>
+                                <li>Leer una variable libre como cero sin justificación.</li>
                             </ul>
                         </section>
 
                         <section class="howto-section-card howto-calculator-card">
-                            <h2>Check your work with the calculator</h2>
+                            <h2>Comprueba tu trabajo con la calculadora</h2>
                             <p>
-                                The main calculator supports equations, A and b, augmented matrices, RREF steps,
-                                unique/no/infinite solution types, fractions, and decimals.
+                                La calculadora principal admite ecuaciones, A y b, matrices aumentadas, pasos de RREF,
+                                tipos de solución única, sin solución o con infinitas soluciones, fracciones y
+                                decimales.
                             </p>
                             <div class="howto-quick-links">
                                 <a class="howto-pill howto-pill-primary"
-                                    href="/en/matrix-equations-calculator.html">Open the System of Equations
-                                    Calculator</a>
+                                    href="/es/matrix-equations-calculator.html">Abrir la calculadora de sistemas de
+                                    ecuaciones</a>
                             </div>
                         </section>
 
                         <section class="howto-section-card">
-                            <h2>Related matrix tools</h2>
+                            <h2>Herramientas de matrices relacionadas</h2>
                             <div class="related-tools-grid">
                                 <article class="related-tool-card">
-                                    <h3><a href="/en/matrix-equations-calculator.html">System of Equations
-                                            Calculator</a></h3>
-                                    <p>Solve linear systems from equations, A and b, or an augmented matrix.</p>
+                                    <h3><a href="/es/matrix-equations-calculator.html">Calculadora de sistemas de
+                                            ecuaciones</a></h3>
+                                    <p>Resuelve sistemas lineales desde ecuaciones, A y b, o una matriz aumentada.</p>
                                 </article>
                                 <article class="related-tool-card">
-                                    <h3><a href="/en/matrix-rref-calculator.html">RREF Calculator</a></h3>
-                                    <p>Reduce a matrix to RREF and review the row-reduction steps.</p>
+                                    <h3><a href="/es/matrix-rref-calculator.html">Calculadora RREF</a></h3>
+                                    <p>Reduce una matriz a RREF y revisa los pasos de reducción por filas.</p>
                                 </article>
                                 <article class="related-tool-card">
-                                    <h3><a href="/en/matrix-augmented-calculator.html">Augmented Matrix Calculator</a>
+                                    <h3><a href="/es/matrix-augmented-calculator.html">Calculadora de matriz aumentada</a>
                                     </h3>
-                                    <p>Build or check the augmented matrix layout for a system.</p>
+                                    <p>Construye o comprueba la estructura de matriz aumentada de un sistema.</p>
                                 </article>
                                 <article class="related-tool-card">
-                                    <h3><a href="/en/matrix-rank-calculator.html">Matrix Rank Calculator</a></h3>
-                                    <p>Study rank when comparing coefficient and augmented matrices.</p>
+                                    <h3><a href="/es/matrix-rank-calculator.html">Calculadora del rango de una matriz</a></h3>
+                                    <p>Estudia el rango al comparar matrices de coeficientes y matrices aumentadas.</p>
                                 </article>
                                 <article class="related-tool-card">
-                                    <h3><a href="/en/matrix-inverse-calculator.html">Matrix Inverse Calculator</a></h3>
-                                    <p>Compute the inverse of a square invertible matrix.</p>
+                                    <h3><a href="/es/matrix-inverse-calculator.html">Calculadora de matriz inversa</a></h3>
+                                    <p>Calcula la inversa de una matriz cuadrada invertible.</p>
                                 </article>
                                 <article class="related-tool-card">
-                                    <h3><a href="/en/how-to-multiply-matrices.html">How to Multiply Matrices</a></h3>
-                                    <p>Learn the row-by-column rule used in matrix products.</p>
+                                    <h3><a href="/es/how-to-multiply-matrices.html">Cómo multiplicar matrices</a></h3>
+                                    <p>Aprende la regla fila por columna usada en productos de matrices.</p>
                                 </article>
                             </div>
                         </section>
 
                         <section class="howto-faq-card" id="faq">
-                            <h2>Frequently Asked Questions</h2>
+                            <h2>Preguntas frecuentes</h2>
 
                             <div>
-                                <h3>How do you solve a system of equations using matrices?</h3>
+                                <h3>¿Cómo se resuelve un sistema de ecuaciones usando matrices?</h3>
                                 <p>
-                                    Write the system as an augmented matrix, use row operations to reach RREF, then read
-                                    the variable values or identify the solution type.
+                                    Escribe el sistema como una matriz aumentada, usa operaciones por filas para llegar
+                                    a la RREF y luego lee los valores de las variables o identifica el tipo de solución.
                                 </p>
                             </div>
 
                             <div>
-                                <h3>What does Ax = b mean?</h3>
+                                <h3>¿Qué significa Ax = b?</h3>
                                 <p>
-                                    A is the coefficient matrix, x is the column vector of unknown variables, and b is
-                                    the column vector of constants.
+                                    A es la matriz de coeficientes, x es el vector columna de incógnitas y b es el
+                                    vector columna de constantes.
                                 </p>
                             </div>
 
                             <div>
-                                <h3>What is the difference between a coefficient matrix and an augmented matrix?</h3>
+                                <h3>¿Cuál es la diferencia entre una matriz de coeficientes y una matriz aumentada?</h3>
                                 <p>
-                                    The coefficient matrix contains only variable coefficients. The augmented matrix adds
-                                    the constants column after a separator.
+                                    La matriz de coeficientes contiene solo los coeficientes de las variables. La matriz
+                                    aumentada agrega la columna de constantes después de un separador.
                                 </p>
                             </div>
 
                             <div>
-                                <h3>Why is RREF useful for solving a system?</h3>
+                                <h3>¿Por qué es útil la RREF para resolver un sistema?</h3>
                                 <p>
-                                    RREF isolates pivots, exposes contradictions, and shows whether variables are fixed
-                                    or free.
+                                    La RREF aísla pivotes, muestra contradicciones e indica si las variables quedan
+                                    determinadas o libres.
                                 </p>
                             </div>
 
                             <div>
-                                <h3>How does RREF show that a system has no solution?</h3>
+                                <h3>¿Cómo muestra la RREF que un sistema no tiene solución?</h3>
                                 <p>
-                                    A row such as [0 0 | 1] means 0 = 1, so the system is inconsistent.
+                                    Una fila como [0 0 | 1] significa 0 = 1, por lo que el sistema es inconsistente.
                                 </p>
                             </div>
 
                             <div>
-                                <h3>Can a rectangular system of equations be solved?</h3>
+                                <h3>¿Se puede resolver un sistema rectangular de ecuaciones?</h3>
                                 <p>
-                                    Yes. Rectangular systems can be solved with RREF; the final rows and pivots
-                                    determine the solution type.
+                                    Sí. Los sistemas rectangulares se pueden resolver con RREF; las filas finales y los
+                                    pivotes determinan el tipo de solución.
                                 </p>
                             </div>
 
                             <div>
-                                <h3>Can I use fractions in the system of equations calculator?</h3>
+                                <h3>¿Puedo usar fracciones en la calculadora de sistemas de ecuaciones?</h3>
                                 <p>
-                                    Yes. The calculator accepts fractions such as 1/2 and -3/4, along with decimals.
+                                    Sí. La calculadora acepta fracciones como 1/2 y -3/4, además de decimales.
                                 </p>
                             </div>
                         </section>
@@ -904,17 +906,17 @@ y = 15/7</code></pre>
 
                 <div class="poster-card">
                     <p class="promo-text">
-                        Solve your system with matrices and review <span>RREF steps</span> using this
-                        <span>free calculator</span>.
+                        Resuelve tu sistema con matrices y revisa los <span>pasos de RREF</span> con esta
+                        <span>calculadora gratuita</span>.
                     </p>
 
                     <div class="poster-card calculator-card">
                         <p class="promo-text">
-                            Enter equations, A and b, or an augmented matrix.
+                            Ingresa ecuaciones, A y b, o una matriz aumentada.
                         </p>
 
-                        <a class="calculator-btn" href="/en/matrix-equations-calculator.html">
-                            Open System Calculator
+                        <a class="calculator-btn" href="/es/matrix-equations-calculator.html">
+                            Abrir calculadora de sistemas
                         </a>
                     </div>
                 </div>
@@ -924,7 +926,7 @@ y = 15/7</code></pre>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Matrix Calculator. All rights reserved.</p>
+            <p>&copy; 2025 Calculadora de Matrices. Todos los derechos reservados.</p>
         </div>
     </footer>
 
