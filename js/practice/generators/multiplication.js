@@ -4,7 +4,7 @@
     const TYPE = 'multiplication';
     const DIFFICULTIES = new Set(['easy', 'medium', 'hard']);
     const SUPPORTED_SIZE = new Set([2, 3]);
-    const MAX_RETRIES = 30;
+    const MAX_RETRIES = 80;
 
     const PRESETS = {
         easy: {
@@ -73,9 +73,25 @@
         return flatten(matrix).filter((value) => value !== 0).length;
     }
 
+    function matrixKey(matrix) {
+        return JSON.stringify(matrix);
+    }
+
+    function countCellDifferences(left, right) {
+        let differences = 0;
+        for (let index = 0; index < left.length; index++) {
+            if (left[index] !== right[index]) differences++;
+        }
+        return differences;
+    }
+
     function allCellsSame(matrix) {
         const first = matrix[0][0];
         return matrix.every((row) => row.every((value) => value === first));
+    }
+
+    function isAllZero(matrix) {
+        return countNonZero(matrix) === 0;
     }
 
     function hasZeroRow(matrix) {
@@ -95,6 +111,46 @@
             if (allZero) return true;
         }
         return false;
+    }
+
+    function hasRepeatedRows(matrix) {
+        const seen = new Set();
+        for (let r = 0; r < matrix.length; r++) {
+            const key = JSON.stringify(matrix[r]);
+            if (seen.has(key)) return true;
+            seen.add(key);
+        }
+        return false;
+    }
+
+    function getColumn(matrix, column) {
+        return matrix.map((row) => row[column]);
+    }
+
+    function hasRepeatedColumns(matrix) {
+        const seen = new Set();
+        for (let c = 0; c < matrix[0].length; c++) {
+            const key = JSON.stringify(getColumn(matrix, c));
+            if (seen.has(key)) return true;
+            seen.add(key);
+        }
+        return false;
+    }
+
+    function isIdentityLike(matrix) {
+        if (matrix.length !== matrix[0].length) return false;
+
+        let nonZeroCount = 0;
+        let offDiagonalNonZero = 0;
+        for (let r = 0; r < matrix.length; r++) {
+            for (let c = 0; c < matrix[r].length; c++) {
+                if (matrix[r][c] === 0) continue;
+                nonZeroCount++;
+                if (r !== c) offDiagonalNonZero++;
+            }
+        }
+
+        return nonZeroCount > 0 && offDiagonalNonZero <= 1 && nonZeroCount <= matrix.length + 1;
     }
 
     function normalizeMultiplicationSettings(options) {
@@ -218,6 +274,20 @@
         return `${dimensions.rowsA}x${dimensions.colsA}x${dimensions.colsB}`;
     }
 
+    function getStrictValueRange(settings) {
+        if (settings.minValue >= 0 && settings.maxValue >= 2) {
+            return {
+                minValue: Math.max(1, settings.minValue),
+                maxValue: settings.maxValue
+            };
+        }
+
+        return {
+            minValue: settings.minValue,
+            maxValue: settings.maxValue
+        };
+    }
+
     function generateMatrix(rng, rows, cols, minValue, maxValue) {
         const matrix = [];
         for (let r = 0; r < rows; r++) {
@@ -249,6 +319,30 @@
         }
 
         return result;
+    }
+
+    function countNonZeroProductsForCell(A, B, row, column) {
+        let count = 0;
+        for (let k = 0; k < A[0].length; k++) {
+            if (A[row][k] * B[k][column] !== 0) count++;
+        }
+        return count;
+    }
+
+    function requiredNonZeroProducts(innerDimension) {
+        return innerDimension === 2 ? 2 : 2;
+    }
+
+    function hasEnoughDotProductWork(A, B) {
+        const required = requiredNonZeroProducts(A[0].length);
+        for (let r = 0; r < A.length; r++) {
+            for (let c = 0; c < B[0].length; c++) {
+                if (countNonZeroProductsForCell(A, B, r, c) < required) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     function createSteps(A, B, answer) {
@@ -289,66 +383,145 @@
         const rangeSize = settings.maxValue - settings.minValue + 1;
         if (rangeSize <= 1) return true;
 
+        if (isAllZero(A)) return false;
+        if (isAllZero(B)) return false;
         if (countNonZero(A) < 2) return false;
         if (countNonZero(B) < 2) return false;
         if (countNonZero(answer) < 2) return false;
         if (hasZeroRow(A)) return false;
+        if (hasZeroColumn(A)) return false;
+        if (hasZeroRow(B)) return false;
         if (hasZeroColumn(B)) return false;
+        if (hasRepeatedRows(A)) return false;
+        if (hasRepeatedColumns(A)) return false;
+        if (hasRepeatedRows(B)) return false;
+        if (hasRepeatedColumns(B)) return false;
         if (allCellsSame(A)) return false;
         if (allCellsSame(B)) return false;
         if (allCellsSame(answer)) return false;
+        if (isIdentityLike(A)) return false;
+        if (isIdentityLike(B)) return false;
+        if (!hasEnoughDotProductWork(A, B)) return false;
 
         return true;
     }
 
-    function enforceMinimumQuality(A, B, settings) {
+    function hasBasicShape(A, B, answer, settings) {
         const rangeSize = settings.maxValue - settings.minValue + 1;
-        if (rangeSize <= 1) return;
+        if (rangeSize <= 1) return true;
 
-        const one = settings.maxValue !== 0 ? settings.maxValue : settings.minValue;
-        const other = settings.minValue !== one ? settings.minValue : settings.maxValue;
-        if (one === 0 && other === 0) return;
+        if (isAllZero(A)) return false;
+        if (isAllZero(B)) return false;
+        if (hasZeroRow(A)) return false;
+        if (hasZeroColumn(B)) return false;
+        if (countNonZero(answer) < 1) return false;
 
-        for (let r = 0; r < A.length; r++) {
-            A[r][0] = one;
-        }
-        for (let c = 0; c < B[0].length; c++) {
-            B[0][c] = one;
-        }
-
-        if (A[0].length > 1) A[0][1] = other;
-        if (B.length > 1) B[1][0] = other;
+        return true;
     }
 
-    function generateCandidate(rng, dimensions, settings) {
-        const A = generateMatrix(rng, dimensions.rowsA, dimensions.colsA, settings.minValue, settings.maxValue);
-        const B = generateMatrix(rng, dimensions.colsA, dimensions.colsB, settings.minValue, settings.maxValue);
+    function createDiversityContext() {
+        return {
+            seenA: new Set(),
+            seenB: new Set(),
+            seenCombo: new Set(),
+            seenRows: new Set(),
+            seenColumns: new Set(),
+            previousInput: null
+        };
+    }
+
+    function collectDiversity(context, A, B) {
+        context.seenA.add(matrixKey(A));
+        context.seenB.add(matrixKey(B));
+        context.seenCombo.add(`${matrixKey(A)}|${matrixKey(B)}`);
+        A.forEach((row) => context.seenRows.add(JSON.stringify(row)));
+        for (let c = 0; c < B[0].length; c++) {
+            context.seenColumns.add(JSON.stringify(getColumn(B, c)));
+        }
+        context.previousInput = flatten(A).concat(flatten(B));
+    }
+
+    function meetsDiversity(A, B, context, strictRowsAndColumns) {
+        if (!context) return true;
+
+        const keyA = matrixKey(A);
+        const keyB = matrixKey(B);
+        if (context.seenA.has(keyA)) return false;
+        if (context.seenB.has(keyB)) return false;
+        if (context.seenCombo.has(`${keyA}|${keyB}`)) return false;
+
+        if (context.previousInput) {
+            const input = flatten(A).concat(flatten(B));
+            const requiredDifferences = Math.max(2, Math.ceil(input.length * 0.25));
+            if (countCellDifferences(input, context.previousInput) < requiredDifferences) {
+                return false;
+            }
+        }
+
+        if (strictRowsAndColumns) {
+            for (let r = 0; r < A.length; r++) {
+                if (context.seenRows.has(JSON.stringify(A[r]))) return false;
+            }
+            for (let c = 0; c < B[0].length; c++) {
+                if (context.seenColumns.has(JSON.stringify(getColumn(B, c)))) return false;
+            }
+        }
+
+        return true;
+    }
+
+    function generateCandidate(rng, dimensions, settings, strictValues) {
+        const valueRange = strictValues ? getStrictValueRange(settings) : settings;
+        const A = generateMatrix(rng, dimensions.rowsA, dimensions.colsA, valueRange.minValue, valueRange.maxValue);
+        const B = generateMatrix(rng, dimensions.colsA, dimensions.colsB, valueRange.minValue, valueRange.maxValue);
         return { A, B, answer: multiplyMatrices(A, B) };
     }
 
-    function buildProblem(settings, index) {
+    function candidatePassesLevel(candidate, settings, context, level) {
+        if (level <= 2 && !hasInterestingShape(candidate.A, candidate.B, candidate.answer, settings)) {
+            return false;
+        }
+        if (level === 3 && !hasBasicShape(candidate.A, candidate.B, candidate.answer, settings)) {
+            return false;
+        }
+        if (level === 0 && !meetsDiversity(candidate.A, candidate.B, context, true)) {
+            return false;
+        }
+        if (level === 1 && !meetsDiversity(candidate.A, candidate.B, context, false)) {
+            return false;
+        }
+        return true;
+    }
+
+    function buildProblem(settings, index, diversityContext) {
         const { random, model } = getDependencies();
         const dimensions = resolveDimensions(settings, index);
-        const problemSeed = `${settings.seed}|${TYPE}|${settings.difficulty}|${dimensionKey(dimensions)}|${settings.minValue}:${settings.maxValue}|${settings.includeNegatives}|${index}`;
-        const rng = random.createSeededRandom(problemSeed);
+        const seedBase = `${settings.seed}|${TYPE}|${settings.difficulty}|${dimensionKey(dimensions)}|${settings.minValue}:${settings.maxValue}|${settings.includeNegatives}|${index}`;
 
         let candidate = null;
-        let passedQuality = false;
-        for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-            candidate = generateCandidate(rng, dimensions, settings);
-            if (hasInterestingShape(candidate.A, candidate.B, candidate.answer, settings)) {
-                passedQuality = true;
+        let selected = null;
+        for (let level = 0; level <= 4; level++) {
+            for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+                const rng = random.createSeededRandom(`${seedBase}|quality|${level}|attempt|${attempt}`);
+                candidate = generateCandidate(rng, dimensions, settings, level <= 2);
+                if (level === 4 || candidatePassesLevel(candidate, settings, diversityContext, level)) {
+                    selected = candidate;
+                    break;
+                }
+            }
+            if (selected) {
                 break;
             }
         }
 
-        const matrixA = cloneMatrix(candidate.A);
-        const matrixB = cloneMatrix(candidate.B);
-        if (!passedQuality) {
-            enforceMinimumQuality(matrixA, matrixB, settings);
-        }
+        const matrixA = cloneMatrix(selected.A);
+        const matrixB = cloneMatrix(selected.B);
 
         const answer = multiplyMatrices(matrixA, matrixB);
+        if (diversityContext) {
+            collectDiversity(diversityContext, matrixA, matrixB);
+        }
+
         const idSeed = [
             settings.seed,
             settings.difficulty,
@@ -418,9 +591,10 @@
         const { model } = getDependencies();
         const settings = normalizeMultiplicationSettings(options);
         const problems = [];
+        const diversityContext = createDiversityContext();
 
         for (let index = 0; index < settings.count; index++) {
-            problems.push(buildProblem(settings, index));
+            problems.push(buildProblem(settings, index, diversityContext));
         }
 
         return model.createProblemSet({

@@ -18,6 +18,18 @@ function countNonZero(matrix) {
     return flatten(matrix).filter((value) => value !== 0).length;
 }
 
+function matrixKey(matrix) {
+    return JSON.stringify(matrix);
+}
+
+function countCellDifferences(left, right) {
+    let differences = 0;
+    for (let index = 0; index < left.length; index++) {
+        if (left[index] !== right[index]) differences++;
+    }
+    return differences;
+}
+
 function allCellsSame(matrix) {
     const first = matrix[0][0];
     return matrix.every((row) => row.every((value) => value === first));
@@ -38,6 +50,30 @@ function hasZeroColumn(matrix) {
             }
         }
         if (allZero) return true;
+    }
+    return false;
+}
+
+function getColumn(matrix, column) {
+    return matrix.map((row) => row[column]);
+}
+
+function hasRepeatedRows(matrix) {
+    const seen = new Set();
+    for (let r = 0; r < matrix.length; r++) {
+        const key = JSON.stringify(matrix[r]);
+        if (seen.has(key)) return true;
+        seen.add(key);
+    }
+    return false;
+}
+
+function hasRepeatedColumns(matrix) {
+    const seen = new Set();
+    for (let c = 0; c < matrix[0].length; c++) {
+        const key = JSON.stringify(getColumn(matrix, c));
+        if (seen.has(key)) return true;
+        seen.add(key);
     }
     return false;
 }
@@ -68,6 +104,41 @@ function multiply(A, B) {
         result.push(row);
     }
     return result;
+}
+
+function countNonZeroProductsForCell(A, B, row, column) {
+    let count = 0;
+    for (let k = 0; k < A[0].length; k++) {
+        if (A[row][k] * B[k][column] !== 0) count++;
+    }
+    return count;
+}
+
+function assertDotProductWork(problem) {
+    const A = problem.inputs.matrixA;
+    const B = problem.inputs.matrixB;
+    for (let r = 0; r < A.length; r++) {
+        for (let c = 0; c < B[0].length; c++) {
+            assert(
+                countNonZeroProductsForCell(A, B, r, c) >= 2,
+                `${problem.id} cell ${r},${c} has too few nonzero products`
+            );
+        }
+    }
+}
+
+function assertExactDotProductWork(problem, expectedCount) {
+    const A = problem.inputs.matrixA;
+    const B = problem.inputs.matrixB;
+    for (let r = 0; r < A.length; r++) {
+        for (let c = 0; c < B[0].length; c++) {
+            assert.strictEqual(
+                countNonZeroProductsForCell(A, B, r, c),
+                expectedCount,
+                `${problem.id} cell ${r},${c} has unexpected nonzero product count`
+            );
+        }
+    }
 }
 
 function assertAnswer(problem) {
@@ -138,6 +209,59 @@ function assertDefaultQuality(problem) {
     assert(!allCellsSame(problem.inputs.matrixA));
     assert(!allCellsSame(problem.inputs.matrixB));
     assert(!allCellsSame(problem.exactAnswer.matrix));
+    assert(!hasZeroColumn(problem.inputs.matrixA));
+    assert(!hasZeroRow(problem.inputs.matrixB));
+    assert(!hasRepeatedRows(problem.inputs.matrixA));
+    assert(!hasRepeatedColumns(problem.inputs.matrixA));
+    assert(!hasRepeatedRows(problem.inputs.matrixB));
+    assert(!hasRepeatedColumns(problem.inputs.matrixB));
+    assertDotProductWork(problem);
+}
+
+function assertUiEasyQuality(problem) {
+    assertMatrixInRange(problem.inputs.matrixA, 0, 5);
+    assertMatrixInRange(problem.inputs.matrixB, 0, 5);
+    assertExactDotProductWork(problem, 2);
+    assert(!hasRepeatedRows(problem.inputs.matrixA), `${problem.id} has repeated A rows`);
+    assert(!hasRepeatedColumns(problem.inputs.matrixA), `${problem.id} has repeated A columns`);
+    assert(!hasRepeatedRows(problem.inputs.matrixB), `${problem.id} has repeated B rows`);
+    assert(!hasRepeatedColumns(problem.inputs.matrixB), `${problem.id} has repeated B columns`);
+    assert(countNonZero(problem.exactAnswer.matrix) >= 2);
+    assertAnswer(problem);
+    assertSteps(problem);
+}
+
+function assertSetDiversity(set) {
+    const seenA = new Set();
+    const seenB = new Set();
+    const seenCombos = new Set();
+    let previousInput = null;
+
+    set.problems.forEach((problem) => {
+        const A = problem.inputs.matrixA;
+        const B = problem.inputs.matrixB;
+        const keyA = matrixKey(A);
+        const keyB = matrixKey(B);
+        const comboKey = `${keyA}|${keyB}`;
+
+        assert(!seenA.has(keyA), `repeated matrixA: ${problem.id}`);
+        assert(!seenB.has(keyB), `repeated matrixB: ${problem.id}`);
+        assert(!seenCombos.has(comboKey), `repeated matrixA/matrixB combo: ${problem.id}`);
+
+        const input = flatten(A).concat(flatten(B));
+        if (previousInput && input.length === previousInput.length) {
+            const requiredDifferences = Math.max(2, Math.ceil(input.length * 0.25));
+            assert(
+                countCellDifferences(input, previousInput) >= requiredDifferences,
+                `adjacent problem is too similar: ${problem.id}`
+            );
+        }
+
+        seenA.add(keyA);
+        seenB.add(keyB);
+        seenCombos.add(comboKey);
+        previousInput = input;
+    });
 }
 
 function runTests() {
@@ -160,9 +284,9 @@ function runTests() {
     const expectedGolden = [
         {
             id: 'practice-multiplication-3535903094-medium-2x3x2-5-5-true-1',
-            matrixA: [[1, 2, 2], [3, 3, 3]],
-            matrixB: [[-4, 0], [-4, 1], [-1, -3]],
-            exactAnswer: [[-14, -4], [-27, -6]],
+            matrixA: [[0, -2, -2], [-5, 5, 1]],
+            matrixB: [[5, 2], [2, -5], [1, 4]],
+            exactAnswer: [[-6, 2], [-14, -31]],
             dimensions: {
                 rowsA: 2,
                 colsA: 3,
@@ -176,29 +300,29 @@ function runTests() {
                 row: 0,
                 column: 0,
                 terms: [
-                    { index: 0, leftValue: 1, rightValue: -4, product: -4 },
-                    { index: 1, leftValue: 2, rightValue: -4, product: -8 },
-                    { index: 2, leftValue: 2, rightValue: -1, product: -2 }
+                    { index: 0, leftValue: 0, rightValue: 5, product: 0 },
+                    { index: 1, leftValue: -2, rightValue: 2, product: -4 },
+                    { index: 2, leftValue: -2, rightValue: 1, product: -2 }
                 ],
-                result: -14
+                result: -6
             },
             lastStep: {
                 kind: 'dot-product',
                 row: 1,
                 column: 1,
                 terms: [
-                    { index: 0, leftValue: 3, rightValue: 0, product: 0 },
-                    { index: 1, leftValue: 3, rightValue: 1, product: 3 },
-                    { index: 2, leftValue: 3, rightValue: -3, product: -9 }
+                    { index: 0, leftValue: -5, rightValue: 2, product: -10 },
+                    { index: 1, leftValue: 5, rightValue: -5, product: -25 },
+                    { index: 2, leftValue: 1, rightValue: 4, product: 4 }
                 ],
-                result: -6
+                result: -31
             }
         },
         {
             id: 'practice-multiplication-3535903094-medium-2x3x2-5-5-true-2',
-            matrixA: [[3, 4, -4], [4, 4, 2]],
-            matrixB: [[0, -3], [-2, -3], [-1, -3]],
-            exactAnswer: [[-4, -9], [-10, -30]],
+            matrixA: [[3, 1, 1], [-3, 5, -2]],
+            matrixB: [[-5, 5], [-2, -1], [0, 4]],
+            exactAnswer: [[-17, 18], [5, -28]],
             dimensions: {
                 rowsA: 2,
                 colsA: 3,
@@ -212,29 +336,29 @@ function runTests() {
                 row: 0,
                 column: 0,
                 terms: [
-                    { index: 0, leftValue: 3, rightValue: 0, product: 0 },
-                    { index: 1, leftValue: 4, rightValue: -2, product: -8 },
-                    { index: 2, leftValue: -4, rightValue: -1, product: 4 }
+                    { index: 0, leftValue: 3, rightValue: -5, product: -15 },
+                    { index: 1, leftValue: 1, rightValue: -2, product: -2 },
+                    { index: 2, leftValue: 1, rightValue: 0, product: 0 }
                 ],
-                result: -4
+                result: -17
             },
             lastStep: {
                 kind: 'dot-product',
                 row: 1,
                 column: 1,
                 terms: [
-                    { index: 0, leftValue: 4, rightValue: -3, product: -12 },
-                    { index: 1, leftValue: 4, rightValue: -3, product: -12 },
-                    { index: 2, leftValue: 2, rightValue: -3, product: -6 }
+                    { index: 0, leftValue: -3, rightValue: 5, product: -15 },
+                    { index: 1, leftValue: 5, rightValue: -1, product: -5 },
+                    { index: 2, leftValue: -2, rightValue: 4, product: -8 }
                 ],
-                result: -30
+                result: -28
             }
         },
         {
             id: 'practice-multiplication-3535903094-medium-2x3x2-5-5-true-3',
-            matrixA: [[5, 5, 2], [-2, 3, -4]],
-            matrixB: [[-5, 1], [5, -4], [3, -3]],
-            exactAnswer: [[6, -21], [13, -2]],
+            matrixA: [[-4, 1, -1], [5, 5, 3]],
+            matrixB: [[-3, 5], [5, -1], [-3, -4]],
+            exactAnswer: [[20, -17], [1, 8]],
             dimensions: {
                 rowsA: 2,
                 colsA: 3,
@@ -248,22 +372,22 @@ function runTests() {
                 row: 0,
                 column: 0,
                 terms: [
-                    { index: 0, leftValue: 5, rightValue: -5, product: -25 },
-                    { index: 1, leftValue: 5, rightValue: 5, product: 25 },
-                    { index: 2, leftValue: 2, rightValue: 3, product: 6 }
+                    { index: 0, leftValue: -4, rightValue: -3, product: 12 },
+                    { index: 1, leftValue: 1, rightValue: 5, product: 5 },
+                    { index: 2, leftValue: -1, rightValue: -3, product: 3 }
                 ],
-                result: 6
+                result: 20
             },
             lastStep: {
                 kind: 'dot-product',
                 row: 1,
                 column: 1,
                 terms: [
-                    { index: 0, leftValue: -2, rightValue: 1, product: -2 },
-                    { index: 1, leftValue: 3, rightValue: -4, product: -12 },
-                    { index: 2, leftValue: -4, rightValue: -3, product: 12 }
+                    { index: 0, leftValue: 5, rightValue: 5, product: 25 },
+                    { index: 1, leftValue: 5, rightValue: -1, product: -5 },
+                    { index: 2, leftValue: 3, rightValue: -4, product: -12 }
                 ],
-                result: -2
+                result: 8
             }
         }
     ];
@@ -317,14 +441,182 @@ function runTests() {
         assertMatrixInRange(problem.inputs.matrixB, 0, 5);
         assertDefaultQuality(problem);
     });
+    assertSetDiversity(easy);
     ['easy-default', 'easy-range-a', 'easy-range-b', 'easy-range-c'].forEach((seed) => {
         const set = generator.generateMultiplicationSet({ seed, count: 3, difficulty: 'easy' });
         set.problems.forEach((problem) => {
             assertMatrixInRange(problem.inputs.matrixA, 0, 5);
             assertMatrixInRange(problem.inputs.matrixB, 0, 5);
+            assertDotProductWork(problem);
         });
     });
     rows.push(['T08', 'easy defaults are 2x2 by 2x2, 0..5, nonnegative, and quality guarded', 'pass']);
+
+    const worksheetFixture = generator.generateMultiplicationSet({
+        seed: 'worksheet-multiplication-quality-v1',
+        count: 6,
+        difficulty: 'easy',
+        rowsA: 2,
+        colsA: 2,
+        colsB: 2,
+        minValue: 0,
+        maxValue: 5,
+        includeNegatives: false
+    });
+    const expectedWorksheetFixture = [
+        {
+            id: 'practice-multiplication-2808065287-easy-2x2x2-0-5-false-1',
+            matrixA: [[3, 3], [5, 2]],
+            matrixB: [[2, 3], [4, 5]],
+            exactAnswer: [[18, 24], [18, 25]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-2808065287-easy-2x2x2-0-5-false-2',
+            matrixA: [[4, 2], [5, 3]],
+            matrixB: [[5, 1], [3, 1]],
+            exactAnswer: [[26, 6], [34, 8]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-2808065287-easy-2x2x2-0-5-false-3',
+            matrixA: [[3, 2], [2, 2]],
+            matrixB: [[2, 1], [3, 2]],
+            exactAnswer: [[12, 7], [10, 6]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-2808065287-easy-2x2x2-0-5-false-4',
+            matrixA: [[2, 5], [1, 4]],
+            matrixB: [[1, 4], [5, 2]],
+            exactAnswer: [[27, 18], [21, 12]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-2808065287-easy-2x2x2-0-5-false-5',
+            matrixA: [[1, 1], [3, 4]],
+            matrixB: [[3, 4], [2, 1]],
+            exactAnswer: [[5, 5], [17, 16]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-2808065287-easy-2x2x2-0-5-false-6',
+            matrixA: [[3, 5], [2, 4]],
+            matrixB: [[1, 4], [4, 5]],
+            exactAnswer: [[23, 37], [18, 28]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        }
+    ];
+    assert.deepStrictEqual(
+        worksheetFixture.problems.map((problem) => ({
+            id: problem.id,
+            matrixA: problem.inputs.matrixA,
+            matrixB: problem.inputs.matrixB,
+            exactAnswer: problem.exactAnswer.matrix,
+            nonzeroProductCounts: problem.inputs.matrixA.map((row, r) => problem.inputs.matrixB[0].map((_, c) => {
+                return countNonZeroProductsForCell(problem.inputs.matrixA, problem.inputs.matrixB, r, c);
+            }))
+        })),
+        expectedWorksheetFixture
+    );
+    worksheetFixture.problems.forEach((problem) => {
+        assertDefaultQuality(problem);
+        assertAnswer(problem);
+        assertSteps(problem);
+    });
+    assertSetDiversity(worksheetFixture);
+    rows.push(['T08a', 'fixed easy worksheet fixture keeps full dot-product work and set diversity', 'pass']);
+
+    const uiOptions = {
+        seed: 'ui-multiplication-quality-v2',
+        count: 6,
+        difficulty: 'easy',
+        rowsA: 2,
+        colsA: 2,
+        colsB: 2,
+        minValue: 0,
+        maxValue: 5,
+        includeNegatives: false
+    };
+    const uiSet = generator.generateMultiplicationSet(uiOptions);
+    const expectedUiFixture = [
+        {
+            id: 'practice-multiplication-1560209232-easy-2x2x2-0-5-false-1',
+            matrixA: [[3, 1], [5, 2]],
+            matrixB: [[3, 2], [3, 1]],
+            exactAnswer: [[12, 7], [21, 12]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-1560209232-easy-2x2x2-0-5-false-2',
+            matrixA: [[1, 5], [4, 3]],
+            matrixB: [[1, 1], [2, 5]],
+            exactAnswer: [[11, 26], [10, 19]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-1560209232-easy-2x2x2-0-5-false-3',
+            matrixA: [[2, 4], [5, 5]],
+            matrixB: [[4, 4], [1, 4]],
+            exactAnswer: [[12, 24], [25, 40]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-1560209232-easy-2x2x2-0-5-false-4',
+            matrixA: [[4, 2], [2, 1]],
+            matrixB: [[3, 5], [4, 3]],
+            exactAnswer: [[20, 26], [10, 13]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-1560209232-easy-2x2x2-0-5-false-5',
+            matrixA: [[1, 2], [2, 3]],
+            matrixB: [[5, 3], [1, 5]],
+            exactAnswer: [[7, 13], [13, 21]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        },
+        {
+            id: 'practice-multiplication-1560209232-easy-2x2x2-0-5-false-6',
+            matrixA: [[1, 3], [1, 1]],
+            matrixB: [[5, 2], [5, 3]],
+            exactAnswer: [[20, 11], [10, 5]],
+            nonzeroProductCounts: [[2, 2], [2, 2]]
+        }
+    ];
+    assert.deepStrictEqual(
+        uiSet.problems.map((problem) => ({
+            id: problem.id,
+            matrixA: problem.inputs.matrixA,
+            matrixB: problem.inputs.matrixB,
+            exactAnswer: problem.exactAnswer.matrix,
+            nonzeroProductCounts: problem.inputs.matrixA.map((row, r) => problem.inputs.matrixB[0].map((_, c) => {
+                return countNonZeroProductsForCell(problem.inputs.matrixA, problem.inputs.matrixB, r, c);
+            }))
+        })),
+        expectedUiFixture
+    );
+    uiSet.problems.forEach(assertUiEasyQuality);
+    assertSetDiversity(uiSet);
+    const uiSetAgain = generator.generateMultiplicationSet(uiOptions);
+    assert.deepStrictEqual(uiSet, uiSetAgain);
+    const uiSetTen = generator.generateMultiplicationSet(Object.assign({}, uiOptions, { count: 10 }));
+    assert.deepStrictEqual(uiSetTen.problems.slice(0, 6), uiSet.problems);
+    [
+        'ui-multiplication-quality-v2',
+        'ui-multiplication-quality-v2-a',
+        'ui-multiplication-quality-v2-b',
+        'ui-multiplication-quality-v2-c',
+        'ui-multiplication-quality-v2-d'
+    ].forEach((seed) => {
+        const fixedSeedSet = generator.generateMultiplicationSet(Object.assign({}, uiOptions, { seed }));
+        fixedSeedSet.problems.forEach(assertUiEasyQuality);
+        assertSetDiversity(fixedSeedSet);
+        assert.deepStrictEqual(
+            generator.generateMultiplicationSet(Object.assign({}, uiOptions, { seed })),
+            fixedSeedSet
+        );
+    });
+    rows.push(['T08b', 'full UI multiplication options enforce strict easy quality across fixed seeds', 'pass']);
 
     const medium = generator.generateMultiplicationSet({ seed: 'medium-default', count: 10, difficulty: 'medium' });
     medium.problems.forEach((problem) => {
@@ -333,7 +625,25 @@ function runTests() {
         assertMatrixInRange(problem.inputs.matrixB, -5, 5);
         assertDefaultQuality(problem);
     });
+    assertSetDiversity(medium);
     rows.push(['T09', 'medium defaults use approved shapes and -5..5 range', 'pass']);
+
+    const innerThree = generator.generateMultiplicationSet({
+        seed: 'inner-three-quality',
+        count: 4,
+        difficulty: 'easy',
+        rowsA: 2,
+        colsA: 3,
+        colsB: 2
+    });
+    innerThree.problems.forEach((problem) => {
+        assert.strictEqual(problem.dimensions.colsA, 3);
+        assertDotProductWork(problem);
+        assertAnswer(problem);
+        assertSteps(problem);
+    });
+    assertSetDiversity(innerThree);
+    rows.push(['T09a', 'inner dimension 3 problems have at least two nonzero products per dot product', 'pass']);
 
     const mediumShapeSeeds = ['matrixcalcu-multiply-v1', 'medium-default'];
     const mediumShapes = mediumShapeSeeds.map((seed) => {
@@ -356,6 +666,7 @@ function runTests() {
         });
         assertMatrixInRange(problem.inputs.matrixA, -7, 7);
         assertMatrixInRange(problem.inputs.matrixB, -7, 7);
+        assertDefaultQuality(problem);
     });
     rows.push(['T10', 'hard defaults are 3x3 by 3x3 with -7..7 range', 'pass']);
 
@@ -423,6 +734,7 @@ function runTests() {
     easyWideRange.problems.forEach((problem) => {
         assertMatrixInRange(problem.inputs.matrixA, 0, 9);
         assertMatrixInRange(problem.inputs.matrixB, 0, 9);
+        assertDotProductWork(problem);
     });
     rows.push(['T13b', 'easy explicit 0..9 value range override remains allowed', 'pass']);
 
@@ -486,7 +798,30 @@ function runTests() {
         assertMatrixInRange(problem.inputs.matrixB, 1, 1);
         assertAnswer(problem);
     });
-    rows.push(['T16', 'extremely narrow legal ranges complete without infinite loops', 'pass']);
+    const narrowZeroOneA = generator.generateMultiplicationSet({
+        seed: 'narrow-zero-one',
+        count: 6,
+        difficulty: 'easy',
+        minValue: 0,
+        maxValue: 1,
+        includeNegatives: false
+    });
+    const narrowZeroOneB = generator.generateMultiplicationSet({
+        seed: 'narrow-zero-one',
+        count: 6,
+        difficulty: 'easy',
+        minValue: 0,
+        maxValue: 1,
+        includeNegatives: false
+    });
+    assert.deepStrictEqual(narrowZeroOneA, narrowZeroOneB);
+    narrowZeroOneA.problems.forEach((problem) => {
+        assertMatrixInRange(problem.inputs.matrixA, 0, 1);
+        assertMatrixInRange(problem.inputs.matrixB, 0, 1);
+        assertAnswer(problem);
+        assertSteps(problem);
+    });
+    rows.push(['T16', 'extremely narrow legal ranges complete deterministically without infinite loops', 'pass']);
 
     assertThrows('missing seed', () => generator.generateMultiplicationSet({ count: 1 }));
     assertThrows('invalid count type', () => generator.generateMultiplicationSet({ seed: 'x', count: 1.5 }));

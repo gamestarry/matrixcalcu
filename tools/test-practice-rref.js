@@ -111,6 +111,69 @@ function hasDuplicateColumns(matrix) {
     return new Set(columns).size !== columns.length;
 }
 
+function matrixKey(matrix) {
+    return matrix.map((row) => row.join('|')).join('/');
+}
+
+function rowKey(row) {
+    return row.join('|');
+}
+
+function columnKey(matrix, column) {
+    return matrix.map((row) => row[column]).join('|');
+}
+
+function countFlatDifferences(left, right) {
+    let count = 0;
+    for (let index = 0; index < left.length; index++) {
+        if (left[index] !== right[index]) count++;
+    }
+    return count;
+}
+
+function assertSetDiversity(set) {
+    const seenMatrices = new Set();
+    const seenRows = new Set();
+    const seenColumns = new Set();
+    let previousInput = null;
+
+    set.problems.forEach((problem) => {
+        const matrix = problem.inputs.matrix;
+        assert(!seenMatrices.has(matrixKey(matrix)), `repeated input matrix: ${problem.id}`);
+        matrix.forEach((row) => {
+            const key = rowKey(row);
+            assert(!seenRows.has(key), `repeated row: ${problem.id}`);
+            seenRows.add(key);
+        });
+        for (let c = 0; c < matrix[0].length; c++) {
+            const key = columnKey(matrix, c);
+            assert(!seenColumns.has(key), `repeated column: ${problem.id}`);
+            seenColumns.add(key);
+        }
+        if (previousInput) {
+            assert(countFlatDifferences(flatten(matrix), previousInput) >= 2, `adjacent input too similar: ${problem.id}`);
+        }
+        seenMatrices.add(matrixKey(matrix));
+        previousInput = flatten(matrix);
+    });
+}
+
+function hasRepeatedRowOrColumnWithOtherProblems(set, problemIndex) {
+    const target = set.problems[problemIndex].inputs.matrix;
+    const targetRows = new Set(target.map(rowKey));
+    const targetColumns = new Set(target[0].map((_, c) => columnKey(target, c)));
+
+    return set.problems.some((problem, index) => {
+        if (index === problemIndex) return false;
+        const matrix = problem.inputs.matrix;
+        if (matrix.some((row) => targetRows.has(rowKey(row)))) return true;
+        for (let c = 0; c < matrix[0].length; c++) {
+            if (targetColumns.has(columnKey(matrix, c))) return true;
+        }
+        return false;
+    });
+}
+
 function areRowsPositiveOrNegativeCopies(left, right) {
     let same = true;
     let negative = true;
@@ -223,58 +286,61 @@ async function runTests() {
     const expectedGolden = [
         {
             id: 'practice-rref-193613467-medium-3x3-2-5-5-true-1',
-            input: [[0, -2, 2], [-1, -2, -1], [2, 2, 4]],
+            input: [[-4, 2, 2], [3, -2, 1], [-1, 0, 3]],
             targetRank: 2,
             rank: 2,
-            exactAnswer: [[1, 0, 3], [0, 1, -1], [0, 0, 0]],
+            exactAnswer: [[1, 0, -3], [0, 1, -5], [0, 0, 0]],
             stepCount: 6,
             firstStep: {
-                kind: 'swap-rows',
-                rowA: 0,
-                rowB: 1,
-                matrix: [[-1, -2, -1], [0, -2, 2], [2, 2, 4]]
+                kind: 'scale-row',
+                row: 0,
+                factor: { kind: 'fraction', numerator: -1, denominator: 4 },
+                matrix: [
+                    [1, { kind: 'fraction', numerator: -1, denominator: 2 }, { kind: 'fraction', numerator: -1, denominator: 2 }],
+                    [3, -2, 1],
+                    [-1, 0, 3]
+                ]
             },
             lastStep: {
                 kind: 'add-row-multiple',
                 targetRow: 2,
                 sourceRow: 1,
-                multiple: 2,
-                matrix: [[1, 0, 3], [0, 1, -1], [0, 0, 0]]
+                multiple: { kind: 'fraction', numerator: 1, denominator: 2 },
+                matrix: [[1, 0, -3], [0, 1, -5], [0, 0, 0]]
             }
         },
         {
             id: 'practice-rref-193613467-medium-3x3-2-5-5-true-2',
-            input: [[1, 1, 3], [0, -4, -1], [1, -3, 2]],
+            input: [[0, 3, -2], [1, -3, -3], [1, 0, -5]],
             targetRank: 2,
             rank: 2,
             exactAnswer: [
-                [1, 0, { kind: 'fraction', numerator: 11, denominator: 4 }],
-                [0, 1, { kind: 'fraction', numerator: 1, denominator: 4 }],
+                [1, 0, -5],
+                [0, 1, { kind: 'fraction', numerator: -2, denominator: 3 }],
                 [0, 0, 0]
             ],
-            stepCount: 4,
+            stepCount: 5,
             firstStep: {
-                kind: 'add-row-multiple',
-                targetRow: 2,
-                sourceRow: 0,
-                multiple: -1,
-                matrix: [[1, 1, 3], [0, -4, -1], [0, -4, -1]]
+                kind: 'swap-rows',
+                rowA: 0,
+                rowB: 1,
+                matrix: [[1, -3, -3], [0, 3, -2], [1, 0, -5]]
             },
             lastStep: {
                 kind: 'add-row-multiple',
                 targetRow: 2,
                 sourceRow: 1,
-                multiple: 4,
+                multiple: -3,
                 matrix: [
-                    [1, 0, { kind: 'fraction', numerator: 11, denominator: 4 }],
-                    [0, 1, { kind: 'fraction', numerator: 1, denominator: 4 }],
+                    [1, 0, -5],
+                    [0, 1, { kind: 'fraction', numerator: -2, denominator: 3 }],
                     [0, 0, 0]
                 ]
             }
         },
         {
             id: 'practice-rref-193613467-medium-3x3-3-5-5-true-3',
-            input: [[0, -3, -1], [3, 4, -2], [-4, 0, 2]],
+            input: [[0, -2, 4], [-1, 2, -5], [1, 1, -5]],
             targetRank: 3,
             rank: 3,
             exactAnswer: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
@@ -283,13 +349,13 @@ async function runTests() {
                 kind: 'swap-rows',
                 rowA: 0,
                 rowB: 1,
-                matrix: [[3, 4, -2], [0, -3, -1], [-4, 0, 2]]
+                matrix: [[-1, 2, -5], [0, -2, 4], [1, 1, -5]]
             },
             lastStep: {
                 kind: 'add-row-multiple',
                 targetRow: 1,
                 sourceRow: 2,
-                multiple: { kind: 'fraction', numerator: -1, denominator: 3 },
+                multiple: 2,
                 matrix: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
             }
         }
@@ -340,6 +406,93 @@ async function runTests() {
         assertMatrixInRange(problem.inputs.matrix, 0, 5);
     });
     rows.push(['T06', 'easy defaults are 2x3, 0..5, nonnegative, rank 2', 'pass']);
+
+    const uiOptions = {
+        seed: 'ui-rref-quality-v2',
+        count: 4,
+        difficulty: 'easy',
+        rows: 2,
+        cols: 3,
+        minValue: 0,
+        maxValue: 5,
+        includeNegatives: false
+    };
+    const uiSet = await generator.generateRrefSet(uiOptions);
+    const expectedUiFixture = [
+        {
+            input: [[0, 2, 3], [4, 1, 0]],
+            targetRank: 2,
+            rank: 2,
+            exactAnswer: [
+                [1, 0, { kind: 'fraction', numerator: -3, denominator: 8 }],
+                [0, 1, { kind: 'fraction', numerator: 3, denominator: 2 }]
+            ],
+            stepCount: 4,
+            firstOperation: 'swap-rows',
+            needsInitialSwap: true,
+            repeatedRowOrColumnWithOtherProblems: false
+        },
+        {
+            input: [[2, 0, 5], [0, 2, 0]],
+            targetRank: 2,
+            rank: 2,
+            exactAnswer: [[1, 0, { kind: 'fraction', numerator: 5, denominator: 2 }], [0, 1, 0]],
+            stepCount: 2,
+            firstOperation: 'scale-row',
+            needsInitialSwap: false,
+            repeatedRowOrColumnWithOtherProblems: false
+        },
+        {
+            input: [[3, 3, 2], [5, 2, 2]],
+            targetRank: 2,
+            rank: 2,
+            exactAnswer: [
+                [1, 0, { kind: 'fraction', numerator: 2, denominator: 9 }],
+                [0, 1, { kind: 'fraction', numerator: 4, denominator: 9 }]
+            ],
+            stepCount: 4,
+            firstOperation: 'scale-row',
+            needsInitialSwap: false,
+            repeatedRowOrColumnWithOtherProblems: false
+        },
+        {
+            input: [[0, 5, 0], [3, 3, 0]],
+            targetRank: 2,
+            rank: 2,
+            exactAnswer: [[1, 0, 0], [0, 1, 0]],
+            stepCount: 4,
+            firstOperation: 'swap-rows',
+            needsInitialSwap: true,
+            repeatedRowOrColumnWithOtherProblems: false
+        }
+    ];
+    assert.deepStrictEqual(
+        uiSet.problems.map((problem, index) => ({
+            input: problem.inputs.matrix,
+            targetRank: problem.metadata.targetRank,
+            rank: problem.metadata.rank,
+            exactAnswer: problem.exactAnswer.matrix,
+            stepCount: problem.metadata.stepCount,
+            firstOperation: problem.steps[0].kind,
+            needsInitialSwap: problem.steps[0].kind === 'swap-rows',
+            repeatedRowOrColumnWithOtherProblems: hasRepeatedRowOrColumnWithOtherProblems(uiSet, index)
+        })),
+        expectedUiFixture
+    );
+    uiSet.problems.forEach((problem) => {
+        assertMatrixInRange(problem.inputs.matrix, 0, 5);
+        assertInputNotRref(problem);
+        assert(problem.steps.length >= 2, `${problem.id} should require at least two row operations`);
+        assert.strictEqual(problem.metadata.rank, problem.metadata.targetRank);
+        assertSteps(problem);
+    });
+    assertSetDiversity(uiSet);
+    assert(uiSet.problems.some((problem) => problem.steps[0].kind === 'swap-rows'));
+    assert(uiSet.problems.some((problem) => problem.steps[0].kind !== 'swap-rows'));
+    assert.deepStrictEqual(await generator.generateRrefSet(uiOptions), uiSet);
+    const uiSetEight = await generator.generateRrefSet(Object.assign({}, uiOptions, { count: 8 }));
+    assert.deepStrictEqual(uiSetEight.problems.slice(0, 4), uiSet.problems);
+    rows.push(['T06a', 'full UI easy RREF options enforce minimum steps and set-level row/column diversity', 'pass']);
 
     const medium = await generator.generateRrefSet({ seed: 'medium-rref', count: 5, difficulty: 'medium' });
     assert.strictEqual(medium.settings.rows, 3);

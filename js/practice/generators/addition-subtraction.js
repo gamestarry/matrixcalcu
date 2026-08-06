@@ -6,7 +6,7 @@
     const SUBTYPES = new Set(['add', 'subtract']);
     const DIFFICULTIES = new Set(['easy', 'medium', 'hard']);
     const SUPPORTED_DIMENSIONS = new Set(['2x2', '2x3', '3x2', '3x3']);
-    const MAX_RETRIES = 20;
+    const MAX_RETRIES = 200;
 
     const PRESETS = {
         easy: {
@@ -192,6 +192,29 @@
         return count;
     }
 
+    function matrixKey(matrix) {
+        return JSON.stringify(matrix);
+    }
+
+    function flatten(matrix) {
+        return matrix.reduce((items, row) => items.concat(row), []);
+    }
+
+    function hasZeroRow(matrix) {
+        return matrix.some((row) => row.every((value) => value === 0));
+    }
+
+    function getColumn(matrix, column) {
+        return matrix.map((row) => row[column]);
+    }
+
+    function hasZeroColumn(matrix) {
+        for (let c = 0; c < matrix[0].length; c++) {
+            if (getColumn(matrix, c).every((value) => value === 0)) return true;
+        }
+        return false;
+    }
+
     function allCellsSame(matrix) {
         const first = matrix[0][0];
         return allCells(matrix, (value) => value === first);
@@ -212,6 +235,14 @@
             for (let c = 0; c < A[r].length; c++) {
                 if (A[r][c] !== B[r][c]) count++;
             }
+        }
+        return count;
+    }
+
+    function countFlatDifferences(left, right) {
+        let count = 0;
+        for (let index = 0; index < left.length; index++) {
+            if (left[index] !== right[index]) count++;
         }
         return count;
     }
@@ -241,6 +272,10 @@
         return steps;
     }
 
+    function hasCompleteRowsAndColumns(matrix) {
+        return !hasZeroRow(matrix) && !hasZeroColumn(matrix);
+    }
+
     function hasInterestingShape(A, B, answer, subtype, minValue, maxValue) {
         const rangeSize = maxValue - minValue + 1;
         const normalRange = rangeSize > 1;
@@ -249,6 +284,9 @@
         if (countNonZero(A) < minActiveCells) return false;
         if (countNonZero(B) < minActiveCells) return false;
         if (countNonZero(answer) < minActiveCells) return false;
+        if (normalRange && !hasCompleteRowsAndColumns(A)) return false;
+        if (normalRange && !hasCompleteRowsAndColumns(B)) return false;
+        if (normalRange && !hasCompleteRowsAndColumns(answer)) return false;
         if (subtype === 'subtract' && matricesEqual(A, B)) return false;
         if (subtype === 'subtract' && countDifferences(A, B) < minActiveCells) return false;
 
@@ -257,6 +295,42 @@
         }
 
         return true;
+    }
+
+    function createDiversityContext() {
+        return {
+            seenA: new Set(),
+            seenB: new Set(),
+            seenCombo: new Set(),
+            previousInput: null
+        };
+    }
+
+    function meetsSetDiversity(A, B, context) {
+        if (!context) return true;
+
+        const keyA = matrixKey(A);
+        const keyB = matrixKey(B);
+        if (context.seenA.has(keyA)) return false;
+        if (context.seenB.has(keyB)) return false;
+        if (context.seenCombo.has(`${keyA}|${keyB}`)) return false;
+
+        if (context.previousInput) {
+            const input = flatten(A).concat(flatten(B));
+            if (countFlatDifferences(input, context.previousInput) < 2) return false;
+        }
+
+        return true;
+    }
+
+    function collectDiversity(context, A, B) {
+        if (!context) return;
+        const keyA = matrixKey(A);
+        const keyB = matrixKey(B);
+        context.seenA.add(keyA);
+        context.seenB.add(keyB);
+        context.seenCombo.add(`${keyA}|${keyB}`);
+        context.previousInput = flatten(A).concat(flatten(B));
     }
 
     function adjustMatrixIfZero(matrix, minValue, maxValue) {
@@ -326,7 +400,7 @@
         return { A, B, answer: calculateAnswer(A, B, subtype) };
     }
 
-    function buildProblem(settings, index) {
+    function buildProblem(settings, index, diversityContext) {
         const { random, model } = getDependencies();
         const subtypeSeed = `${settings.seed}|${TYPE}|${settings.operation}|${settings.difficulty}|${settings.rows}x${settings.cols}|${settings.minValue}:${settings.maxValue}|${settings.includeNegatives}|${index}`;
         const rng = random.createSeededRandom(subtypeSeed);
@@ -340,7 +414,10 @@
         let passedQuality = false;
         for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
             candidate = generateCandidate(rng, settings, subtype);
-            if (hasInterestingShape(candidate.A, candidate.B, candidate.answer, subtype, settings.minValue, settings.maxValue)) {
+            if (
+                hasInterestingShape(candidate.A, candidate.B, candidate.answer, subtype, settings.minValue, settings.maxValue) &&
+                meetsSetDiversity(candidate.A, candidate.B, diversityContext)
+            ) {
                 passedQuality = true;
                 break;
             }
@@ -368,6 +445,8 @@
             }
             answer = calculateAnswer(matrixA, matrixB, subtype);
         }
+
+        collectDiversity(diversityContext, matrixA, matrixB);
 
         const idSeed = [
             settings.seed,
@@ -433,9 +512,10 @@
         const { model } = getDependencies();
         const settings = normalizeOptions(options);
         const problems = [];
+        const diversityContext = createDiversityContext();
 
         for (let index = 0; index < settings.count; index++) {
-            problems.push(buildProblem(settings, index));
+            problems.push(buildProblem(settings, index, diversityContext));
         }
 
         return model.createProblemSet({

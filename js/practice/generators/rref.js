@@ -4,7 +4,7 @@
     const TYPE = 'rref';
     const DIFFICULTIES = new Set(['easy', 'medium', 'hard']);
     const ALLOWED_DIMENSIONS = new Set(['2x3', '3x3', '3x4']);
-    const MAX_RETRIES = 20;
+    const MAX_RETRIES = 80;
 
     const PRESETS = {
         easy: {
@@ -334,6 +334,10 @@
         return true;
     }
 
+    function matrixKey(matrix) {
+        return matrix.map((row) => rowKey(row)).join('/');
+    }
+
     function rowKey(row) {
         return row.join('|');
     }
@@ -572,15 +576,68 @@
         })).length;
     }
 
-    function hasInterestingInput(matrix, exactAnswer, actualRank, targetRank) {
+    function hasMinimumPracticeWork(matrix, exactAnswer, steps, actualRank, targetRank) {
         if (actualRank !== targetRank) return false;
         if (countNonZero(matrix) < 3) return false;
         if (matricesEqual(matrix, exactAnswer)) return false;
+        if (steps.length < 2) return false;
+        return true;
+    }
+
+    function hasInterestingInput(matrix, exactAnswer, steps, actualRank, targetRank) {
+        if (!hasMinimumPracticeWork(matrix, exactAnswer, steps, actualRank, targetRank)) return false;
         if (hasDuplicateRows(matrix)) return false;
         if (hasDuplicateColumns(matrix)) return false;
         if (hasCopyDependentRow(matrix, targetRank)) return false;
         if (hasDominantRepeatedValue(matrix)) return false;
         return true;
+    }
+
+    function createDiversityContext() {
+        return {
+            seenMatrices: new Set(),
+            seenRows: new Set(),
+            seenColumns: new Set(),
+            previousInput: null
+        };
+    }
+
+    function countFlatDifferences(left, right) {
+        let count = 0;
+        for (let index = 0; index < left.length; index++) {
+            if (left[index] !== right[index]) count++;
+        }
+        return count;
+    }
+
+    function hasSetDiversity(matrix, context, strictRowsAndColumns) {
+        if (!context) return true;
+        if (context.seenMatrices.has(matrixKey(matrix))) return false;
+
+        if (context.previousInput && countFlatDifferences(flatten(matrix), context.previousInput) < 2) {
+            return false;
+        }
+
+        if (strictRowsAndColumns) {
+            for (const row of matrix) {
+                if (context.seenRows.has(rowKey(row))) return false;
+            }
+            for (let c = 0; c < matrix[0].length; c++) {
+                if (context.seenColumns.has(columnKey(matrix, c))) return false;
+            }
+        }
+
+        return true;
+    }
+
+    function collectDiversity(context, matrix) {
+        if (!context) return;
+        context.seenMatrices.add(matrixKey(matrix));
+        matrix.forEach((row) => context.seenRows.add(rowKey(row)));
+        for (let c = 0; c < matrix[0].length; c++) {
+            context.seenColumns.add(columnKey(matrix, c));
+        }
+        context.previousInput = flatten(matrix);
     }
 
     async function calculateWithCore(matrix) {
@@ -612,36 +669,58 @@
         };
     }
 
-    async function buildProblem(settings, index) {
+    async function buildProblem(settings, index, diversityContext) {
         const { random, model } = getDependencies();
         const targetRank = pickTargetRank(settings, index);
         const problemSeed = `${settings.seed}|${TYPE}|${settings.difficulty}|${settings.rows}x${settings.cols}|${targetRank}|${settings.minValue}:${settings.maxValue}|${settings.includeNegatives}|${index}`;
-        const rng = random.createSeededRandom(problemSeed);
         let matrix = null;
         let calculated = null;
         let actualRank = 0;
 
-        for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-            try {
-                matrix = createControlledMatrix(settings, targetRank, rng);
-            } catch {
+        for (let level = 0; level <= 2; level++) {
+            for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+                const rng = random.createSeededRandom(`${problemSeed}|quality|${level}|attempt|${attempt}`);
+                try {
+                    matrix = createControlledMatrix(settings, targetRank, rng);
+                } catch {
+                    matrix = null;
+                    continue;
+                }
+                try {
+                    calculated = await calculateWithCore(matrix);
+                } catch {
+                    matrix = null;
+                    continue;
+                }
+                actualRank = calculateRankFromRref(calculated.rrefMatrix);
+                if (
+                    (
+                        level === 0 &&
+                        hasInterestingInput(matrix, calculated.rrefMatrix, calculated.steps, actualRank, targetRank) &&
+                        hasSetDiversity(matrix, diversityContext, true)
+                    ) ||
+                    (
+                        level === 1 &&
+                        hasInterestingInput(matrix, calculated.rrefMatrix, calculated.steps, actualRank, targetRank) &&
+                        hasSetDiversity(matrix, diversityContext, false)
+                    ) ||
+                    (
+                        level === 2 &&
+                        hasMinimumPracticeWork(matrix, calculated.rrefMatrix, calculated.steps, actualRank, targetRank)
+                    )
+                ) {
+                    level = 3;
+                    break;
+                }
                 matrix = null;
-                continue;
             }
-            try {
-                calculated = await calculateWithCore(matrix);
-            } catch {
-                matrix = null;
-                continue;
-            }
-            actualRank = calculateRankFromRref(calculated.rrefMatrix);
-            if (hasInterestingInput(matrix, calculated.rrefMatrix, actualRank, targetRank)) break;
-            matrix = null;
         }
 
         if (!matrix) {
             throw new Error('Unable to generate an RREF practice problem for the requested settings.');
         }
+
+        collectDiversity(diversityContext, matrix);
 
         const idSeed = [
             settings.seed,
@@ -705,9 +784,10 @@
         const { model } = getDependencies();
         const settings = normalizeRrefSettings(options);
         const problems = [];
+        const diversityContext = createDiversityContext();
 
         for (let index = 0; index < settings.count; index++) {
-            problems.push(await buildProblem(settings, index));
+            problems.push(await buildProblem(settings, index, diversityContext));
         }
 
         return model.createProblemSet({

@@ -17,6 +17,10 @@ function flatten(matrix) {
     return matrix.reduce((items, row) => items.concat(row), []);
 }
 
+function matrixKey(matrix) {
+    return JSON.stringify(matrix);
+}
+
 function assertMatrixInRange(matrix, minValue, maxValue) {
     flatten(matrix).forEach((value) => {
         assert(Number.isInteger(value));
@@ -60,6 +64,23 @@ function assertNotAllZero(matrix, name) {
     assert(flatten(matrix).some((value) => value !== 0), `${name} should not be all zero`);
 }
 
+function countZeroRows(matrix) {
+    return matrix.filter((row) => row.every((value) => value === 0)).length;
+}
+
+function countZeroColumns(matrix) {
+    let count = 0;
+    for (let c = 0; c < matrix[0].length; c++) {
+        if (matrix.every((row) => row[c] === 0)) count++;
+    }
+    return count;
+}
+
+function assertNoZeroRowsOrColumns(matrix, name) {
+    assert.strictEqual(countZeroRows(matrix), 0, `${name} has a zero row`);
+    assert.strictEqual(countZeroColumns(matrix), 0, `${name} has a zero column`);
+}
+
 function countNonZero(matrix) {
     return flatten(matrix).filter((value) => value !== 0).length;
 }
@@ -72,6 +93,55 @@ function countDifferences(A, B) {
         }
     }
     return count;
+}
+
+function assertSetDiversity(set) {
+    const seenA = new Set();
+    const seenB = new Set();
+    const seenCombo = new Set();
+    let previousInput = null;
+
+    set.problems.forEach((problem) => {
+        const A = problem.inputs.matrixA;
+        const B = problem.inputs.matrixB;
+        const keyA = matrixKey(A);
+        const keyB = matrixKey(B);
+        const comboKey = `${keyA}|${keyB}`;
+
+        assert(!seenA.has(keyA), `repeated A: ${problem.id}`);
+        assert(!seenB.has(keyB), `repeated B: ${problem.id}`);
+        assert(!seenCombo.has(comboKey), `repeated A/B combo: ${problem.id}`);
+
+        const input = flatten(A).concat(flatten(B));
+        if (previousInput) {
+            assert(
+                input.some((value, index) => value !== previousInput[index]) &&
+                input.filter((value, index) => value !== previousInput[index]).length >= 2,
+                `adjacent problem too similar: ${problem.id}`
+            );
+        }
+
+        seenA.add(keyA);
+        seenB.add(keyB);
+        seenCombo.add(comboKey);
+        previousInput = input;
+    });
+}
+
+function assertUiEasyQuality(problem) {
+    assertMatrixInRange(problem.inputs.matrixA, 0, 5);
+    assertMatrixInRange(problem.inputs.matrixB, 0, 5);
+    assertNoZeroRowsOrColumns(problem.inputs.matrixA, 'matrixA');
+    assertNoZeroRowsOrColumns(problem.inputs.matrixB, 'matrixB');
+    assertNoZeroRowsOrColumns(problem.exactAnswer.matrix, 'answer');
+    assertNotAllZero(problem.inputs.matrixA, 'matrixA');
+    assertNotAllZero(problem.inputs.matrixB, 'matrixB');
+    assertNotAllZero(problem.exactAnswer.matrix, 'answer');
+    if (problem.subtype === 'subtract') {
+        flatten(problem.exactAnswer.matrix).forEach((value) => assert(value >= 0));
+    }
+    assertAnswer(problem);
+    assertSteps(problem);
 }
 
 function problemSummary(problem) {
@@ -121,9 +191,9 @@ function runTests() {
         {
             id: 'practice-addition-subtraction-3831773707-mixed-easy-2x2-0-9-false-3',
             subtype: 'subtract',
-            matrixA: [[5, 2], [0, 5]],
-            matrixB: [[0, 2], [0, 3]],
-            exactAnswer: [[5, 0], [0, 2]]
+            matrixA: [[6, 2], [9, 8]],
+            matrixB: [[5, 0], [6, 2]],
+            exactAnswer: [[1, 2], [3, 6]]
         }
     ];
     assert.deepStrictEqual(setA.problems.slice(0, 3).map(problemSummary), expectedGolden);
@@ -162,6 +232,9 @@ function runTests() {
         assertNotAllZero(problem.inputs.matrixA, 'matrixA');
         assertNotAllZero(problem.inputs.matrixB, 'matrixB');
         assertNotAllZero(problem.exactAnswer.matrix, 'answer');
+        assertNoZeroRowsOrColumns(problem.inputs.matrixA, 'matrixA');
+        assertNoZeroRowsOrColumns(problem.inputs.matrixB, 'matrixB');
+        assertNoZeroRowsOrColumns(problem.exactAnswer.matrix, 'answer');
     });
     rows.push(['T08', 'matrix dimensions, exact answers, steps, and nonzero guards are valid', 'pass']);
 
@@ -216,11 +289,130 @@ function runTests() {
         assert(countNonZero(problem.inputs.matrixA) >= 2);
         assert(countNonZero(problem.inputs.matrixB) >= 2);
         assert(countNonZero(problem.exactAnswer.matrix) >= 2);
+        assertNoZeroRowsOrColumns(problem.inputs.matrixA, 'matrixA');
+        assertNoZeroRowsOrColumns(problem.inputs.matrixB, 'matrixB');
+        assertNoZeroRowsOrColumns(problem.exactAnswer.matrix, 'answer');
         if (problem.subtype === 'subtract') {
             assert(countDifferences(problem.inputs.matrixA, problem.inputs.matrixB) >= 2);
         }
     });
+    assertSetDiversity(easyMixed);
     rows.push(['T12', 'default easy generated problems have at least two nonzero answer cells', 'pass']);
+
+    const uiOptions = {
+        seed: 'ui-addsub-quality-v2',
+        count: 6,
+        difficulty: 'easy',
+        operation: 'mixed',
+        rows: 2,
+        cols: 2,
+        minValue: 0,
+        maxValue: 5,
+        includeNegatives: false
+    };
+    const uiSet = generator.generateAdditionSubtractionSet(uiOptions);
+    const expectedUiFixture = [
+        {
+            id: 'practice-addition-subtraction-1500445191-mixed-easy-2x2-0-5-false-1',
+            subtype: 'add',
+            matrixA: [[4, 3], [2, 5]],
+            matrixB: [[3, 4], [1, 2]],
+            exactAnswer: [[7, 7], [3, 7]],
+            zeroRowsA: 0,
+            zeroColsA: 0,
+            zeroRowsB: 0,
+            zeroColsB: 0,
+            zeroRowsAnswer: 0,
+            zeroColsAnswer: 0
+        },
+        {
+            id: 'practice-addition-subtraction-1500445191-mixed-easy-2x2-0-5-false-2',
+            subtype: 'subtract',
+            matrixA: [[2, 2], [0, 5]],
+            matrixB: [[1, 2], [0, 4]],
+            exactAnswer: [[1, 0], [0, 1]],
+            zeroRowsA: 0,
+            zeroColsA: 0,
+            zeroRowsB: 0,
+            zeroColsB: 0,
+            zeroRowsAnswer: 0,
+            zeroColsAnswer: 0
+        },
+        {
+            id: 'practice-addition-subtraction-1500445191-mixed-easy-2x2-0-5-false-3',
+            subtype: 'add',
+            matrixA: [[0, 5], [4, 1]],
+            matrixB: [[5, 5], [2, 2]],
+            exactAnswer: [[5, 10], [6, 3]],
+            zeroRowsA: 0,
+            zeroColsA: 0,
+            zeroRowsB: 0,
+            zeroColsB: 0,
+            zeroRowsAnswer: 0,
+            zeroColsAnswer: 0
+        },
+        {
+            id: 'practice-addition-subtraction-1500445191-mixed-easy-2x2-0-5-false-4',
+            subtype: 'subtract',
+            matrixA: [[3, 2], [3, 5]],
+            matrixB: [[1, 2], [0, 2]],
+            exactAnswer: [[2, 0], [3, 3]],
+            zeroRowsA: 0,
+            zeroColsA: 0,
+            zeroRowsB: 0,
+            zeroColsB: 0,
+            zeroRowsAnswer: 0,
+            zeroColsAnswer: 0
+        },
+        {
+            id: 'practice-addition-subtraction-1500445191-mixed-easy-2x2-0-5-false-5',
+            subtype: 'add',
+            matrixA: [[4, 0], [3, 3]],
+            matrixB: [[0, 2], [1, 4]],
+            exactAnswer: [[4, 2], [4, 7]],
+            zeroRowsA: 0,
+            zeroColsA: 0,
+            zeroRowsB: 0,
+            zeroColsB: 0,
+            zeroRowsAnswer: 0,
+            zeroColsAnswer: 0
+        },
+        {
+            id: 'practice-addition-subtraction-1500445191-mixed-easy-2x2-0-5-false-6',
+            subtype: 'add',
+            matrixA: [[3, 0], [3, 5]],
+            matrixB: [[5, 0], [0, 4]],
+            exactAnswer: [[8, 0], [3, 9]],
+            zeroRowsA: 0,
+            zeroColsA: 0,
+            zeroRowsB: 0,
+            zeroColsB: 0,
+            zeroRowsAnswer: 0,
+            zeroColsAnswer: 0
+        }
+    ];
+    assert.deepStrictEqual(
+        uiSet.problems.map((problem) => ({
+            id: problem.id,
+            subtype: problem.subtype,
+            matrixA: problem.inputs.matrixA,
+            matrixB: problem.inputs.matrixB,
+            exactAnswer: problem.exactAnswer.matrix,
+            zeroRowsA: countZeroRows(problem.inputs.matrixA),
+            zeroColsA: countZeroColumns(problem.inputs.matrixA),
+            zeroRowsB: countZeroRows(problem.inputs.matrixB),
+            zeroColsB: countZeroColumns(problem.inputs.matrixB),
+            zeroRowsAnswer: countZeroRows(problem.exactAnswer.matrix),
+            zeroColsAnswer: countZeroColumns(problem.exactAnswer.matrix)
+        })),
+        expectedUiFixture
+    );
+    uiSet.problems.forEach(assertUiEasyQuality);
+    assertSetDiversity(uiSet);
+    assert.deepStrictEqual(generator.generateAdditionSubtractionSet(uiOptions), uiSet);
+    const uiSetTen = generator.generateAdditionSubtractionSet(Object.assign({}, uiOptions, { count: 10 }));
+    assert.deepStrictEqual(uiSetTen.problems.slice(0, 6), uiSet.problems);
+    rows.push(['T12a', 'full UI easy options avoid zero rows and columns while preserving deterministic sets', 'pass']);
 
     const medium = generator.generateAdditionSubtractionSet({
         seed: 'medium-range',
