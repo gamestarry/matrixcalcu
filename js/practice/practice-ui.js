@@ -45,6 +45,19 @@
         formAugmentedMatrix: 'Form the augmented matrix.',
         solutionSummary: 'Solution summary',
         row: 'Row',
+        worksheet: 'Worksheet',
+        answerKey: 'Answer Key',
+        detailedSolutions: 'Detailed Solutions',
+        name: 'Name',
+        date: 'Date',
+        page: 'Page',
+        of: 'of',
+        worksheetTitle: 'Matrix Practice Worksheet',
+        answerKeyTitle: 'Matrix Practice Answer Key',
+        solveInstructions: 'Solve each problem. Show your work.',
+        exactAnswers: 'Exact Answers',
+        stepByStepSolutions: 'Step-by-Step Solutions',
+        set: 'Set',
         emptyTitle: 'Choose your settings and generate a matrix practice worksheet.',
         emptyBody: 'Your problems, exact answers, and steps will appear here.',
         rows: 'Rows',
@@ -100,6 +113,15 @@
         'linear-system': 'systemsOfEquations'
     };
 
+    const WORKSHEET_TYPE_LABELS = {
+        'addition-subtraction': 'Matrix Addition and Subtraction',
+        multiplication: 'Matrix Multiplication',
+        rref: 'Reduced Row Echelon Form',
+        'linear-system': 'Systems of Equations'
+    };
+
+    const VIEW_MODES = ['worksheet', 'answer-key', 'detailed-solutions'];
+
     const config = root.MATRIX_PRACTICE_PAGE_CONFIG || {};
     const messages = Object.assign({}, DEFAULT_MESSAGES, config.messages || {});
 
@@ -126,6 +148,7 @@
             maxValue: 5,
             generationToken: 0,
             currentSet: null,
+            currentView: 'worksheet',
             hasGenerated: false,
             dirty: false
         };
@@ -165,6 +188,7 @@
         state.type = nextType;
         state.generationToken += 1;
         state.currentSet = null;
+        state.currentView = 'worksheet';
         state.hasGenerated = false;
         state.dirty = false;
         applyDifficultyDefaults(state);
@@ -174,6 +198,12 @@
     function markSettingsChangedState(state) {
         state.dirty = true;
         return state;
+    }
+
+    function applyViewModeChange(state, viewMode) {
+        if (!VIEW_MODES.includes(viewMode) || !state.currentSet) return false;
+        state.currentView = viewMode;
+        return true;
     }
 
     function buildGeneratorOptions(state, seed) {
@@ -210,6 +240,99 @@
             variables: Number(state.variables),
             solutionType: state.solutionType
         });
+    }
+
+    function getWorksheetTypeLabel(problemSet) {
+        return WORKSHEET_TYPE_LABELS[problemSet.type] || getTypeLabel(problemSet.type);
+    }
+
+    function getWorksheetLayout(problemSet) {
+        const first = problemSet && problemSet.problems && problemSet.problems[0];
+        if (!first) return 'regular';
+
+        if (problemSet.type === 'addition-subtraction') {
+            const rows = first.dimensions && first.dimensions.rows;
+            const cols = first.dimensions && first.dimensions.cols;
+            return rows === 3 && cols === 3 ? 'regular' : 'compact';
+        }
+
+        if (problemSet.type === 'multiplication') {
+            const dims = first.dimensions || {};
+            if (dims.rowsA === 3 && dims.colsA === 3 && dims.colsB === 3) return 'wide';
+            if (first.difficulty === 'easy') return 'compact';
+            return 'regular';
+        }
+
+        if (problemSet.type === 'rref') {
+            return 'regular';
+        }
+
+        if (problemSet.type === 'linear-system') {
+            const dims = first.dimensions || {};
+            return dims.variables === 3 ? 'regular' : 'compact';
+        }
+
+        return 'regular';
+    }
+
+    function getProblemsPerPage(viewMode, layout) {
+        if (viewMode === 'detailed-solutions') return Infinity;
+        if (viewMode === 'answer-key') return layout === 'wide' ? 4 : 8;
+        return layout === 'compact' ? 6 : 4;
+    }
+
+    function chunkProblems(problems, size) {
+        const source = problems.slice();
+        if (!Number.isFinite(size) || size <= 0 || size >= source.length) {
+            return source.length ? [source] : [];
+        }
+
+        const chunks = [];
+        for (let index = 0; index < source.length; index += size) {
+            chunks.push(source.slice(index, index + size));
+        }
+        return chunks;
+    }
+
+    function buildPageMetadata(problemSet, viewMode) {
+        const layout = getWorksheetLayout(problemSet);
+        const perPage = getProblemsPerPage(viewMode, layout);
+        const chunks = chunkProblems(problemSet.problems, perPage);
+        const totalPages = chunks.length;
+        return chunks.map((problems, pageIndex) => ({
+            viewMode,
+            layout,
+            pageIndex,
+            pageNumber: pageIndex + 1,
+            totalPages,
+            problems: problems.map((problem, index) => ({
+                problem,
+                problemNumber: pageIndex * perPage + index + 1
+            }))
+        }));
+    }
+
+    function buildWorksheetProblemItems(problemSet) {
+        return problemSet.problems.map((problem, index) => ({
+            problem,
+            problemNumber: index + 1,
+            includesAnswer: false,
+            includesSteps: false
+        }));
+    }
+
+    function getWorksheetBlankMatrixDimensions(problem) {
+        const dims = problem.dimensions || {};
+        if (problem.type === 'addition-subtraction') {
+            return { rows: dims.rows, cols: dims.cols };
+        }
+        if (problem.type === 'multiplication') {
+            return { rows: dims.resultRows, cols: dims.resultCols };
+        }
+        if (problem.type === 'rref') {
+            return { rows: dims.rows, cols: dims.cols };
+        }
+        return null;
     }
 
     function isFraction(value) {
@@ -277,6 +400,13 @@
         });
 
         wrapper.appendChild(matrixBox);
+        return wrapper;
+    }
+
+    function renderEmptyMatrix(rows, cols, options) {
+        const matrix = Array.from({ length: rows }, () => Array.from({ length: cols }, () => ''));
+        const wrapper = renderMatrix(matrix, options);
+        wrapper.classList.add('mp-empty-matrix-wrap');
         return wrapper;
     }
 
@@ -570,6 +700,139 @@
         return renderInfiniteSolutionText(answer);
     }
 
+    function renderWorksheetProblem(problem, number) {
+        const item = document.createElement('section');
+        item.className = 'mp-print-problem';
+        const title = document.createElement('h3');
+        title.textContent = `${number}.`;
+        item.append(title, renderProblemBody(problem), renderWorksheetAnswerSpace(problem));
+        return item;
+    }
+
+    function renderWorksheetAnswerSpace(problem) {
+        const space = document.createElement('div');
+        space.className = 'mp-work-space';
+        const blankMatrix = getWorksheetBlankMatrixDimensions(problem);
+
+        if (blankMatrix) {
+            const label = document.createElement('div');
+            label.className = 'mp-work-label';
+            label.textContent = problem.type === 'rref' ? 'RREF:' : 'Answer:';
+            space.append(label, renderEmptyMatrix(blankMatrix.rows, blankMatrix.cols, {
+                label: '',
+                augmented: false
+            }), createWorkLines(problem.type === 'rref' ? 2 : 1));
+        } else if (problem.type === 'linear-system') {
+            space.textContent = 'Solution: __________________';
+            space.appendChild(createWorkLines(2));
+        } else {
+            space.textContent = 'Answer: __________________';
+        }
+        return space;
+    }
+
+    function createWorkLines(count) {
+        const lines = document.createElement('div');
+        lines.className = 'mp-work-lines';
+        for (let index = 0; index < count; index++) {
+            const line = document.createElement('span');
+            lines.appendChild(line);
+        }
+        return lines;
+    }
+
+    function renderAnswerKeyProblem(problem, number) {
+        const item = document.createElement('section');
+        item.className = 'mp-answer-key-item';
+        const title = document.createElement('h3');
+        title.textContent = `${number}.`;
+        item.appendChild(title);
+
+        if (problem.type === 'linear-system') {
+            const summary = document.createElement('div');
+            summary.className = 'mp-answer-summary';
+            summary.textContent = solutionLabel(problem.exactAnswer.solutionType || problem.solutionType);
+            item.appendChild(summary);
+            if (problem.exactAnswer.solutionType === 'none') {
+                item.appendChild(renderMatrix(problem.exactAnswer.rrefMatrix, { label: t('rref'), augmented: true }));
+            } else {
+                const detail = document.createElement('div');
+                detail.className = 'mp-answer-summary';
+                detail.textContent = renderInfiniteAwareSummary(problem.exactAnswer);
+                item.appendChild(detail);
+            }
+            return item;
+        }
+
+        item.appendChild(renderAnswer(problem));
+        return item;
+    }
+
+    function renderPaperPage(problemSet, page, viewMode) {
+        const paper = document.createElement('article');
+        paper.className = `mp-paper mp-paper-${page.layout}`;
+        paper.setAttribute('aria-label', `${viewMode === 'answer-key' ? t('answerKey') : t('worksheet')} ${t('page')} ${page.pageNumber} ${t('of')} ${page.totalPages}`);
+
+        const header = document.createElement('header');
+        header.className = 'mp-paper-header';
+        const title = document.createElement('h2');
+        title.textContent = viewMode === 'answer-key' ? t('answerKeyTitle') : t('worksheetTitle');
+        const subtitle = document.createElement('p');
+        subtitle.textContent = getWorksheetTypeLabel(problemSet);
+        header.append(title, subtitle);
+
+        if (page.pageIndex === 0 && viewMode === 'worksheet') {
+            const meta = document.createElement('div');
+            meta.className = 'mp-student-meta';
+            meta.append(createLabeledLine(t('name')), createLabeledLine(t('date')));
+            const instructions = document.createElement('p');
+            instructions.className = 'mp-paper-instructions';
+            instructions.textContent = t('solveInstructions');
+            header.append(meta, instructions);
+        }
+
+        if (viewMode === 'answer-key' && page.pageIndex === 0) {
+            const label = document.createElement('p');
+            label.className = 'mp-paper-instructions';
+            label.textContent = t('exactAnswers');
+            const seed = document.createElement('p');
+            seed.className = 'mp-paper-instructions';
+            seed.textContent = `${t('set')} ${problemSet.seed}`;
+            header.append(label, seed);
+        }
+
+        const pageText = document.createElement('p');
+        pageText.className = 'mp-paper-page-number';
+        pageText.textContent = `${t('page')} ${page.pageNumber} ${t('of')} ${page.totalPages}`;
+        header.appendChild(pageText);
+
+        const grid = document.createElement('div');
+        grid.className = `mp-paper-problems mp-paper-problems-${page.layout}`;
+        page.problems.forEach((item) => {
+            grid.appendChild(viewMode === 'answer-key'
+                ? renderAnswerKeyProblem(item.problem, item.problemNumber)
+                : renderWorksheetProblem(item.problem, item.problemNumber));
+        });
+
+        const footer = document.createElement('footer');
+        footer.className = 'mp-paper-footer';
+        footer.textContent = 'matrixcalcu.com';
+
+        paper.append(header, grid, footer);
+        return paper;
+    }
+
+    function createLabeledLine(labelText) {
+        const item = document.createElement('div');
+        item.className = 'mp-labeled-line';
+        const label = document.createElement('span');
+        label.textContent = `${labelText}:`;
+        const line = document.createElement('span');
+        line.className = 'mp-write-line';
+        item.append(label, line);
+        return item;
+    }
+
     function createPracticeUi(rootElement) {
         const state = createInitialState();
 
@@ -615,6 +878,25 @@
             els.info = document.createElement('div');
             els.info.className = 'mp-set-info';
 
+            els.viewTabs = document.createElement('div');
+            els.viewTabs.className = 'mp-view-tabs';
+            els.viewTabs.hidden = true;
+            [
+                ['worksheet', t('worksheet')],
+                ['answer-key', t('answerKey')],
+                ['detailed-solutions', t('detailedSolutions')]
+            ].forEach(([viewMode, label]) => {
+                const button = createButton(label, 'mp-view-tab');
+                button.dataset.viewMode = viewMode;
+                button.setAttribute('aria-pressed', viewMode === state.currentView ? 'true' : 'false');
+                button.addEventListener('click', () => {
+                    if (state.currentView === viewMode || !applyViewModeChange(state, viewMode)) return;
+                    updateViewTabs();
+                    renderCurrentView();
+                });
+                els.viewTabs.appendChild(button);
+            });
+
             els.list = document.createElement('div');
             els.list.className = 'mp-problem-list';
 
@@ -628,7 +910,7 @@
             generateRow.appendChild(generateCore);
             controls.append(typeGroup, els.settings, generateRow, els.error);
 
-            rootElement.append(controls, els.info, els.list);
+            rootElement.append(controls, els.info, els.viewTabs, els.list);
             rebuildSettings();
             renderEmptyState();
         }
@@ -636,6 +918,12 @@
         function updateTypeTabs() {
             rootElement.querySelectorAll('.mp-type-tab').forEach((button) => {
                 button.setAttribute('aria-pressed', button.dataset.type === state.type ? 'true' : 'false');
+            });
+        }
+
+        function updateViewTabs() {
+            els.viewTabs.querySelectorAll('.mp-view-tab').forEach((button) => {
+                button.setAttribute('aria-pressed', button.dataset.viewMode === state.currentView ? 'true' : 'false');
             });
         }
 
@@ -756,6 +1044,7 @@
             els.generate.disabled = false;
             els.generate.textContent = t('generateNewSet');
             els.info.dataset.lastSetInfo = '';
+            els.viewTabs.hidden = true;
             renderEmptyState();
         }
 
@@ -763,10 +1052,12 @@
             els.info.textContent = '';
             els.list.innerHTML = '';
             els.error.hidden = true;
+            els.viewTabs.hidden = true;
         }
 
         function renderEmptyState() {
             els.info.textContent = '';
+            els.viewTabs.hidden = true;
             els.list.innerHTML = '';
             const empty = document.createElement('div');
             empty.className = 'mp-empty-state';
@@ -805,6 +1096,7 @@
                 const set = await Promise.resolve(generator(buildGeneratorOptions(state, seed)));
                 if (token !== state.generationToken) return;
                 state.currentSet = set;
+                state.currentView = 'worksheet';
                 state.hasGenerated = true;
                 state.dirty = false;
                 renderSet(set);
@@ -825,9 +1117,36 @@
             const setInfo = `${t('practiceSet')}: ${getTypeLabel(set.type)} | ${t('difficulty')}: ${t(set.settings.difficulty)} | ${t('seed')}: ${set.seed}`;
             els.info.dataset.lastSetInfo = setInfo;
             els.info.textContent = setInfo;
+            els.viewTabs.hidden = false;
+            updateViewTabs();
+            renderCurrentView();
+        }
+
+        function renderCurrentView() {
             els.list.innerHTML = '';
-            set.problems.forEach((problem, index) => {
-                els.list.appendChild(renderProblemCard(problem, index));
+            els.list.className = state.currentView === 'detailed-solutions'
+                ? 'mp-problem-list mp-detailed-list'
+                : 'mp-problem-list mp-paper-preview';
+
+            if (!state.currentSet) {
+                renderEmptyState();
+                return;
+            }
+
+            if (state.currentView === 'detailed-solutions') {
+                const heading = document.createElement('div');
+                heading.className = 'mp-solutions-heading';
+                heading.textContent = t('stepByStepSolutions');
+                els.list.appendChild(heading);
+                state.currentSet.problems.forEach((problem, index) => {
+                    els.list.appendChild(renderProblemCard(problem, index));
+                });
+                return;
+            }
+
+            const pages = buildPageMetadata(state.currentSet, state.currentView);
+            pages.forEach((page) => {
+                els.list.appendChild(renderPaperPage(state.currentSet, page, state.currentView));
             });
         }
 
@@ -920,12 +1239,20 @@
         COUNT_OPTIONS,
         DIFFICULTY_DEFAULTS,
         TYPE_DIMENSION_DEFAULTS,
+        VIEW_MODES,
         createInitialState,
         applyDifficultyDefaults,
         buildGeneratorOptions,
         validateSettings,
         applyProblemTypeChange,
         markSettingsChangedState,
+        applyViewModeChange,
+        getWorksheetLayout,
+        getProblemsPerPage,
+        chunkProblems,
+        buildPageMetadata,
+        buildWorksheetProblemItems,
+        getWorksheetBlankMatrixDimensions,
         formatInputValue,
         formatScalarText,
         formatEquationText,

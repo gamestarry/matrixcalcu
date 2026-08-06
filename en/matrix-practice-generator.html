@@ -122,17 +122,21 @@
         }
 
         .mp-generate-row .btn.core-main {
-            background: #8ecfe0;
-            color: #0f172a;
+            background: #93cfde;
+            color: #12334a;
         }
 
         .mp-generate-row .btn.core-main:hover {
-            background: #79c3d6;
+            background: #7fc3d5;
+        }
+
+        .mp-generate-row .btn.core-main:active {
+            background: #70b7cb;
         }
 
         .mp-generate-row .btn.core-main:disabled {
-            background: #b7cbd3;
-            color: #334155;
+            background: #c6d7dc;
+            color: #60717a;
         }
 
         .mp-type-tab:focus-visible,
@@ -199,6 +203,268 @@
             padding: 14px;
             border-radius: var(--border-radius);
             background: #f1f3f5;
+        }
+
+        .mp-view-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .mp-view-tabs[hidden] {
+            display: none;
+        }
+
+        .mp-view-tab {
+            min-height: 38px;
+            border: 1px solid #c9d3df;
+            border-radius: 5px;
+            padding: 0 14px;
+            background: #ffffff;
+            color: var(--primary-color);
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .mp-view-tab[aria-pressed="true"] {
+            border-color: var(--secondary-color);
+            background: #f3f8ff;
+        }
+
+        .mp-view-tab:focus-visible {
+            outline: 3px solid rgba(52, 152, 219, 0.3);
+            outline-offset: 2px;
+        }
+
+        .mp-paper-preview {
+            background: #e8ebef;
+            padding: 18px;
+        }
+
+        .mp-detailed-list {
+            background: #f1f3f5;
+        }
+
+        .mp-solutions-heading {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .mp-paper {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 10px;
+            width: 100%;
+            max-width: 816px;
+            min-height: 1056px;
+            margin: 0 auto 22px;
+            padding: 34px 38px 24px;
+            box-sizing: border-box;
+            border: 1px solid #d6d6d6;
+            background: #ffffff;
+            color: #1f2933;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+        }
+
+        .mp-paper:last-child {
+            margin-bottom: 0;
+        }
+
+        .mp-paper-header {
+            display: grid;
+            gap: 4px;
+            border-bottom: 1px solid #d9dee3;
+            padding: 0 0 8px;
+            margin: 0;
+            min-height: 0;
+            border-radius: 0;
+            background: #ffffff;
+            color: #1f2933;
+            box-shadow: none;
+            position: static;
+            overflow: visible;
+        }
+
+        .mp-paper .mp-paper-header::before {
+            content: none;
+        }
+
+        .mp-paper-header h2 {
+            margin: 0;
+            color: #1f2933;
+            font-size: 1.45rem;
+            line-height: 1.2;
+            text-align: center;
+            text-shadow: none;
+        }
+
+        .mp-paper-header p {
+            margin: 0;
+            color: #5f6b73;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .mp-student-meta {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+            gap: 18px;
+            margin-top: 6px;
+        }
+
+        .mp-labeled-line {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px;
+            align-items: end;
+        }
+
+        .mp-write-line {
+            border-bottom: 1px solid #334155;
+            min-height: 1.2em;
+        }
+
+        .mp-paper-instructions,
+        .mp-paper-page-number,
+        .mp-paper-footer {
+            font-size: 0.9rem;
+        }
+
+        .mp-paper-page-number {
+            justify-self: end;
+        }
+
+        .mp-paper-problems {
+            display: grid;
+            gap: 14px 18px;
+            align-content: start;
+        }
+
+        .mp-paper-problems-compact,
+        .mp-paper-problems-regular {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .mp-paper-problems-compact {
+            grid-template-rows: repeat(3, minmax(0, 1fr));
+        }
+
+        .mp-paper-problems-regular {
+            grid-template-rows: repeat(2, minmax(0, 1fr));
+        }
+
+        .mp-paper-problems-wide {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(4, minmax(0, 1fr));
+        }
+
+        .mp-print-problem,
+        .mp-answer-key-item {
+            display: grid;
+            gap: 6px;
+            min-width: 0;
+            padding: 0 0 8px;
+            border-bottom: 1px solid #d9dee3;
+            break-inside: avoid;
+        }
+
+        .mp-print-problem h3,
+        .mp-answer-key-item h3 {
+            margin: 0;
+            color: #1f2933;
+            font-size: 0.98rem;
+            line-height: 1.2;
+        }
+
+        .mp-print-problem .mp-problem-body,
+        .mp-answer-key-item .mp-answer-content {
+            gap: 6px;
+            overflow-x: auto;
+        }
+
+        .mp-print-problem .mp-matrix {
+            gap: 4px 6px;
+            padding: 5px 9px;
+        }
+
+        .mp-print-problem .mp-cell {
+            min-width: 26px;
+            min-height: 22px;
+            font-size: 0.88rem;
+            color: #1f2933;
+        }
+
+        .mp-print-problem .mp-matrix-label {
+            font-size: 0.78rem;
+            color: #5f6b73;
+        }
+
+        .mp-print-problem .mp-tag {
+            font-size: 0.9rem;
+        }
+
+        .mp-print-problem .mp-tag {
+            background: transparent;
+            color: #1f2933;
+            min-height: auto;
+            padding: 0 2px;
+            border-radius: 0;
+        }
+
+        .mp-work-space {
+            display: grid;
+            gap: 5px;
+            align-content: start;
+            min-height: 86px;
+            padding-top: 4px;
+            color: #5f6b73;
+            font-size: 0.86rem;
+        }
+
+        .mp-work-label {
+            color: #1f2933;
+            font-weight: 600;
+        }
+
+        .mp-empty-matrix-wrap .mp-matrix {
+            padding: 5px 9px;
+        }
+
+        .mp-empty-matrix-wrap .mp-cell {
+            min-width: 28px;
+            min-height: 24px;
+            border-bottom: 1px solid #b8c0c8;
+        }
+
+        .mp-work-lines {
+            display: grid;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .mp-work-lines span {
+            display: block;
+            min-height: 14px;
+            border-bottom: 1px solid #e0e4e8;
+        }
+
+        .mp-answer-summary {
+            color: #1f2933;
+            font-weight: 650;
+        }
+
+        .mp-paper-footer {
+            align-self: end;
+            justify-self: center;
+            border: 0;
+            padding-top: 2px;
+            color: #8a939b;
+            background: transparent;
+            font-size: 10px;
+            font-weight: 400;
+            text-align: center;
         }
 
         .mp-problem-card {
@@ -447,6 +713,39 @@
             .mp-card-actions {
                 justify-content: flex-start;
             }
+
+            .mp-paper-preview {
+                padding: 10px;
+            }
+
+            .mp-paper {
+                min-height: 0;
+                padding: 22px 16px 18px;
+            }
+
+            .mp-student-meta,
+            .mp-paper-problems-compact,
+            .mp-paper-problems-regular {
+                grid-template-columns: 1fr;
+            }
+
+            .mp-paper-problems-compact,
+            .mp-paper-problems-regular,
+            .mp-paper-problems-wide {
+                grid-template-rows: none;
+            }
+        }
+
+        @media print {
+            .mp-paper,
+            .mp-paper-header {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .mp-paper .mp-paper-header::before {
+                content: none;
+            }
         }
     </style>
 </head>
@@ -567,6 +866,19 @@
                 formAugmentedMatrix: "Form the augmented matrix.",
                 solutionSummary: "Solution summary",
                 row: "Row",
+                worksheet: "Worksheet",
+                answerKey: "Answer Key",
+                detailedSolutions: "Detailed Solutions",
+                name: "Name",
+                date: "Date",
+                page: "Page",
+                of: "of",
+                worksheetTitle: "Matrix Practice Worksheet",
+                answerKeyTitle: "Matrix Practice Answer Key",
+                solveInstructions: "Solve each problem. Show your work.",
+                exactAnswers: "Exact Answers",
+                stepByStepSolutions: "Step-by-Step Solutions",
+                set: "Set",
                 emptyTitle: "Choose your settings and generate a matrix practice worksheet.",
                 emptyBody: "Your problems, exact answers, and steps will appear here.",
                 rows: "Rows",
