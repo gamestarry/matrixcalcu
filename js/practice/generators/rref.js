@@ -593,6 +593,25 @@
         };
     }
 
+    async function reduceMatrixForPractice(inputMatrix) {
+        if (!Array.isArray(inputMatrix) || !inputMatrix.length || !Array.isArray(inputMatrix[0])) {
+            throw new Error('inputMatrix must be a non-empty two-dimensional array.');
+        }
+
+        const matrix = inputMatrix.map((row, rowIndex) => {
+            if (!Array.isArray(row) || row.length !== inputMatrix[0].length) {
+                throw new Error(`inputMatrix row ${rowIndex} has an inconsistent column count.`);
+            }
+            return row.slice();
+        });
+        const calculated = await calculateWithCore(matrix);
+        return {
+            rrefMatrix: calculated.rrefMatrix.map((row) => row.slice()),
+            steps: calculated.steps.slice(),
+            rank: calculateRankFromRref(calculated.rrefMatrix)
+        };
+    }
+
     async function buildProblem(settings, index) {
         const { random, model } = getDependencies();
         const targetRank = pickTargetRank(settings, index);
@@ -704,7 +723,8 @@
     const api = {
         generateRrefProblem,
         generateRrefSet,
-        normalizeRrefSettings
+        normalizeRrefSettings,
+        reduceMatrixForPractice
     };
 
     Object.defineProperty(api, '__test', {

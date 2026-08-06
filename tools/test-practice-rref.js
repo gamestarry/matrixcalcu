@@ -525,6 +525,19 @@ async function runTests() {
     assert.deepStrictEqual(parallelA, parallelB);
     rows.push(['T17b', 'temporary language context restores state and parallel generation remains stable', 'pass']);
 
+    const reduceInput = [[1, 2, 1], [3, 4, 2]];
+    const reduceBefore = JSON.stringify(reduceInput);
+    const reduced = await generator.reduceMatrixForPractice(reduceInput);
+    assert.strictEqual(JSON.stringify(reduceInput), reduceBefore);
+    assert.deepStrictEqual(reduced.rrefMatrix, [[1, 0, 0], [0, 1, { kind: 'fraction', numerator: 1, denominator: 2 }]]);
+    assert.strictEqual(reduced.rank, 2);
+    assert.deepStrictEqual(reduced.steps[reduced.steps.length - 1].matrix, reduced.rrefMatrix);
+    reduced.steps.forEach((step) => {
+        assert(['swap-rows', 'scale-row', 'add-row-multiple'].includes(step.kind));
+        assert(!Object.prototype.hasOwnProperty.call(step, 'label'));
+    });
+    rows.push(['T17c', 'reduceMatrixForPractice reduces a specified matrix without mutating input', 'pass']);
+
     const source = fs.readFileSync(path.join(__dirname, '..', 'js', 'practice', 'generators', 'rref.js'), 'utf8');
     assert(!/\bdocument\b/.test(source));
     assert(!/\bMath\.random\b/.test(source));
