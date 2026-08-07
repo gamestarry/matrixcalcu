@@ -914,7 +914,9 @@
                 void downloadPdf('answer-key');
             });
             els.pdfActions.append(els.downloadWorksheetPdf, els.downloadAnswerKeyPdf);
-
+            els.cardActions = document.createElement('div');
+            els.cardActions.className = 'mp-card-actions';
+            els.cardActions.append(els.viewTabs, els.pdfActions);
             els.list = document.createElement('div');
             els.list.className = 'mp-problem-list';
 
@@ -928,7 +930,7 @@
             generateRow.appendChild(generateCore);
             controls.append(typeGroup, els.settings, generateRow, els.error);
 
-            rootElement.append(controls, els.info, els.viewTabs, els.pdfActions, els.list);
+            rootElement.append(controls, els.info, els.cardActions, els.list);
             rebuildSettings();
             renderEmptyState();
         }
@@ -1147,7 +1149,10 @@
         }
 
         function updatePdfActions() {
-            const canDownloadPdf = state.currentSet && state.currentSet.type === 'addition-subtraction';
+            const canDownloadPdf = state.currentSet && (
+                state.currentSet.type === 'addition-subtraction' ||
+                state.currentSet.type === 'multiplication'
+            );
             els.pdfActions.hidden = !canDownloadPdf;
             setPdfButtonsDisabled(false);
         }
@@ -1165,12 +1170,13 @@
         }
 
         async function downloadPdf(kind) {
-            if (!state.currentSet || state.currentSet.type !== 'addition-subtraction') return;
+            if (!state.currentSet || !(
+                state.currentSet.type === 'addition-subtraction' ||
+                state.currentSet.type === 'multiplication'
+            )) return;
             const pdf = root.MatrixPractice && root.MatrixPractice.pdf;
             const isAnswerKey = kind === 'answer-key';
-            const method = isAnswerKey
-                ? 'downloadAdditionSubtractionAnswerKeyPdf'
-                : 'downloadAdditionSubtractionWorksheetPdf';
+            const method = isAnswerKey ? 'downloadAnswerKeyPdf' : 'downloadWorksheetPdf';
             const activeButton = isAnswerKey ? els.downloadAnswerKeyPdf : els.downloadWorksheetPdf;
             if (!pdf || typeof pdf[method] !== 'function') {
                 els.error.textContent = `${t('error')}: ${t('pdfError')}`;

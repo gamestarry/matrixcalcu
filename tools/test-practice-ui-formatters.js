@@ -239,6 +239,12 @@ assert.deepStrictEqual(ui.buildPageMetadata(rrefTwoByThree, 'worksheet')[1].prob
 assert.strictEqual(ui.getWorksheetLayout(makeSet('rref', 6, { rows: 3, cols: 3 }, 'medium')), 'regular');
 assert.strictEqual(ui.getWorksheetLayout(makeSet('linear-system', 6, { variables: 2 }, 'easy')), 'compact');
 assert.strictEqual(ui.getWorksheetLayout(makeSet('linear-system', 6, { variables: 3 }, 'hard')), 'regular');
+assert.strictEqual(ui.getProblemsPerPage('worksheet', 'compact'), 6);
+assert.strictEqual(ui.getProblemsPerPage('worksheet', 'regular'), 4);
+assert.strictEqual(ui.getProblemsPerPage('worksheet', 'wide'), 4);
+assert.strictEqual(ui.getProblemsPerPage('answer-key', 'compact'), 8);
+assert.strictEqual(ui.getProblemsPerPage('answer-key', 'regular'), 8);
+assert.strictEqual(ui.getProblemsPerPage('answer-key', 'wide'), 4);
 
 const originalProblems = addSubEight.problems.slice();
 const chunks = ui.chunkProblems(addSubEight.problems, 6);
@@ -344,9 +350,12 @@ assert.ok(source.includes('downloadWorksheetPdf'));
 assert.ok(source.includes('downloadAnswerKeyPdf'));
 assert.ok(source.includes("downloadPdf('worksheet')"));
 assert.ok(source.includes("downloadPdf('answer-key')"));
-assert.ok(source.includes("downloadAdditionSubtractionWorksheetPdf"));
-assert.ok(source.includes("downloadAdditionSubtractionAnswerKeyPdf"));
+assert.ok(source.includes("state.currentSet.type === 'addition-subtraction' ||"));
+assert.ok(source.includes("state.currentSet.type === 'multiplication'"));
 assert.ok(source.includes("state.currentSet.type === 'addition-subtraction'"));
+assert.ok(source.includes("const method = isAnswerKey ? 'downloadAnswerKeyPdf' : 'downloadWorksheetPdf';"));
+assert.ok(!source.includes('downloadMultiplicationWorksheetPdf(state.currentSet)'));
+assert.ok(!source.includes('downloadMultiplicationAnswerKeyPdf(state.currentSet)'));
 assert.ok(source.includes("setPdfButtonsDisabled(true);"));
 assert.ok(source.includes("els.downloadWorksheetPdf.textContent = t('downloadWorksheetPdf');"));
 assert.ok(source.includes("els.downloadAnswerKeyPdf.textContent = t('downloadAnswerKeyPdf');"));

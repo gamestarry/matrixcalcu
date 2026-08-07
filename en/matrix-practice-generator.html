@@ -494,7 +494,16 @@
             background: #ffffff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
         }
+        @media (min-width: 801px) {
+            .mp-card-actions {
+                flex-wrap: nowrap;
+            }
 
+            .mp-view-tabs,
+            .mp-pdf-actions {
+                flex-wrap: nowrap;
+            }
+        }
         .mp-card-header,
         .mp-card-actions {
             display: flex;
