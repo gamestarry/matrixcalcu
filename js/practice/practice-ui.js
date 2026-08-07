@@ -48,6 +48,9 @@
         worksheet: 'Worksheet',
         answerKey: 'Answer Key',
         detailedSolutions: 'Detailed Solutions',
+        downloadWorksheetPdf: 'Download Worksheet PDF',
+        creatingPdf: 'Creating PDF...',
+        pdfError: 'Unable to create this worksheet PDF. Try generating the worksheet again.',
         name: 'Name',
         date: 'Date',
         page: 'Page',
@@ -897,6 +900,15 @@
                 els.viewTabs.appendChild(button);
             });
 
+            els.pdfActions = document.createElement('div');
+            els.pdfActions.className = 'mp-pdf-actions';
+            els.pdfActions.hidden = true;
+            els.downloadPdf = createButton(t('downloadWorksheetPdf'), 'mp-button mp-pdf-button');
+            els.downloadPdf.addEventListener('click', () => {
+                void downloadWorksheetPdf();
+            });
+            els.pdfActions.appendChild(els.downloadPdf);
+
             els.list = document.createElement('div');
             els.list.className = 'mp-problem-list';
 
@@ -910,7 +922,7 @@
             generateRow.appendChild(generateCore);
             controls.append(typeGroup, els.settings, generateRow, els.error);
 
-            rootElement.append(controls, els.info, els.viewTabs, els.list);
+            rootElement.append(controls, els.info, els.viewTabs, els.pdfActions, els.list);
             rebuildSettings();
             renderEmptyState();
         }
@@ -1045,6 +1057,7 @@
             els.generate.textContent = t('generateNewSet');
             els.info.dataset.lastSetInfo = '';
             els.viewTabs.hidden = true;
+            els.pdfActions.hidden = true;
             renderEmptyState();
         }
 
@@ -1053,11 +1066,13 @@
             els.list.innerHTML = '';
             els.error.hidden = true;
             els.viewTabs.hidden = true;
+            els.pdfActions.hidden = true;
         }
 
         function renderEmptyState() {
             els.info.textContent = '';
             els.viewTabs.hidden = true;
+            els.pdfActions.hidden = true;
             els.list.innerHTML = '';
             const empty = document.createElement('div');
             empty.className = 'mp-empty-state';
@@ -1089,6 +1104,7 @@
             const seed = root.MatrixPractice.random.createRuntimeSeed();
             const generator = generatorForType();
             els.generate.disabled = true;
+            setPdfButtonDisabled(true);
             els.generate.textContent = t('generating');
             els.error.hidden = true;
 
@@ -1108,6 +1124,7 @@
             } finally {
                 if (token === state.generationToken) {
                     els.generate.disabled = false;
+                    setPdfButtonDisabled(false);
                     els.generate.textContent = t('generateNewSet');
                 }
             }
@@ -1118,8 +1135,45 @@
             els.info.dataset.lastSetInfo = setInfo;
             els.info.textContent = setInfo;
             els.viewTabs.hidden = false;
+            updatePdfActions();
             updateViewTabs();
             renderCurrentView();
+        }
+
+        function updatePdfActions() {
+            const canDownloadPdf = state.currentSet && state.currentSet.type === 'addition-subtraction';
+            els.pdfActions.hidden = !canDownloadPdf;
+            setPdfButtonDisabled(false);
+        }
+
+        function setPdfButtonDisabled(disabled) {
+            if (!els.downloadPdf) return;
+            els.downloadPdf.disabled = Boolean(disabled);
+        }
+
+        async function downloadWorksheetPdf() {
+            if (!state.currentSet || state.currentSet.type !== 'addition-subtraction') return;
+            const pdf = root.MatrixPractice && root.MatrixPractice.pdf;
+            if (!pdf || typeof pdf.downloadAdditionSubtractionWorksheetPdf !== 'function') {
+                els.error.textContent = `${t('error')}: ${t('pdfError')}`;
+                els.error.hidden = false;
+                console.error(new Error('MatrixPractice.pdf is not loaded.'));
+                return;
+            }
+
+            setPdfButtonDisabled(true);
+            els.downloadPdf.textContent = t('creatingPdf');
+            els.error.hidden = true;
+            try {
+                await pdf.downloadAdditionSubtractionWorksheetPdf(state.currentSet);
+            } catch (error) {
+                console.error(error);
+                els.error.textContent = `${t('error')}: ${t('pdfError')}`;
+                els.error.hidden = false;
+            } finally {
+                els.downloadPdf.textContent = t('downloadWorksheetPdf');
+                setPdfButtonDisabled(false);
+            }
         }
 
         function renderCurrentView() {
