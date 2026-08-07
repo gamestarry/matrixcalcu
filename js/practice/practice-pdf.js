@@ -18,10 +18,10 @@
         return matrix.map((row) => row.slice());
     }
 
-    function assertAdditionSubtractionSet(problemSet) {
+    function assertAdditionSubtractionSet(problemSet, kind) {
         if (!problemSet || problemSet.type !== TYPE) {
             const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
-            throw new Error(`Unsupported PDF worksheet type: ${actual}`);
+            throw new Error(`Unsupported PDF ${kind || 'worksheet'} type: ${actual}`);
         }
         if (!Array.isArray(problemSet.problems)) {
             throw new Error('Invalid addition/subtraction problem set.');
@@ -49,7 +49,7 @@
     }
 
     function buildAdditionSubtractionWorksheetPlan(problemSet, options) {
-        assertAdditionSubtractionSet(problemSet);
+        assertAdditionSubtractionSet(problemSet, 'worksheet');
         const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
         const chunks = chunkProblems(problemSet.problems);
         const totalPages = chunks.length;
@@ -86,6 +86,50 @@
                     matrixA: cloneMatrix(problem.inputs.matrixA),
                     matrixB: cloneMatrix(problem.inputs.matrixB),
                     answerDimensions: answerDimensionsForProblem(problem)
+                }))
+            }))
+        };
+    }
+
+    function buildAdditionSubtractionAnswerKeyPlan(problemSet, options) {
+        assertAdditionSubtractionSet(problemSet, 'answer key');
+        const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const chunks = chunkProblems(problemSet.problems);
+        const totalPages = chunks.length;
+
+        return {
+            kind: 'answer-key',
+            type: TYPE,
+            title: 'Matrix Practice Answer Key',
+            subtitle: 'Matrix Addition and Subtraction',
+            seed: problemSet.seed,
+            paper: {
+                width: PAGE_WIDTH,
+                height: PAGE_HEIGHT
+            },
+            layout: {
+                problemsPerPage: PROBLEMS_PER_PAGE,
+                columns: 2,
+                rows: 3,
+                marginLeft: opts.marginLeft,
+                marginRight: opts.marginRight,
+                marginTop: opts.marginTop,
+                marginBottom: opts.marginBottom,
+                columnGap: opts.columnGap,
+                rowGap: opts.rowGap,
+                footer: 'matrixcalcu.com'
+            },
+            pages: chunks.map((problems, pageIndex) => ({
+                pageNumber: pageIndex + 1,
+                totalPages,
+                problems: problems.map((problem, index) => ({
+                    id: problem.id,
+                    globalNumber: pageIndex * PROBLEMS_PER_PAGE + index + 1,
+                    subtype: problem.subtype,
+                    operator: problem.subtype === 'subtract' ? '-' : '+',
+                    matrixA: cloneMatrix(problem.inputs.matrixA),
+                    matrixB: cloneMatrix(problem.inputs.matrixB),
+                    exactAnswer: cloneMatrix(problem.exactAnswer.matrix)
                 }))
             }))
         };
@@ -242,6 +286,58 @@
         }
     }
 
+    function drawAnswerKeyHeader(page, plan, pageInfo, fonts, colors) {
+        drawTextCentered(page, plan.title, 746, fonts.bold, 16, colors.text);
+        drawTextCentered(page, plan.subtitle, 727, fonts.regular, 11, colors.muted);
+        const seedText = `Set seed: ${plan.seed || ''}`;
+        page.drawText(seedText, {
+            x: 44,
+            y: 704,
+            size: 9,
+            font: fonts.regular,
+            color: colors.muted
+        });
+        const pageText = `Page ${pageInfo.pageNumber} of ${pageInfo.totalPages}`;
+        page.drawText(pageText, {
+            x: PAGE_WIDTH - 44 - fonts.regular.widthOfTextAtSize(pageText, 9),
+            y: 704,
+            size: 9,
+            font: fonts.regular,
+            color: colors.muted
+        });
+        page.drawLine({
+            start: { x: 44, y: 688 },
+            end: { x: PAGE_WIDTH - 44, y: 688 },
+            thickness: 0.6,
+            color: colors.line
+        });
+        return 664;
+    }
+
+    function drawAnswerKeyProblem(page, item, box, fonts, colors) {
+        const numberText = `${item.globalNumber}.`;
+        page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
+
+        const matrixTop = box.y - 30;
+        const matrixA = drawMatrix(page, item.matrixA, box.x + 12, matrixTop, fonts, { color: colors.text });
+        page.drawText(item.operator, {
+            x: box.x + 12 + matrixA.width + 11,
+            y: matrixTop - matrixA.height / 2 - 2,
+            size: 13,
+            font: fonts.bold,
+            color: colors.text
+        });
+        drawMatrix(page, item.matrixB, box.x + 12 + matrixA.width + 30, matrixTop, fonts, { color: colors.text });
+
+        const answerY = box.y - 98;
+        page.drawText('Answer:', { x: box.x + 4, y: answerY, size: 9, font: fonts.bold, color: colors.text });
+        drawMatrix(page, item.exactAnswer, box.x + 58, answerY + 12, fonts, {
+            color: colors.text,
+            cellWidth: 24,
+            cellHeight: 18
+        });
+    }
+
     function drawFooter(page, fonts, colors) {
         drawTextCentered(page, 'matrixcalcu.com', 18, fonts.regular, 8, colors.footer);
     }
@@ -296,6 +392,56 @@
         return pdfDoc.save();
     }
 
+    async function createAdditionSubtractionAnswerKeyPdf(problemSet, options) {
+        const opts = options || {};
+        const plan = buildAdditionSubtractionAnswerKeyPlan(problemSet, opts);
+        const pdfLib = getPdfLib(opts);
+        const { PDFDocument, StandardFonts, rgb } = pdfLib;
+        const pdfDoc = await PDFDocument.create();
+        pdfDoc.setTitle('Matrix Addition and Subtraction Practice Answer Key');
+        pdfDoc.setAuthor('MatrixCalcu');
+        pdfDoc.setCreator('MatrixCalcu');
+        pdfDoc.setSubject('Matrix addition and subtraction practice answer key');
+        const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
+        pdfDoc.setCreationDate(date);
+        pdfDoc.setModificationDate(date);
+
+        const fonts = {
+            regular: await pdfDoc.embedFont(StandardFonts.Helvetica),
+            bold: await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+        };
+        const colors = {
+            text: rgb(0.10, 0.12, 0.16),
+            muted: rgb(0.36, 0.41, 0.45),
+            line: rgb(0.78, 0.80, 0.84),
+            footer: rgb(0.54, 0.58, 0.61)
+        };
+
+        plan.pages.forEach((pageInfo) => {
+            const page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+            const contentTop = drawAnswerKeyHeader(page, plan, pageInfo, fonts, colors);
+            const left = plan.layout.marginLeft;
+            const right = PAGE_WIDTH - plan.layout.marginRight;
+            const footerTop = plan.layout.marginBottom + 18;
+            const gridBottom = footerTop + 8;
+            const availableWidth = right - left;
+            const availableHeight = contentTop - gridBottom;
+            const cellWidth = (availableWidth - plan.layout.columnGap) / 2;
+            const cellHeight = (availableHeight - plan.layout.rowGap * 2) / 3;
+
+            pageInfo.problems.forEach((item, index) => {
+                const column = index % 2;
+                const row = Math.floor(index / 2);
+                const x = left + column * (cellWidth + plan.layout.columnGap);
+                const y = contentTop - row * (cellHeight + plan.layout.rowGap);
+                drawAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+            });
+            drawFooter(page, fonts, colors);
+        });
+
+        return pdfDoc.save();
+    }
+
     async function downloadAdditionSubtractionWorksheetPdf(problemSet, options) {
         if (typeof document === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined') {
             throw new Error('PDF download requires a browser environment.');
@@ -318,13 +464,38 @@
         return filename;
     }
 
+    async function downloadAdditionSubtractionAnswerKeyPdf(problemSet, options) {
+        if (typeof document === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined') {
+            throw new Error('PDF download requires a browser environment.');
+        }
+        const bytes = await createAdditionSubtractionAnswerKeyPdf(problemSet, options);
+        const filename = createPdfFilename(problemSet, 'answer-key');
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        try {
+            link.click();
+        } finally {
+            link.remove();
+            URL.revokeObjectURL(url);
+        }
+        return filename;
+    }
+
     const api = {
         PAGE_WIDTH,
         PAGE_HEIGHT,
         PROBLEMS_PER_PAGE,
         buildAdditionSubtractionWorksheetPlan,
+        buildAdditionSubtractionAnswerKeyPlan,
         createAdditionSubtractionWorksheetPdf,
+        createAdditionSubtractionAnswerKeyPdf,
         downloadAdditionSubtractionWorksheetPdf,
+        downloadAdditionSubtractionAnswerKeyPdf,
         createPdfFilename
     };
 

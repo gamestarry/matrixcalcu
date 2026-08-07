@@ -22,6 +22,12 @@ function assertNoAnswerOrSteps(plan) {
     assert.strictEqual(text.includes('Detailed Solutions'), false);
 }
 
+function assertNoSteps(plan) {
+    const text = JSON.stringify(plan);
+    assert.strictEqual(text.includes('steps'), false);
+    assert.strictEqual(text.includes('Detailed Solutions'), false);
+}
+
 function ids(problemSet) {
     return problemSet.problems.map((problem) => problem.id);
 }
@@ -34,6 +40,16 @@ async function pageCount(bytes) {
 async function pageSizes(bytes) {
     const doc = await pdfLib.PDFDocument.load(bytes);
     return doc.getPages().map((page) => page.getSize());
+}
+
+async function pdfMetadata(bytes) {
+    const doc = await pdfLib.PDFDocument.load(bytes);
+    return {
+        title: doc.getTitle(),
+        author: doc.getAuthor(),
+        creator: doc.getCreator(),
+        subject: doc.getSubject()
+    };
 }
 
 function makePoisonedSet() {
@@ -67,6 +83,35 @@ function makePoisonedSet() {
     };
 }
 
+function makeAnswerKeyPoisonedStepsSet() {
+    const problem = {
+        id: 'answer-poisoned-1',
+        type: 'addition-subtraction',
+        subtype: 'subtract',
+        difficulty: 'easy',
+        inputs: {
+            matrixA: [[5, 4], [3, 2]],
+            matrixB: [[1, 2], [3, 0]]
+        },
+        exactAnswer: {
+            matrix: [[4, 2], [0, 2]]
+        },
+        dimensions: { rows: 2, cols: 2 }
+    };
+    Object.defineProperty(problem, 'steps', {
+        get() {
+            throw new Error('PDF answer key plan must not read steps.');
+        }
+    });
+    return {
+        id: 'answer-poisoned-set',
+        seed: 'answer-poisoned-seed',
+        type: 'addition-subtraction',
+        settings: { difficulty: 'easy' },
+        problems: [problem]
+    };
+}
+
 async function runTests() {
     const rows = [];
 
@@ -90,6 +135,7 @@ async function runTests() {
     const ten = generator.generateAdditionSubtractionSet(Object.assign({}, six.settings, { seed: 'pdf-add-sub-ten', count: 10 }));
 
     assert.throws(() => pdf.buildAdditionSubtractionWorksheetPlan({ type: 'multiplication', problems: [] }), /Unsupported PDF worksheet type: multiplication/);
+    assert.throws(() => pdf.buildAdditionSubtractionAnswerKeyPlan({ type: 'multiplication', problems: [] }), /Unsupported PDF answer key type: multiplication/);
     rows.push(['T02', 'build plan accepts only addition/subtraction sets', 'pass']);
 
     const planSix = pdf.buildAdditionSubtractionWorksheetPlan(six);
@@ -123,6 +169,28 @@ async function runTests() {
     pdf.buildAdditionSubtractionWorksheetPlan(makePoisonedSet());
     rows.push(['T05', 'plan stores matrices and blank answer dimensions without reading exact answers or steps', 'pass']);
 
+    const answerPlanSix = pdf.buildAdditionSubtractionAnswerKeyPlan(six);
+    assert.deepStrictEqual(answerPlanSix.paper, { width: 612, height: 792 });
+    assert.strictEqual(answerPlanSix.kind, 'answer-key');
+    assert.strictEqual(answerPlanSix.title, 'Matrix Practice Answer Key');
+    assert.strictEqual(answerPlanSix.subtitle, 'Matrix Addition and Subtraction');
+    assert.strictEqual(answerPlanSix.layout.problemsPerPage, 6);
+    assert.strictEqual(answerPlanSix.layout.columns, 2);
+    assert.strictEqual(answerPlanSix.layout.rows, 3);
+    assert.strictEqual(answerPlanSix.layout.footer, 'matrixcalcu.com');
+    assert.deepStrictEqual(answerPlanSix.pages[0].problems.map((item) => item.globalNumber), [1, 2, 3, 4, 5, 6]);
+    assert.deepStrictEqual(answerPlanSix.pages[0].problems.map((item) => item.id), ids(six));
+    assert.deepStrictEqual(answerPlanSix.pages[0].problems[0].matrixA, six.problems[0].inputs.matrixA);
+    assert.deepStrictEqual(answerPlanSix.pages[0].problems[0].matrixB, six.problems[0].inputs.matrixB);
+    assert.deepStrictEqual(answerPlanSix.pages[0].problems[0].exactAnswer, six.problems[0].exactAnswer.matrix);
+    assert.strictEqual(answerPlanSix.pages[0].problems[0].operator, six.problems[0].subtype === 'subtract' ? '-' : '+');
+    assertNoSteps(answerPlanSix);
+    const originalAnswer = six.problems[0].exactAnswer.matrix[0][0];
+    answerPlanSix.pages[0].problems[0].exactAnswer[0][0] = 999;
+    assert.strictEqual(six.problems[0].exactAnswer.matrix[0][0], originalAnswer);
+    pdf.buildAdditionSubtractionAnswerKeyPlan(makeAnswerKeyPoisonedStepsSet());
+    rows.push(['T06', 'answer key plan stores original matrices and exact answers without reading steps', 'pass']);
+
     const before = JSON.stringify(six);
     const bytesSix = await pdf.createAdditionSubtractionWorksheetPdf(six, {
         pdfLib,
@@ -133,7 +201,7 @@ async function runTests() {
     assert.strictEqual(await pageCount(bytesSix), 1);
     assert.deepStrictEqual(await pageSizes(bytesSix), [{ width: 612, height: 792 }]);
     assert.strictEqual(JSON.stringify(six), before);
-    rows.push(['T06', 'six-problem PDF is a valid one-page Letter PDF and does not mutate the set', 'pass']);
+    rows.push(['T07', 'six-problem worksheet PDF is a valid one-page Letter PDF and does not mutate the set', 'pass']);
 
     const bytesEight = await pdf.createAdditionSubtractionWorksheetPdf(eight, {
         pdfLib,
@@ -141,12 +209,40 @@ async function runTests() {
     });
     assert.strictEqual(await pageCount(bytesEight), 2);
     (await pageSizes(bytesEight)).forEach((size) => assert.deepStrictEqual(size, { width: 612, height: 792 }));
-    rows.push(['T07', 'eight-problem PDF is two Letter pages', 'pass']);
+    rows.push(['T08', 'eight-problem worksheet PDF is two Letter pages', 'pass']);
+
+    const answerPlanEight = pdf.buildAdditionSubtractionAnswerKeyPlan(eight);
+    assert.strictEqual(answerPlanEight.pages.length, 2);
+    assert.deepStrictEqual(answerPlanEight.pages[1].problems.map((item) => item.globalNumber), [7, 8]);
+    assert.strictEqual(answerPlanEight.pages[1].problems.length, 2);
+    const answerPlanTen = pdf.buildAdditionSubtractionAnswerKeyPlan(ten);
+    assert.strictEqual(answerPlanTen.pages.length, 2);
+    assert.deepStrictEqual(answerPlanTen.pages[1].problems.map((item) => item.globalNumber), [7, 8, 9, 10]);
+    assert.strictEqual(answerPlanTen.pages[1].problems.length, 4);
+    const answerBytes = await pdf.createAdditionSubtractionAnswerKeyPdf(eight, {
+        pdfLib,
+        creationDate: new Date('2024-01-01T00:00:00Z')
+    });
+    assert(answerBytes instanceof Uint8Array);
+    assertHeader(answerBytes);
+    assert.strictEqual(await pageCount(answerBytes), 2);
+    (await pageSizes(answerBytes)).forEach((size) => assert.deepStrictEqual(size, { width: 612, height: 792 }));
+    assert.deepStrictEqual(await pdfMetadata(answerBytes), {
+        title: 'Matrix Addition and Subtraction Practice Answer Key',
+        author: 'MatrixCalcu',
+        creator: 'MatrixCalcu',
+        subject: 'Matrix addition and subtraction practice answer key'
+    });
+    rows.push(['T09', 'answer key PDF paginates six per page and has answer-key metadata', 'pass']);
 
     const filename = pdf.createPdfFilename({ seed: 'My Seed: 01/Unsafe?' }, 'worksheet');
     assert.strictEqual(filename, 'matrix-addition-subtraction-worksheet-my-seed-01-unsafe.pdf');
     assert(!/\s|[:/?#\\]/.test(filename));
-    rows.push(['T08', 'filename uses a safe normalized seed and no runtime timestamp', 'pass']);
+    assert.strictEqual(
+        pdf.createPdfFilename({ seed: 'My Seed: 01/Unsafe?' }, 'answer-key'),
+        'matrix-addition-subtraction-answer-key-my-seed-01-unsafe.pdf'
+    );
+    rows.push(['T10', 'filenames use safe normalized kind and seed with no runtime timestamp', 'pass']);
 
     const source = fs.readFileSync(path.join(__dirname, '..', 'js', 'practice', 'practice-pdf.js'), 'utf8');
     assert(!/\bdocument\b/.test(source.replace(/downloadAdditionSubtractionWorksheetPdf[\s\S]*?const api =/, 'const api =')));
@@ -154,13 +250,13 @@ async function runTests() {
     assert(!/\bMath\.random\b/.test(source));
     assert(!/html2canvas|canvas|fetch\(|XMLHttpRequest|import\(/.test(source));
     assert(!/fontkit/.test(source));
-    rows.push(['T09', 'PDF generation path avoids DOM measurement, window.print, network, screenshots, and extra fonts', 'pass']);
+    rows.push(['T11', 'PDF generation path avoids DOM measurement, window.print, network, screenshots, and extra fonts', 'pass']);
 
     const samplePath = path.join(os.tmpdir(), 'matrix-addition-subtraction-worksheet-sample.pdf');
     fs.writeFileSync(samplePath, Buffer.from(bytesSix));
     assert(fs.existsSync(samplePath));
     fs.unlinkSync(samplePath);
-    rows.push(['T10', 'temporary manual sample PDF can be produced and cleaned up', 'pass']);
+    rows.push(['T12', 'temporary manual sample PDF can be produced and cleaned up', 'pass']);
 
     return rows;
 }

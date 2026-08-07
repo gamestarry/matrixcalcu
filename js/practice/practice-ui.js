@@ -49,8 +49,10 @@
         answerKey: 'Answer Key',
         detailedSolutions: 'Detailed Solutions',
         downloadWorksheetPdf: 'Download Worksheet PDF',
-        creatingPdf: 'Creating PDF...',
-        pdfError: 'Unable to create this worksheet PDF. Try generating the worksheet again.',
+        downloadAnswerKeyPdf: 'Download Answer Key PDF',
+        creatingWorksheetPdf: 'Creating Worksheet PDF...',
+        creatingAnswerKeyPdf: 'Creating Answer Key PDF...',
+        pdfError: 'Unable to create this PDF. Try generating the worksheet again.',
         name: 'Name',
         date: 'Date',
         page: 'Page',
@@ -903,11 +905,15 @@
             els.pdfActions = document.createElement('div');
             els.pdfActions.className = 'mp-pdf-actions';
             els.pdfActions.hidden = true;
-            els.downloadPdf = createButton(t('downloadWorksheetPdf'), 'mp-button mp-pdf-button');
-            els.downloadPdf.addEventListener('click', () => {
-                void downloadWorksheetPdf();
+            els.downloadWorksheetPdf = createButton(t('downloadWorksheetPdf'), 'mp-button mp-pdf-button');
+            els.downloadWorksheetPdf.addEventListener('click', () => {
+                void downloadPdf('worksheet');
             });
-            els.pdfActions.appendChild(els.downloadPdf);
+            els.downloadAnswerKeyPdf = createButton(t('downloadAnswerKeyPdf'), 'mp-button mp-pdf-button');
+            els.downloadAnswerKeyPdf.addEventListener('click', () => {
+                void downloadPdf('answer-key');
+            });
+            els.pdfActions.append(els.downloadWorksheetPdf, els.downloadAnswerKeyPdf);
 
             els.list = document.createElement('div');
             els.list.className = 'mp-problem-list';
@@ -1104,7 +1110,7 @@
             const seed = root.MatrixPractice.random.createRuntimeSeed();
             const generator = generatorForType();
             els.generate.disabled = true;
-            setPdfButtonDisabled(true);
+            setPdfButtonsDisabled(true);
             els.generate.textContent = t('generating');
             els.error.hidden = true;
 
@@ -1124,7 +1130,7 @@
             } finally {
                 if (token === state.generationToken) {
                     els.generate.disabled = false;
-                    setPdfButtonDisabled(false);
+                    setPdfButtonsDisabled(false);
                     els.generate.textContent = t('generateNewSet');
                 }
             }
@@ -1143,36 +1149,48 @@
         function updatePdfActions() {
             const canDownloadPdf = state.currentSet && state.currentSet.type === 'addition-subtraction';
             els.pdfActions.hidden = !canDownloadPdf;
-            setPdfButtonDisabled(false);
+            setPdfButtonsDisabled(false);
         }
 
-        function setPdfButtonDisabled(disabled) {
-            if (!els.downloadPdf) return;
-            els.downloadPdf.disabled = Boolean(disabled);
+        function setPdfButtonsDisabled(disabled) {
+            if (!els.downloadWorksheetPdf || !els.downloadAnswerKeyPdf) return;
+            els.downloadWorksheetPdf.disabled = Boolean(disabled);
+            els.downloadAnswerKeyPdf.disabled = Boolean(disabled);
         }
 
-        async function downloadWorksheetPdf() {
+        function restorePdfButtonText() {
+            if (!els.downloadWorksheetPdf || !els.downloadAnswerKeyPdf) return;
+            els.downloadWorksheetPdf.textContent = t('downloadWorksheetPdf');
+            els.downloadAnswerKeyPdf.textContent = t('downloadAnswerKeyPdf');
+        }
+
+        async function downloadPdf(kind) {
             if (!state.currentSet || state.currentSet.type !== 'addition-subtraction') return;
             const pdf = root.MatrixPractice && root.MatrixPractice.pdf;
-            if (!pdf || typeof pdf.downloadAdditionSubtractionWorksheetPdf !== 'function') {
+            const isAnswerKey = kind === 'answer-key';
+            const method = isAnswerKey
+                ? 'downloadAdditionSubtractionAnswerKeyPdf'
+                : 'downloadAdditionSubtractionWorksheetPdf';
+            const activeButton = isAnswerKey ? els.downloadAnswerKeyPdf : els.downloadWorksheetPdf;
+            if (!pdf || typeof pdf[method] !== 'function') {
                 els.error.textContent = `${t('error')}: ${t('pdfError')}`;
                 els.error.hidden = false;
                 console.error(new Error('MatrixPractice.pdf is not loaded.'));
                 return;
             }
 
-            setPdfButtonDisabled(true);
-            els.downloadPdf.textContent = t('creatingPdf');
+            setPdfButtonsDisabled(true);
+            activeButton.textContent = isAnswerKey ? t('creatingAnswerKeyPdf') : t('creatingWorksheetPdf');
             els.error.hidden = true;
             try {
-                await pdf.downloadAdditionSubtractionWorksheetPdf(state.currentSet);
+                await pdf[method](state.currentSet);
             } catch (error) {
                 console.error(error);
                 els.error.textContent = `${t('error')}: ${t('pdfError')}`;
                 els.error.hidden = false;
             } finally {
-                els.downloadPdf.textContent = t('downloadWorksheetPdf');
-                setPdfButtonDisabled(false);
+                restorePdfButtonText();
+                setPdfButtonsDisabled(false);
             }
         }
 
