@@ -3,6 +3,96 @@ const fs = require('fs');
 
 const ui = require('../js/practice/practice-ui.js');
 
+class FakeNode {
+    constructor(tagName) {
+        this.tagName = tagName;
+        this.children = [];
+        this.attributes = {};
+        this.className = '';
+        this.hidden = false;
+        this.dataset = {};
+        this.style = {
+            values: {},
+            setProperty: (name, value) => {
+                this.style.values[name] = value;
+            }
+        };
+        this._textContent = '';
+        this.classList = {
+            add: (...names) => {
+                const current = this.className ? this.className.split(/\s+/) : [];
+                names.forEach((name) => {
+                    if (!current.includes(name)) current.push(name);
+                });
+                this.className = current.join(' ');
+            }
+        };
+    }
+
+    append(...nodes) {
+        nodes.forEach((node) => this.appendChild(node));
+    }
+
+    appendChild(node) {
+        this.children.push(typeof node === 'string' ? new FakeTextNode(node) : node);
+        return node;
+    }
+
+    setAttribute(name, value) {
+        this.attributes[name] = String(value);
+    }
+
+    get textContent() {
+        return this._textContent + this.children.map((child) => child.textContent).join('');
+    }
+
+    set textContent(value) {
+        this._textContent = String(value);
+        this.children = [];
+    }
+}
+
+class FakeTextNode {
+    constructor(text) {
+        this.text = String(text);
+    }
+
+    get textContent() {
+        return this.text;
+    }
+}
+
+function installFakeDocument() {
+    global.document = {
+        createElement(tagName) {
+            return new FakeNode(tagName);
+        },
+        createTextNode(text) {
+            return new FakeTextNode(text);
+        }
+    };
+}
+
+function countClass(node, className) {
+    if (!node || node instanceof FakeTextNode) return 0;
+    const own = String(node.className).split(/\s+/).includes(className) ? 1 : 0;
+    return own + node.children.reduce((sum, child) => sum + countClass(child, className), 0);
+}
+
+function collectLabels(node) {
+    if (!node || node instanceof FakeTextNode) return [];
+    const own = String(node.className).split(/\s+/).includes('mp-matrix-label')
+        ? [node.textContent]
+        : [];
+    return own.concat(node.children.flatMap(collectLabels));
+}
+
+function collectClassNodes(node, className) {
+    if (!node || node instanceof FakeTextNode) return [];
+    const own = String(node.className).split(/\s+/).includes(className) ? [node] : [];
+    return own.concat(node.children.flatMap((child) => collectClassNodes(child, className)));
+}
+
 assert.strictEqual(ui.formatScalarText(3), '3');
 assert.strictEqual(ui.formatScalarText({ kind: 'fraction', numerator: -2, denominator: 5 }), '-2/5');
 
@@ -236,6 +326,9 @@ assert.strictEqual(ui.getWorksheetLayout(rrefTwoByThree), 'regular');
 assert.strictEqual(ui.buildPageMetadata(rrefTwoByThree, 'worksheet').length, 2);
 assert.deepStrictEqual(ui.buildPageMetadata(rrefTwoByThree, 'worksheet')[0].problems.map((item) => item.problemNumber), [1, 2, 3, 4]);
 assert.deepStrictEqual(ui.buildPageMetadata(rrefTwoByThree, 'worksheet')[1].problems.map((item) => item.problemNumber), [5, 6]);
+assert.strictEqual(ui.buildPageMetadata(rrefTwoByThree, 'answer-key').length, 2);
+assert.deepStrictEqual(ui.buildPageMetadata(rrefTwoByThree, 'answer-key')[0].problems.map((item) => item.problemNumber), [1, 2, 3, 4]);
+assert.deepStrictEqual(ui.buildPageMetadata(rrefTwoByThree, 'answer-key')[1].problems.map((item) => item.problemNumber), [5, 6]);
 assert.strictEqual(ui.getWorksheetLayout(makeSet('rref', 6, { rows: 3, cols: 3 }, 'medium')), 'regular');
 assert.strictEqual(ui.getWorksheetLayout(makeSet('linear-system', 6, { variables: 2 }, 'easy')), 'compact');
 assert.strictEqual(ui.getWorksheetLayout(makeSet('linear-system', 6, { variables: 3 }, 'hard')), 'regular');
@@ -245,6 +338,81 @@ assert.strictEqual(ui.getProblemsPerPage('worksheet', 'wide'), 4);
 assert.strictEqual(ui.getProblemsPerPage('answer-key', 'compact'), 8);
 assert.strictEqual(ui.getProblemsPerPage('answer-key', 'regular'), 8);
 assert.strictEqual(ui.getProblemsPerPage('answer-key', 'wide'), 4);
+assert.strictEqual(ui.getProblemsPerPage('answer-key', 'regular', 'rref'), 4);
+assert.strictEqual(ui.getProblemsPerPage('worksheet', 'compact', 'rref'), 4);
+assert.strictEqual(ui.canDownloadPdfForSet(addSubSix), true);
+assert.strictEqual(ui.canDownloadPdfForSet(multEasy), true);
+assert.strictEqual(ui.canDownloadPdfForSet(rrefTwoByThree), true);
+assert.strictEqual(ui.canDownloadPdfForSet(makeSet('linear-system', 6, { variables: 2 }, 'easy')), false);
+assert.strictEqual(ui.canDownloadPdfForSet(null), false);
+
+installFakeDocument();
+const rrefRenderProblem = {
+    id: 'rref-render-1',
+    type: 'rref',
+    difficulty: 'easy',
+    inputs: {
+        matrix: [[1, 2, 3], [4, 5, 6]]
+    },
+    exactAnswer: {
+        matrix: [
+            [1, 0, { kind: 'fraction', numerator: 17, denominator: 25 }],
+            [0, 1, { kind: 'fraction', numerator: -2, denominator: 3 }]
+        ]
+    },
+    steps: [{ kind: 'scale-row', row: 0, factor: 1, matrix: [[1, 2, 3], [4, 5, 6]] }],
+    dimensions: { rows: 2, cols: 3 }
+};
+const rrefWorksheetNode = ui.__test.renderWorksheetProblem(rrefRenderProblem, 1);
+assert.strictEqual(rrefWorksheetNode.textContent.includes('1.'), true);
+assert.strictEqual(rrefWorksheetNode.textContent.includes('Find the RREF of'), true);
+assert.deepStrictEqual(collectLabels(rrefWorksheetNode), ['Input Matrix']);
+assert.strictEqual(rrefWorksheetNode.textContent.includes('RREF:'), true);
+assert.strictEqual(countClass(rrefWorksheetNode, 'mp-empty-matrix-wrap'), 1);
+assert.strictEqual(countClass(rrefWorksheetNode, 'mp-work-lines'), 1);
+assert.strictEqual(rrefWorksheetNode.textContent.includes('17'), false);
+assert.strictEqual(rrefWorksheetNode.textContent.includes('25'), false);
+
+const rrefAnswerKeyNode = ui.__test.renderAnswerKeyProblem(rrefRenderProblem, 1);
+assert.strictEqual(rrefAnswerKeyNode.textContent.includes('1.'), true);
+assert.deepStrictEqual(collectLabels(rrefAnswerKeyNode), ['Original:', 'RREF:']);
+assert.strictEqual(rrefAnswerKeyNode.textContent.includes('17'), true);
+assert.strictEqual(rrefAnswerKeyNode.textContent.includes('25'), true);
+assert.strictEqual(rrefAnswerKeyNode.textContent.includes('-'), true);
+assert.strictEqual(rrefAnswerKeyNode.textContent.includes('2'), true);
+assert.strictEqual(rrefAnswerKeyNode.textContent.includes('3'), true);
+assert.strictEqual(countClass(rrefAnswerKeyNode, 'mp-empty-matrix-wrap'), 0);
+assert.strictEqual(countClass(rrefAnswerKeyNode, 'mp-work-lines'), 0);
+assert.strictEqual(rrefAnswerKeyNode.textContent.includes('scale-row'), false);
+assert.strictEqual(rrefAnswerKeyNode.textContent.includes('0.68'), false);
+assert.strictEqual(rrefAnswerKeyNode.textContent.includes('-0.666'), false);
+
+const rrefAnswerKeyPage = ui.__test.renderPaperPage({
+    id: 'rref-render-set',
+    seed: '775404156',
+    type: 'rref',
+    settings: { difficulty: 'easy' },
+    problems: [rrefRenderProblem]
+}, {
+    viewMode: 'answer-key',
+    layout: 'regular',
+    pageIndex: 0,
+    pageNumber: 1,
+    totalPages: 1,
+    problems: [{ problem: rrefRenderProblem, problemNumber: 1 }]
+}, 'answer-key');
+const paperHeaderMeta = rrefAnswerKeyPage.children[0].children[1];
+assert.strictEqual(paperHeaderMeta.tagName, 'p');
+assert.strictEqual(
+    paperHeaderMeta.textContent,
+    'Reduced Row Echelon Form · Exact Answers · Set seed: 775404156'
+);
+assert.strictEqual(paperHeaderMeta.textContent.includes('Reduced Row Echelon Form'), true);
+assert.strictEqual(paperHeaderMeta.textContent.includes('Exact Answers'), true);
+assert.strictEqual(paperHeaderMeta.textContent.includes('Set seed: 775404156'), true);
+assert.strictEqual(collectClassNodes(rrefAnswerKeyPage, 'mp-paper-instructions').length, 0);
+assert.strictEqual(collectLabels(rrefAnswerKeyPage).includes('Original:'), true);
+assert.strictEqual(collectLabels(rrefAnswerKeyPage).includes('RREF:'), true);
 
 const originalProblems = addSubEight.problems.slice();
 const chunks = ui.chunkProblems(addSubEight.problems, 6);
@@ -350,12 +518,15 @@ assert.ok(source.includes('downloadWorksheetPdf'));
 assert.ok(source.includes('downloadAnswerKeyPdf'));
 assert.ok(source.includes("downloadPdf('worksheet')"));
 assert.ok(source.includes("downloadPdf('answer-key')"));
-assert.ok(source.includes("state.currentSet.type === 'addition-subtraction' ||"));
-assert.ok(source.includes("state.currentSet.type === 'multiplication'"));
-assert.ok(source.includes("state.currentSet.type === 'addition-subtraction'"));
+assert.ok(source.includes('canDownloadPdfForSet'));
+assert.ok(source.includes("problemSet.type === 'addition-subtraction'"));
+assert.ok(source.includes("problemSet.type === 'multiplication'"));
+assert.ok(source.includes("problemSet.type === 'rref'"));
 assert.ok(source.includes("const method = isAnswerKey ? 'downloadAnswerKeyPdf' : 'downloadWorksheetPdf';"));
 assert.ok(!source.includes('downloadMultiplicationWorksheetPdf(state.currentSet)'));
 assert.ok(!source.includes('downloadMultiplicationAnswerKeyPdf(state.currentSet)'));
+assert.ok(!source.includes('downloadRrefWorksheetPdf(state.currentSet)'));
+assert.ok(!source.includes('downloadRrefAnswerKeyPdf(state.currentSet)'));
 assert.ok(source.includes("setPdfButtonsDisabled(true);"));
 assert.ok(source.includes("els.downloadWorksheetPdf.textContent = t('downloadWorksheetPdf');"));
 assert.ok(source.includes("els.downloadAnswerKeyPdf.textContent = t('downloadAnswerKeyPdf');"));

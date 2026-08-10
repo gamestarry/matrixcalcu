@@ -280,8 +280,9 @@
         return 'regular';
     }
 
-    function getProblemsPerPage(viewMode, layout) {
+    function getProblemsPerPage(viewMode, layout, type) {
         if (viewMode === 'detailed-solutions') return Infinity;
+        if (type === 'rref') return 4;
         if (viewMode === 'answer-key') return layout === 'wide' ? 4 : 8;
         return layout === 'compact' ? 6 : 4;
     }
@@ -301,7 +302,7 @@
 
     function buildPageMetadata(problemSet, viewMode) {
         const layout = getWorksheetLayout(problemSet);
-        const perPage = getProblemsPerPage(viewMode, layout);
+        const perPage = getProblemsPerPage(viewMode, layout, problemSet.type);
         const chunks = chunkProblems(problemSet.problems, perPage);
         const totalPages = chunks.length;
         return chunks.map((problems, pageIndex) => ({
@@ -315,6 +316,14 @@
                 problemNumber: pageIndex * perPage + index + 1
             }))
         }));
+    }
+
+    function canDownloadPdfForSet(problemSet) {
+        return Boolean(problemSet && (
+            problemSet.type === 'addition-subtraction' ||
+            problemSet.type === 'multiplication' ||
+            problemSet.type === 'rref'
+        ));
     }
 
     function buildWorksheetProblemItems(problemSet) {
@@ -611,6 +620,16 @@
         return answer;
     }
 
+    function renderRrefAnswerKeyContent(problem) {
+        const answer = document.createElement('div');
+        answer.className = 'mp-answer-content mp-rref-answer-content';
+        answer.append(
+            renderMatrix(problem.inputs.matrix, { label: 'Original:' }),
+            renderMatrix(problem.exactAnswer.matrix, { label: 'RREF:' })
+        );
+        return answer;
+    }
+
     function renderInfiniteSolutionText(answer) {
         const freeMap = new Map();
         answer.freeVariables.forEach((variable, index) => {
@@ -769,7 +788,9 @@
             return item;
         }
 
-        item.appendChild(renderAnswer(problem));
+        item.appendChild(problem.type === 'rref'
+            ? renderRrefAnswerKeyContent(problem)
+            : renderAnswer(problem));
         return item;
     }
 
@@ -783,7 +804,9 @@
         const title = document.createElement('h2');
         title.textContent = viewMode === 'answer-key' ? t('answerKeyTitle') : t('worksheetTitle');
         const subtitle = document.createElement('p');
-        subtitle.textContent = getWorksheetTypeLabel(problemSet);
+        subtitle.textContent = viewMode === 'answer-key' && problemSet.type === 'rref'
+            ? `${getWorksheetTypeLabel(problemSet)} · ${t('exactAnswers')} · Set seed: ${problemSet.seed}`
+            : getWorksheetTypeLabel(problemSet);
         header.append(title, subtitle);
 
         if (page.pageIndex === 0 && viewMode === 'worksheet') {
@@ -796,7 +819,7 @@
             header.append(meta, instructions);
         }
 
-        if (viewMode === 'answer-key' && page.pageIndex === 0) {
+        if (viewMode === 'answer-key' && page.pageIndex === 0 && problemSet.type !== 'rref') {
             const label = document.createElement('p');
             label.className = 'mp-paper-instructions';
             label.textContent = t('exactAnswers');
@@ -1149,11 +1172,7 @@
         }
 
         function updatePdfActions() {
-            const canDownloadPdf = state.currentSet && (
-                state.currentSet.type === 'addition-subtraction' ||
-                state.currentSet.type === 'multiplication'
-            );
-            els.pdfActions.hidden = !canDownloadPdf;
+            els.pdfActions.hidden = !canDownloadPdfForSet(state.currentSet);
             setPdfButtonsDisabled(false);
         }
 
@@ -1170,10 +1189,7 @@
         }
 
         async function downloadPdf(kind) {
-            if (!state.currentSet || !(
-                state.currentSet.type === 'addition-subtraction' ||
-                state.currentSet.type === 'multiplication'
-            )) return;
+            if (!canDownloadPdfForSet(state.currentSet)) return;
             const pdf = root.MatrixPractice && root.MatrixPractice.pdf;
             const isAnswerKey = kind === 'answer-key';
             const method = isAnswerKey ? 'downloadAnswerKeyPdf' : 'downloadWorksheetPdf';
@@ -1329,6 +1345,7 @@
         getProblemsPerPage,
         chunkProblems,
         buildPageMetadata,
+        canDownloadPdfForSet,
         buildWorksheetProblemItems,
         getWorksheetBlankMatrixDimensions,
         formatInputValue,
@@ -1337,6 +1354,15 @@
         formatRrefOperationText,
         createPracticeUi
     };
+
+    Object.defineProperty(api, '__test', {
+        value: {
+            renderWorksheetProblem,
+            renderAnswerKeyProblem,
+            renderPaperPage
+        },
+        enumerable: false
+    });
 
     root.MatrixPractice = root.MatrixPractice || {};
     root.MatrixPractice.practiceUi = api;

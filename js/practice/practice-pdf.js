@@ -3,9 +3,11 @@
 
     const ADD_SUB_TYPE = 'addition-subtraction';
     const MULTIPLICATION_TYPE = 'multiplication';
+    const RREF_TYPE = 'rref';
     const PAGE_WIDTH = 612;
     const PAGE_HEIGHT = 792;
     const PROBLEMS_PER_PAGE = 6;
+    const RREF_PROBLEMS_PER_PAGE = 4;
     const DEFAULT_OPTIONS = {
         marginLeft: 36,
         marginRight: 36,
@@ -17,6 +19,17 @@
 
     function cloneMatrix(matrix) {
         return matrix.map((row) => row.slice());
+    }
+
+    function cloneExactValue(value) {
+        if (value && typeof value === 'object') {
+            return Object.assign({}, value);
+        }
+        return value;
+    }
+
+    function cloneExactMatrix(matrix) {
+        return matrix.map((row) => row.map(cloneExactValue));
     }
 
     function assertAdditionSubtractionSet(problemSet, kind) {
@@ -59,6 +72,16 @@
         }
     }
 
+    function assertRrefSet(problemSet, kind) {
+        if (!problemSet || problemSet.type !== RREF_TYPE) {
+            const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
+            throw new Error(`Unsupported RREF ${kind || 'worksheet'} type: ${actual}`);
+        }
+        if (!Array.isArray(problemSet.problems)) {
+            throw new Error('Invalid RREF problem set.');
+        }
+    }
+
     function getMultiplicationLayout(problemSet) {
         const first = problemSet && problemSet.problems && problemSet.problems[0];
         if (!first) return 'regular';
@@ -91,6 +114,18 @@
         return {
             rows: matrixA ? matrixA.length : 0,
             cols: matrixB && matrixB[0] ? matrixB[0].length : 0
+        };
+    }
+
+    function rrefDimensionsForProblem(problem) {
+        const dims = problem.dimensions || {};
+        if (Number.isInteger(dims.rows) && Number.isInteger(dims.cols)) {
+            return { rows: dims.rows, cols: dims.cols };
+        }
+        const matrix = problem.inputs && problem.inputs.matrix;
+        return {
+            rows: matrix ? matrix.length : 0,
+            cols: matrix && matrix[0] ? matrix[0].length : 0
         };
     }
 
@@ -273,6 +308,95 @@
         };
     }
 
+    function buildRrefWorksheetPlan(problemSet, options) {
+        assertRrefSet(problemSet, 'worksheet');
+        const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const chunks = chunkProblemsBySize(problemSet.problems, RREF_PROBLEMS_PER_PAGE);
+        const totalPages = chunks.length;
+
+        return {
+            kind: 'worksheet',
+            type: RREF_TYPE,
+            title: 'Matrix Practice Worksheet',
+            subtitle: 'Reduced Row Echelon Form',
+            instructions: 'Reduce each matrix to reduced row echelon form (RREF). Show your work.',
+            seed: problemSet.seed,
+            paper: {
+                width: PAGE_WIDTH,
+                height: PAGE_HEIGHT
+            },
+            layout: {
+                problemsPerPage: RREF_PROBLEMS_PER_PAGE,
+                columns: 2,
+                rows: 2,
+                marginLeft: opts.marginLeft,
+                marginRight: opts.marginRight,
+                marginTop: opts.marginTop,
+                marginBottom: opts.marginBottom,
+                columnGap: opts.columnGap,
+                rowGap: opts.rowGap,
+                footer: 'matrixcalcu.com'
+            },
+            pages: chunks.map((problems, pageIndex) => ({
+                pageNumber: pageIndex + 1,
+                totalPages,
+                problems: problems.map((problem, index) => {
+                    const dimensions = rrefDimensionsForProblem(problem);
+                    return {
+                        id: problem.id,
+                        globalNumber: pageIndex * RREF_PROBLEMS_PER_PAGE + index + 1,
+                        matrix: cloneExactMatrix(problem.inputs.matrix),
+                        rows: dimensions.rows,
+                        cols: dimensions.cols,
+                        answerDimensions: dimensions
+                    };
+                })
+            }))
+        };
+    }
+
+    function buildRrefAnswerKeyPlan(problemSet, options) {
+        assertRrefSet(problemSet, 'answer key');
+        const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const chunks = chunkProblemsBySize(problemSet.problems, RREF_PROBLEMS_PER_PAGE);
+        const totalPages = chunks.length;
+
+        return {
+            kind: 'answer-key',
+            type: RREF_TYPE,
+            title: 'Matrix Practice Answer Key',
+            subtitle: 'Row Reduction (RREF)',
+            seed: problemSet.seed,
+            paper: {
+                width: PAGE_WIDTH,
+                height: PAGE_HEIGHT
+            },
+            layout: {
+                problemsPerPage: RREF_PROBLEMS_PER_PAGE,
+                columns: 2,
+                rows: 2,
+                marginLeft: opts.marginLeft,
+                marginRight: opts.marginRight,
+                marginTop: opts.marginTop,
+                marginBottom: opts.marginBottom,
+                columnGap: opts.columnGap,
+                rowGap: opts.rowGap,
+                footer: 'matrixcalcu.com'
+            },
+            pages: chunks.map((problems, pageIndex) => ({
+                pageNumber: pageIndex + 1,
+                totalPages,
+                problems: problems.map((problem, index) => ({
+                    id: problem.id,
+                    globalNumber: pageIndex * RREF_PROBLEMS_PER_PAGE + index + 1,
+                    matrix: cloneExactMatrix(problem.inputs.matrix),
+                    exactAnswer: cloneExactMatrix(problem.exactAnswer.matrix),
+                    dimensions: rrefDimensionsForProblem(problem)
+                }))
+            }))
+        };
+    }
+
     function sanitizeFilenamePart(value) {
         return String(value || 'worksheet')
             .toLowerCase()
@@ -284,9 +408,12 @@
     function createPdfFilename(problemSet, kind) {
         const safeKind = sanitizeFilenamePart(kind || 'worksheet');
         const seed = sanitizeFilenamePart(problemSet && problemSet.seed ? problemSet.seed : 'set');
-        const type = problemSet && problemSet.type === MULTIPLICATION_TYPE
-            ? 'multiplication'
-            : 'addition-subtraction';
+        let type = 'addition-subtraction';
+        if (problemSet && problemSet.type === MULTIPLICATION_TYPE) {
+            type = 'multiplication';
+        } else if (problemSet && problemSet.type === RREF_TYPE) {
+            type = 'rref';
+        }
         return `matrix-${type}-${safeKind}-${seed}.pdf`;
     }
 
@@ -306,6 +433,60 @@
             y,
             size,
             font,
+            color
+        });
+    }
+
+    function isFraction(value) {
+        return value && typeof value === 'object' && value.kind === 'fraction';
+    }
+
+    function exactValueText(value) {
+        if (!isFraction(value)) return String(value);
+        if (value.denominator === 1) return String(value.numerator);
+        return `${value.numerator}/${value.denominator}`;
+    }
+
+    function drawExactValue(page, value, centerX, centerY, fonts, options) {
+        const opts = options || {};
+        const color = opts.color;
+        if (!isFraction(value) || value.denominator === 1) {
+            const text = isFraction(value) ? String(value.numerator) : String(value);
+            const width = fonts.regular.widthOfTextAtSize(text, opts.fontSize);
+            page.drawText(text, {
+                x: centerX - width / 2,
+                y: centerY - opts.fontSize / 2 + 2,
+                size: opts.fontSize,
+                font: fonts.regular,
+                color
+            });
+            return;
+        }
+
+        const numeratorText = String(value.numerator);
+        const denominatorText = String(value.denominator);
+        const size = opts.fractionFontSize || Math.max(7, opts.fontSize - 1);
+        const numeratorWidth = fonts.regular.widthOfTextAtSize(numeratorText, size);
+        const denominatorWidth = fonts.regular.widthOfTextAtSize(denominatorText, size);
+        const barWidth = Math.max(numeratorWidth, denominatorWidth) + 6;
+        page.drawText(numeratorText, {
+            x: centerX - numeratorWidth / 2,
+            y: centerY + 2,
+            size,
+            font: fonts.regular,
+            color
+        });
+        page.drawLine({
+            start: { x: centerX - barWidth / 2, y: centerY },
+            end: { x: centerX + barWidth / 2, y: centerY },
+            thickness: 0.7,
+            color
+        });
+        page.drawText(denominatorText, {
+            x: centerX - denominatorWidth / 2,
+            y: centerY - size - 2,
+            size,
+            font: fonts.regular,
             color
         });
     }
@@ -336,13 +517,24 @@
 
         matrix.forEach((row, r) => {
             row.forEach((value, c) => {
-                const text = opts.empty ? '' : String(value);
+                const text = opts.empty ? '' : exactValueText(value);
                 if (!text) return;
                 const size = opts.fontSize;
                 const textWidth = fonts.regular.widthOfTextAtSize(text, size);
                 const tx = x + bracketArm + c * opts.cellWidth + (opts.cellWidth - textWidth) / 2;
                 const ty = y - (r + 1) * opts.cellHeight + 5;
-                page.drawText(text, { x: tx, y: ty, size, font: fonts.regular, color });
+                if (isFraction(value) && value.denominator !== 1) {
+                    drawExactValue(
+                        page,
+                        value,
+                        x + bracketArm + c * opts.cellWidth + opts.cellWidth / 2,
+                        y - r * opts.cellHeight - opts.cellHeight / 2,
+                        fonts,
+                        opts
+                    );
+                } else {
+                    page.drawText(text, { x: tx, y: ty, size, font: fonts.regular, color });
+                }
             });
         });
 
@@ -567,6 +759,72 @@
         });
     }
 
+    function drawRrefWorksheetProblem(page, item, box, fonts, colors) {
+        const numberText = `${item.globalNumber}.`;
+        page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
+
+        page.drawText('Find the RREF of', {
+            x: box.x + 14,
+            y: box.y - 32,
+            size: 9,
+            font: fonts.bold,
+            color: colors.text
+        });
+        page.drawText('Input Matrix', {
+            x: box.x + 14,
+            y: box.y - 49,
+            size: 8,
+            font: fonts.bold,
+            color: colors.muted
+        });
+
+        const matrixTop = box.y - 62;
+        drawMatrix(page, item.matrix, box.x + 14, matrixTop, fonts, {
+            color: colors.text,
+            cellWidth: item.cols >= 4 ? 24 : 26,
+            cellHeight: 20,
+            fontSize: 10
+        });
+
+        const answerLabelY = box.y - 126;
+        page.drawText('RREF:', { x: box.x + 4, y: answerLabelY, size: 9, font: fonts.bold, color: colors.text });
+        drawEmptyMatrix(page, item.answerDimensions.rows, item.answerDimensions.cols, box.x + 14, answerLabelY - 6, fonts, {
+            color: colors.text,
+            cellWidth: item.answerDimensions.cols >= 4 ? 30 : 32,
+            cellHeight: 21,
+            fontSize: 10
+        });
+
+        for (let index = 0; index < 4; index++) {
+            const y = box.y - 186 - index * 20;
+            if (y <= box.y - box.height + 12) break;
+            page.drawLine({
+                start: { x: box.x + 4, y },
+                end: { x: box.x + box.width - 4, y },
+                thickness: 0.5,
+                color: colors.line
+            });
+        }
+    }
+
+    function drawRrefAnswerKeyProblem(page, item, box, fonts, colors) {
+        const numberText = `${item.globalNumber}.`;
+        page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
+
+        const matrixOptions = {
+            color: colors.text,
+            cellWidth: item.dimensions.cols >= 4 ? 30 : 32,
+            cellHeight: 25,
+            fontSize: 10,
+            fractionFontSize: 8
+        };
+        page.drawText('Original:', { x: box.x + 4, y: box.y - 32, size: 9, font: fonts.bold, color: colors.text });
+        drawMatrix(page, item.matrix, box.x + 58, box.y - 20, fonts, matrixOptions);
+
+        page.drawText('RREF:', { x: box.x + 4, y: box.y - 118, size: 9, font: fonts.bold, color: colors.text });
+        drawMatrix(page, item.exactAnswer, box.x + 58, box.y - 106, fonts, matrixOptions);
+    }
+
     function drawFooter(page, fonts, colors) {
         drawTextCentered(page, 'matrixcalcu.com', 18, fonts.regular, 8, colors.footer);
     }
@@ -775,6 +1033,110 @@
         return pdfDoc.save();
     }
 
+    async function createRrefWorksheetPdf(problemSet, options) {
+        const opts = options || {};
+        const plan = buildRrefWorksheetPlan(problemSet, opts);
+        const pdfLib = getPdfLib(opts);
+        const { PDFDocument, StandardFonts, rgb } = pdfLib;
+        const pdfDoc = await PDFDocument.create();
+        pdfDoc.setTitle('Matrix RREF Practice Worksheet');
+        pdfDoc.setAuthor('MatrixCalcu');
+        pdfDoc.setCreator('MatrixCalcu');
+        pdfDoc.setSubject('Matrix row reduction and RREF practice worksheet');
+        const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
+        pdfDoc.setCreationDate(date);
+        pdfDoc.setModificationDate(date);
+
+        const fonts = {
+            regular: await pdfDoc.embedFont(StandardFonts.Helvetica),
+            bold: await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+        };
+        const colors = {
+            text: rgb(0.10, 0.12, 0.16),
+            muted: rgb(0.36, 0.41, 0.45),
+            line: rgb(0.78, 0.80, 0.84),
+            footer: rgb(0.54, 0.58, 0.61)
+        };
+
+        plan.pages.forEach((pageInfo) => {
+            const page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+            const contentTop = drawHeader(page, plan, pageInfo, fonts, colors);
+            const left = plan.layout.marginLeft;
+            const right = PAGE_WIDTH - plan.layout.marginRight;
+            const footerTop = plan.layout.marginBottom + 18;
+            const gridBottom = footerTop + 8;
+            const availableWidth = right - left;
+            const availableHeight = contentTop - gridBottom;
+            const columns = plan.layout.columns;
+            const rows = plan.layout.rows;
+            const cellWidth = (availableWidth - plan.layout.columnGap * (columns - 1)) / columns;
+            const cellHeight = (availableHeight - plan.layout.rowGap * (rows - 1)) / rows;
+
+            pageInfo.problems.forEach((item, index) => {
+                const column = index % columns;
+                const row = Math.floor(index / columns);
+                const x = left + column * (cellWidth + plan.layout.columnGap);
+                const y = contentTop - row * (cellHeight + plan.layout.rowGap);
+                drawRrefWorksheetProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+            });
+            drawFooter(page, fonts, colors);
+        });
+
+        return pdfDoc.save();
+    }
+
+    async function createRrefAnswerKeyPdf(problemSet, options) {
+        const opts = options || {};
+        const plan = buildRrefAnswerKeyPlan(problemSet, opts);
+        const pdfLib = getPdfLib(opts);
+        const { PDFDocument, StandardFonts, rgb } = pdfLib;
+        const pdfDoc = await PDFDocument.create();
+        pdfDoc.setTitle('Matrix RREF Practice Answer Key');
+        pdfDoc.setAuthor('MatrixCalcu');
+        pdfDoc.setCreator('MatrixCalcu');
+        pdfDoc.setSubject('Matrix row reduction and RREF practice answer key');
+        const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
+        pdfDoc.setCreationDate(date);
+        pdfDoc.setModificationDate(date);
+
+        const fonts = {
+            regular: await pdfDoc.embedFont(StandardFonts.Helvetica),
+            bold: await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+        };
+        const colors = {
+            text: rgb(0.10, 0.12, 0.16),
+            muted: rgb(0.36, 0.41, 0.45),
+            line: rgb(0.78, 0.80, 0.84),
+            footer: rgb(0.54, 0.58, 0.61)
+        };
+
+        plan.pages.forEach((pageInfo) => {
+            const page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+            const contentTop = drawAnswerKeyHeader(page, plan, pageInfo, fonts, colors);
+            const left = plan.layout.marginLeft;
+            const right = PAGE_WIDTH - plan.layout.marginRight;
+            const footerTop = plan.layout.marginBottom + 18;
+            const gridBottom = footerTop + 8;
+            const availableWidth = right - left;
+            const availableHeight = contentTop - gridBottom;
+            const columns = plan.layout.columns;
+            const rows = plan.layout.rows;
+            const cellWidth = (availableWidth - plan.layout.columnGap * (columns - 1)) / columns;
+            const cellHeight = (availableHeight - plan.layout.rowGap * (rows - 1)) / rows;
+
+            pageInfo.problems.forEach((item, index) => {
+                const column = index % columns;
+                const row = Math.floor(index / columns);
+                const x = left + column * (cellWidth + plan.layout.columnGap);
+                const y = contentTop - row * (cellHeight + plan.layout.rowGap);
+                drawRrefAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+            });
+            drawFooter(page, fonts, colors);
+        });
+
+        return pdfDoc.save();
+    }
+
     async function downloadAdditionSubtractionWorksheetPdf(problemSet, options) {
         if (typeof document === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined') {
             throw new Error('PDF download requires a browser environment.');
@@ -863,12 +1225,59 @@
         return filename;
     }
 
+    async function downloadRrefWorksheetPdf(problemSet, options) {
+        if (typeof document === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined') {
+            throw new Error('PDF download requires a browser environment.');
+        }
+        const bytes = await createRrefWorksheetPdf(problemSet, options);
+        const filename = createPdfFilename(problemSet, 'worksheet');
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        try {
+            link.click();
+        } finally {
+            link.remove();
+            URL.revokeObjectURL(url);
+        }
+        return filename;
+    }
+
+    async function downloadRrefAnswerKeyPdf(problemSet, options) {
+        if (typeof document === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined') {
+            throw new Error('PDF download requires a browser environment.');
+        }
+        const bytes = await createRrefAnswerKeyPdf(problemSet, options);
+        const filename = createPdfFilename(problemSet, 'answer-key');
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        try {
+            link.click();
+        } finally {
+            link.remove();
+            URL.revokeObjectURL(url);
+        }
+        return filename;
+    }
+
     function createWorksheetPdf(problemSet, options) {
         if (problemSet && problemSet.type === ADD_SUB_TYPE) {
             return createAdditionSubtractionWorksheetPdf(problemSet, options);
         }
         if (problemSet && problemSet.type === MULTIPLICATION_TYPE) {
             return createMultiplicationWorksheetPdf(problemSet, options);
+        }
+        if (problemSet && problemSet.type === RREF_TYPE) {
+            return createRrefWorksheetPdf(problemSet, options);
         }
         const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
         throw new Error(`Unsupported PDF worksheet type: ${actual}`);
@@ -881,6 +1290,9 @@
         if (problemSet && problemSet.type === MULTIPLICATION_TYPE) {
             return createMultiplicationAnswerKeyPdf(problemSet, options);
         }
+        if (problemSet && problemSet.type === RREF_TYPE) {
+            return createRrefAnswerKeyPdf(problemSet, options);
+        }
         const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
         throw new Error(`Unsupported PDF answer key type: ${actual}`);
     }
@@ -891,6 +1303,9 @@
         }
         if (problemSet && problemSet.type === MULTIPLICATION_TYPE) {
             return downloadMultiplicationWorksheetPdf(problemSet, options);
+        }
+        if (problemSet && problemSet.type === RREF_TYPE) {
+            return downloadRrefWorksheetPdf(problemSet, options);
         }
         const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
         throw new Error(`Unsupported PDF worksheet type: ${actual}`);
@@ -903,6 +1318,9 @@
         if (problemSet && problemSet.type === MULTIPLICATION_TYPE) {
             return downloadMultiplicationAnswerKeyPdf(problemSet, options);
         }
+        if (problemSet && problemSet.type === RREF_TYPE) {
+            return downloadRrefAnswerKeyPdf(problemSet, options);
+        }
         const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
         throw new Error(`Unsupported PDF answer key type: ${actual}`);
     }
@@ -911,24 +1329,40 @@
         PAGE_WIDTH,
         PAGE_HEIGHT,
         PROBLEMS_PER_PAGE,
+        RREF_PROBLEMS_PER_PAGE,
         buildAdditionSubtractionWorksheetPlan,
         buildAdditionSubtractionAnswerKeyPlan,
         buildMultiplicationWorksheetPlan,
         buildMultiplicationAnswerKeyPlan,
+        buildRrefWorksheetPlan,
+        buildRrefAnswerKeyPlan,
         createAdditionSubtractionWorksheetPdf,
         createAdditionSubtractionAnswerKeyPdf,
         createMultiplicationWorksheetPdf,
         createMultiplicationAnswerKeyPdf,
+        createRrefWorksheetPdf,
+        createRrefAnswerKeyPdf,
         downloadAdditionSubtractionWorksheetPdf,
         downloadAdditionSubtractionAnswerKeyPdf,
         downloadMultiplicationWorksheetPdf,
         downloadMultiplicationAnswerKeyPdf,
+        downloadRrefWorksheetPdf,
+        downloadRrefAnswerKeyPdf,
         createWorksheetPdf,
         createAnswerKeyPdf,
         downloadWorksheetPdf,
         downloadAnswerKeyPdf,
         createPdfFilename
     };
+
+    Object.defineProperty(api, '__test', {
+        value: {
+            drawMatrix,
+            drawRrefWorksheetProblem,
+            drawRrefAnswerKeyProblem
+        },
+        enumerable: false
+    });
 
     root.MatrixPractice = root.MatrixPractice || {};
     root.MatrixPractice.pdf = api;

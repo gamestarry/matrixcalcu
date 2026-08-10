@@ -9,6 +9,7 @@ const pdfLib = require('../js/vendor/pdf-lib-1.17.1.min.js');
 const pdf = require('../js/practice/practice-pdf.js');
 const additionGenerator = require('../js/practice/generators/addition-subtraction.js');
 const multiplicationGenerator = require('../js/practice/generators/multiplication.js');
+const rrefGenerator = require('../js/practice/generators/rref.js');
 
 function assertHeader(bytes) {
     const header = Buffer.from(bytes.slice(0, 4)).toString('ascii');
@@ -185,6 +186,137 @@ function makeMultiplicationPoisonedAnswerKeySet() {
         settings: { difficulty: 'easy' },
         problems: [problem]
     };
+}
+
+function makeRrefPoisonedWorksheetSet() {
+    const problem = {
+        id: 'rref-poisoned-1',
+        type: 'rref',
+        subtype: null,
+        difficulty: 'easy',
+        inputs: {
+            matrix: [[1, 2, 3], [4, 5, 6]]
+        },
+        dimensions: { rows: 2, cols: 3 }
+    };
+    Object.defineProperty(problem, 'exactAnswer', {
+        get() {
+            throw new Error('PDF RREF worksheet plan must not read exactAnswer.');
+        }
+    });
+    Object.defineProperty(problem, 'steps', {
+        get() {
+            throw new Error('PDF RREF worksheet plan must not read steps.');
+        }
+    });
+    return {
+        id: 'rref-poisoned-worksheet-set',
+        seed: 'rref-poisoned-seed',
+        type: 'rref',
+        settings: { difficulty: 'easy' },
+        problems: [problem]
+    };
+}
+
+function makeRrefPoisonedAnswerKeySet() {
+    const problem = {
+        id: 'rref-answer-poisoned-1',
+        type: 'rref',
+        subtype: null,
+        difficulty: 'easy',
+        inputs: {
+            matrix: [[2, 4, 6], [1, 3, 5]]
+        },
+        exactAnswer: {
+            matrix: [
+                [1, 0, { kind: 'fraction', numerator: -1, denominator: 2 }],
+                [0, 1, { kind: 'fraction', numerator: 7, denominator: 4 }]
+            ]
+        },
+        dimensions: { rows: 2, cols: 3 }
+    };
+    Object.defineProperty(problem, 'steps', {
+        get() {
+            throw new Error('PDF RREF answer key plan must not read steps.');
+        }
+    });
+    return {
+        id: 'rref-answer-poisoned-set',
+        seed: 'rref-answer-poisoned-seed',
+        type: 'rref',
+        settings: { difficulty: 'easy' },
+        problems: [problem]
+    };
+}
+
+function assertFractionDrawsAsStackedFraction() {
+    const calls = [];
+    const page = {
+        drawLine(args) {
+            calls.push({ kind: 'line', args });
+        },
+        drawText(text, args) {
+            calls.push({ kind: 'text', text, args });
+        }
+    };
+    const font = {
+        widthOfTextAtSize(text, size) {
+            return String(text).length * size * 0.55;
+        }
+    };
+    const fonts = { regular: font };
+    pdf.__test.drawMatrix(page, [[
+        0,
+        { kind: 'fraction', numerator: 1, denominator: 2 },
+        { kind: 'fraction', numerator: -1, denominator: 3 },
+        { kind: 'fraction', numerator: 4, denominator: 1 }
+    ]], 10, 80, fonts, {
+        color: 'black',
+        cellWidth: 34,
+        cellHeight: 26,
+        fontSize: 10
+    });
+    assert(calls.some((call) => call.kind === 'text' && call.text === '0'));
+    assert(calls.some((call) => call.kind === 'text' && call.text === '1'));
+    assert(calls.some((call) => call.kind === 'text' && call.text === '2'));
+    assert(calls.some((call) => call.kind === 'text' && call.text === '-1'));
+    assert(calls.some((call) => call.kind === 'text' && call.text === '3'));
+    assert(calls.some((call) => call.kind === 'text' && call.text === '4'));
+    assert(calls.some((call) => call.kind === 'line' && call.args.thickness === 0.7));
+    assert(!calls.some((call) => call.kind === 'text' && call.text === '4/1'));
+    assert(!calls.some((call) => call.kind === 'text' && /0\.5|0\.333333|-0\.333333/.test(call.text)));
+}
+
+function captureRrefWorksheetProblemDraws() {
+    const calls = [];
+    const page = {
+        drawLine(args) {
+            calls.push({ kind: 'line', args });
+        },
+        drawText(text, args) {
+            calls.push({ kind: 'text', text, args });
+        }
+    };
+    const font = {
+        widthOfTextAtSize(text, size) {
+            return String(text).length * size * 0.55;
+        }
+    };
+    const fonts = { regular: font, bold: font };
+    const colors = { text: 'text', muted: 'muted', line: 'line' };
+    pdf.__test.drawRrefWorksheetProblem(page, {
+        globalNumber: 1,
+        matrix: [[1, 2, 3], [4, 5, 6]],
+        rows: 2,
+        cols: 3,
+        answerDimensions: { rows: 2, cols: 3 }
+    }, {
+        x: 36,
+        y: 646,
+        width: 260,
+        height: 285
+    }, fonts, colors);
+    return calls;
 }
 
 function assertContinuousNumbers(plan) {
@@ -500,22 +632,186 @@ async function runTests() {
     assert(!/\s|[:/?#\\]/.test(pdf.createPdfFilename({ type: 'multiplication', seed: 'My Seed: 01/Unsafe?' }, 'answer-key')));
     rows.push(['T16', 'multiplication filenames use type-specific safe worksheet and answer-key names', 'pass']);
 
+    assert.throws(() => pdf.buildRrefWorksheetPlan({ type: 'multiplication', problems: [] }), /Unsupported RREF worksheet type: multiplication/);
+    assert.throws(() => pdf.buildRrefAnswerKeyPlan({ type: 'addition-subtraction', problems: [] }), /Unsupported RREF answer key type: addition-subtraction/);
+    rows.push(['T17', 'RREF-specific builders accept only RREF problem sets', 'pass']);
+
+    const rrefFour = await rrefGenerator.generateRrefSet({
+        seed: 'pdf-rref-four',
+        count: 4,
+        difficulty: 'easy',
+        rows: 2,
+        cols: 3,
+        minValue: 0,
+        maxValue: 5,
+        includeNegatives: false
+    });
+    const rrefSix = await rrefGenerator.generateRrefSet(Object.assign({}, rrefFour.settings, { seed: 'pdf-rref-six', count: 6 }));
+    const rrefEight = await rrefGenerator.generateRrefSet(Object.assign({}, rrefFour.settings, { seed: 'pdf-rref-eight', count: 8 }));
+    const rrefTen = await rrefGenerator.generateRrefSet(Object.assign({}, rrefFour.settings, { seed: 'pdf-rref-ten', count: 10 }));
+    const rrefMedium = await rrefGenerator.generateRrefSet({
+        seed: 'pdf-rref-medium',
+        count: 6,
+        difficulty: 'medium',
+        rows: 3,
+        cols: 3,
+        minValue: -5,
+        maxValue: 5,
+        includeNegatives: true
+    });
+    const rrefHard = await rrefGenerator.generateRrefSet({
+        seed: 'pdf-rref-hard',
+        count: 6,
+        difficulty: 'hard',
+        rows: 3,
+        cols: 4,
+        minValue: -7,
+        maxValue: 7,
+        includeNegatives: true
+    });
+
+    const rrefWorksheetFour = pdf.buildRrefWorksheetPlan(rrefFour);
+    assert.strictEqual(rrefWorksheetFour.kind, 'worksheet');
+    assert.strictEqual(rrefWorksheetFour.type, 'rref');
+    assert.deepStrictEqual(rrefWorksheetFour.paper, { width: 612, height: 792 });
+    assert.strictEqual(rrefWorksheetFour.subtitle, 'Reduced Row Echelon Form');
+    assert.strictEqual(rrefWorksheetFour.instructions, 'Reduce each matrix to reduced row echelon form (RREF). Show your work.');
+    assert.strictEqual(rrefWorksheetFour.layout.problemsPerPage, 4);
+    assert.strictEqual(rrefWorksheetFour.layout.columns, 2);
+    assert.strictEqual(rrefWorksheetFour.layout.rows, 2);
+    assert.strictEqual(rrefWorksheetFour.pages.length, 1);
+    assert.deepStrictEqual(rrefWorksheetFour.pages[0].problems.map((item) => item.globalNumber), [1, 2, 3, 4]);
+    assert.deepStrictEqual(rrefWorksheetFour.pages[0].problems.map((item) => item.id), ids(rrefFour));
+    assert.deepStrictEqual(rrefWorksheetFour.pages[0].problems[0].matrix, rrefFour.problems[0].inputs.matrix);
+    assert.deepStrictEqual(rrefWorksheetFour.pages[0].problems[0].answerDimensions, { rows: 2, cols: 3 });
+    assertNoAnswerOrSteps(rrefWorksheetFour);
+    pdf.buildRrefWorksheetPlan(makeRrefPoisonedWorksheetSet());
+    rows.push(['T18', 'RREF worksheet plan is 4 per Letter page and omits exact answers and steps', 'pass']);
+
+    const rrefWorksheetSix = pdf.buildRrefWorksheetPlan(rrefSix);
+    assert.strictEqual(rrefWorksheetSix.pages.length, 2);
+    assert.deepStrictEqual(rrefWorksheetSix.pages[1].problems.map((item) => item.globalNumber), [5, 6]);
+    assert.strictEqual(rrefWorksheetSix.pages[1].problems.length, 2);
+    assert.strictEqual(pdf.buildRrefWorksheetPlan(rrefEight).pages.length, 2);
+    assert.strictEqual(pdf.buildRrefWorksheetPlan(rrefTen).pages.length, 3);
+    assert.strictEqual(pdf.buildRrefWorksheetPlan(rrefMedium).layout.problemsPerPage, 4);
+    assert.strictEqual(pdf.buildRrefWorksheetPlan(rrefHard).layout.problemsPerPage, 4);
+    assertContinuousNumbers(pdf.buildRrefWorksheetPlan(rrefTen));
+    rows.push(['T19', 'RREF worksheet pagination is fixed at 4 problems for all difficulties', 'pass']);
+
+    const rrefAnswerPlan = pdf.buildRrefAnswerKeyPlan(rrefSix);
+    assert.strictEqual(rrefAnswerPlan.kind, 'answer-key');
+    assert.strictEqual(rrefAnswerPlan.type, 'rref');
+    assert.strictEqual(rrefAnswerPlan.subtitle, 'Row Reduction (RREF)');
+    assert.strictEqual(rrefAnswerPlan.layout.problemsPerPage, 4);
+    assert.strictEqual(rrefAnswerPlan.pages.length, 2);
+    assert.deepStrictEqual(rrefAnswerPlan.pages[1].problems.map((item) => item.globalNumber), [5, 6]);
+    assert.deepStrictEqual(rrefAnswerPlan.pages[0].problems[0].matrix, rrefSix.problems[0].inputs.matrix);
+    assert.deepStrictEqual(rrefAnswerPlan.pages[0].problems[0].exactAnswer, rrefSix.problems[0].exactAnswer.matrix);
+    assertNoSteps(rrefAnswerPlan);
+    const rrefOriginalNumerator = rrefAnswerPlan.pages[0].problems
+        .flatMap((item) => item.exactAnswer)
+        .flat()
+        .find((value) => value && typeof value === 'object');
+    if (rrefOriginalNumerator) {
+        const problemValue = rrefSix.problems.flatMap((problem) => problem.exactAnswer.matrix).flat()
+            .find((value) => value && typeof value === 'object');
+        rrefOriginalNumerator.numerator = 999;
+        assert.notStrictEqual(problemValue.numerator, 999);
+    }
+    pdf.buildRrefAnswerKeyPlan(makeRrefPoisonedAnswerKeySet());
+    rows.push(['T20', 'RREF answer key plan uses exactAnswer directly, deep-clones fractions, and omits steps', 'pass']);
+
+    assertFractionDrawsAsStackedFraction();
+    rows.push(['T21', 'RREF exact fractions draw with numerator, denominator, and vector fraction bar', 'pass']);
+
+    const rrefWorksheetDraws = captureRrefWorksheetProblemDraws();
+    assert(rrefWorksheetDraws.some((call) => call.kind === 'text' && call.text === '1.'));
+    assert(rrefWorksheetDraws.some((call) => call.kind === 'text' && call.text === 'Find the RREF of'));
+    assert(rrefWorksheetDraws.some((call) => call.kind === 'text' && call.text === 'Input Matrix'));
+    assert(rrefWorksheetDraws.some((call) => call.kind === 'text' && call.text === 'RREF:'));
+    const rrefLabelIndex = rrefWorksheetDraws.findIndex((call) => call.kind === 'text' && call.text === 'RREF:');
+    const blankMatrixFirstLine = rrefWorksheetDraws.slice(rrefLabelIndex + 1).find((call) => call.kind === 'line');
+    assert.deepStrictEqual(blankMatrixFirstLine.args.start, { x: 50, y: 514 });
+    const blankMatrixTop = blankMatrixFirstLine.args.start.y;
+    const blankMatrixBottom = blankMatrixTop - 2 * 21;
+    const workingLines = rrefWorksheetDraws.filter((call) => call.kind === 'line' && call.args.color === 'line');
+    assert.strictEqual(workingLines.length, 4);
+    const firstWorkingLineY = workingLines[0].args.start.y;
+    assert.strictEqual(firstWorkingLineY, 460);
+    assert(firstWorkingLineY < blankMatrixBottom);
+    assert.strictEqual(blankMatrixBottom - firstWorkingLineY, 12);
+    workingLines.forEach((line) => {
+        assert(line.args.start.y < blankMatrixBottom);
+        assert(line.args.end.y < blankMatrixBottom);
+    });
+    [1, 2, 3, 4, 5, 6].forEach((value) => {
+        assert(rrefWorksheetDraws.some((call) => call.kind === 'text' && call.text === String(value)));
+    });
+    assert(!rrefWorksheetDraws.some((call) => call.kind === 'text' && call.text === '17/25'));
+    rows.push(['T21a', 'RREF worksheet problem draw includes prompt labels, original matrix, blank RREF matrix, and work lines', 'pass']);
+
+    const rrefBefore = JSON.stringify(rrefSix);
+    const rrefWorksheetBytes = await pdf.createRrefWorksheetPdf(rrefSix, {
+        pdfLib,
+        creationDate: new Date('2024-01-01T00:00:00Z')
+    });
+    const rrefAnswerBytes = await pdf.createRrefAnswerKeyPdf(rrefSix, {
+        pdfLib,
+        creationDate: new Date('2024-01-01T00:00:00Z')
+    });
+    assert(rrefWorksheetBytes instanceof Uint8Array);
+    assert(rrefAnswerBytes instanceof Uint8Array);
+    assertHeader(rrefWorksheetBytes);
+    assertHeader(rrefAnswerBytes);
+    assert.strictEqual(await pageCount(rrefWorksheetBytes), 2);
+    assert.strictEqual(await pageCount(rrefAnswerBytes), 2);
+    (await pageSizes(rrefWorksheetBytes)).forEach((size) => assert.deepStrictEqual(size, { width: 612, height: 792 }));
+    (await pageSizes(rrefAnswerBytes)).forEach((size) => assert.deepStrictEqual(size, { width: 612, height: 792 }));
+    assert.deepStrictEqual(await pdfMetadata(rrefWorksheetBytes), {
+        title: 'Matrix RREF Practice Worksheet',
+        author: 'MatrixCalcu',
+        creator: 'MatrixCalcu',
+        subject: 'Matrix row reduction and RREF practice worksheet'
+    });
+    assert.deepStrictEqual(await pdfMetadata(rrefAnswerBytes), {
+        title: 'Matrix RREF Practice Answer Key',
+        author: 'MatrixCalcu',
+        creator: 'MatrixCalcu',
+        subject: 'Matrix row reduction and RREF practice answer key'
+    });
+    assert.strictEqual(JSON.stringify(rrefSix), rrefBefore);
+    rows.push(['T22', 'RREF PDFs are valid Letter Uint8Arrays with metadata and do not mutate problem sets', 'pass']);
+
+    assert.strictEqual(
+        pdf.createPdfFilename({ type: 'rref', seed: 'My Seed: 01/Unsafe?' }, 'worksheet'),
+        'matrix-rref-worksheet-my-seed-01-unsafe.pdf'
+    );
+    assert.strictEqual(
+        pdf.createPdfFilename({ type: 'rref', seed: 'My Seed: 01/Unsafe?' }, 'answer-key'),
+        'matrix-rref-answer-key-my-seed-01-unsafe.pdf'
+    );
+    assert.strictEqual(await pageCount(await pdf.createWorksheetPdf(rrefFour, { pdfLib })), 1);
+    assert.strictEqual(await pageCount(await pdf.createAnswerKeyPdf(rrefFour, { pdfLib })), 1);
+    rows.push(['T23', 'RREF filenames and generic PDF dispatchers use the current set seed and type', 'pass']);
+
     const source = fs.readFileSync(path.join(__dirname, '..', 'js', 'practice', 'practice-pdf.js'), 'utf8');
     assert(!/\bdocument\b/.test(source.replace(/downloadAdditionSubtractionWorksheetPdf[\s\S]*?const api =/, 'const api =')));
     assert(!/\bwindow\.print\b/.test(source));
     assert(!/\bMath\.random\b/.test(source));
     assert(!/html2canvas|canvas|fetch\(|XMLHttpRequest|import\(/.test(source));
     assert(!/fontkit/.test(source));
+    assert(!/reduceMatrixForPractice|calculateRREFWithSteps/.test(source));
     assert(source.includes('drawMultiplicationSign'));
     assert(source.includes('drawLine'));
     assert(!source.includes("'x'"));
-    rows.push(['T17', 'PDF generation path avoids DOM measurement, window.print, network, screenshots, and extra fonts', 'pass']);
+    rows.push(['T24', 'PDF generation path avoids DOM measurement, window.print, network, screenshots, extra fonts, and RREF recomputation', 'pass']);
 
     const samplePath = path.join(os.tmpdir(), 'matrix-addition-subtraction-worksheet-sample.pdf');
     fs.writeFileSync(samplePath, Buffer.from(bytesSix));
     assert(fs.existsSync(samplePath));
     fs.unlinkSync(samplePath);
-    rows.push(['T18', 'temporary manual sample PDF can be produced and cleaned up', 'pass']);
+    rows.push(['T25', 'temporary manual sample PDF can be produced and cleaned up', 'pass']);
 
     return rows;
 }
