@@ -1,5 +1,6 @@
 const assert = require('assert');
 const fs = require('fs');
+const vm = require('vm');
 
 const ui = require('../js/practice/practice-ui.js');
 
@@ -64,11 +65,20 @@ class FakeTextNode {
 
 function installFakeDocument() {
     global.document = {
+        readyState: 'loading',
         createElement(tagName) {
             return new FakeNode(tagName);
         },
         createTextNode(text) {
             return new FakeTextNode(text);
+        },
+        querySelector() {
+            return null;
+        },
+        getElementById() {
+            return null;
+        },
+        addEventListener() {
         }
     };
 }
@@ -91,6 +101,59 @@ function collectClassNodes(node, className) {
     if (!node || node instanceof FakeTextNode) return [];
     const own = String(node.className).split(/\s+/).includes(className) ? [node] : [];
     return own.concat(node.children.flatMap((child) => collectClassNodes(child, className)));
+}
+
+function extractPracticePageConfig(html) {
+    const match = html.match(/window\.MATRIX_PRACTICE_PAGE_CONFIG = ([\s\S]*?);\s*<\/script>/);
+    assert(match, 'Practice page config must be present.');
+    const sandbox = { window: {} };
+    vm.createContext(sandbox);
+    vm.runInContext(`window.MATRIX_PRACTICE_PAGE_CONFIG = ${match[1]};`, sandbox);
+    return sandbox.window.MATRIX_PRACTICE_PAGE_CONFIG;
+}
+
+function assertNoSpanishVisibleEnglish(text) {
+    [
+        'Worksheet',
+        'Answer Key',
+        'Detailed Solutions',
+        'Exact Answers',
+        'Practice Set',
+        'Difficulty',
+        'Easy',
+        'Medium',
+        'Hard',
+        'Number of Problems',
+        'Number of Variables',
+        'Solution Type',
+        'Minimum Value',
+        'Maximum Value',
+        'Generate Worksheet',
+        'Download Worksheet PDF',
+        'Download Answer Key PDF',
+        'Creating Worksheet PDF',
+        'Creating Answer Key PDF',
+        'Problem',
+        'Answer',
+        'Steps',
+        'Show Answer',
+        'Hide Answer',
+        'Show Steps',
+        'Hide Steps',
+        'Unique Solution',
+        'No Solution',
+        'Infinitely Many Solutions',
+        'Input Matrix',
+        'Find the RREF of',
+        'Set seed',
+        'Step-by-Step Solutions',
+        'Settings changed',
+        'Unable to',
+        'Solve each problem',
+        'Show your work'
+    ].forEach((phrase) => {
+        assert.strictEqual(text.includes(phrase), false, `Unexpected English phrase in Spanish UI: ${phrase}`);
+    });
 }
 
 assert.strictEqual(ui.formatScalarText(3), '3');
@@ -539,6 +602,124 @@ assert.deepStrictEqual(ui.buildPageMetadata(makeLinearSystemSet(8, 2), 'answer-k
 assert.deepStrictEqual(ui.buildPageMetadata(makeLinearSystemSet(6, 3), 'answer-key')[0].problems.map((item) => item.problemNumber), [1, 2, 3, 4]);
 assert.deepStrictEqual(ui.buildPageMetadata(makeLinearSystemSet(6, 3), 'answer-key')[1].problems.map((item) => item.problemNumber), [5, 6]);
 
+const uiPath = require.resolve('../js/practice/practice-ui.js');
+delete require.cache[uiPath];
+const esPageConfig = extractPracticePageConfig(fs.readFileSync('es/matrix-practice-generator.html', 'utf8'));
+global.MATRIX_PRACTICE_PAGE_CONFIG = esPageConfig;
+const uiEs = require('../js/practice/practice-ui.js');
+delete global.MATRIX_PRACTICE_PAGE_CONFIG;
+
+assert.strictEqual(
+    uiEs.formatRrefOperationText({ kind: 'swap-rows', rowA: 0, rowB: 2 }),
+    'Intercambia R1 y R3'
+);
+assert.strictEqual(
+    uiEs.formatRrefOperationText({ kind: 'scale-row', row: 1, factor: { kind: 'fraction', numerator: -1, denominator: 3 } }),
+    'Multiplica R2 por -1/3'
+);
+assert.strictEqual(
+    uiEs.formatRrefOperationText({ kind: 'add-row-multiple', targetRow: 2, sourceRow: 0, multiple: 4 }),
+    'Suma 4 veces R1 a R3'
+);
+
+const rrefAnswerKeyPageEs = uiEs.__test.renderPaperPage({
+    id: 'rref-render-set-es',
+    seed: '775404156',
+    type: 'rref',
+    settings: { difficulty: 'easy' },
+    problems: [rrefRenderProblem]
+}, {
+    viewMode: 'answer-key',
+    layout: 'regular',
+    pageIndex: 0,
+    pageNumber: 1,
+    totalPages: 1,
+    problems: [{ problem: rrefRenderProblem, problemNumber: 1 }]
+}, 'answer-key');
+assert.strictEqual(
+    rrefAnswerKeyPageEs.children[0].children[1].textContent,
+    'Forma escalonada reducida por filas · Respuestas exactas · Semilla del conjunto: 775404156'
+);
+assert.deepStrictEqual(collectLabels(rrefAnswerKeyPageEs), ['Original:', 'RREF:']);
+assertNoSpanishVisibleEnglish(rrefAnswerKeyPageEs.textContent);
+
+const rrefWorksheetNodeEs = uiEs.__test.renderWorksheetProblem(rrefRenderProblem, 1);
+assert.strictEqual(rrefWorksheetNodeEs.textContent.includes('Halla la RREF de'), true);
+assert.deepStrictEqual(collectLabels(rrefWorksheetNodeEs), ['Matriz de entrada']);
+assert.strictEqual(rrefWorksheetNodeEs.textContent.includes('Respuesta:'), false);
+assertNoSpanishVisibleEnglish(rrefWorksheetNodeEs.textContent);
+
+const linearUniqueAnswerEs = uiEs.__test.renderAnswerKeyProblem(linearUniqueProblem, 1);
+assert.strictEqual(linearUniqueAnswerEs.textContent.includes('Sistema original:'), true);
+assert.strictEqual(linearUniqueAnswerEs.textContent.includes('Solución única'), true);
+assertNoSpanishVisibleEnglish(linearUniqueAnswerEs.textContent);
+
+const linearNoneAnswerEs = uiEs.__test.renderAnswerKeyProblem(makeLinearSystemProblem('linear-none-es', 2, 'none'), 1);
+assert.strictEqual(linearNoneAnswerEs.textContent.includes('Sin solución'), true);
+assert.strictEqual(linearNoneAnswerEs.textContent.includes('No Solution'), false);
+assertNoSpanishVisibleEnglish(linearNoneAnswerEs.textContent);
+
+const linearInfiniteAnswerEs = uiEs.__test.renderAnswerKeyProblem(makeLinearSystemProblem('linear-infinite-es', 2, 'infinite'), 1);
+assert.strictEqual(linearInfiniteAnswerEs.textContent.includes('Infinitas soluciones'), true);
+assert.strictEqual(linearInfiniteAnswerEs.textContent.includes('Infinitely Many Solutions'), false);
+assertNoSpanishVisibleEnglish(linearInfiniteAnswerEs.textContent);
+
+const addSubProblemEs = {
+    id: 'add-es',
+    type: 'addition-subtraction',
+    subtype: 'add',
+    difficulty: 'easy',
+    inputs: { matrixA: [[1, 2], [3, 4]], matrixB: [[5, 6], [7, 8]] },
+    exactAnswer: { matrix: [[6, 8], [10, 12]] },
+    dimensions: { rows: 2, cols: 2 },
+    steps: [{ kind: 'element-operation', row: 0, column: 0, operator: 'add', leftValue: 1, rightValue: 5, result: 6 }]
+};
+const multiplicationProblemEs = {
+    id: 'mult-es',
+    type: 'multiplication',
+    difficulty: 'easy',
+    inputs: { matrixA: [[1, 2], [3, 4]], matrixB: [[5, 6], [7, 8]] },
+    exactAnswer: { matrix: [[19, 22], [43, 50]] },
+    dimensions: { rowsA: 2, colsA: 2, colsB: 2, resultRows: 2, resultCols: 2 },
+    steps: [{ kind: 'dot-product', row: 0, column: 0, terms: [{ leftValue: 1, rightValue: 5 }, { leftValue: 2, rightValue: 7 }], result: 19 }]
+};
+[
+    addSubProblemEs,
+    multiplicationProblemEs,
+    rrefRenderProblem,
+    linearUniqueProblem
+].forEach((problem, index) => {
+    const worksheet = uiEs.__test.renderWorksheetProblem(problem, index + 1);
+    const answerKey = uiEs.__test.renderAnswerKeyProblem(problem, index + 1);
+    assertNoSpanishVisibleEnglish(worksheet.textContent);
+    assertNoSpanishVisibleEnglish(answerKey.textContent);
+});
+
+const rrefStepsEs = uiEs.__test.renderSteps({
+    type: 'rref',
+    inputs: rrefRenderProblem.inputs,
+    exactAnswer: rrefRenderProblem.exactAnswer,
+    steps: [
+        { kind: 'swap-rows', rowA: 0, rowB: 1 },
+        { kind: 'scale-row', row: 1, factor: { kind: 'fraction', numerator: 1, denominator: 3 } },
+        { kind: 'add-row-multiple', targetRow: 1, sourceRow: 0, multiple: -2 }
+    ]
+});
+assert.strictEqual(rrefStepsEs.textContent.includes('Intercambia R1 y R2'), true);
+assert.strictEqual(rrefStepsEs.textContent.includes('Multiplica R2 por 1/3'), true);
+assert.strictEqual(rrefStepsEs.textContent.includes('Suma -2 veces R1 a R2'), true);
+assertNoSpanishVisibleEnglish(rrefStepsEs.textContent);
+
+[
+    addSubProblemEs,
+    multiplicationProblemEs,
+    rrefRenderProblem,
+    makeLinearSystemProblem('linear-infinite-steps-es', 2, 'infinite')
+].forEach((problem) => {
+    assertNoSpanishVisibleEnglish(uiEs.__test.renderAnswer(problem).textContent);
+    assertNoSpanishVisibleEnglish(uiEs.__test.renderSteps(problem).textContent);
+});
+
 const originalProblems = addSubEight.problems.slice();
 const chunks = ui.chunkProblems(addSubEight.problems, 6);
 assert.deepStrictEqual(addSubEight.problems, originalProblems);
@@ -604,6 +785,7 @@ assert.strictEqual(ui.validateSettings(Object.assign(ui.createInitialState(), { 
 
 const source = fs.readFileSync('js/practice/practice-ui.js', 'utf8');
 const html = fs.readFileSync('en/matrix-practice-generator.html', 'utf8');
+const esHtml = fs.readFileSync('es/matrix-practice-generator.html', 'utf8');
 assert.ok(!source.includes('Math.random'));
 assert.ok(!source.includes('.click('));
 assert.ok(!source.includes('window.print'));
@@ -624,7 +806,23 @@ assert.ok(html.includes('max-width: 320px;'));
 assert.ok(html.includes('max-width: none;'));
 assert.ok(!html.includes('<span class="globe-icon">Language</span> English'));
 assert.ok(html.includes('<span class="globe-icon">🌐</span> English'));
+assert.ok(html.includes('hreflang="en" href="https://matrixcalcu.com/en/matrix-practice-generator.html"'));
+assert.ok(html.includes('hreflang="es" href="https://matrixcalcu.com/es/matrix-practice-generator.html"'));
+assert.ok(html.includes('href="/es/matrix-practice-generator.html" lang="es"'));
 assert.ok(html.includes('lang="es">Español</a>'));
+assert.ok(esHtml.includes('<html lang="es">'));
+assert.ok(esHtml.includes('<link rel="canonical" href="https://matrixcalcu.com/es/matrix-practice-generator.html">'));
+assert.ok(esHtml.includes('hreflang="en" href="https://matrixcalcu.com/en/matrix-practice-generator.html"'));
+assert.ok(esHtml.includes('hreflang="es" href="https://matrixcalcu.com/es/matrix-practice-generator.html"'));
+assert.ok(esHtml.includes('<span class="globe-icon">🌐</span> Español'));
+assert.ok(esHtml.includes('href="/en/matrix-practice-generator.html" lang="en"'));
+assert.ok(esHtml.includes('href="/es/matrix-practice-generator.html" lang="es"'));
+assert.ok(esHtml.includes('locale: "es"'));
+assert.ok(esHtml.includes('Generador de ejercicios de matrices'));
+assert.ok(esHtml.includes('Forma escalonada reducida por filas'));
+assert.ok(esHtml.includes('Sistemas de ecuaciones lineales'));
+assert.ok(esHtml.includes('Descargar PDF de la hoja'));
+assert.ok(esHtml.includes('Descargar PDF de respuestas'));
 assert.ok(html.includes('background: #93cfde;'));
 assert.ok(html.includes('color: #12334a;'));
 assert.ok(html.includes('background: #7fc3d5;'));

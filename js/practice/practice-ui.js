@@ -38,6 +38,13 @@
         inputMatrix: 'Input Matrix',
         augmentedMatrix: 'Augmented Matrix',
         findRref: 'Find the RREF of',
+        original: 'Original:',
+        originalSystem: 'Original System:',
+        rrefLabel: 'RREF:',
+        answerLabel: 'Answer:',
+        answerBlank: 'Answer: __________________',
+        solutionBlank: 'Solution: __________________',
+        setSeed: 'Set seed',
         noSteps: 'No steps available.',
         generateError: 'Unable to generate this practice set. Try another option.',
         noSolutionSummary: 'No solution',
@@ -77,7 +84,14 @@
         invalidRange: 'Minimum Value must be less than or equal to Maximum Value.',
         integerRequired: 'Minimum Value and Maximum Value must be integers.',
         multiplicationSizeHelp: 'Matrix B rows automatically match Matrix A columns.',
-        settingsChanged: 'Settings changed. Click Generate Worksheet to create a new set.'
+        settingsChanged: 'Settings changed. Click Generate Worksheet to create a new set.',
+        matrixAdditionAndSubtraction: 'Matrix Addition and Subtraction',
+        matrixMultiplication: 'Matrix Multiplication',
+        reducedRowEchelonForm: 'Reduced Row Echelon Form',
+        systemsOfLinearEquations: 'Systems of Linear Equations',
+        rrefSwapRowsTemplate: '',
+        rrefScaleRowTemplate: '',
+        rrefAddRowMultipleTemplate: ''
     };
 
     const COUNT_OPTIONS = [4, 6, 8, 10];
@@ -119,10 +133,10 @@
     };
 
     const WORKSHEET_TYPE_LABELS = {
-        'addition-subtraction': 'Matrix Addition and Subtraction',
-        multiplication: 'Matrix Multiplication',
-        rref: 'Reduced Row Echelon Form',
-        'linear-system': 'Systems of Equations'
+        'addition-subtraction': 'matrixAdditionAndSubtraction',
+        multiplication: 'matrixMultiplication',
+        rref: 'reducedRowEchelonForm',
+        'linear-system': 'systemsOfEquations'
     };
 
     const VIEW_MODES = ['worksheet', 'answer-key', 'detailed-solutions'];
@@ -248,7 +262,13 @@
     }
 
     function getWorksheetTypeLabel(problemSet) {
-        return WORKSHEET_TYPE_LABELS[problemSet.type] || getTypeLabel(problemSet.type);
+        return WORKSHEET_TYPE_LABELS[problemSet.type] ? t(WORKSHEET_TYPE_LABELS[problemSet.type]) : getTypeLabel(problemSet.type);
+    }
+
+    function formatTemplate(template, values) {
+        return String(template).replace(/\{([a-zA-Z0-9_]+)\}/g, (_, key) => (
+            Object.prototype.hasOwnProperty.call(values, key) ? values[key] : `{${key}}`
+        ));
     }
 
     function getWorksheetLayout(problemSet) {
@@ -487,13 +507,32 @@
 
     function formatRrefOperationText(step) {
         if (step.kind === 'swap-rows') {
+            if (messages.rrefSwapRowsTemplate) {
+                return formatTemplate(messages.rrefSwapRowsTemplate, {
+                    rowA: rowName(step.rowA),
+                    rowB: rowName(step.rowB)
+                });
+            }
             return `${rowName(step.rowA)} <-> ${rowName(step.rowB)}`;
         }
         if (step.kind === 'scale-row') {
+            if (messages.rrefScaleRowTemplate) {
+                return formatTemplate(messages.rrefScaleRowTemplate, {
+                    row: rowName(step.row),
+                    factor: formatScalarText(step.factor)
+                });
+            }
             return `${rowName(step.row)} <- ${formatScalarText(step.factor)}${rowName(step.row)}`;
         }
         if (step.kind === 'add-row-multiple') {
             const multiple = formatScalarText(step.multiple);
+            if (messages.rrefAddRowMultipleTemplate) {
+                return formatTemplate(messages.rrefAddRowMultipleTemplate, {
+                    targetRow: rowName(step.targetRow),
+                    sourceRow: rowName(step.sourceRow),
+                    multiple
+                });
+            }
             return `${rowName(step.targetRow)} <- ${rowName(step.targetRow)} + ${multiple}${rowName(step.sourceRow)}`;
         }
         return step.kind || t('steps');
@@ -626,8 +665,8 @@
         const answer = document.createElement('div');
         answer.className = 'mp-answer-content mp-rref-answer-content';
         answer.append(
-            renderMatrix(problem.inputs.matrix, { label: 'Original:' }),
-            renderMatrix(problem.exactAnswer.matrix, { label: 'RREF:' })
+            renderMatrix(problem.inputs.matrix, { label: t('original') }),
+            renderMatrix(problem.exactAnswer.matrix, { label: t('rrefLabel') })
         );
         return answer;
     }
@@ -740,7 +779,7 @@
         original.className = 'mp-linear-system-original';
         const originalLabel = document.createElement('div');
         originalLabel.className = 'mp-matrix-label';
-        originalLabel.textContent = 'Original System:';
+        originalLabel.textContent = t('originalSystem');
         original.append(originalLabel, renderEquationList(problem));
         answer.appendChild(original);
 
@@ -760,7 +799,7 @@
             });
             answer.appendChild(list);
         } else if (problem.exactAnswer.solutionType === 'none') {
-            answer.appendChild(renderMatrix(problem.exactAnswer.rrefMatrix, { label: 'RREF:', augmented: true }));
+            answer.appendChild(renderMatrix(problem.exactAnswer.rrefMatrix, { label: t('rrefLabel'), augmented: true }));
         } else {
             const detail = document.createElement('div');
             detail.className = 'mp-answer-summary';
@@ -788,16 +827,16 @@
         if (blankMatrix) {
             const label = document.createElement('div');
             label.className = 'mp-work-label';
-            label.textContent = problem.type === 'rref' ? 'RREF:' : 'Answer:';
+            label.textContent = problem.type === 'rref' ? t('rrefLabel') : t('answerLabel');
             space.append(label, renderEmptyMatrix(blankMatrix.rows, blankMatrix.cols, {
                 label: '',
                 augmented: false
             }), createWorkLines(problem.type === 'rref' ? 2 : 1));
         } else if (problem.type === 'linear-system') {
-            space.textContent = 'Solution: __________________';
+            space.textContent = t('solutionBlank');
             space.appendChild(createWorkLines(2));
         } else {
-            space.textContent = 'Answer: __________________';
+            space.textContent = t('answerBlank');
         }
         return space;
     }
@@ -841,7 +880,7 @@
         title.textContent = viewMode === 'answer-key' ? t('answerKeyTitle') : t('worksheetTitle');
         const subtitle = document.createElement('p');
         subtitle.textContent = viewMode === 'answer-key' && (problemSet.type === 'rref' || problemSet.type === 'linear-system')
-            ? `${problemSet.type === 'linear-system' ? 'Systems of Linear Equations' : getWorksheetTypeLabel(problemSet)} · ${t('exactAnswers')} · Set seed: ${problemSet.seed}`
+            ? `${problemSet.type === 'linear-system' ? t('systemsOfLinearEquations') : getWorksheetTypeLabel(problemSet)} · ${t('exactAnswers')} · ${t('setSeed')}: ${problemSet.seed}`
             : getWorksheetTypeLabel(problemSet);
         header.append(title, subtitle);
 
@@ -1241,7 +1280,7 @@
             activeButton.textContent = isAnswerKey ? t('creatingAnswerKeyPdf') : t('creatingWorksheetPdf');
             els.error.hidden = true;
             try {
-                await pdf[method](state.currentSet);
+                await pdf[method](state.currentSet, { locale: config.locale || 'en' });
             } catch (error) {
                 console.error(error);
                 els.error.textContent = `${t('error')}: ${t('pdfError')}`;
@@ -1395,7 +1434,9 @@
         value: {
             renderWorksheetProblem,
             renderAnswerKeyProblem,
-            renderPaperPage
+            renderPaperPage,
+            renderAnswer,
+            renderSteps
         },
         enumerable: false
     });

@@ -17,7 +17,7 @@ function assertHeader(bytes) {
 }
 
 function assertNoAnswerOrSteps(plan) {
-    const text = JSON.stringify(plan);
+    const text = JSON.stringify(Object.assign({}, plan, { labels: undefined }));
     assert.strictEqual(text.includes('exactAnswer'), false);
     assert.strictEqual(text.includes('steps'), false);
     assert.strictEqual(text.includes('Answer Key'), false);
@@ -25,9 +25,56 @@ function assertNoAnswerOrSteps(plan) {
 }
 
 function assertNoSteps(plan) {
-    const text = JSON.stringify(plan);
+    const text = JSON.stringify(Object.assign({}, plan, { labels: undefined }));
     assert.strictEqual(text.includes('steps'), false);
     assert.strictEqual(text.includes('Detailed Solutions'), false);
+}
+
+function collectStrings(value, out) {
+    if (typeof value === 'string') {
+        out.push(value);
+        return;
+    }
+    if (Array.isArray(value)) {
+        value.forEach((item) => collectStrings(item, out));
+        return;
+    }
+    if (value && typeof value === 'object') {
+        Object.keys(value).forEach((key) => collectStrings(value[key], out));
+    }
+}
+
+function assertNoSpanishPdfEnglish(value) {
+    const strings = [];
+    collectStrings(value, strings);
+    const text = strings.join('\n');
+    [
+        'Matrix Practice Worksheet',
+        'Matrix Practice Answer Key',
+        'Matrix Addition and Subtraction',
+        'Matrix Multiplication',
+        'Systems of Linear Equations',
+        'Row Reduction',
+        'Solve each',
+        'Show your work',
+        'Multiply each',
+        'Solve each system',
+        'Find the RREF of',
+        'Input Matrix',
+        'Set seed',
+        'Exact Answers',
+        'Answer:',
+        'Solution:',
+        'Final RREF:',
+        'Unique Solution',
+        'No Solution',
+        'Infinitely Many Solutions',
+        'Page',
+        'Name',
+        'Date'
+    ].forEach((phrase) => {
+        assert.strictEqual(text.includes(phrase), false, `Unexpected English phrase in Spanish PDF plan: ${phrase}`);
+    });
 }
 
 function ids(problemSet) {
@@ -1054,6 +1101,74 @@ async function runTests() {
     assert.strictEqual(await pageCount(await pdf.createWorksheetPdf(linearSix, { pdfLib })), 1);
     assert.strictEqual(await pageCount(await pdf.createAnswerKeyPdf(linearSix, { pdfLib })), 1);
     rows.push(['T30', 'Linear Systems filenames and generic PDF dispatchers use the current set seed and type', 'pass']);
+
+    const esAddWorksheet = pdf.buildAdditionSubtractionWorksheetPlan(six, { locale: 'es' });
+    assert.strictEqual(esAddWorksheet.title, 'Hoja de ejercicios de matrices');
+    assert.strictEqual(esAddWorksheet.subtitle, 'Suma y resta de matrices');
+    assert.strictEqual(esAddWorksheet.instructions, 'Resuelve cada ejercicio. Muestra tu trabajo.');
+    assertNoSpanishPdfEnglish(esAddWorksheet.labels);
+    assertNoAnswerOrSteps(esAddWorksheet);
+    const esMultiplicationWorksheet = pdf.buildMultiplicationWorksheetPlan(multEasySix, { locale: 'es' });
+    assert.strictEqual(esMultiplicationWorksheet.subtitle, 'Multiplicación de matrices');
+    assert.strictEqual(esMultiplicationWorksheet.instructions, 'Multiplica cada par de matrices. Muestra tu trabajo.');
+    assertNoSpanishPdfEnglish(esMultiplicationWorksheet.labels);
+    assertNoAnswerOrSteps(esMultiplicationWorksheet);
+    const esRrefWorksheet = pdf.buildRrefWorksheetPlan(rrefFour, { locale: 'es' });
+    assert.strictEqual(esRrefWorksheet.subtitle, 'Forma escalonada reducida por filas');
+    assert.strictEqual(esRrefWorksheet.labels.findRref, 'Halla la RREF de');
+    assert.strictEqual(esRrefWorksheet.layout.problemsPerPage, 4);
+    assert.strictEqual(esRrefWorksheet.layout.columns, 2);
+    assert.strictEqual(esRrefWorksheet.layout.rows, 2);
+    assertNoSpanishPdfEnglish(esRrefWorksheet.labels);
+    assertNoAnswerOrSteps(esRrefWorksheet);
+    const esLinearWorksheet = pdf.buildLinearSystemWorksheetPlan(linearSix, { locale: 'es' });
+    assert.strictEqual(esLinearWorksheet.subtitle, 'Sistemas de ecuaciones lineales');
+    assert.strictEqual(esLinearWorksheet.instructions, 'Resuelve cada sistema. Muestra tu trabajo.');
+    assertNoSpanishPdfEnglish(esLinearWorksheet.labels);
+    assertNoAnswerOrSteps(esLinearWorksheet);
+
+    const esRrefAnswerKey = pdf.buildRrefAnswerKeyPlan(rrefFour, { locale: 'es' });
+    assert.strictEqual(esRrefAnswerKey.title, 'Respuestas de ejercicios de matrices');
+    assert.strictEqual(esRrefAnswerKey.subtitle, 'Forma escalonada reducida por filas');
+    assert.strictEqual(pdf.buildRrefAnswerKeyPlan(rrefFour).subtitle, 'Row Reduction (RREF)');
+    assertNoSteps(esRrefAnswerKey);
+    assert.strictEqual(
+        pdf.createPdfFilename({ type: 'rref', seed: 'Mi Semilla: 01/Lista?' }, 'worksheet', { locale: 'es' }),
+        'practica-rref-matrices-hoja-mi-semilla-01-lista.pdf'
+    );
+    assert.strictEqual(
+        pdf.createPdfFilename({ type: 'linear-system', seed: 'Mi Semilla: 01/Lista?' }, 'answer-key', { locale: 'es' }),
+        'practica-sistemas-ecuaciones-respuestas-mi-semilla-01-lista.pdf'
+    );
+    const esPdfCases = [
+        ['addition worksheet', () => pdf.createAdditionSubtractionWorksheetPdf(six, { pdfLib, locale: 'es', creationDate: new Date('2024-01-01T00:00:00Z') }), await pageCount(bytesSix)],
+        ['addition answer key', () => pdf.createAdditionSubtractionAnswerKeyPdf(eight, { pdfLib, locale: 'es', creationDate: new Date('2024-01-01T00:00:00Z') }), await pageCount(answerBytes)],
+        ['multiplication worksheet', () => pdf.createMultiplicationWorksheetPdf(multEasySix, { pdfLib, locale: 'es', creationDate: new Date('2024-01-01T00:00:00Z') }), await pageCount(multWorksheetBytes)],
+        ['multiplication answer key', () => pdf.createMultiplicationAnswerKeyPdf(multEasyEight, { pdfLib, locale: 'es', creationDate: new Date('2024-01-01T00:00:00Z') }), await pageCount(multAnswerBytes)],
+        ['rref worksheet', () => pdf.createRrefWorksheetPdf(rrefFour, { pdfLib, locale: 'es', creationDate: new Date('2024-01-01T00:00:00Z') }), 1],
+        ['rref answer key', () => pdf.createRrefAnswerKeyPdf(rrefFour, { pdfLib, locale: 'es', creationDate: new Date('2024-01-01T00:00:00Z') }), 1],
+        ['linear worksheet', () => pdf.createLinearSystemWorksheetPdf(linearSix, { pdfLib, locale: 'es', creationDate: new Date('2024-01-01T00:00:00Z') }), await pageCount(linearWorksheetBytes)],
+        ['linear answer key', () => pdf.createLinearSystemAnswerKeyPdf(linearSix, { pdfLib, locale: 'es', creationDate: new Date('2024-01-01T00:00:00Z') }), await pageCount(linearAnswerBytes)]
+    ];
+    for (const [name, createBytes, expectedPages] of esPdfCases) {
+        const bytes = await createBytes();
+        assertHeader(bytes);
+        const doc = await pdfLib.PDFDocument.load(bytes);
+        assert.strictEqual(doc.getPageCount(), expectedPages, name);
+        doc.getPages().forEach((page) => assert.deepStrictEqual(page.getSize(), { width: 612, height: 792 }));
+    }
+    const esRrefWorksheetBytes = await pdf.createRrefWorksheetPdf(rrefFour, {
+        pdfLib,
+        locale: 'es',
+        creationDate: new Date('2024-01-01T00:00:00Z')
+    });
+    assert.deepStrictEqual(await pdfMetadata(esRrefWorksheetBytes), {
+        title: 'Hoja de ejercicios de RREF de matrices',
+        author: 'MatrixCalcu',
+        creator: 'MatrixCalcu',
+        subject: 'Hoja de ejercicios de forma escalonada reducida por filas'
+    });
+    rows.push(['T30a', 'Spanish PDF locale localizes worksheet and answer-key plans, metadata, and filenames without changing pagination', 'pass']);
 
     const source = fs.readFileSync(path.join(__dirname, '..', 'js', 'practice', 'practice-pdf.js'), 'utf8');
     assert(!/\bdocument\b/.test(source.replace(/downloadAdditionSubtractionWorksheetPdf[\s\S]*?const api =/, 'const api =')));

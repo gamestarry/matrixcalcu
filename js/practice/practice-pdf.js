@@ -17,9 +17,191 @@
         columnGap: 18,
         rowGap: 12
     };
+    const PDF_LOCALES = {
+        en: {
+            worksheetTitle: 'Matrix Practice Worksheet',
+            answerKeyTitle: 'Matrix Practice Answer Key',
+            addSubTitle: 'Matrix Addition and Subtraction',
+            multiplicationTitle: 'Matrix Multiplication',
+            rrefTitle: 'Reduced Row Echelon Form',
+            rrefAnswerKeyTitle: 'Row Reduction (RREF)',
+            linearSystemsTitle: 'Systems of Linear Equations',
+            addSubWorksheetInstructions: 'Solve each problem. Show your work.',
+            multiplicationWorksheetInstructions: 'Multiply each pair of matrices. Show your work.',
+            rrefWorksheetInstructions: 'Reduce each matrix to reduced row echelon form (RREF). Show your work.',
+            linearSystemsWorksheetInstructions: 'Solve each system. Show your work.',
+            name: 'Name',
+            date: 'Date',
+            page: 'Page',
+            of: 'of',
+            setSeed: 'Set seed',
+            exactAnswers: 'Exact Answers',
+            answer: 'Answer:',
+            rref: 'RREF:',
+            original: 'Original:',
+            inputMatrix: 'Input Matrix',
+            findRref: 'Find the RREF of',
+            solveSystem: 'Solve the system:',
+            solution: 'Solution:',
+            finalRref: 'Final RREF:',
+            noSolution: 'No Solution',
+            infiniteSolutions: 'Infinitely Many Solutions',
+            uniqueSolution: 'Unique Solution',
+            filenames: {
+                'addition-subtraction': 'matrix-addition-subtraction',
+                multiplication: 'matrix-multiplication',
+                rref: 'matrix-rref',
+                'linear-system': 'matrix-linear-systems',
+                worksheet: 'worksheet',
+                'answer-key': 'answer-key'
+            },
+            metadata: {
+                'addition-subtraction': {
+                    worksheet: {
+                        title: 'Matrix Addition and Subtraction Practice Worksheet',
+                        subject: 'Matrix addition and subtraction practice worksheet'
+                    },
+                    'answer-key': {
+                        title: 'Matrix Addition and Subtraction Practice Answer Key',
+                        subject: 'Matrix addition and subtraction practice answer key'
+                    }
+                },
+                multiplication: {
+                    worksheet: {
+                        title: 'Matrix Multiplication Practice Worksheet',
+                        subject: 'Matrix multiplication practice worksheet'
+                    },
+                    'answer-key': {
+                        title: 'Matrix Multiplication Practice Answer Key',
+                        subject: 'Matrix multiplication practice answer key'
+                    }
+                },
+                rref: {
+                    worksheet: {
+                        title: 'Matrix RREF Practice Worksheet',
+                        subject: 'Matrix row reduction and RREF practice worksheet'
+                    },
+                    'answer-key': {
+                        title: 'Matrix RREF Practice Answer Key',
+                        subject: 'Matrix row reduction and RREF practice answer key'
+                    }
+                },
+                'linear-system': {
+                    worksheet: {
+                        title: 'Matrix Linear Systems Practice Worksheet',
+                        subject: 'Systems of linear equations practice worksheet'
+                    },
+                    'answer-key': {
+                        title: 'Matrix Linear Systems Practice Answer Key',
+                        subject: 'Systems of linear equations practice answer key'
+                    }
+                }
+            }
+        },
+        es: {
+            worksheetTitle: 'Hoja de ejercicios de matrices',
+            answerKeyTitle: 'Respuestas de ejercicios de matrices',
+            addSubTitle: 'Suma y resta de matrices',
+            multiplicationTitle: 'Multiplicación de matrices',
+            rrefTitle: 'Forma escalonada reducida por filas',
+            rrefAnswerKeyTitle: 'Forma escalonada reducida por filas',
+            linearSystemsTitle: 'Sistemas de ecuaciones lineales',
+            addSubWorksheetInstructions: 'Resuelve cada ejercicio. Muestra tu trabajo.',
+            multiplicationWorksheetInstructions: 'Multiplica cada par de matrices. Muestra tu trabajo.',
+            rrefWorksheetInstructions: 'Reduce cada matriz a forma escalonada reducida por filas (RREF). Muestra tu trabajo.',
+            linearSystemsWorksheetInstructions: 'Resuelve cada sistema. Muestra tu trabajo.',
+            name: 'Nombre',
+            date: 'Fecha',
+            page: 'Página',
+            of: 'de',
+            setSeed: 'Semilla del conjunto',
+            exactAnswers: 'Respuestas exactas',
+            answer: 'Respuesta:',
+            rref: 'RREF:',
+            original: 'Original:',
+            inputMatrix: 'Matriz de entrada',
+            findRref: 'Halla la RREF de',
+            solveSystem: 'Resuelve el sistema:',
+            solution: 'Solución:',
+            finalRref: 'RREF final:',
+            noSolution: 'Sin solución',
+            infiniteSolutions: 'Infinitas soluciones',
+            uniqueSolution: 'Solución única',
+            filenames: {
+                'addition-subtraction': 'practica-suma-resta-matrices',
+                multiplication: 'practica-multiplicacion-matrices',
+                rref: 'practica-rref-matrices',
+                'linear-system': 'practica-sistemas-ecuaciones',
+                worksheet: 'hoja',
+                'answer-key': 'respuestas'
+            },
+            metadata: {
+                'addition-subtraction': {
+                    worksheet: {
+                        title: 'Hoja de ejercicios de suma y resta de matrices',
+                        subject: 'Hoja de ejercicios de suma y resta de matrices'
+                    },
+                    'answer-key': {
+                        title: 'Respuestas de ejercicios de suma y resta de matrices',
+                        subject: 'Respuestas de ejercicios de suma y resta de matrices'
+                    }
+                },
+                multiplication: {
+                    worksheet: {
+                        title: 'Hoja de ejercicios de multiplicación de matrices',
+                        subject: 'Hoja de ejercicios de multiplicación de matrices'
+                    },
+                    'answer-key': {
+                        title: 'Respuestas de ejercicios de multiplicación de matrices',
+                        subject: 'Respuestas de ejercicios de multiplicación de matrices'
+                    }
+                },
+                rref: {
+                    worksheet: {
+                        title: 'Hoja de ejercicios de RREF de matrices',
+                        subject: 'Hoja de ejercicios de forma escalonada reducida por filas'
+                    },
+                    'answer-key': {
+                        title: 'Respuestas de ejercicios de RREF de matrices',
+                        subject: 'Respuestas de ejercicios de forma escalonada reducida por filas'
+                    }
+                },
+                'linear-system': {
+                    worksheet: {
+                        title: 'Hoja de ejercicios de sistemas de ecuaciones lineales',
+                        subject: 'Hoja de ejercicios de sistemas de ecuaciones lineales'
+                    },
+                    'answer-key': {
+                        title: 'Respuestas de ejercicios de sistemas de ecuaciones lineales',
+                        subject: 'Respuestas de ejercicios de sistemas de ecuaciones lineales'
+                    }
+                }
+            }
+        }
+    };
 
     function cloneMatrix(matrix) {
         return matrix.map((row) => row.slice());
+    }
+
+    function getLocaleKey(options) {
+        const locale = options && options.locale ? String(options.locale).toLowerCase() : 'en';
+        return locale.indexOf('es') === 0 ? 'es' : 'en';
+    }
+
+    function getPdfLabels(options) {
+        const localeLabels = PDF_LOCALES[getLocaleKey(options)] || PDF_LOCALES.en;
+        return Object.assign({}, PDF_LOCALES.en, localeLabels, options && options.pdfMessages ? options.pdfMessages : {});
+    }
+
+    function setPracticePdfMetadata(pdfDoc, type, kind, options) {
+        const labels = getPdfLabels(options);
+        const typeMetadata = labels.metadata[type] || PDF_LOCALES.en.metadata[type];
+        const meta = typeMetadata[kind] || PDF_LOCALES.en.metadata[type][kind];
+        pdfDoc.setTitle(meta.title);
+        pdfDoc.setAuthor('MatrixCalcu');
+        pdfDoc.setCreator('MatrixCalcu');
+        pdfDoc.setSubject(meta.subject);
     }
 
     function cloneExactValue(value) {
@@ -178,16 +360,18 @@
     function buildAdditionSubtractionWorksheetPlan(problemSet, options) {
         assertAdditionSubtractionSet(problemSet, 'worksheet');
         const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const labels = getPdfLabels(opts);
         const chunks = chunkProblems(problemSet.problems);
         const totalPages = chunks.length;
 
         return {
             kind: 'worksheet',
             type: ADD_SUB_TYPE,
-            title: 'Matrix Practice Worksheet',
-            subtitle: 'Matrix Addition and Subtraction',
-            instructions: 'Solve each problem. Show your work.',
+            title: labels.worksheetTitle,
+            subtitle: labels.addSubTitle,
+            instructions: labels.addSubWorksheetInstructions,
             seed: problemSet.seed,
+            labels,
             paper: {
                 width: PAGE_WIDTH,
                 height: PAGE_HEIGHT
@@ -222,15 +406,17 @@
     function buildAdditionSubtractionAnswerKeyPlan(problemSet, options) {
         assertAdditionSubtractionSet(problemSet, 'answer key');
         const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const labels = getPdfLabels(opts);
         const chunks = chunkProblems(problemSet.problems);
         const totalPages = chunks.length;
 
         return {
             kind: 'answer-key',
             type: ADD_SUB_TYPE,
-            title: 'Matrix Practice Answer Key',
-            subtitle: 'Matrix Addition and Subtraction',
+            title: labels.answerKeyTitle,
+            subtitle: labels.addSubTitle,
             seed: problemSet.seed,
+            labels,
             paper: {
                 width: PAGE_WIDTH,
                 height: PAGE_HEIGHT
@@ -266,6 +452,7 @@
     function buildMultiplicationWorksheetPlan(problemSet, options) {
         assertMultiplicationSet(problemSet, 'worksheet');
         const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const labels = getPdfLabels(opts);
         const layoutName = getMultiplicationLayout(problemSet);
         const problemsPerPage = getMultiplicationProblemsPerPage('worksheet', layoutName);
         const chunks = chunkProblemsBySize(problemSet.problems, problemsPerPage);
@@ -274,10 +461,11 @@
         return {
             kind: 'worksheet',
             type: MULTIPLICATION_TYPE,
-            title: 'Matrix Practice Worksheet',
-            subtitle: 'Matrix Multiplication',
-            instructions: 'Multiply each pair of matrices. Show your work.',
+            title: labels.worksheetTitle,
+            subtitle: labels.multiplicationTitle,
+            instructions: labels.multiplicationWorksheetInstructions,
             seed: problemSet.seed,
+            labels,
             paper: {
                 width: PAGE_WIDTH,
                 height: PAGE_HEIGHT
@@ -312,6 +500,7 @@
     function buildMultiplicationAnswerKeyPlan(problemSet, options) {
         assertMultiplicationSet(problemSet, 'answer key');
         const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const labels = getPdfLabels(opts);
         const layoutName = getMultiplicationLayout(problemSet);
         const problemsPerPage = getMultiplicationProblemsPerPage('answer-key', layoutName);
         const chunks = chunkProblemsBySize(problemSet.problems, problemsPerPage);
@@ -320,9 +509,10 @@
         return {
             kind: 'answer-key',
             type: MULTIPLICATION_TYPE,
-            title: 'Matrix Practice Answer Key',
-            subtitle: 'Matrix Multiplication',
+            title: labels.answerKeyTitle,
+            subtitle: labels.multiplicationTitle,
             seed: problemSet.seed,
+            labels,
             paper: {
                 width: PAGE_WIDTH,
                 height: PAGE_HEIGHT
@@ -357,16 +547,18 @@
     function buildRrefWorksheetPlan(problemSet, options) {
         assertRrefSet(problemSet, 'worksheet');
         const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const labels = getPdfLabels(opts);
         const chunks = chunkProblemsBySize(problemSet.problems, RREF_PROBLEMS_PER_PAGE);
         const totalPages = chunks.length;
 
         return {
             kind: 'worksheet',
             type: RREF_TYPE,
-            title: 'Matrix Practice Worksheet',
-            subtitle: 'Reduced Row Echelon Form',
-            instructions: 'Reduce each matrix to reduced row echelon form (RREF). Show your work.',
+            title: labels.worksheetTitle,
+            subtitle: labels.rrefTitle,
+            instructions: labels.rrefWorksheetInstructions,
             seed: problemSet.seed,
+            labels,
             paper: {
                 width: PAGE_WIDTH,
                 height: PAGE_HEIGHT
@@ -404,15 +596,17 @@
     function buildRrefAnswerKeyPlan(problemSet, options) {
         assertRrefSet(problemSet, 'answer key');
         const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const labels = getPdfLabels(opts);
         const chunks = chunkProblemsBySize(problemSet.problems, RREF_PROBLEMS_PER_PAGE);
         const totalPages = chunks.length;
 
         return {
             kind: 'answer-key',
             type: RREF_TYPE,
-            title: 'Matrix Practice Answer Key',
-            subtitle: 'Row Reduction (RREF)',
+            title: labels.answerKeyTitle,
+            subtitle: labels.rrefAnswerKeyTitle,
             seed: problemSet.seed,
+            labels,
             paper: {
                 width: PAGE_WIDTH,
                 height: PAGE_HEIGHT
@@ -446,6 +640,7 @@
     function buildLinearSystemWorksheetPlan(problemSet, options) {
         assertLinearSystemSet(problemSet, 'worksheet');
         const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const labels = getPdfLabels(opts);
         const layoutName = getLinearSystemLayout(problemSet);
         const problemsPerPage = getLinearSystemProblemsPerPage(layoutName);
         const chunks = chunkProblemsBySize(problemSet.problems, problemsPerPage);
@@ -454,10 +649,11 @@
         return {
             kind: 'worksheet',
             type: LINEAR_SYSTEM_TYPE,
-            title: 'Matrix Practice Worksheet',
-            subtitle: 'Systems of Linear Equations',
-            instructions: 'Solve each system. Show your work.',
+            title: labels.worksheetTitle,
+            subtitle: labels.linearSystemsTitle,
+            instructions: labels.linearSystemsWorksheetInstructions,
             seed: problemSet.seed,
+            labels,
             paper: {
                 width: PAGE_WIDTH,
                 height: PAGE_HEIGHT
@@ -493,6 +689,7 @@
     function buildLinearSystemAnswerKeyPlan(problemSet, options) {
         assertLinearSystemSet(problemSet, 'answer key');
         const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const labels = getPdfLabels(opts);
         const layoutName = getLinearSystemLayout(problemSet);
         const problemsPerPage = getLinearSystemProblemsPerPage(layoutName);
         const chunks = chunkProblemsBySize(problemSet.problems, problemsPerPage);
@@ -501,9 +698,10 @@
         return {
             kind: 'answer-key',
             type: LINEAR_SYSTEM_TYPE,
-            title: 'Matrix Practice Answer Key',
-            subtitle: 'Systems of Linear Equations',
+            title: labels.answerKeyTitle,
+            subtitle: labels.linearSystemsTitle,
             seed: problemSet.seed,
+            labels,
             paper: {
                 width: PAGE_WIDTH,
                 height: PAGE_HEIGHT
@@ -546,18 +744,16 @@
             .slice(0, 80) || 'worksheet';
     }
 
-    function createPdfFilename(problemSet, kind) {
-        const safeKind = sanitizeFilenamePart(kind || 'worksheet');
+    function createPdfFilename(problemSet, kind, options) {
+        const labels = getPdfLabels(options || {});
+        const safeKind = sanitizeFilenamePart(labels.filenames[kind] || kind || 'worksheet');
         const seed = sanitizeFilenamePart(problemSet && problemSet.seed ? problemSet.seed : 'set');
-        let type = 'addition-subtraction';
-        if (problemSet && problemSet.type === MULTIPLICATION_TYPE) {
-            type = 'multiplication';
-        } else if (problemSet && problemSet.type === RREF_TYPE) {
-            type = 'rref';
-        } else if (problemSet && problemSet.type === LINEAR_SYSTEM_TYPE) {
-            type = 'linear-systems';
-        }
-        return `matrix-${type}-${safeKind}-${seed}.pdf`;
+        let type = ADD_SUB_TYPE;
+        if (problemSet && problemSet.type === MULTIPLICATION_TYPE) type = MULTIPLICATION_TYPE;
+        if (problemSet && problemSet.type === RREF_TYPE) type = RREF_TYPE;
+        if (problemSet && problemSet.type === LINEAR_SYSTEM_TYPE) type = LINEAR_SYSTEM_TYPE;
+        const safeType = sanitizeFilenamePart(labels.filenames[type] || PDF_LOCALES.en.filenames[type]);
+        return `${safeType}-${safeKind}-${seed}.pdf`;
     }
 
     function getPdfLib(options) {
@@ -709,17 +905,36 @@
     }
 
     function drawHeader(page, plan, pageInfo, fonts, colors) {
+        const labels = plan.labels || PDF_LOCALES.en;
         if (pageInfo.pageNumber === 1) {
             drawTextCentered(page, plan.title, 746, fonts.bold, 16, colors.text);
             drawTextCentered(page, plan.subtitle, 727, fonts.regular, 11, colors.muted);
 
-            page.drawText('Name:', { x: 44, y: 702, size: 10, font: fonts.regular, color: colors.text });
-            page.drawLine({ start: { x: 78, y: 701 }, end: { x: 300, y: 701 }, thickness: 0.8, color: colors.text });
-            page.drawText('Date:', { x: 328, y: 702, size: 10, font: fonts.regular, color: colors.text });
-            page.drawLine({ start: { x: 360, y: 701 }, end: { x: 568, y: 701 }, thickness: 0.8, color: colors.text });
+            const nameText = `${labels.name}:`;
+            const dateText = `${labels.date}:`;
+            const nameLineStart = labels.name === PDF_LOCALES.en.name
+                ? 78
+                : 44 + fonts.regular.widthOfTextAtSize(nameText, 10) + 8;
+            const dateLineStart = labels.date === PDF_LOCALES.en.date
+                ? 360
+                : 328 + fonts.regular.widthOfTextAtSize(dateText, 10) + 8;
+            page.drawText(nameText, { x: 44, y: 702, size: 10, font: fonts.regular, color: colors.text });
+            page.drawLine({
+                start: { x: nameLineStart, y: 701 },
+                end: { x: 300, y: 701 },
+                thickness: 0.8,
+                color: colors.text
+            });
+            page.drawText(dateText, { x: 328, y: 702, size: 10, font: fonts.regular, color: colors.text });
+            page.drawLine({
+                start: { x: dateLineStart, y: 701 },
+                end: { x: 568, y: 701 },
+                thickness: 0.8,
+                color: colors.text
+            });
 
             drawTextCentered(page, plan.instructions || 'Solve each problem. Show your work.', 680, fonts.regular, 10, colors.muted);
-            const pageText = `Page ${pageInfo.pageNumber} of ${pageInfo.totalPages}`;
+            const pageText = `${labels.page} ${pageInfo.pageNumber} ${labels.of} ${pageInfo.totalPages}`;
             page.drawText(pageText, {
                 x: PAGE_WIDTH - 44 - fonts.regular.widthOfTextAtSize(pageText, 9),
                 y: 662,
@@ -732,7 +947,7 @@
 
         const header = `${plan.title} - ${plan.subtitle}`;
         drawTextCentered(page, header, 750, fonts.bold, 12, colors.text);
-        const pageText = `Page ${pageInfo.pageNumber} of ${pageInfo.totalPages}`;
+        const pageText = `${labels.page} ${pageInfo.pageNumber} ${labels.of} ${pageInfo.totalPages}`;
         page.drawText(pageText, {
             x: PAGE_WIDTH - 44 - fonts.regular.widthOfTextAtSize(pageText, 9),
             y: 730,
@@ -743,7 +958,8 @@
         return 710;
     }
 
-    function drawProblem(page, item, box, fonts, colors) {
+    function drawProblem(page, item, box, fonts, colors, labels) {
+        labels = labels || PDF_LOCALES.en;
         const numberText = `${item.globalNumber}.`;
         page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
 
@@ -760,7 +976,7 @@
         drawMatrix(page, item.matrixB, box.x + 12 + matrixA.width + 30, matrixTop, fonts, { color: colors.text });
 
         const answerY = box.y - 96;
-        page.drawText('Answer:', { x: box.x + 4, y: answerY, size: 9, font: fonts.bold, color: colors.text });
+        page.drawText(labels.answer, { x: box.x + 4, y: answerY, size: 9, font: fonts.bold, color: colors.text });
         drawEmptyMatrix(page, item.answerDimensions.rows, item.answerDimensions.cols, box.x + 58, answerY + 12, fonts, {
             color: colors.text,
             cellWidth: 24,
@@ -779,9 +995,10 @@
     }
 
     function drawAnswerKeyHeader(page, plan, pageInfo, fonts, colors) {
+        const labels = plan.labels || PDF_LOCALES.en;
         drawTextCentered(page, plan.title, 746, fonts.bold, 16, colors.text);
         drawTextCentered(page, plan.subtitle, 727, fonts.regular, 11, colors.muted);
-        const seedText = `Set seed: ${plan.seed || ''}`;
+        const seedText = `${labels.setSeed}: ${plan.seed || ''}`;
         page.drawText(seedText, {
             x: 44,
             y: 704,
@@ -789,7 +1006,7 @@
             font: fonts.regular,
             color: colors.muted
         });
-        const pageText = `Page ${pageInfo.pageNumber} of ${pageInfo.totalPages}`;
+        const pageText = `${labels.page} ${pageInfo.pageNumber} ${labels.of} ${pageInfo.totalPages}`;
         page.drawText(pageText, {
             x: PAGE_WIDTH - 44 - fonts.regular.widthOfTextAtSize(pageText, 9),
             y: 704,
@@ -807,10 +1024,11 @@
     }
 
     function drawCompactAnswerKeyHeader(page, plan, pageInfo, fonts, colors) {
+        const labels = plan.labels || PDF_LOCALES.en;
         drawTextCentered(page, plan.title, 746, fonts.bold, 16, colors.text);
-        const metaText = `${plan.subtitle} · Exact Answers · Set seed: ${plan.seed || ''}`;
+        const metaText = `${plan.subtitle} · ${labels.exactAnswers} · ${labels.setSeed}: ${plan.seed || ''}`;
         drawTextCentered(page, metaText, 727, fonts.regular, 10, colors.muted);
-        const pageText = `Page ${pageInfo.pageNumber} of ${pageInfo.totalPages}`;
+        const pageText = `${labels.page} ${pageInfo.pageNumber} ${labels.of} ${pageInfo.totalPages}`;
         page.drawText(pageText, {
             x: PAGE_WIDTH - 44 - fonts.regular.widthOfTextAtSize(pageText, 9),
             y: 704,
@@ -827,7 +1045,8 @@
         return 664;
     }
 
-    function drawAnswerKeyProblem(page, item, box, fonts, colors) {
+    function drawAnswerKeyProblem(page, item, box, fonts, colors, labels) {
+        labels = labels || PDF_LOCALES.en;
         const numberText = `${item.globalNumber}.`;
         page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
 
@@ -843,7 +1062,7 @@
         drawMatrix(page, item.matrixB, box.x + 12 + matrixA.width + 30, matrixTop, fonts, { color: colors.text });
 
         const answerY = box.y - 98;
-        page.drawText('Answer:', { x: box.x + 4, y: answerY, size: 9, font: fonts.bold, color: colors.text });
+        page.drawText(labels.answer, { x: box.x + 4, y: answerY, size: 9, font: fonts.bold, color: colors.text });
         drawMatrix(page, item.exactAnswer, box.x + 58, answerY + 12, fonts, {
             color: colors.text,
             cellWidth: 24,
@@ -878,7 +1097,8 @@
         };
     }
 
-    function drawMultiplicationWorksheetProblem(page, item, box, fonts, colors) {
+    function drawMultiplicationWorksheetProblem(page, item, box, fonts, colors, labels) {
+        labels = labels || PDF_LOCALES.en;
         const numberText = `${item.globalNumber}.`;
         page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
 
@@ -886,7 +1106,7 @@
         drawMultiplicationOperands(page, item, box.x + 12, matrixTop, fonts, colors);
 
         const answerY = box.y - 102;
-        page.drawText('Answer:', { x: box.x + 4, y: answerY, size: 9, font: fonts.bold, color: colors.text });
+        page.drawText(labels.answer, { x: box.x + 4, y: answerY, size: 9, font: fonts.bold, color: colors.text });
         drawEmptyMatrix(page, item.resultDimensions.rows, item.resultDimensions.cols, box.x + 58, answerY + 12, fonts, {
             color: colors.text,
             cellWidth: 24,
@@ -906,7 +1126,8 @@
         }
     }
 
-    function drawMultiplicationAnswerKeyProblem(page, item, box, fonts, colors) {
+    function drawMultiplicationAnswerKeyProblem(page, item, box, fonts, colors, labels) {
+        labels = labels || PDF_LOCALES.en;
         const numberText = `${item.globalNumber}.`;
         page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
 
@@ -914,7 +1135,7 @@
         drawMultiplicationOperands(page, item, box.x + 12, matrixTop, fonts, colors);
 
         const answerY = box.y - 104;
-        page.drawText('Answer:', { x: box.x + 4, y: answerY, size: 9, font: fonts.bold, color: colors.text });
+        page.drawText(labels.answer, { x: box.x + 4, y: answerY, size: 9, font: fonts.bold, color: colors.text });
         drawMatrix(page, item.exactAnswer, box.x + 58, answerY + 12, fonts, {
             color: colors.text,
             cellWidth: 24,
@@ -923,18 +1144,19 @@
         });
     }
 
-    function drawRrefWorksheetProblem(page, item, box, fonts, colors) {
+    function drawRrefWorksheetProblem(page, item, box, fonts, colors, labels) {
+        labels = labels || PDF_LOCALES.en;
         const numberText = `${item.globalNumber}.`;
         page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
 
-        page.drawText('Find the RREF of', {
+        page.drawText(labels.findRref, {
             x: box.x + 14,
             y: box.y - 32,
             size: 9,
             font: fonts.bold,
             color: colors.text
         });
-        page.drawText('Input Matrix', {
+        page.drawText(labels.inputMatrix, {
             x: box.x + 14,
             y: box.y - 49,
             size: 8,
@@ -951,7 +1173,7 @@
         });
 
         const answerLabelY = box.y - 126;
-        page.drawText('RREF:', { x: box.x + 4, y: answerLabelY, size: 9, font: fonts.bold, color: colors.text });
+        page.drawText(labels.rref, { x: box.x + 4, y: answerLabelY, size: 9, font: fonts.bold, color: colors.text });
         drawEmptyMatrix(page, item.answerDimensions.rows, item.answerDimensions.cols, box.x + 14, answerLabelY - 6, fonts, {
             color: colors.text,
             cellWidth: item.answerDimensions.cols >= 4 ? 30 : 32,
@@ -971,7 +1193,8 @@
         }
     }
 
-    function drawRrefAnswerKeyProblem(page, item, box, fonts, colors) {
+    function drawRrefAnswerKeyProblem(page, item, box, fonts, colors, labels) {
+        labels = labels || PDF_LOCALES.en;
         const numberText = `${item.globalNumber}.`;
         page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
 
@@ -982,10 +1205,10 @@
             fontSize: 10,
             fractionFontSize: 8
         };
-        page.drawText('Original:', { x: box.x + 4, y: box.y - 32, size: 9, font: fonts.bold, color: colors.text });
+        page.drawText(labels.original, { x: box.x + 4, y: box.y - 32, size: 9, font: fonts.bold, color: colors.text });
         drawMatrix(page, item.matrix, box.x + 58, box.y - 20, fonts, matrixOptions);
 
-        page.drawText('RREF:', { x: box.x + 4, y: box.y - 118, size: 9, font: fonts.bold, color: colors.text });
+        page.drawText(labels.rref, { x: box.x + 4, y: box.y - 118, size: 9, font: fonts.bold, color: colors.text });
         drawMatrix(page, item.exactAnswer, box.x + 58, box.y - 106, fonts, matrixOptions);
     }
 
@@ -1053,10 +1276,11 @@
         });
     }
 
-    function solutionTypeLabel(solutionType) {
-        if (solutionType === 'none') return 'No Solution';
-        if (solutionType === 'infinite') return 'Infinitely Many Solutions';
-        return 'Unique Solution';
+    function solutionTypeLabel(solutionType, labels) {
+        labels = labels || PDF_LOCALES.en;
+        if (solutionType === 'none') return labels.noSolution;
+        if (solutionType === 'infinite') return labels.infiniteSolutions;
+        return labels.uniqueSolution;
     }
 
     function drawAssignmentValue(page, variable, value, x, y, fonts, colors, options) {
@@ -1103,17 +1327,18 @@
         return map;
     }
 
-    function drawLinearSystemWorksheetProblem(page, item, box, fonts, colors) {
+    function drawLinearSystemWorksheetProblem(page, item, box, fonts, colors, labels) {
+        labels = labels || PDF_LOCALES.en;
         const numberText = `${item.globalNumber}.`;
         page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
-        page.drawText('Solve the system:', { x: box.x + 12, y: box.y - 31, size: 9, font: fonts.bold, color: colors.text });
+        page.drawText(labels.solveSystem, { x: box.x + 12, y: box.y - 31, size: 9, font: fonts.bold, color: colors.text });
         drawEquationList(page, item, box.x + 18, box.y - 47, fonts, colors, {
             fontSize: item.variables === 3 ? 8.5 : 9,
             lineHeight: item.variables === 3 ? 13 : 14
         });
 
         const answerTop = box.y - (item.variables === 3 ? 94 : 86);
-        page.drawText('Solution:', { x: box.x + 4, y: answerTop, size: 9, font: fonts.bold, color: colors.text });
+        page.drawText(labels.solution, { x: box.x + 4, y: answerTop, size: 9, font: fonts.bold, color: colors.text });
         for (let index = 0; index < item.variables; index++) {
             const y = answerTop - 18 - index * 17;
             const label = `${variableName(index)} =`;
@@ -1140,7 +1365,8 @@
         }
     }
 
-    function drawLinearSystemAnswerKeyProblem(page, item, box, fonts, colors) {
+    function drawLinearSystemAnswerKeyProblem(page, item, box, fonts, colors, labels) {
+        labels = labels || PDF_LOCALES.en;
         const numberText = `${item.globalNumber}.`;
         page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
         drawEquationList(page, item, box.x + 12, box.y - 32, fonts, colors, {
@@ -1149,7 +1375,7 @@
         });
 
         const summaryY = box.y - (item.variables === 3 ? 78 : 70);
-        page.drawText(solutionTypeLabel(item.solutionType), {
+        page.drawText(solutionTypeLabel(item.solutionType, labels), {
             x: box.x + 4,
             y: summaryY,
             size: 9,
@@ -1176,7 +1402,7 @@
         }
 
         if (item.solutionType === 'none') {
-            page.drawText('Final RREF:', { x: box.x + 4, y: summaryY - 19, size: 8.5, font: fonts.bold, color: colors.text });
+            page.drawText(labels.finalRref, { x: box.x + 4, y: summaryY - 19, size: 8.5, font: fonts.bold, color: colors.text });
             drawMatrix(page, item.exactAnswer.rrefMatrix, box.x + 68, summaryY - 8, fonts, {
                 color: colors.text,
                 cellWidth: item.variables === 3 ? 22 : 24,
@@ -1209,10 +1435,7 @@
         const pdfLib = getPdfLib(opts);
         const { PDFDocument, StandardFonts, rgb } = pdfLib;
         const pdfDoc = await PDFDocument.create();
-        pdfDoc.setTitle('Matrix Addition and Subtraction Practice Worksheet');
-        pdfDoc.setAuthor('MatrixCalcu');
-        pdfDoc.setCreator('MatrixCalcu');
-        pdfDoc.setSubject('Matrix addition and subtraction practice worksheet');
+        setPracticePdfMetadata(pdfDoc, ADD_SUB_TYPE, 'worksheet', opts);
         const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
         pdfDoc.setCreationDate(date);
         pdfDoc.setModificationDate(date);
@@ -1245,7 +1468,7 @@
                 const row = Math.floor(index / 2);
                 const x = left + column * (cellWidth + plan.layout.columnGap);
                 const y = contentTop - row * (cellHeight + plan.layout.rowGap);
-                drawProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+                drawProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors, plan.labels);
             });
             drawFooter(page, fonts, colors);
         });
@@ -1259,10 +1482,7 @@
         const pdfLib = getPdfLib(opts);
         const { PDFDocument, StandardFonts, rgb } = pdfLib;
         const pdfDoc = await PDFDocument.create();
-        pdfDoc.setTitle('Matrix Addition and Subtraction Practice Answer Key');
-        pdfDoc.setAuthor('MatrixCalcu');
-        pdfDoc.setCreator('MatrixCalcu');
-        pdfDoc.setSubject('Matrix addition and subtraction practice answer key');
+        setPracticePdfMetadata(pdfDoc, ADD_SUB_TYPE, 'answer-key', opts);
         const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
         pdfDoc.setCreationDate(date);
         pdfDoc.setModificationDate(date);
@@ -1295,7 +1515,7 @@
                 const row = Math.floor(index / 2);
                 const x = left + column * (cellWidth + plan.layout.columnGap);
                 const y = contentTop - row * (cellHeight + plan.layout.rowGap);
-                drawAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+                drawAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors, plan.labels);
             });
             drawFooter(page, fonts, colors);
         });
@@ -1309,10 +1529,7 @@
         const pdfLib = getPdfLib(opts);
         const { PDFDocument, StandardFonts, rgb } = pdfLib;
         const pdfDoc = await PDFDocument.create();
-        pdfDoc.setTitle('Matrix Multiplication Practice Worksheet');
-        pdfDoc.setAuthor('MatrixCalcu');
-        pdfDoc.setCreator('MatrixCalcu');
-        pdfDoc.setSubject('Matrix multiplication practice worksheet');
+        setPracticePdfMetadata(pdfDoc, MULTIPLICATION_TYPE, 'worksheet', opts);
         const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
         pdfDoc.setCreationDate(date);
         pdfDoc.setModificationDate(date);
@@ -1347,7 +1564,7 @@
                 const row = Math.floor(index / columns);
                 const x = left + column * (cellWidth + plan.layout.columnGap);
                 const y = contentTop - row * (cellHeight + plan.layout.rowGap);
-                drawMultiplicationWorksheetProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+                drawMultiplicationWorksheetProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors, plan.labels);
             });
             drawFooter(page, fonts, colors);
         });
@@ -1361,10 +1578,7 @@
         const pdfLib = getPdfLib(opts);
         const { PDFDocument, StandardFonts, rgb } = pdfLib;
         const pdfDoc = await PDFDocument.create();
-        pdfDoc.setTitle('Matrix Multiplication Practice Answer Key');
-        pdfDoc.setAuthor('MatrixCalcu');
-        pdfDoc.setCreator('MatrixCalcu');
-        pdfDoc.setSubject('Matrix multiplication practice answer key');
+        setPracticePdfMetadata(pdfDoc, MULTIPLICATION_TYPE, 'answer-key', opts);
         const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
         pdfDoc.setCreationDate(date);
         pdfDoc.setModificationDate(date);
@@ -1399,7 +1613,7 @@
                 const row = Math.floor(index / columns);
                 const x = left + column * (cellWidth + plan.layout.columnGap);
                 const y = contentTop - row * (cellHeight + plan.layout.rowGap);
-                drawMultiplicationAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+                drawMultiplicationAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors, plan.labels);
             });
             drawFooter(page, fonts, colors);
         });
@@ -1413,10 +1627,7 @@
         const pdfLib = getPdfLib(opts);
         const { PDFDocument, StandardFonts, rgb } = pdfLib;
         const pdfDoc = await PDFDocument.create();
-        pdfDoc.setTitle('Matrix RREF Practice Worksheet');
-        pdfDoc.setAuthor('MatrixCalcu');
-        pdfDoc.setCreator('MatrixCalcu');
-        pdfDoc.setSubject('Matrix row reduction and RREF practice worksheet');
+        setPracticePdfMetadata(pdfDoc, RREF_TYPE, 'worksheet', opts);
         const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
         pdfDoc.setCreationDate(date);
         pdfDoc.setModificationDate(date);
@@ -1451,7 +1662,7 @@
                 const row = Math.floor(index / columns);
                 const x = left + column * (cellWidth + plan.layout.columnGap);
                 const y = contentTop - row * (cellHeight + plan.layout.rowGap);
-                drawRrefWorksheetProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+                drawRrefWorksheetProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors, plan.labels);
             });
             drawFooter(page, fonts, colors);
         });
@@ -1465,10 +1676,7 @@
         const pdfLib = getPdfLib(opts);
         const { PDFDocument, StandardFonts, rgb } = pdfLib;
         const pdfDoc = await PDFDocument.create();
-        pdfDoc.setTitle('Matrix RREF Practice Answer Key');
-        pdfDoc.setAuthor('MatrixCalcu');
-        pdfDoc.setCreator('MatrixCalcu');
-        pdfDoc.setSubject('Matrix row reduction and RREF practice answer key');
+        setPracticePdfMetadata(pdfDoc, RREF_TYPE, 'answer-key', opts);
         const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
         pdfDoc.setCreationDate(date);
         pdfDoc.setModificationDate(date);
@@ -1503,7 +1711,7 @@
                 const row = Math.floor(index / columns);
                 const x = left + column * (cellWidth + plan.layout.columnGap);
                 const y = contentTop - row * (cellHeight + plan.layout.rowGap);
-                drawRrefAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+                drawRrefAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors, plan.labels);
             });
             drawFooter(page, fonts, colors);
         });
@@ -1517,10 +1725,7 @@
         const pdfLib = getPdfLib(opts);
         const { PDFDocument, StandardFonts, rgb } = pdfLib;
         const pdfDoc = await PDFDocument.create();
-        pdfDoc.setTitle('Matrix Linear Systems Practice Worksheet');
-        pdfDoc.setAuthor('MatrixCalcu');
-        pdfDoc.setCreator('MatrixCalcu');
-        pdfDoc.setSubject('Systems of linear equations practice worksheet');
+        setPracticePdfMetadata(pdfDoc, LINEAR_SYSTEM_TYPE, 'worksheet', opts);
         const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
         pdfDoc.setCreationDate(date);
         pdfDoc.setModificationDate(date);
@@ -1555,7 +1760,7 @@
                 const row = Math.floor(index / columns);
                 const x = left + column * (cellWidth + plan.layout.columnGap);
                 const y = contentTop - row * (cellHeight + plan.layout.rowGap);
-                drawLinearSystemWorksheetProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+                drawLinearSystemWorksheetProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors, plan.labels);
             });
             drawFooter(page, fonts, colors);
         });
@@ -1569,10 +1774,7 @@
         const pdfLib = getPdfLib(opts);
         const { PDFDocument, StandardFonts, rgb } = pdfLib;
         const pdfDoc = await PDFDocument.create();
-        pdfDoc.setTitle('Matrix Linear Systems Practice Answer Key');
-        pdfDoc.setAuthor('MatrixCalcu');
-        pdfDoc.setCreator('MatrixCalcu');
-        pdfDoc.setSubject('Systems of linear equations practice answer key');
+        setPracticePdfMetadata(pdfDoc, LINEAR_SYSTEM_TYPE, 'answer-key', opts);
         const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
         pdfDoc.setCreationDate(date);
         pdfDoc.setModificationDate(date);
@@ -1607,7 +1809,7 @@
                 const row = Math.floor(index / columns);
                 const x = left + column * (cellWidth + plan.layout.columnGap);
                 const y = contentTop - row * (cellHeight + plan.layout.rowGap);
-                drawLinearSystemAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+                drawLinearSystemAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors, plan.labels);
             });
             drawFooter(page, fonts, colors);
         });
@@ -1620,7 +1822,7 @@
             throw new Error('PDF download requires a browser environment.');
         }
         const bytes = await createAdditionSubtractionWorksheetPdf(problemSet, options);
-        const filename = createPdfFilename(problemSet, 'worksheet');
+        const filename = createPdfFilename(problemSet, 'worksheet', options);
         const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -1642,7 +1844,7 @@
             throw new Error('PDF download requires a browser environment.');
         }
         const bytes = await createAdditionSubtractionAnswerKeyPdf(problemSet, options);
-        const filename = createPdfFilename(problemSet, 'answer-key');
+        const filename = createPdfFilename(problemSet, 'answer-key', options);
         const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -1664,7 +1866,7 @@
             throw new Error('PDF download requires a browser environment.');
         }
         const bytes = await createMultiplicationWorksheetPdf(problemSet, options);
-        const filename = createPdfFilename(problemSet, 'worksheet');
+        const filename = createPdfFilename(problemSet, 'worksheet', options);
         const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -1686,7 +1888,7 @@
             throw new Error('PDF download requires a browser environment.');
         }
         const bytes = await createMultiplicationAnswerKeyPdf(problemSet, options);
-        const filename = createPdfFilename(problemSet, 'answer-key');
+        const filename = createPdfFilename(problemSet, 'answer-key', options);
         const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -1708,7 +1910,7 @@
             throw new Error('PDF download requires a browser environment.');
         }
         const bytes = await createRrefWorksheetPdf(problemSet, options);
-        const filename = createPdfFilename(problemSet, 'worksheet');
+        const filename = createPdfFilename(problemSet, 'worksheet', options);
         const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -1730,7 +1932,7 @@
             throw new Error('PDF download requires a browser environment.');
         }
         const bytes = await createRrefAnswerKeyPdf(problemSet, options);
-        const filename = createPdfFilename(problemSet, 'answer-key');
+        const filename = createPdfFilename(problemSet, 'answer-key', options);
         const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -1752,7 +1954,7 @@
             throw new Error('PDF download requires a browser environment.');
         }
         const bytes = await createLinearSystemWorksheetPdf(problemSet, options);
-        const filename = createPdfFilename(problemSet, 'worksheet');
+        const filename = createPdfFilename(problemSet, 'worksheet', options);
         const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -1774,7 +1976,7 @@
             throw new Error('PDF download requires a browser environment.');
         }
         const bytes = await createLinearSystemAnswerKeyPdf(problemSet, options);
-        const filename = createPdfFilename(problemSet, 'answer-key');
+        const filename = createPdfFilename(problemSet, 'answer-key', options);
         const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
