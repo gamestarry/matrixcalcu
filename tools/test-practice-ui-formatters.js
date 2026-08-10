@@ -332,6 +332,7 @@ assert.deepStrictEqual(ui.buildPageMetadata(rrefTwoByThree, 'answer-key')[1].pro
 assert.strictEqual(ui.getWorksheetLayout(makeSet('rref', 6, { rows: 3, cols: 3 }, 'medium')), 'regular');
 assert.strictEqual(ui.getWorksheetLayout(makeSet('linear-system', 6, { variables: 2 }, 'easy')), 'compact');
 assert.strictEqual(ui.getWorksheetLayout(makeSet('linear-system', 6, { variables: 3 }, 'hard')), 'regular');
+assert.strictEqual(ui.canDownloadPdfForSet(makeSet('linear-system', 6, { variables: 2 }, 'easy')), true);
 assert.strictEqual(ui.getProblemsPerPage('worksheet', 'compact'), 6);
 assert.strictEqual(ui.getProblemsPerPage('worksheet', 'regular'), 4);
 assert.strictEqual(ui.getProblemsPerPage('worksheet', 'wide'), 4);
@@ -340,10 +341,12 @@ assert.strictEqual(ui.getProblemsPerPage('answer-key', 'regular'), 8);
 assert.strictEqual(ui.getProblemsPerPage('answer-key', 'wide'), 4);
 assert.strictEqual(ui.getProblemsPerPage('answer-key', 'regular', 'rref'), 4);
 assert.strictEqual(ui.getProblemsPerPage('worksheet', 'compact', 'rref'), 4);
+assert.strictEqual(ui.getProblemsPerPage('answer-key', 'compact', 'linear-system'), 6);
+assert.strictEqual(ui.getProblemsPerPage('answer-key', 'regular', 'linear-system'), 4);
 assert.strictEqual(ui.canDownloadPdfForSet(addSubSix), true);
 assert.strictEqual(ui.canDownloadPdfForSet(multEasy), true);
 assert.strictEqual(ui.canDownloadPdfForSet(rrefTwoByThree), true);
-assert.strictEqual(ui.canDownloadPdfForSet(makeSet('linear-system', 6, { variables: 2 }, 'easy')), false);
+assert.strictEqual(ui.canDownloadPdfForSet(makeSet('linear-system', 6, { variables: 2 }, 'easy')), true);
 assert.strictEqual(ui.canDownloadPdfForSet(null), false);
 
 installFakeDocument();
@@ -413,6 +416,128 @@ assert.strictEqual(paperHeaderMeta.textContent.includes('Set seed: 775404156'), 
 assert.strictEqual(collectClassNodes(rrefAnswerKeyPage, 'mp-paper-instructions').length, 0);
 assert.strictEqual(collectLabels(rrefAnswerKeyPage).includes('Original:'), true);
 assert.strictEqual(collectLabels(rrefAnswerKeyPage).includes('RREF:'), true);
+
+function makeLinearSystemProblem(id, variables, solutionType) {
+    const coefficientMatrix = variables === 3
+        ? [[1, -1, 0], [-1, 2, -3], [0, 0, 0]]
+        : [[1, -1], [2, 1]];
+    const constants = variables === 3 ? [4, -7, 5] : [3, 7];
+    const exactAnswer = {
+        solutionType,
+        rrefMatrix: variables === 3
+            ? [[1, 0, 0, { kind: 'fraction', numerator: 5, denominator: 2 }], [0, 1, 0, -1], [0, 0, 1, 3]]
+            : [[1, 0, { kind: 'fraction', numerator: 17, denominator: 25 }], [0, 1, { kind: 'fraction', numerator: -2, denominator: 3 }]]
+    };
+    if (solutionType === 'unique') {
+        exactAnswer.solution = variables === 3
+            ? [{ kind: 'fraction', numerator: 5, denominator: 2 }, -1, 3]
+            : [{ kind: 'fraction', numerator: 17, denominator: 25 }, { kind: 'fraction', numerator: -2, denominator: 3 }];
+    } else if (solutionType === 'none') {
+        exactAnswer.rrefMatrix = variables === 3
+            ? [[1, 0, 2, 0], [0, 1, -1, 0], [0, 0, 0, 1]]
+            : [[1, 0, 2], [0, 0, 1]];
+        exactAnswer.contradictionRows = [{ row: variables - 1, constant: 1 }];
+    } else {
+        exactAnswer.rrefMatrix = variables === 3
+            ? [[1, 0, -2, 1], [0, 1, 3, -4], [0, 0, 0, 0]]
+            : [[1, -2, 5], [0, 0, 0]];
+        exactAnswer.pivotVariables = variables === 3 ? [0, 1] : [0];
+        exactAnswer.freeVariables = variables === 3 ? [2] : [1];
+        exactAnswer.expressions = variables === 3 ? [
+            { variable: 0, isFree: false, constant: 1, terms: [{ freeVariable: 2, coefficient: 2 }] },
+            { variable: 1, isFree: false, constant: -4, terms: [{ freeVariable: 2, coefficient: -3 }] },
+            { variable: 2, isFree: true, constant: 0, terms: [] }
+        ] : [
+            { variable: 0, isFree: false, constant: 5, terms: [{ freeVariable: 1, coefficient: { kind: 'fraction', numerator: -1, denominator: 2 } }] },
+            { variable: 1, isFree: true, constant: 0, terms: [] }
+        ];
+    }
+    return {
+        id,
+        type: 'linear-system',
+        subtype: solutionType,
+        difficulty: variables === 3 ? 'hard' : 'easy',
+        inputs: {
+            coefficientMatrix,
+            constants,
+            augmentedMatrix: coefficientMatrix.map((row, index) => row.concat(constants[index]))
+        },
+        exactAnswer,
+        solutionType,
+        steps: [{ kind: 'form-augmented-matrix', matrix: coefficientMatrix.map((row, index) => row.concat(constants[index])) }],
+        dimensions: { equations: variables, variables, augmentedCols: variables + 1 }
+    };
+}
+
+function makeLinearSystemSet(count, variables) {
+    const types = ['unique', 'none', 'infinite'];
+    return {
+        id: `linear-${variables}-set`,
+        seed: `linear-${variables}-seed`,
+        type: 'linear-system',
+        settings: { variables, difficulty: variables === 3 ? 'hard' : 'easy' },
+        problems: Array.from({ length: count }, (_, index) => makeLinearSystemProblem(`linear-${variables}-${index + 1}`, variables, types[index % types.length]))
+    };
+}
+
+const linearUniqueProblem = makeLinearSystemProblem('linear-unique', 2, 'unique');
+const linearUniqueBefore = JSON.stringify(linearUniqueProblem);
+const linearUniqueAnswer = ui.__test.renderAnswerKeyProblem(linearUniqueProblem, 1);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('1.'), true);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('Original System:'), true);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('x - y = 3'), true);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('2x + y = 7'), true);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('Unique Solution'), true);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('x ='), true);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('y ='), true);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('17'), true);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('25'), true);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('0.68'), false);
+assert.strictEqual(countClass(linearUniqueAnswer, 'mp-fraction'), 2);
+assert.strictEqual(countClass(linearUniqueAnswer, 'mp-empty-matrix-wrap'), 0);
+assert.strictEqual(countClass(linearUniqueAnswer, 'mp-work-lines'), 0);
+assert.strictEqual(linearUniqueAnswer.textContent.includes('form-augmented-matrix'), false);
+assert.strictEqual(JSON.stringify(linearUniqueProblem), linearUniqueBefore);
+
+const linearUnique3Answer = ui.__test.renderAnswerKeyProblem(makeLinearSystemProblem('linear-unique-3', 3, 'unique'), 1);
+assert.strictEqual(linearUnique3Answer.textContent.includes('x ='), true);
+assert.strictEqual(linearUnique3Answer.textContent.includes('y ='), true);
+assert.strictEqual(linearUnique3Answer.textContent.includes('z ='), true);
+assert.strictEqual(linearUnique3Answer.textContent.includes('5'), true);
+assert.strictEqual(linearUnique3Answer.textContent.includes('2'), true);
+
+const linearNoneAnswer = ui.__test.renderAnswerKeyProblem(makeLinearSystemProblem('linear-none', 2, 'none'), 1);
+assert.strictEqual(linearNoneAnswer.textContent.includes('No Solution'), true);
+assert.strictEqual(collectLabels(linearNoneAnswer).includes('RREF:'), true);
+assert.strictEqual(linearNoneAnswer.textContent.includes('0'), true);
+assert.strictEqual(linearNoneAnswer.textContent.includes('1'), true);
+assert.strictEqual(linearNoneAnswer.textContent.includes('scale-row'), false);
+
+const linearInfiniteAnswer = ui.__test.renderAnswerKeyProblem(makeLinearSystemProblem('linear-infinite', 2, 'infinite'), 1);
+assert.strictEqual(linearInfiniteAnswer.textContent.includes('Infinitely Many Solutions'), true);
+assert.strictEqual(linearInfiniteAnswer.textContent.includes('x = 5 - 1/2t'), true);
+assert.strictEqual(linearInfiniteAnswer.textContent.includes('y = t'), true);
+assert.strictEqual(linearInfiniteAnswer.textContent.includes('0.5'), false);
+
+const linearAnswerKeyPage = ui.__test.renderPaperPage(makeLinearSystemSet(6, 2), {
+    viewMode: 'answer-key',
+    layout: 'compact',
+    pageIndex: 0,
+    pageNumber: 1,
+    totalPages: 1,
+    problems: makeLinearSystemSet(6, 2).problems.map((problem, index) => ({ problem, problemNumber: index + 1 }))
+}, 'answer-key');
+const linearHeaderMeta = linearAnswerKeyPage.children[0].children[1];
+assert.strictEqual(linearHeaderMeta.textContent, 'Systems of Linear Equations · Exact Answers · Set seed: linear-2-seed');
+assert.strictEqual(collectClassNodes(linearAnswerKeyPage, 'mp-paper-instructions').length, 0);
+assert.strictEqual(linearAnswerKeyPage.textContent.includes('Name:'), false);
+assert.strictEqual(linearAnswerKeyPage.textContent.includes('Date:'), false);
+assert.strictEqual(linearAnswerKeyPage.textContent.includes('Solution: __________________'), false);
+assert.strictEqual(countClass(linearAnswerKeyPage, 'mp-work-lines'), 0);
+assert.deepStrictEqual(ui.buildPageMetadata(makeLinearSystemSet(8, 2), 'answer-key')[0].problems.map((item) => item.problemNumber), [1, 2, 3, 4, 5, 6]);
+assert.deepStrictEqual(ui.buildPageMetadata(makeLinearSystemSet(8, 2), 'answer-key')[1].problems.map((item) => item.problemNumber), [7, 8]);
+assert.deepStrictEqual(ui.buildPageMetadata(makeLinearSystemSet(6, 3), 'answer-key')[0].problems.map((item) => item.problemNumber), [1, 2, 3, 4]);
+assert.deepStrictEqual(ui.buildPageMetadata(makeLinearSystemSet(6, 3), 'answer-key')[1].problems.map((item) => item.problemNumber), [5, 6]);
 
 const originalProblems = addSubEight.problems.slice();
 const chunks = ui.chunkProblems(addSubEight.problems, 6);
@@ -522,11 +647,14 @@ assert.ok(source.includes('canDownloadPdfForSet'));
 assert.ok(source.includes("problemSet.type === 'addition-subtraction'"));
 assert.ok(source.includes("problemSet.type === 'multiplication'"));
 assert.ok(source.includes("problemSet.type === 'rref'"));
+assert.ok(source.includes("problemSet.type === 'linear-system'"));
 assert.ok(source.includes("const method = isAnswerKey ? 'downloadAnswerKeyPdf' : 'downloadWorksheetPdf';"));
 assert.ok(!source.includes('downloadMultiplicationWorksheetPdf(state.currentSet)'));
 assert.ok(!source.includes('downloadMultiplicationAnswerKeyPdf(state.currentSet)'));
 assert.ok(!source.includes('downloadRrefWorksheetPdf(state.currentSet)'));
 assert.ok(!source.includes('downloadRrefAnswerKeyPdf(state.currentSet)'));
+assert.ok(!source.includes('downloadLinearSystemWorksheetPdf(state.currentSet)'));
+assert.ok(!source.includes('downloadLinearSystemAnswerKeyPdf(state.currentSet)'));
 assert.ok(source.includes("setPdfButtonsDisabled(true);"));
 assert.ok(source.includes("els.downloadWorksheetPdf.textContent = t('downloadWorksheetPdf');"));
 assert.ok(source.includes("els.downloadAnswerKeyPdf.textContent = t('downloadAnswerKeyPdf');"));

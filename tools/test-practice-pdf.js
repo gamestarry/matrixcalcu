@@ -249,6 +249,109 @@ function makeRrefPoisonedAnswerKeySet() {
     };
 }
 
+function makeLinearSystemProblem(id, variables, solutionType) {
+    const coefficientMatrix = variables === 3
+        ? [[1, -1, 2], [0, 3, -1], [2, 0, 1]]
+        : [[1, -1], [2, 1]];
+    const constants = variables === 3 ? [4, -2, 5] : [3, 7];
+    const answer = {
+        solutionType,
+        rrefMatrix: variables === 3
+            ? [[1, 0, 0, 2], [0, 1, 0, -1], [0, 0, 1, { kind: 'fraction', numerator: 3, denominator: 2 }]]
+            : [[1, 0, { kind: 'fraction', numerator: 1, denominator: 2 }], [0, 1, -3]]
+    };
+    if (solutionType === 'unique') {
+        answer.solution = variables === 3
+            ? [2, -1, { kind: 'fraction', numerator: 3, denominator: 2 }]
+            : [{ kind: 'fraction', numerator: 1, denominator: 2 }, -3];
+    } else if (solutionType === 'none') {
+        answer.rrefMatrix = variables === 3
+            ? [[1, 0, 2, 0], [0, 1, -1, 0], [0, 0, 0, 1]]
+            : [[1, 0, 2], [0, 0, 1]];
+        answer.contradictionRows = [{ row: variables - 1, constant: 1 }];
+    } else {
+        answer.rrefMatrix = variables === 3
+            ? [[1, 0, -2, 1], [0, 1, 3, -4], [0, 0, 0, 0]]
+            : [[1, -2, 5], [0, 0, 0]];
+        answer.pivotVariables = variables === 3 ? ['x', 'y'] : ['x'];
+        answer.freeVariables = variables === 3 ? ['z'] : ['y'];
+        answer.expressions = variables === 3 ? [
+            { variable: 'x', isFree: false, constant: 1, terms: [{ freeVariable: 'z', coefficient: 2 }] },
+            { variable: 'y', isFree: false, constant: -4, terms: [{ freeVariable: 'z', coefficient: -3 }] },
+            { variable: 'z', isFree: true, constant: 0, terms: [] }
+        ] : [
+            { variable: 'x', isFree: false, constant: 5, terms: [{ freeVariable: 'y', coefficient: 2 }] },
+            { variable: 'y', isFree: true, constant: 0, terms: [] }
+        ];
+    }
+    return {
+        id,
+        type: 'linear-system',
+        subtype: solutionType,
+        solutionType,
+        difficulty: variables === 3 ? 'hard' : 'easy',
+        inputs: { coefficientMatrix, constants },
+        exactAnswer: answer,
+        steps: [{ kind: 'form-augmented-matrix' }],
+        dimensions: { equations: variables, variables, augmentedCols: variables + 1 }
+    };
+}
+
+function makeLinearSystemSet(seed, count, variables, solutionType) {
+    const types = solutionType === 'mixed' ? ['unique', 'none', 'infinite'] : [solutionType];
+    return {
+        id: `${seed}-set`,
+        seed,
+        type: 'linear-system',
+        settings: { count, variables, solutionType },
+        problems: Array.from({ length: count }, (_, index) => (
+            makeLinearSystemProblem(`${seed}-${index + 1}`, variables, types[index % types.length])
+        ))
+    };
+}
+
+function makeLinearSystemPoisonedWorksheetSet() {
+    const problem = makeLinearSystemProblem('linear-poisoned-1', 2, 'unique');
+    Object.defineProperty(problem, 'exactAnswer', {
+        get() {
+            throw new Error('Linear Systems worksheet plan must not read exactAnswer.');
+        }
+    });
+    Object.defineProperty(problem, 'solutionType', {
+        get() {
+            throw new Error('Linear Systems worksheet plan must not read solutionType.');
+        }
+    });
+    Object.defineProperty(problem, 'steps', {
+        get() {
+            throw new Error('Linear Systems worksheet plan must not read steps.');
+        }
+    });
+    return {
+        id: 'linear-poisoned-worksheet-set',
+        seed: 'linear-poisoned-seed',
+        type: 'linear-system',
+        settings: { variables: 2 },
+        problems: [problem]
+    };
+}
+
+function makeLinearSystemPoisonedAnswerKeySet() {
+    const problem = makeLinearSystemProblem('linear-answer-poisoned-1', 2, 'infinite');
+    Object.defineProperty(problem, 'steps', {
+        get() {
+            throw new Error('Linear Systems answer key plan must not read steps.');
+        }
+    });
+    return {
+        id: 'linear-answer-poisoned-set',
+        seed: 'linear-answer-poisoned-seed',
+        type: 'linear-system',
+        settings: { variables: 2 },
+        problems: [problem]
+    };
+}
+
 function assertFractionDrawsAsStackedFraction() {
     const calls = [];
     const page = {
@@ -795,23 +898,181 @@ async function runTests() {
     assert.strictEqual(await pageCount(await pdf.createAnswerKeyPdf(rrefFour, { pdfLib })), 1);
     rows.push(['T23', 'RREF filenames and generic PDF dispatchers use the current set seed and type', 'pass']);
 
+    assert.throws(() => pdf.buildLinearSystemWorksheetPlan({ type: 'rref', problems: [] }), /Unsupported linear systems worksheet type: rref/);
+    assert.throws(() => pdf.buildLinearSystemAnswerKeyPlan({ type: 'multiplication', problems: [] }), /Unsupported linear systems answer key type: multiplication/);
+    const linearSix = makeLinearSystemSet('pdf-linear-six', 6, 2, 'mixed');
+    const linearEight = makeLinearSystemSet('pdf-linear-eight', 8, 2, 'mixed');
+    const linearTen = makeLinearSystemSet('pdf-linear-ten', 10, 2, 'mixed');
+    const linearThreeFour = makeLinearSystemSet('pdf-linear-three-four', 4, 3, 'mixed');
+    const linearThreeSix = makeLinearSystemSet('pdf-linear-three-six', 6, 3, 'mixed');
+
+    const linearWorksheetSix = pdf.buildLinearSystemWorksheetPlan(linearSix);
+    assert.strictEqual(linearWorksheetSix.kind, 'worksheet');
+    assert.strictEqual(linearWorksheetSix.type, 'linear-system');
+    assert.strictEqual(linearWorksheetSix.subtitle, 'Systems of Linear Equations');
+    assert.strictEqual(linearWorksheetSix.instructions, 'Solve each system. Show your work.');
+    assert.strictEqual(linearWorksheetSix.layout.problemsPerPage, 6);
+    assert.strictEqual(linearWorksheetSix.layout.columns, 2);
+    assert.strictEqual(linearWorksheetSix.layout.rows, 3);
+    assert.deepStrictEqual(linearWorksheetSix.pages[0].problems.map((item) => item.globalNumber), [1, 2, 3, 4, 5, 6]);
+    assert.deepStrictEqual(linearWorksheetSix.pages[0].problems[0].coefficientMatrix, linearSix.problems[0].inputs.coefficientMatrix);
+    assert.deepStrictEqual(linearWorksheetSix.pages[0].problems[0].constants, linearSix.problems[0].inputs.constants);
+    assert.strictEqual(linearWorksheetSix.pages[0].problems[0].variables, 2);
+    assertNoAnswerOrSteps(linearWorksheetSix);
+    pdf.buildLinearSystemWorksheetPlan(makeLinearSystemPoisonedWorksheetSet());
+    rows.push(['T24', 'Linear Systems worksheet plan uses 2-variable six-up layout and omits answers, solution types, and steps', 'pass']);
+
+    assert.strictEqual(pdf.buildLinearSystemWorksheetPlan(linearEight).pages.length, 2);
+    assert.deepStrictEqual(pdf.buildLinearSystemWorksheetPlan(linearEight).pages[1].problems.map((item) => item.globalNumber), [7, 8]);
+    assert.strictEqual(pdf.buildLinearSystemWorksheetPlan(linearTen).pages.length, 2);
+    assert.strictEqual(pdf.buildLinearSystemWorksheetPlan(linearThreeFour).layout.problemsPerPage, 4);
+    assert.strictEqual(pdf.buildLinearSystemWorksheetPlan(linearThreeFour).layout.rows, 2);
+    assert.strictEqual(pdf.buildLinearSystemWorksheetPlan(linearThreeSix).pages.length, 2);
+    assert.deepStrictEqual(pdf.buildLinearSystemWorksheetPlan(linearThreeSix).pages[1].problems.map((item) => item.globalNumber), [5, 6]);
+    assertContinuousNumbers(pdf.buildLinearSystemWorksheetPlan(linearTen));
+    rows.push(['T25', 'Linear Systems worksheet pagination is 6 per page for 2 variables and 4 per page for 3 variables', 'pass']);
+
+    const linearAnswerSix = pdf.buildLinearSystemAnswerKeyPlan(linearSix);
+    assert.strictEqual(linearAnswerSix.kind, 'answer-key');
+    assert.strictEqual(linearAnswerSix.title, 'Matrix Practice Answer Key');
+    assert.strictEqual(linearAnswerSix.subtitle, 'Systems of Linear Equations');
+    assert.strictEqual(linearAnswerSix.layout.problemsPerPage, 6);
+    assert.strictEqual(linearAnswerSix.pages[0].problems[0].solutionType, 'unique');
+    assert.deepStrictEqual(linearAnswerSix.pages[0].problems[0].exactAnswer.solution, linearSix.problems[0].exactAnswer.solution);
+    assert.strictEqual(JSON.stringify(linearAnswerSix).includes('steps'), false);
+    const linearOriginalNumerator = linearAnswerSix.pages[0].problems[0].exactAnswer.solution[0].numerator;
+    linearAnswerSix.pages[0].problems[0].exactAnswer.solution[0].numerator = 999;
+    assert.strictEqual(linearSix.problems[0].exactAnswer.solution[0].numerator, linearOriginalNumerator);
+    pdf.buildLinearSystemAnswerKeyPlan(makeLinearSystemPoisonedAnswerKeySet());
+    rows.push(['T26', 'Linear Systems answer key plan includes exact generated answers, deep-clones fractions, and omits steps', 'pass']);
+
+    assert.strictEqual(pdf.__test.formatLinearEquationText([1, -1, 0], 4), 'x - y = 4');
+    assert.strictEqual(pdf.__test.formatLinearEquationText([-1, 2, -3], -7), '-x + 2y - 3z = -7');
+    assert.strictEqual(pdf.__test.formatLinearEquationText([0, 0, 0], 5), '0 = 5');
+    assert.strictEqual(
+        pdf.__test.formatLinearSystemExpressionText({
+            variable: 'x',
+            isFree: false,
+            constant: 1,
+            terms: [{ freeVariable: 'y', coefficient: { kind: 'fraction', numerator: -1, denominator: 2 } }]
+        }, { y: 't' }),
+        'x = 1 - 1/2t'
+    );
+    rows.push(['T27', 'Linear Systems PDF equation and parametric answer formatters preserve exact fractions without decimals', 'pass']);
+
+    const linearDrawCalls = [];
+    const fakePage = {
+        drawLine(args) {
+            linearDrawCalls.push({ kind: 'line', args });
+        },
+        drawText(text, args) {
+            linearDrawCalls.push({ kind: 'text', text, args });
+        }
+    };
+    const fakeFont = {
+        widthOfTextAtSize(text, size) {
+            return String(text).length * size * 0.55;
+        }
+    };
+    const fakeFonts = { regular: fakeFont, bold: fakeFont };
+    const fakeColors = { text: 'text', muted: 'muted', line: 'line' };
+    pdf.__test.drawLinearSystemWorksheetProblem(fakePage, linearWorksheetSix.pages[0].problems[0], {
+        x: 36,
+        y: 646,
+        width: 260,
+        height: 180
+    }, fakeFonts, fakeColors);
+    assert(linearDrawCalls.some((call) => call.kind === 'text' && call.text === 'Solve the system:'));
+    assert(linearDrawCalls.some((call) => call.kind === 'text' && call.text === 'Solution:'));
+    assert(linearDrawCalls.some((call) => call.kind === 'text' && call.text === 'x ='));
+    assert(linearDrawCalls.some((call) => call.kind === 'text' && call.text === 'y ='));
+    assert(!linearDrawCalls.some((call) => call.kind === 'text' && call.text === 'Unique Solution'));
+    assert(!linearDrawCalls.some((call) => call.kind === 'text' && call.text === '1/2'));
+    const linearAnswerDrawCalls = [];
+    const fakeAnswerPage = {
+        drawLine(args) {
+            linearAnswerDrawCalls.push({ kind: 'line', args });
+        },
+        drawText(text, args) {
+            linearAnswerDrawCalls.push({ kind: 'text', text, args });
+        }
+    };
+    pdf.__test.drawLinearSystemAnswerKeyProblem(fakeAnswerPage, pdf.buildLinearSystemAnswerKeyPlan(makeLinearSystemSet('pdf-linear-unique', 1, 2, 'unique')).pages[0].problems[0], {
+        x: 36,
+        y: 646,
+        width: 260,
+        height: 180
+    }, fakeFonts, fakeColors);
+    assert(linearAnswerDrawCalls.some((call) => call.kind === 'text' && call.text === 'Unique Solution'));
+    assert(linearAnswerDrawCalls.some((call) => call.kind === 'text' && call.text === '1'));
+    assert(linearAnswerDrawCalls.some((call) => call.kind === 'text' && call.text === '2'));
+    assert(linearAnswerDrawCalls.some((call) => call.kind === 'line' && call.args.thickness === 0.7));
+    rows.push(['T28', 'Linear Systems PDF drawing keeps worksheet blank and renders unique fractions with vector fraction bars', 'pass']);
+
+    const linearBefore = JSON.stringify(linearSix);
+    const linearWorksheetBytes = await pdf.createLinearSystemWorksheetPdf(linearSix, {
+        pdfLib,
+        creationDate: new Date('2024-01-01T00:00:00Z')
+    });
+    const linearAnswerBytes = await pdf.createLinearSystemAnswerKeyPdf(linearSix, {
+        pdfLib,
+        creationDate: new Date('2024-01-01T00:00:00Z')
+    });
+    assert(linearWorksheetBytes instanceof Uint8Array);
+    assert(linearAnswerBytes instanceof Uint8Array);
+    assertHeader(linearWorksheetBytes);
+    assertHeader(linearAnswerBytes);
+    assert.strictEqual(await pageCount(linearWorksheetBytes), 1);
+    assert.strictEqual(await pageCount(linearAnswerBytes), 1);
+    assert.strictEqual(await pageCount(await pdf.createLinearSystemWorksheetPdf(linearThreeSix, { pdfLib })), 2);
+    assert.strictEqual(await pageCount(await pdf.createLinearSystemAnswerKeyPdf(linearThreeSix, { pdfLib })), 2);
+    (await pageSizes(linearWorksheetBytes)).forEach((size) => assert.deepStrictEqual(size, { width: 612, height: 792 }));
+    (await pageSizes(linearAnswerBytes)).forEach((size) => assert.deepStrictEqual(size, { width: 612, height: 792 }));
+    assert.deepStrictEqual(await pdfMetadata(linearWorksheetBytes), {
+        title: 'Matrix Linear Systems Practice Worksheet',
+        author: 'MatrixCalcu',
+        creator: 'MatrixCalcu',
+        subject: 'Systems of linear equations practice worksheet'
+    });
+    assert.deepStrictEqual(await pdfMetadata(linearAnswerBytes), {
+        title: 'Matrix Linear Systems Practice Answer Key',
+        author: 'MatrixCalcu',
+        creator: 'MatrixCalcu',
+        subject: 'Systems of linear equations practice answer key'
+    });
+    assert.strictEqual(JSON.stringify(linearSix), linearBefore);
+    rows.push(['T29', 'Linear Systems PDFs are valid Letter Uint8Arrays with metadata and do not mutate problem sets', 'pass']);
+
+    assert.strictEqual(
+        pdf.createPdfFilename({ type: 'linear-system', seed: 'My Seed: 01/Unsafe?' }, 'worksheet'),
+        'matrix-linear-systems-worksheet-my-seed-01-unsafe.pdf'
+    );
+    assert.strictEqual(
+        pdf.createPdfFilename({ type: 'linear-system', seed: 'My Seed: 01/Unsafe?' }, 'answer-key'),
+        'matrix-linear-systems-answer-key-my-seed-01-unsafe.pdf'
+    );
+    assert.strictEqual(await pageCount(await pdf.createWorksheetPdf(linearSix, { pdfLib })), 1);
+    assert.strictEqual(await pageCount(await pdf.createAnswerKeyPdf(linearSix, { pdfLib })), 1);
+    rows.push(['T30', 'Linear Systems filenames and generic PDF dispatchers use the current set seed and type', 'pass']);
+
     const source = fs.readFileSync(path.join(__dirname, '..', 'js', 'practice', 'practice-pdf.js'), 'utf8');
     assert(!/\bdocument\b/.test(source.replace(/downloadAdditionSubtractionWorksheetPdf[\s\S]*?const api =/, 'const api =')));
     assert(!/\bwindow\.print\b/.test(source));
     assert(!/\bMath\.random\b/.test(source));
     assert(!/html2canvas|canvas|fetch\(|XMLHttpRequest|import\(/.test(source));
     assert(!/fontkit/.test(source));
-    assert(!/reduceMatrixForPractice|calculateRREFWithSteps/.test(source));
+    assert(!/reduceMatrixForPractice|calculateRREFWithSteps|analyzeRref/.test(source));
     assert(source.includes('drawMultiplicationSign'));
+    assert(source.includes('drawLinearSystemAnswerKeyProblem'));
     assert(source.includes('drawLine'));
     assert(!source.includes("'x'"));
-    rows.push(['T24', 'PDF generation path avoids DOM measurement, window.print, network, screenshots, extra fonts, and RREF recomputation', 'pass']);
+    rows.push(['T31', 'PDF generation path avoids DOM measurement, window.print, network, screenshots, extra fonts, and RREF recomputation', 'pass']);
 
     const samplePath = path.join(os.tmpdir(), 'matrix-addition-subtraction-worksheet-sample.pdf');
     fs.writeFileSync(samplePath, Buffer.from(bytesSix));
     assert(fs.existsSync(samplePath));
     fs.unlinkSync(samplePath);
-    rows.push(['T25', 'temporary manual sample PDF can be produced and cleaned up', 'pass']);
+    rows.push(['T32', 'temporary manual sample PDF can be produced and cleaned up', 'pass']);
 
     return rows;
 }

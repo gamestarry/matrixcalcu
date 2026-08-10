@@ -4,6 +4,7 @@
     const ADD_SUB_TYPE = 'addition-subtraction';
     const MULTIPLICATION_TYPE = 'multiplication';
     const RREF_TYPE = 'rref';
+    const LINEAR_SYSTEM_TYPE = 'linear-system';
     const PAGE_WIDTH = 612;
     const PAGE_HEIGHT = 792;
     const PROBLEMS_PER_PAGE = 6;
@@ -30,6 +31,18 @@
 
     function cloneExactMatrix(matrix) {
         return matrix.map((row) => row.map(cloneExactValue));
+    }
+
+    function cloneExactDeep(value) {
+        if (Array.isArray(value)) return value.map(cloneExactDeep);
+        if (value && typeof value === 'object') {
+            const clone = {};
+            Object.keys(value).forEach((key) => {
+                clone[key] = cloneExactDeep(value[key]);
+            });
+            return clone;
+        }
+        return value;
     }
 
     function assertAdditionSubtractionSet(problemSet, kind) {
@@ -82,6 +95,16 @@
         }
     }
 
+    function assertLinearSystemSet(problemSet, kind) {
+        if (!problemSet || problemSet.type !== LINEAR_SYSTEM_TYPE) {
+            const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
+            throw new Error(`Unsupported linear systems ${kind || 'worksheet'} type: ${actual}`);
+        }
+        if (!Array.isArray(problemSet.problems)) {
+            throw new Error('Invalid linear systems problem set.');
+        }
+    }
+
     function getMultiplicationLayout(problemSet) {
         const first = problemSet && problemSet.problems && problemSet.problems[0];
         if (!first) return 'regular';
@@ -127,6 +150,29 @@
             rows: matrix ? matrix.length : 0,
             cols: matrix && matrix[0] ? matrix[0].length : 0
         };
+    }
+
+    function linearSystemVariablesForProblem(problem) {
+        const dims = problem.dimensions || {};
+        if (Number.isInteger(dims.variables)) return dims.variables;
+        const matrix = problem.inputs && problem.inputs.coefficientMatrix;
+        return matrix && matrix[0] ? matrix[0].length : 0;
+    }
+
+    function linearSystemEquationsForProblem(problem) {
+        const dims = problem.dimensions || {};
+        if (Number.isInteger(dims.equations)) return dims.equations;
+        const matrix = problem.inputs && problem.inputs.coefficientMatrix;
+        return matrix ? matrix.length : 0;
+    }
+
+    function getLinearSystemLayout(problemSet) {
+        const first = problemSet && problemSet.problems && problemSet.problems[0];
+        return linearSystemVariablesForProblem(first || {}) === 3 ? 'regular' : 'compact';
+    }
+
+    function getLinearSystemProblemsPerPage(layoutName) {
+        return layoutName === 'regular' ? 4 : 6;
     }
 
     function buildAdditionSubtractionWorksheetPlan(problemSet, options) {
@@ -397,6 +443,101 @@
         };
     }
 
+    function buildLinearSystemWorksheetPlan(problemSet, options) {
+        assertLinearSystemSet(problemSet, 'worksheet');
+        const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const layoutName = getLinearSystemLayout(problemSet);
+        const problemsPerPage = getLinearSystemProblemsPerPage(layoutName);
+        const chunks = chunkProblemsBySize(problemSet.problems, problemsPerPage);
+        const totalPages = chunks.length;
+
+        return {
+            kind: 'worksheet',
+            type: LINEAR_SYSTEM_TYPE,
+            title: 'Matrix Practice Worksheet',
+            subtitle: 'Systems of Linear Equations',
+            instructions: 'Solve each system. Show your work.',
+            seed: problemSet.seed,
+            paper: {
+                width: PAGE_WIDTH,
+                height: PAGE_HEIGHT
+            },
+            layout: {
+                name: layoutName,
+                problemsPerPage,
+                columns: 2,
+                rows: layoutName === 'regular' ? 2 : 3,
+                marginLeft: opts.marginLeft,
+                marginRight: opts.marginRight,
+                marginTop: opts.marginTop,
+                marginBottom: opts.marginBottom,
+                columnGap: opts.columnGap,
+                rowGap: opts.rowGap,
+                footer: 'matrixcalcu.com'
+            },
+            pages: chunks.map((problems, pageIndex) => ({
+                pageNumber: pageIndex + 1,
+                totalPages,
+                problems: problems.map((problem, index) => ({
+                    id: problem.id,
+                    globalNumber: pageIndex * problemsPerPage + index + 1,
+                    coefficientMatrix: cloneExactMatrix(problem.inputs.coefficientMatrix),
+                    constants: problem.inputs.constants.map(cloneExactValue),
+                    variables: linearSystemVariablesForProblem(problem),
+                    equations: linearSystemEquationsForProblem(problem)
+                }))
+            }))
+        };
+    }
+
+    function buildLinearSystemAnswerKeyPlan(problemSet, options) {
+        assertLinearSystemSet(problemSet, 'answer key');
+        const opts = Object.assign({}, DEFAULT_OPTIONS, options || {});
+        const layoutName = getLinearSystemLayout(problemSet);
+        const problemsPerPage = getLinearSystemProblemsPerPage(layoutName);
+        const chunks = chunkProblemsBySize(problemSet.problems, problemsPerPage);
+        const totalPages = chunks.length;
+
+        return {
+            kind: 'answer-key',
+            type: LINEAR_SYSTEM_TYPE,
+            title: 'Matrix Practice Answer Key',
+            subtitle: 'Systems of Linear Equations',
+            seed: problemSet.seed,
+            paper: {
+                width: PAGE_WIDTH,
+                height: PAGE_HEIGHT
+            },
+            layout: {
+                name: layoutName,
+                problemsPerPage,
+                columns: 2,
+                rows: layoutName === 'regular' ? 2 : 3,
+                marginLeft: opts.marginLeft,
+                marginRight: opts.marginRight,
+                marginTop: opts.marginTop,
+                marginBottom: opts.marginBottom,
+                columnGap: opts.columnGap,
+                rowGap: opts.rowGap,
+                footer: 'matrixcalcu.com'
+            },
+            pages: chunks.map((problems, pageIndex) => ({
+                pageNumber: pageIndex + 1,
+                totalPages,
+                problems: problems.map((problem, index) => ({
+                    id: problem.id,
+                    globalNumber: pageIndex * problemsPerPage + index + 1,
+                    coefficientMatrix: cloneExactMatrix(problem.inputs.coefficientMatrix),
+                    constants: problem.inputs.constants.map(cloneExactValue),
+                    variables: linearSystemVariablesForProblem(problem),
+                    equations: linearSystemEquationsForProblem(problem),
+                    solutionType: problem.solutionType || (problem.exactAnswer && problem.exactAnswer.solutionType),
+                    exactAnswer: cloneExactDeep(problem.exactAnswer)
+                }))
+            }))
+        };
+    }
+
     function sanitizeFilenamePart(value) {
         return String(value || 'worksheet')
             .toLowerCase()
@@ -413,6 +554,8 @@
             type = 'multiplication';
         } else if (problemSet && problemSet.type === RREF_TYPE) {
             type = 'rref';
+        } else if (problemSet && problemSet.type === LINEAR_SYSTEM_TYPE) {
+            type = 'linear-systems';
         }
         return `matrix-${type}-${safeKind}-${seed}.pdf`;
     }
@@ -663,6 +806,27 @@
         return 664;
     }
 
+    function drawCompactAnswerKeyHeader(page, plan, pageInfo, fonts, colors) {
+        drawTextCentered(page, plan.title, 746, fonts.bold, 16, colors.text);
+        const metaText = `${plan.subtitle} · Exact Answers · Set seed: ${plan.seed || ''}`;
+        drawTextCentered(page, metaText, 727, fonts.regular, 10, colors.muted);
+        const pageText = `Page ${pageInfo.pageNumber} of ${pageInfo.totalPages}`;
+        page.drawText(pageText, {
+            x: PAGE_WIDTH - 44 - fonts.regular.widthOfTextAtSize(pageText, 9),
+            y: 704,
+            size: 9,
+            font: fonts.regular,
+            color: colors.muted
+        });
+        page.drawLine({
+            start: { x: 44, y: 688 },
+            end: { x: PAGE_WIDTH - 44, y: 688 },
+            thickness: 0.6,
+            color: colors.line
+        });
+        return 664;
+    }
+
     function drawAnswerKeyProblem(page, item, box, fonts, colors) {
         const numberText = `${item.globalNumber}.`;
         page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
@@ -823,6 +987,216 @@
 
         page.drawText('RREF:', { x: box.x + 4, y: box.y - 118, size: 9, font: fonts.bold, color: colors.text });
         drawMatrix(page, item.exactAnswer, box.x + 58, box.y - 106, fonts, matrixOptions);
+    }
+
+    function variableName(index) {
+        return ["x", "y", "z"][index] || `x${index + 1}`;
+    }
+
+    function numericValue(value) {
+        if (isFraction(value)) return value.numerator / value.denominator;
+        return Number(value);
+    }
+
+    function isZeroValue(value) {
+        return isFraction(value) ? value.numerator === 0 : Number(value) === 0;
+    }
+
+    function isOneValue(value) {
+        return isFraction(value)
+            ? value.numerator === value.denominator
+            : Number(value) === 1;
+    }
+
+    function isNegativeValue(value) {
+        return isFraction(value) ? value.numerator < 0 : Number(value) < 0;
+    }
+
+    function absExactValue(value) {
+        if (isFraction(value)) {
+            return {
+                kind: 'fraction',
+                numerator: Math.abs(value.numerator),
+                denominator: value.denominator
+            };
+        }
+        return Math.abs(Number(value));
+    }
+
+    function formatLinearEquationText(coefficients, constant) {
+        const terms = [];
+        coefficients.forEach((coefficient, index) => {
+            if (isZeroValue(coefficient)) return;
+            const variable = variableName(index);
+            const negative = isNegativeValue(coefficient);
+            const magnitude = absExactValue(coefficient);
+            const body = isOneValue(magnitude) ? variable : `${exactValueText(magnitude)}${variable}`;
+            if (!terms.length) {
+                terms.push(negative ? `-${body}` : body);
+            } else {
+                terms.push(negative ? `- ${body}` : `+ ${body}`);
+            }
+        });
+        return `${terms.length ? terms.join(' ') : '0'} = ${exactValueText(constant)}`;
+    }
+
+    function drawEquationList(page, item, x, y, fonts, colors, options) {
+        const opts = Object.assign({ fontSize: 9, lineHeight: 14 }, options || {});
+        item.coefficientMatrix.forEach((row, index) => {
+            page.drawText(formatLinearEquationText(row, item.constants[index]), {
+                x,
+                y: y - index * opts.lineHeight,
+                size: opts.fontSize,
+                font: fonts.regular,
+                color: colors.text
+            });
+        });
+    }
+
+    function solutionTypeLabel(solutionType) {
+        if (solutionType === 'none') return 'No Solution';
+        if (solutionType === 'infinite') return 'Infinitely Many Solutions';
+        return 'Unique Solution';
+    }
+
+    function drawAssignmentValue(page, variable, value, x, y, fonts, colors, options) {
+        const opts = Object.assign({ fontSize: 9, valueCenterOffset: 34 }, options || {});
+        const label = `${variable} =`;
+        page.drawText(label, { x, y, size: opts.fontSize, font: fonts.regular, color: colors.text });
+        drawExactValue(page, value, x + opts.valueCenterOffset, y + opts.fontSize / 2, fonts, {
+            color: colors.text,
+            fontSize: opts.fontSize,
+            fractionFontSize: Math.max(7, opts.fontSize - 1)
+        });
+    }
+
+    function formatParametricTerm(coefficient, parameter, isFirst) {
+        const negative = isNegativeValue(coefficient);
+        const magnitude = absExactValue(coefficient);
+        const body = isOneValue(magnitude) ? parameter : `${exactValueText(magnitude)}${parameter}`;
+        if (isFirst) return negative ? `-${body}` : body;
+        return negative ? `- ${body}` : `+ ${body}`;
+    }
+
+    function formatLinearSystemExpressionText(expression, parameterMap) {
+        if (expression.isFree) {
+            return `${expression.variable} = ${parameterMap[expression.variable] || expression.variable}`;
+        }
+
+        const parts = [];
+        if (!isZeroValue(expression.constant)) {
+            parts.push(exactValueText(expression.constant));
+        }
+        (expression.terms || []).forEach((term) => {
+            const parameter = parameterMap[term.freeVariable] || term.freeVariable;
+            parts.push(formatParametricTerm(term.coefficient, parameter, parts.length === 0));
+        });
+        return `${expression.variable} = ${parts.length ? parts.join(' ') : '0'}`;
+    }
+
+    function parameterMapForAnswer(answer) {
+        const names = ["t", "s", "u", "v"];
+        const map = {};
+        (answer.freeVariables || []).forEach((variable, index) => {
+            map[variable] = names[index] || `t${index + 1}`;
+        });
+        return map;
+    }
+
+    function drawLinearSystemWorksheetProblem(page, item, box, fonts, colors) {
+        const numberText = `${item.globalNumber}.`;
+        page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
+        page.drawText('Solve the system:', { x: box.x + 12, y: box.y - 31, size: 9, font: fonts.bold, color: colors.text });
+        drawEquationList(page, item, box.x + 18, box.y - 47, fonts, colors, {
+            fontSize: item.variables === 3 ? 8.5 : 9,
+            lineHeight: item.variables === 3 ? 13 : 14
+        });
+
+        const answerTop = box.y - (item.variables === 3 ? 94 : 86);
+        page.drawText('Solution:', { x: box.x + 4, y: answerTop, size: 9, font: fonts.bold, color: colors.text });
+        for (let index = 0; index < item.variables; index++) {
+            const y = answerTop - 18 - index * 17;
+            const label = `${variableName(index)} =`;
+            page.drawText(label, { x: box.x + 18, y, size: 9, font: fonts.regular, color: colors.text });
+            page.drawLine({
+                start: { x: box.x + 46, y: y + 1 },
+                end: { x: box.x + box.width - 8, y: y + 1 },
+                thickness: 0.5,
+                color: colors.line
+            });
+        }
+
+        const firstLineY = answerTop - 30 - item.variables * 17;
+        const lineCount = item.variables === 3 ? 3 : 2;
+        for (let index = 0; index < lineCount; index++) {
+            const y = firstLineY - index * 18;
+            if (y <= box.y - box.height + 10) break;
+            page.drawLine({
+                start: { x: box.x + 4, y },
+                end: { x: box.x + box.width - 4, y },
+                thickness: 0.5,
+                color: colors.line
+            });
+        }
+    }
+
+    function drawLinearSystemAnswerKeyProblem(page, item, box, fonts, colors) {
+        const numberText = `${item.globalNumber}.`;
+        page.drawText(numberText, { x: box.x, y: box.y - 14, size: 11, font: fonts.bold, color: colors.text });
+        drawEquationList(page, item, box.x + 12, box.y - 32, fonts, colors, {
+            fontSize: item.variables === 3 ? 8 : 8.5,
+            lineHeight: item.variables === 3 ? 12 : 13
+        });
+
+        const summaryY = box.y - (item.variables === 3 ? 78 : 70);
+        page.drawText(solutionTypeLabel(item.solutionType), {
+            x: box.x + 4,
+            y: summaryY,
+            size: 9,
+            font: fonts.bold,
+            color: colors.text
+        });
+
+        if (item.solutionType === 'unique') {
+            (item.exactAnswer.solution || []).forEach((value, index) => {
+                const row = Math.floor(index / 2);
+                const column = index % 2;
+                drawAssignmentValue(
+                    page,
+                    variableName(index),
+                    value,
+                    box.x + 12 + column * 88,
+                    summaryY - 18 - row * 18,
+                    fonts,
+                    colors,
+                    { fontSize: 9 }
+                );
+            });
+            return;
+        }
+
+        if (item.solutionType === 'none') {
+            page.drawText('Final RREF:', { x: box.x + 4, y: summaryY - 19, size: 8.5, font: fonts.bold, color: colors.text });
+            drawMatrix(page, item.exactAnswer.rrefMatrix, box.x + 68, summaryY - 8, fonts, {
+                color: colors.text,
+                cellWidth: item.variables === 3 ? 22 : 24,
+                cellHeight: 17,
+                fontSize: 8,
+                fractionFontSize: 7
+            });
+            return;
+        }
+
+        const parameterMap = parameterMapForAnswer(item.exactAnswer || {});
+        (item.exactAnswer.expressions || []).forEach((expression, index) => {
+            page.drawText(formatLinearSystemExpressionText(expression, parameterMap), {
+                x: box.x + 12,
+                y: summaryY - 18 - index * 14,
+                size: item.variables === 3 ? 8 : 8.5,
+                font: fonts.regular,
+                color: colors.text
+            });
+        });
     }
 
     function drawFooter(page, fonts, colors) {
@@ -1137,6 +1511,110 @@
         return pdfDoc.save();
     }
 
+    async function createLinearSystemWorksheetPdf(problemSet, options) {
+        const opts = options || {};
+        const plan = buildLinearSystemWorksheetPlan(problemSet, opts);
+        const pdfLib = getPdfLib(opts);
+        const { PDFDocument, StandardFonts, rgb } = pdfLib;
+        const pdfDoc = await PDFDocument.create();
+        pdfDoc.setTitle('Matrix Linear Systems Practice Worksheet');
+        pdfDoc.setAuthor('MatrixCalcu');
+        pdfDoc.setCreator('MatrixCalcu');
+        pdfDoc.setSubject('Systems of linear equations practice worksheet');
+        const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
+        pdfDoc.setCreationDate(date);
+        pdfDoc.setModificationDate(date);
+
+        const fonts = {
+            regular: await pdfDoc.embedFont(StandardFonts.Helvetica),
+            bold: await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+        };
+        const colors = {
+            text: rgb(0.10, 0.12, 0.16),
+            muted: rgb(0.36, 0.41, 0.45),
+            line: rgb(0.78, 0.80, 0.84),
+            footer: rgb(0.54, 0.58, 0.61)
+        };
+
+        plan.pages.forEach((pageInfo) => {
+            const page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+            const contentTop = drawHeader(page, plan, pageInfo, fonts, colors);
+            const left = plan.layout.marginLeft;
+            const right = PAGE_WIDTH - plan.layout.marginRight;
+            const footerTop = plan.layout.marginBottom + 18;
+            const gridBottom = footerTop + 8;
+            const availableWidth = right - left;
+            const availableHeight = contentTop - gridBottom;
+            const columns = plan.layout.columns;
+            const rows = plan.layout.rows;
+            const cellWidth = (availableWidth - plan.layout.columnGap * (columns - 1)) / columns;
+            const cellHeight = (availableHeight - plan.layout.rowGap * (rows - 1)) / rows;
+
+            pageInfo.problems.forEach((item, index) => {
+                const column = index % columns;
+                const row = Math.floor(index / columns);
+                const x = left + column * (cellWidth + plan.layout.columnGap);
+                const y = contentTop - row * (cellHeight + plan.layout.rowGap);
+                drawLinearSystemWorksheetProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+            });
+            drawFooter(page, fonts, colors);
+        });
+
+        return pdfDoc.save();
+    }
+
+    async function createLinearSystemAnswerKeyPdf(problemSet, options) {
+        const opts = options || {};
+        const plan = buildLinearSystemAnswerKeyPlan(problemSet, opts);
+        const pdfLib = getPdfLib(opts);
+        const { PDFDocument, StandardFonts, rgb } = pdfLib;
+        const pdfDoc = await PDFDocument.create();
+        pdfDoc.setTitle('Matrix Linear Systems Practice Answer Key');
+        pdfDoc.setAuthor('MatrixCalcu');
+        pdfDoc.setCreator('MatrixCalcu');
+        pdfDoc.setSubject('Systems of linear equations practice answer key');
+        const date = opts.creationDate instanceof Date ? opts.creationDate : new Date();
+        pdfDoc.setCreationDate(date);
+        pdfDoc.setModificationDate(date);
+
+        const fonts = {
+            regular: await pdfDoc.embedFont(StandardFonts.Helvetica),
+            bold: await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+        };
+        const colors = {
+            text: rgb(0.10, 0.12, 0.16),
+            muted: rgb(0.36, 0.41, 0.45),
+            line: rgb(0.78, 0.80, 0.84),
+            footer: rgb(0.54, 0.58, 0.61)
+        };
+
+        plan.pages.forEach((pageInfo) => {
+            const page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+            const contentTop = drawCompactAnswerKeyHeader(page, plan, pageInfo, fonts, colors);
+            const left = plan.layout.marginLeft;
+            const right = PAGE_WIDTH - plan.layout.marginRight;
+            const footerTop = plan.layout.marginBottom + 18;
+            const gridBottom = footerTop + 8;
+            const availableWidth = right - left;
+            const availableHeight = contentTop - gridBottom;
+            const columns = plan.layout.columns;
+            const rows = plan.layout.rows;
+            const cellWidth = (availableWidth - plan.layout.columnGap * (columns - 1)) / columns;
+            const cellHeight = (availableHeight - plan.layout.rowGap * (rows - 1)) / rows;
+
+            pageInfo.problems.forEach((item, index) => {
+                const column = index % columns;
+                const row = Math.floor(index / columns);
+                const x = left + column * (cellWidth + plan.layout.columnGap);
+                const y = contentTop - row * (cellHeight + plan.layout.rowGap);
+                drawLinearSystemAnswerKeyProblem(page, item, { x, y, width: cellWidth, height: cellHeight }, fonts, colors);
+            });
+            drawFooter(page, fonts, colors);
+        });
+
+        return pdfDoc.save();
+    }
+
     async function downloadAdditionSubtractionWorksheetPdf(problemSet, options) {
         if (typeof document === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined') {
             throw new Error('PDF download requires a browser environment.');
@@ -1269,6 +1747,50 @@
         return filename;
     }
 
+    async function downloadLinearSystemWorksheetPdf(problemSet, options) {
+        if (typeof document === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined') {
+            throw new Error('PDF download requires a browser environment.');
+        }
+        const bytes = await createLinearSystemWorksheetPdf(problemSet, options);
+        const filename = createPdfFilename(problemSet, 'worksheet');
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        try {
+            link.click();
+        } finally {
+            link.remove();
+            URL.revokeObjectURL(url);
+        }
+        return filename;
+    }
+
+    async function downloadLinearSystemAnswerKeyPdf(problemSet, options) {
+        if (typeof document === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined') {
+            throw new Error('PDF download requires a browser environment.');
+        }
+        const bytes = await createLinearSystemAnswerKeyPdf(problemSet, options);
+        const filename = createPdfFilename(problemSet, 'answer-key');
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        try {
+            link.click();
+        } finally {
+            link.remove();
+            URL.revokeObjectURL(url);
+        }
+        return filename;
+    }
+
     function createWorksheetPdf(problemSet, options) {
         if (problemSet && problemSet.type === ADD_SUB_TYPE) {
             return createAdditionSubtractionWorksheetPdf(problemSet, options);
@@ -1278,6 +1800,9 @@
         }
         if (problemSet && problemSet.type === RREF_TYPE) {
             return createRrefWorksheetPdf(problemSet, options);
+        }
+        if (problemSet && problemSet.type === LINEAR_SYSTEM_TYPE) {
+            return createLinearSystemWorksheetPdf(problemSet, options);
         }
         const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
         throw new Error(`Unsupported PDF worksheet type: ${actual}`);
@@ -1293,6 +1818,9 @@
         if (problemSet && problemSet.type === RREF_TYPE) {
             return createRrefAnswerKeyPdf(problemSet, options);
         }
+        if (problemSet && problemSet.type === LINEAR_SYSTEM_TYPE) {
+            return createLinearSystemAnswerKeyPdf(problemSet, options);
+        }
         const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
         throw new Error(`Unsupported PDF answer key type: ${actual}`);
     }
@@ -1307,6 +1835,9 @@
         if (problemSet && problemSet.type === RREF_TYPE) {
             return downloadRrefWorksheetPdf(problemSet, options);
         }
+        if (problemSet && problemSet.type === LINEAR_SYSTEM_TYPE) {
+            return downloadLinearSystemWorksheetPdf(problemSet, options);
+        }
         const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
         throw new Error(`Unsupported PDF worksheet type: ${actual}`);
     }
@@ -1320,6 +1851,9 @@
         }
         if (problemSet && problemSet.type === RREF_TYPE) {
             return downloadRrefAnswerKeyPdf(problemSet, options);
+        }
+        if (problemSet && problemSet.type === LINEAR_SYSTEM_TYPE) {
+            return downloadLinearSystemAnswerKeyPdf(problemSet, options);
         }
         const actual = problemSet && problemSet.type ? problemSet.type : 'unknown';
         throw new Error(`Unsupported PDF answer key type: ${actual}`);
@@ -1336,18 +1870,24 @@
         buildMultiplicationAnswerKeyPlan,
         buildRrefWorksheetPlan,
         buildRrefAnswerKeyPlan,
+        buildLinearSystemWorksheetPlan,
+        buildLinearSystemAnswerKeyPlan,
         createAdditionSubtractionWorksheetPdf,
         createAdditionSubtractionAnswerKeyPdf,
         createMultiplicationWorksheetPdf,
         createMultiplicationAnswerKeyPdf,
         createRrefWorksheetPdf,
         createRrefAnswerKeyPdf,
+        createLinearSystemWorksheetPdf,
+        createLinearSystemAnswerKeyPdf,
         downloadAdditionSubtractionWorksheetPdf,
         downloadAdditionSubtractionAnswerKeyPdf,
         downloadMultiplicationWorksheetPdf,
         downloadMultiplicationAnswerKeyPdf,
         downloadRrefWorksheetPdf,
         downloadRrefAnswerKeyPdf,
+        downloadLinearSystemWorksheetPdf,
+        downloadLinearSystemAnswerKeyPdf,
         createWorksheetPdf,
         createAnswerKeyPdf,
         downloadWorksheetPdf,
@@ -1359,7 +1899,11 @@
         value: {
             drawMatrix,
             drawRrefWorksheetProblem,
-            drawRrefAnswerKeyProblem
+            drawRrefAnswerKeyProblem,
+            drawLinearSystemWorksheetProblem,
+            drawLinearSystemAnswerKeyProblem,
+            formatLinearEquationText,
+            formatLinearSystemExpressionText
         },
         enumerable: false
     });

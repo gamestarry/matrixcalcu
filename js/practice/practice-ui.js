@@ -283,6 +283,7 @@
     function getProblemsPerPage(viewMode, layout, type) {
         if (viewMode === 'detailed-solutions') return Infinity;
         if (type === 'rref') return 4;
+        if (type === 'linear-system') return layout === 'compact' ? 6 : 4;
         if (viewMode === 'answer-key') return layout === 'wide' ? 4 : 8;
         return layout === 'compact' ? 6 : 4;
     }
@@ -322,7 +323,8 @@
         return Boolean(problemSet && (
             problemSet.type === 'addition-subtraction' ||
             problemSet.type === 'multiplication' ||
-            problemSet.type === 'rref'
+            problemSet.type === 'rref' ||
+            problemSet.type === 'linear-system'
         ));
     }
 
@@ -630,6 +632,12 @@
         return answer;
     }
 
+    function solutionLabel(solutionType) {
+        if (solutionType === 'unique') return t('uniqueSolution');
+        if (solutionType === 'none') return t('noSolution');
+        return t('infinitelyManySolutions');
+    }
+
     function renderInfiniteSolutionText(answer) {
         const freeMap = new Map();
         answer.freeVariables.forEach((variable, index) => {
@@ -724,6 +732,45 @@
         return renderInfiniteSolutionText(answer);
     }
 
+    function renderLinearSystemAnswerKeyContent(problem) {
+        const answer = document.createElement('div');
+        answer.className = 'mp-answer-content mp-linear-system-answer-content';
+
+        const original = document.createElement('div');
+        original.className = 'mp-linear-system-original';
+        const originalLabel = document.createElement('div');
+        originalLabel.className = 'mp-matrix-label';
+        originalLabel.textContent = 'Original System:';
+        original.append(originalLabel, renderEquationList(problem));
+        answer.appendChild(original);
+
+        const summary = document.createElement('div');
+        summary.className = 'mp-answer-summary';
+        summary.textContent = solutionLabel(problem.exactAnswer.solutionType || problem.solutionType);
+        answer.appendChild(summary);
+
+        if (problem.exactAnswer.solutionType === 'unique') {
+            const list = document.createElement('div');
+            list.className = 'mp-answer-summary';
+            problem.exactAnswer.solution.forEach((value, index) => {
+                const line = document.createElement('div');
+                line.appendChild(document.createTextNode(`${variableName(index)} = `));
+                appendScalar(line, value);
+                list.appendChild(line);
+            });
+            answer.appendChild(list);
+        } else if (problem.exactAnswer.solutionType === 'none') {
+            answer.appendChild(renderMatrix(problem.exactAnswer.rrefMatrix, { label: 'RREF:', augmented: true }));
+        } else {
+            const detail = document.createElement('div');
+            detail.className = 'mp-answer-summary';
+            detail.textContent = renderInfiniteSolutionText(problem.exactAnswer);
+            answer.appendChild(detail);
+        }
+
+        return answer;
+    }
+
     function renderWorksheetProblem(problem, number) {
         const item = document.createElement('section');
         item.className = 'mp-print-problem';
@@ -773,18 +820,7 @@
         item.appendChild(title);
 
         if (problem.type === 'linear-system') {
-            const summary = document.createElement('div');
-            summary.className = 'mp-answer-summary';
-            summary.textContent = solutionLabel(problem.exactAnswer.solutionType || problem.solutionType);
-            item.appendChild(summary);
-            if (problem.exactAnswer.solutionType === 'none') {
-                item.appendChild(renderMatrix(problem.exactAnswer.rrefMatrix, { label: t('rref'), augmented: true }));
-            } else {
-                const detail = document.createElement('div');
-                detail.className = 'mp-answer-summary';
-                detail.textContent = renderInfiniteAwareSummary(problem.exactAnswer);
-                item.appendChild(detail);
-            }
+            item.appendChild(renderLinearSystemAnswerKeyContent(problem));
             return item;
         }
 
@@ -804,8 +840,8 @@
         const title = document.createElement('h2');
         title.textContent = viewMode === 'answer-key' ? t('answerKeyTitle') : t('worksheetTitle');
         const subtitle = document.createElement('p');
-        subtitle.textContent = viewMode === 'answer-key' && problemSet.type === 'rref'
-            ? `${getWorksheetTypeLabel(problemSet)} · ${t('exactAnswers')} · Set seed: ${problemSet.seed}`
+        subtitle.textContent = viewMode === 'answer-key' && (problemSet.type === 'rref' || problemSet.type === 'linear-system')
+            ? `${problemSet.type === 'linear-system' ? 'Systems of Linear Equations' : getWorksheetTypeLabel(problemSet)} · ${t('exactAnswers')} · Set seed: ${problemSet.seed}`
             : getWorksheetTypeLabel(problemSet);
         header.append(title, subtitle);
 
@@ -819,7 +855,7 @@
             header.append(meta, instructions);
         }
 
-        if (viewMode === 'answer-key' && page.pageIndex === 0 && problemSet.type !== 'rref') {
+        if (viewMode === 'answer-key' && page.pageIndex === 0 && problemSet.type !== 'rref' && problemSet.type !== 'linear-system') {
             const label = document.createElement('p');
             label.className = 'mp-paper-instructions';
             label.textContent = t('exactAnswers');
