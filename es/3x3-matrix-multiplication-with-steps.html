@@ -4,25 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aprende la multiplicación de matrices 3x3 paso a paso con ejemplos y una calculadora.">
+    <meta name="description"
+        content="Aprende la multiplicación de matrices 3x3 paso a paso. Mira cómo se calculan las nueve entradas de la matriz producto usando filas y columnas.">
     <link rel="canonical" href="https://matrixcalcu.com/es/3x3-matrix-multiplication-with-steps.html">
 
     <link rel="alternate" hreflang="en" href="https://matrixcalcu.com/en/3x3-matrix-multiplication-with-steps.html">
+    <link rel="alternate" hreflang="es" href="https://matrixcalcu.com/es/3x3-matrix-multiplication-with-steps.html">
     <link rel="alternate" hreflang="x-default"
-        href="https://matrixcalcu.com/es/3x3-matrix-multiplication-with-steps.html">
+        href="https://matrixcalcu.com/en/3x3-matrix-multiplication-with-steps.html">
 
-    <meta property="og:title" content="Multiplicación de Matrices 3x3 Con Pasos (Ejemplos + Calculadora)">
+    <meta property="og:title" content="Multiplicación de Matrices 3x3 Con Pasos y Ejemplo | MatrixCalcu">
     <meta property="og:description"
-        content="Aprende la multiplicación de matrices 3x3 paso a paso con ejemplos y una calculadora.">
+        content="Aprende la multiplicación de matrices 3x3 paso a paso. Mira cómo se calculan las nueve entradas de la matriz producto usando filas y columnas.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:url" content="https://matrixcalcu.com/es/3x3-matrix-multiplication-with-steps.html">
 
-    <title>Multiplicación de Matrices 3x3 Con Pasos (Ejemplos + Calculadora)</title>
+    <title>Multiplicación de Matrices 3x3 Con Pasos y Ejemplo | MatrixCalcu</title>
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/calculator.css">
+    <script src="/math.min.js" defer></script>
     <style>
         .matrix-block,
         .result-block {
@@ -36,10 +39,21 @@
             color: #35577e;
         }
 
+        .site-brand {
+            font-size: clamp(1.2rem, 2.6vw, 2rem);
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            font-weight: 700;
+            line-height: 1.2;
+            padding: 0 110px;
+        }
+
         .three-rule-card,
         .three-example-shell,
         .three-result,
         .three-formula-box,
+        .three-workload-box,
         .three-tip-box {
             padding: 20px;
             border: 1px solid #c8d9ee;
@@ -72,6 +86,18 @@
             margin-top: 18px;
         }
 
+        .three-example-figure {
+            margin: 18px 0 0;
+        }
+
+        .three-example-figure figcaption {
+            margin-top: 12px;
+            color: #456483;
+            font-size: 0.96rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
         .three-example .matrix {
             display: inline-flex;
             flex-direction: column;
@@ -98,6 +124,12 @@
             text-align: center;
         }
 
+        .three-example .row span.highlight {
+            background: #d9ebff;
+            color: #0f4d92;
+            box-shadow: inset 0 0 0 2px #7db1e8;
+        }
+
         .three-operator {
             font-size: 1.7rem;
             font-weight: 700;
@@ -106,7 +138,7 @@
 
         .three-detail-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 18px;
             margin-top: 20px;
         }
@@ -137,15 +169,20 @@
             color: #24456a;
             font-weight: 700;
             text-align: center;
+            overflow-wrap: anywhere;
         }
 
-        .three-followup {
-            margin-top: 20px;
-            padding: 18px;
-            border: 1px solid #d6e4f1;
-            border-radius: 16px;
-            background: #f9fbfe;
-            color: #456483;
+        .three-position-map .matrix {
+            border-color: #86aed6;
+        }
+
+        .three-position-map .row span {
+            font-size: 0.92rem;
+        }
+
+        .three-workload-box ul,
+        .three-mistakes-list {
+            margin-bottom: 0;
         }
 
         .three-result {
@@ -175,14 +212,205 @@
             margin-top: 8px;
         }
 
+        .threebythree-action-row {
+            margin: 16px 0 10px;
+        }
+
+        #result-container[hidden] {
+            display: none;
+        }
+
+        #result-container {
+            margin-top: 12px;
+        }
+
+        #result-container .result-top-controls {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            text-align: left;
+        }
+
+        #result-container .matrix-output-ctrl {
+            align-self: flex-start;
+            text-align: left;
+        }
+
+        #c11-detailed-steps[hidden] {
+            display: none;
+        }
+
+        #c11-detailed-steps {
+            width: 100%;
+            margin: 18px 0 14px;
+            padding: 18px 0 4px;
+            border-top: 1px solid #d7e5f3;
+            border-bottom: 1px solid #d7e5f3;
+            color: #24456a;
+        }
+
+        #c11-detailed-steps h2 {
+            margin: 0 0 8px;
+            color: var(--primary-color);
+            font-size: 1.35rem;
+            text-align: left;
+        }
+
+        .c11-step-intro {
+            margin: 0 0 14px;
+            color: #4f6884;
+            text-align: left;
+        }
+
+        .c11-step-row {
+            padding: 12px 0 16px;
+            border-top: 1px solid #e4edf6;
+        }
+
+        .c11-step-row:first-of-type {
+            border-top: 0;
+        }
+
+        .c11-equation {
+            margin: 0 0 10px;
+            font-weight: 700;
+            color: #1f3f62;
+            text-align: left;
+        }
+
+        .c11-mini-flow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .c11-mini-matrix-block {
+            display: grid;
+            gap: 5px;
+            justify-items: center;
+        }
+
+        .c11-mini-label {
+            font-size: 0.78rem;
+            color: #60738b;
+            font-weight: 700;
+        }
+
+        .c11-mini-matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 28px);
+            gap: 3px;
+            padding: 5px;
+            border-left: 2px solid #6b7a8c;
+            border-right: 2px solid #6b7a8c;
+        }
+
+        .c11-cell {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #d3deea;
+            background: #fff;
+            color: #24456a;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-sizing: border-box;
+        }
+
+        .c11-cell.is-row {
+            background: #eef7ff;
+        }
+
+        .c11-cell.is-column {
+            background: #fff7e8;
+        }
+
+        .c11-cell.is-active-a {
+            background: #cfe9ff;
+            border-color: #4f91cf;
+            color: #173e63;
+        }
+
+        .c11-cell.is-active-b {
+            background: #ffe4b8;
+            border-color: #d9922b;
+            color: #5d3908;
+        }
+
+        .c11-cell.is-target {
+            background: #e9f3ee;
+            border-color: #65a786;
+            color: #1f5f43;
+        }
+
+        .c11-cell.is-empty {
+            color: #a9b6c4;
+            font-weight: 400;
+        }
+
+        .c11-flow-symbol {
+            color: #6a7c90;
+            font-weight: 700;
+        }
+
+        .c11-sum {
+            padding: 12px 0 16px;
+            border-top: 1px solid #d7e5f3;
+            text-align: left;
+        }
+
+        .c11-sum h3 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            color: #35577e;
+        }
+
+        .c11-sum-equation,
+        .c11-final-equation {
+            margin: 0 0 8px;
+            font-weight: 700;
+            color: #1f3f62;
+        }
+
+        @media (max-width: 640px) {
+            .c11-mini-flow {
+                justify-content: center;
+            }
+
+            #c11-detailed-steps h2,
+            .c11-step-intro,
+            .c11-equation,
+            .c11-sum {
+                text-align: left;
+            }
+        }
+
         @media (max-width: 640px) {
             .three-detail-grid {
                 grid-template-columns: 1fr;
             }
 
+            .site-brand {
+                font-size: 1.05rem;
+                margin: 0;
+                flex: 1;
+                text-align: center;
+                padding: 0 92px 0 8px;
+            }
+
             .three-example .row span {
                 min-width: 36px;
                 padding: 8px 0;
+            }
+
+            .three-example-shell {
+                gap: 12px;
+                padding: 16px 12px;
             }
         }
     </style>
@@ -205,7 +433,7 @@
           "name": "¿Por qué la multiplicación de matrices 3x3 es más difícil que la de 2x2?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Es más difícil porque cada entrada tiene más términos y hay más entradas que calcular, por lo que es más fácil perder la pista de filas, columnas o sumas."
+            "text": "Es más difícil porque cada entrada tiene más términos y hay más entradas que calcular, así que es más fácil perder la pista de filas, columnas o sumas."
           }
         },
         {
@@ -224,13 +452,15 @@
 <body>
     <header>
         <div class="container">
-            <h1>Calculadora de Matrices</h1>
+            <h1 class="site-brand">Multiplicación de Matrices 3&times;3 Paso a Paso</h1>
 
             <div class="language-selector">
                 <div class="language-toggle">
-                    <span class="globe-icon">Español</span> Español
+                    <span class="globe-icon">🌐</span> Español
                 </div>
                 <div class="language-dropdown">
+                    <a class="language-option" href="/en/3x3-matrix-multiplication-with-steps.html"
+                        lang="en">English</a>
                     <a class="language-option active" href="/es/3x3-matrix-multiplication-with-steps.html"
                         lang="es">Español</a>
                 </div>
@@ -246,22 +476,103 @@
                     <h3 class="nav-title">Navegación</h3>
                     <div class="nav-buttons">
                         <a href="/" class="nav-button" id="home-btn">Inicio</a>
-                        <a href="/es/matrix-multiplication-calculator.html" class="nav-button">Calculadora de Multiplicación de Matrices</a>
-<a href="/es/matrix-practice-generator.html" class="nav-button">Generador de ejercicios de matrices</a>
+                        <a href="/es/matrix-multiplication-calculator.html" class="nav-button">Calculadora de Multiplicación
+                            de Matrices</a>
+                        <a href="/es/matrix-practice-generator.html" class="nav-button">Generador de ejercicios de matrices</a>
                         <a href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html" target="_blank"
                             rel="noopener noreferrer" class="nav-button external">Juego de Multiplicación de Matrices</a>
-                        <a href="/es/matrix-equations-calculator.html" class="nav-button">Calculadora de Sistemas de Ecuaciones</a>
+                        <a href="/es/matrix-equations-calculator.html" class="nav-button">Calculadora de Sistemas de
+                            Ecuaciones</a>
                         <a href="https://en.wikipedia.org/wiki/Matrix_multiplication" target="_blank"
                             rel="noopener noreferrer" class="nav-button external">Wikipedia: Multiplicación de matrices</a>
                     </div>
                 </div>
 
                 <div class="calculator-main">
+                    <div class="dynamic-content-container" id="dynamic-content">
+                        <div class="matrix-calculator">
+                            <div class="main-calculator-container main-2m-with-swap">
+                            <div class="matrix-area" id="matrix-area-a">
+                                <div class="controls" id="controls-a">
+                                    <div class="matrix-label">A <span id="dim-a"
+                                            class="matrix-dimension">(3×3)</span></div>
+                                    <div class="random-controls" id="random-controls-main-a">
+                                        <button id="toggle-random-btn-a" class="control-btn"
+                                            title="Generar matriz aleatoria A"><i class="fas fa-dice"></i></button>
+                                        <div id="random-options-a" class="random-options" style="display: none;">
+                                            <button class="random-option-btn" data-type="pos_int"
+                                                data-target="A">Enteros positivos (0 ~ 9)</button>
+                                            <button class="random-option-btn" data-type="signed_int"
+                                                data-target="A">Enteros (-10 ~ 10)</button>
+                                            <button class="random-option-btn" data-type="float"
+                                                data-target="A">Decimales (-1.0 ~ 1.0)</button>
+                                        </div>
+                                    </div>
+                                    <button id="clear-btn-a" class="control-btn" title="Borrar valores A"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                </div>
+                                <div class="matrix-container" id="matrix-container-a"></div>
+                            </div>
+
+                            <div class="swap-mid-col">
+                                <button type="button" id="swap-ab-btn" class="swap-icon-btn" title="Intercambiar A y B"
+                                    aria-label="Intercambiar matrices">
+                                    <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+                                </button>
+                            </div>
+
+                            <div class="matrix-area" id="matrix-area-b">
+                                <div class="controls" id="controls-b">
+                                    <div class="matrix-label">B <span id="dim-b"
+                                            class="matrix-dimension">(3×3)</span></div>
+                                    <div class="random-controls" id="random-controls-main-b">
+                                        <button id="toggle-random-btn-b" class="control-btn"
+                                            title="Generar matriz aleatoria B"><i class="fas fa-dice"></i></button>
+                                        <div id="random-options-b" class="random-options" style="display: none;">
+                                            <button class="random-option-btn" data-type="pos_int"
+                                                data-target="B">Enteros positivos (0 ~ 9)</button>
+                                            <button class="random-option-btn" data-type="signed_int"
+                                                data-target="B">Enteros (-10 ~ 10)</button>
+                                            <button class="random-option-btn" data-type="float"
+                                                data-target="B">Decimales (-1.0 ~ 1.0)</button>
+                                        </div>
+                                    </div>
+                                    <button id="clear-btn-b" class="control-btn" title="Borrar valores B"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                </div>
+                                <div class="matrix-container" id="matrix-container-b"></div>
+                            </div>
+                        </div>
+
+                        <div class="input-hint">
+                            Introduce las matrices A y B y calcula A × B. A y B están fijadas en 3×3 en esta página. Admite enteros, números negativos, decimales y fracciones como 1/2.
+                        </div>
+
+                        <div class="ops ops-v2 ops-flat threebythree-action-row">
+                            <div class="ops-core">
+                                <button type="button" id="threebythree-multiply-btn" class="btn main core-main"
+                                    title="Calcular A × B">Multiplicar A × B</button>
+                            </div>
+                        </div>
+
+                        <section id="c11-detailed-steps" hidden aria-live="polite">
+                            <div id="c11-detailed-steps-body"></div>
+                        </section>
+
+                        <div id="result-container" hidden>
+                            <div class="result-header">
+                                <h3>Resultados del cálculo</h3>
+                                <button id="clear-all-results" class="clear-all-btn">Borrar todo</button>
+                            </div>
+                            <div class="result-history" id="result-history"></div>
+                        </div>
+                        </div>
+                    </div>
+
                     <div class="seo-articles-container howto-page" id="article-container">
                         <section class="howto-hero-card">
                             <p class="howto-kicker">Guía de Matrices 3x3</p>
-                            <h1>Multiplicación de Matrices 3x3 Paso a Paso</h1>
-                            <p class="lead">
+<p class="lead">
                                 La multiplicación 3x3 sigue la misma regla fila por columna que la multiplicación 2x2, pero cada
                                 entrada del resultado requiere más aritmética. Una vez que mantengas organizadas las filas y columnas, el
                                 proceso se vuelve mucho más fácil de seguir.
@@ -430,7 +741,7 @@
                             <h2>Preguntas Frecuentes</h2>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">¿Cómo se multiplican matrices 3x3?</h3>
+                                    <h3 itemprop="name">¿Cómo se multiplican matrices 3x3?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
                                         Multiplica cada fila de la primera matriz 3x3 por cada columna de la segunda matriz 3x3.
@@ -440,7 +751,7 @@
                             </div>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">¿Por qué la multiplicación de matrices 3x3 es más difícil que la de 2x2?</h3>
+                                    <h3 itemprop="name">¿Por qué la multiplicación de matrices 3x3 es más difícil que la de 2x2?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
                                         Es más difícil porque cada entrada tiene más términos y hay más entradas que calcular,
@@ -450,7 +761,7 @@
                             </div>
 
                             <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                                <h3 itemprop="name">¿Puedo usar una calculadora para matrices 3x3?</h3>
+                                    <h3 itemprop="name">¿Puedo usar una calculadora para matrices 3x3?</h3>
                                 <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                                     <p itemprop="text">
                                         Sí. Una calculadora de multiplicación de matrices puede resolver rápidamente problemas 3x3, ayudarte
@@ -464,7 +775,8 @@
 
                 <div class="poster-card">
                     <p class="promo-text">
-                        Aprende multiplicación de matrices más fácilmente en solo <span>2 minutos</span> con este <span>juego gratuito</span>.
+                        Learn matrix multiplication more easily in just <span>2 minutes</span> with this <span>free
+                            game</span>.
                     </p>
 
                     <a class="image-container" href="https://www.nd-ed.org/matrix-multiplication-by-2-game.html">
@@ -481,7 +793,7 @@
                         </p>
                     
                         <a class="calculator-btn" href="/es/matrix-multiplication-calculator.html">
-                            Abrir calculadora →
+                            Abrir calculadora ?
                         </a>
                     </div>
                 </div>
@@ -494,6 +806,348 @@
             <p>&copy; 2025 Calculadora de Matrices. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+    <script type="module">
+        import { initMatrixInput, getAllMatrices } from '/js/ui/matrix-input.js';
+        import { config, calculate, generateProcessMatrix } from '/js/core/multiplication.js';
+        import { displayResult, showError as showResultError } from '/js/ui/matrix-output.js';
+
+        const FIXED_SIZE = 3;
+        const STATE_KEY = 'matrixcalcu_state_v1';
+        const DIMENSION_PARAMS = ['rowsA', 'colsA', 'rowsB', 'colsB', 'matrixA', 'matrixB'];
+
+        function stripMatrixParams(value, SearchParamsConstructor) {
+            const params = new SearchParamsConstructor(value);
+            DIMENSION_PARAMS.forEach(param => params.delete(param));
+            const next = params.toString();
+            return next ? `?${next}` : '';
+        }
+
+        function initFixedThreeByThreeInput() {
+            const NativeURLSearchParams = window.URLSearchParams;
+            const nativeGetItem = Storage.prototype.getItem;
+
+            window.URLSearchParams = class extends NativeURLSearchParams {
+                constructor(value) {
+                    super(value === window.location.search ? stripMatrixParams(value, NativeURLSearchParams) : value);
+                }
+            };
+
+            Storage.prototype.getItem = function (key) {
+                if (this === window.localStorage && key === STATE_KEY) return null;
+                return nativeGetItem.call(this, key);
+            };
+
+            try {
+                const state = initMatrixInput({});
+                state.A.rows = FIXED_SIZE;
+                state.A.cols = FIXED_SIZE;
+                state.B.rows = FIXED_SIZE;
+                state.B.cols = FIXED_SIZE;
+                return state;
+            } finally {
+                window.URLSearchParams = NativeURLSearchParams;
+                Storage.prototype.getItem = nativeGetItem;
+            }
+        }
+
+        function hasInvalidInput() {
+            let invalid = false;
+            document.querySelectorAll('#matrix-container-a .matrix input, #matrix-container-b .matrix input')
+                .forEach(input => {
+                    const raw = input.value.trim();
+                    if (!raw) {
+                        input.style.borderColor = '';
+                        return;
+                    }
+
+                    try {
+                        math.fraction(raw);
+                        input.style.borderColor = '';
+                    } catch {
+                        input.style.borderColor = 'red';
+                        invalid = true;
+                    }
+                });
+            return invalid;
+        }
+
+        function formatStepValue(value) {
+            if (value === '?' || value === '?') return value;
+            const fraction = math.isFraction(value) ? value : math.fraction(value);
+            if (math.compare(fraction.d, 1) === 0) {
+                return String(fraction.s * fraction.n);
+            }
+            return `${fraction.s * fraction.n}/${fraction.d}`;
+        }
+
+        function renderMiniMatrix(label, matrix, options = {}) {
+            const block = document.createElement('div');
+            block.className = 'c11-mini-matrix-block';
+
+            const labelEl = document.createElement('div');
+            labelEl.className = 'c11-mini-label';
+            labelEl.textContent = label;
+
+            const grid = document.createElement('div');
+            grid.className = 'c11-mini-matrix';
+
+            for (let row = 0; row < FIXED_SIZE; row++) {
+                for (let col = 0; col < FIXED_SIZE; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'c11-cell';
+
+                    if (options.row === row) cell.classList.add('is-row');
+                    if (options.column === col) cell.classList.add('is-column');
+                    if (options.activeRow === row && options.activeCol === col) {
+                        cell.classList.add(options.activeClass || 'is-target');
+                    }
+
+                    const value = matrix?.[row]?.[col];
+                    cell.textContent = value == null ? (options.emptyText || '') : formatStepValue(value);
+                    if (value == null) cell.classList.add('is-empty');
+                    grid.appendChild(cell);
+                }
+            }
+
+            block.appendChild(labelEl);
+            block.appendChild(grid);
+            return block;
+        }
+
+        function renderCMatrix(targetText, targetRow, targetCol) {
+            return Array.from({ length: FIXED_SIZE }, (_, row) =>
+                Array.from({ length: FIXED_SIZE }, (_, col) => (row === targetRow && col === targetCol ? targetText : null))
+            );
+        }
+
+        function getEntryTitle(row, col) {
+            const subscriptDigits = ['₁', '₂', '₃'];
+            return `c${subscriptDigits[row]}${subscriptDigits[col]}`;
+        }
+
+        function renderEntryStep(matrices, result, targetRow, targetCol) {
+            const section = document.getElementById('c11-detailed-steps');
+            const body = document.getElementById('c11-detailed-steps-body');
+            const matrixA = matrices[0];
+            const matrixB = matrices[1];
+            const partials = [0, 1, 2].map(index => math.multiply(matrixA[targetRow][index], matrixB[index][targetCol]));
+            const entryValue = result[targetRow][targetCol];
+            const entryTitle = getEntryTitle(targetRow, targetCol);
+
+            const entry = document.createElement('article');
+            entry.className = 'c11-entry-block';
+
+            const title = document.createElement('h2');
+            title.textContent = `Cómo se calcula ${entryTitle}`;
+
+            const intro = document.createElement('p');
+            intro.className = 'c11-step-intro';
+            intro.textContent = `Para hallar la entrada de la fila ${targetRow + 1}, columna ${targetCol + 1} del resultado, usa la fila ${targetRow + 1} de la matriz A y la columna ${targetCol + 1} de la matriz B.`;
+
+            entry.appendChild(title);
+            entry.appendChild(intro);
+
+            partials.forEach((partial, index) => {
+                const row = document.createElement('div');
+                row.className = 'c11-step-row';
+
+                const equation = document.createElement('p');
+                equation.className = 'c11-equation';
+                equation.textContent = `Paso ${index + 1}: ${formatStepValue(matrixA[targetRow][index])} × ${formatStepValue(matrixB[index][targetCol])} = ${formatStepValue(partial)}`;
+
+                const flow = document.createElement('div');
+                flow.className = 'c11-mini-flow';
+                flow.appendChild(renderMiniMatrix('Matriz A', matrixA, {
+                    row: targetRow,
+                    activeRow: targetRow,
+                    activeCol: index,
+                    activeClass: 'is-active-a'
+                }));
+                flow.appendChild(makeFlowSymbol('×'));
+                flow.appendChild(renderMiniMatrix('Matriz B', matrixB, {
+                    column: targetCol,
+                    activeRow: index,
+                    activeCol: targetCol,
+                    activeClass: 'is-active-b'
+                }));
+                flow.appendChild(makeFlowSymbol('→'));
+                flow.appendChild(renderMiniMatrix('Matriz C', renderCMatrix('?', targetRow, targetCol), {
+                    activeRow: targetRow,
+                    activeCol: targetCol,
+                    activeClass: 'is-target'
+                }));
+
+                row.appendChild(equation);
+                row.appendChild(flow);
+                entry.appendChild(row);
+            });
+
+            const sum = document.createElement('div');
+            sum.className = 'c11-sum';
+
+            const sumTitle = document.createElement('h3');
+            sumTitle.textContent = 'Suma los productos';
+
+            const sumEquation = document.createElement('p');
+            sumEquation.className = 'c11-sum-equation';
+            sumEquation.textContent = `${partials.map(formatStepValue).join(' + ')} = ${formatStepValue(entryValue)}`;
+
+            const finalEquation = document.createElement('p');
+            finalEquation.className = 'c11-final-equation';
+            finalEquation.textContent = `${entryTitle} = ${formatStepValue(entryValue)}`;
+
+            const finalFlow = document.createElement('div');
+                finalFlow.className = 'c11-mini-flow';
+                finalFlow.appendChild(renderMiniMatrix('Matriz C', renderCMatrix(entryValue, targetRow, targetCol), {
+                    activeRow: targetRow,
+                    activeCol: targetCol,
+                    activeClass: 'is-target',
+                    emptyText: '·'
+                }));
+
+            sum.appendChild(sumTitle);
+            sum.appendChild(sumEquation);
+            sum.appendChild(finalEquation);
+            sum.appendChild(finalFlow);
+            entry.appendChild(sum);
+            body.appendChild(entry);
+            section.hidden = false;
+        }
+
+        function renderDetailedSteps(matrices, result) {
+            const section = document.getElementById('c11-detailed-steps');
+            const body = document.getElementById('c11-detailed-steps-body');
+            body.innerHTML = '';
+
+            for (let row = 0; row < FIXED_SIZE; row++) {
+                for (let col = 0; col < FIXED_SIZE; col++) {
+                    renderEntryStep(matrices, result, row, col);
+                }
+            }
+
+            section.hidden = false;
+        }
+
+        function makeFlowSymbol(text) {
+            const symbol = document.createElement('span');
+            symbol.className = 'c11-flow-symbol';
+            symbol.textContent = text;
+            return symbol;
+        }
+
+
+        function localizeCalculationResults() {
+            const resultContainer = document.getElementById('result-container');
+            if (!resultContainer) return;
+            resultContainer.querySelectorAll('label').forEach(label => {
+                if (label.textContent.trim() === 'Fraction') label.textContent = 'Fracción';
+                if (label.textContent.trim() === 'Decimal') label.textContent = 'Decimal';
+            });
+            resultContainer.querySelectorAll('.precision-drawer span').forEach(span => {
+                if (span.textContent.trim() === 'Digits') span.textContent = 'Dígitos';
+            });
+            resultContainer.querySelectorAll('.toggle-process-btn').forEach(button => {
+                const showing = button.querySelector('.fa-eye-slash');
+                const text = showing ? 'Ocultar proceso de cálculo' : 'Mostrar proceso de cálculo';
+                button.title = text;
+                button.setAttribute('aria-label', text);
+            });
+            resultContainer.querySelectorAll('.share-btn').forEach(button => {
+                button.title = 'Compartir este cálculo';
+                button.setAttribute('aria-label', 'Compartir este cálculo');
+            });
+            resultContainer.querySelectorAll('.delete-btn').forEach(button => {
+                button.title = 'Eliminar este registro';
+                button.setAttribute('aria-label', 'Eliminar este registro');
+            });
+            const translations = new Map([['Copy Link', 'Copiar enlace'], ['Share to X', 'Compartir en X'], ['Share to Reddit', 'Compartir en Reddit'], ['Email Result', 'Enviar resultado por correo']]);
+            resultContainer.querySelectorAll('.share-option').forEach(option => {
+                const translated = translations.get(option.textContent.trim());
+                if (translated) option.textContent = translated;
+            });
+        }
+
+        function showError(message) {
+            document.getElementById('result-container').hidden = false;
+            showResultError(message);
+        }
+
+        function clearResult() {
+            const resultContainer = document.getElementById('result-container');
+            document.getElementById('result-history').innerHTML = '';
+            resultContainer.hidden = true;
+            document.getElementById('c11-detailed-steps-body').innerHTML = '';
+            document.getElementById('c11-detailed-steps').hidden = true;
+        }
+
+        function swapFixedThreeByThreeInputs() {
+            const inputsA = Array.from(document.querySelectorAll('#matrix-container-a .matrix input'));
+            const inputsB = Array.from(document.querySelectorAll('#matrix-container-b .matrix input'));
+
+            for (let index = 0; index < FIXED_SIZE * FIXED_SIZE; index++) {
+                const inputA = inputsA[index];
+                const inputB = inputsB[index];
+                if (!inputA || !inputB) continue;
+
+                const valueA = inputA.value;
+                inputA.value = inputB.value;
+                inputB.value = valueA;
+                inputA.style.borderColor = '';
+                inputB.style.borderColor = '';
+            }
+
+            const dimA = document.getElementById('dim-a');
+            const dimB = document.getElementById('dim-b');
+            if (dimA) dimA.textContent = '(3×3)';
+            if (dimB) dimB.textContent = '(3×3)';
+
+            clearResult();
+        }
+
+        initFixedThreeByThreeInput();
+
+        document.getElementById('threebythree-multiply-btn').addEventListener('click', () => {
+            clearResult();
+
+            if (hasInvalidInput()) {
+                showError('Una o más entradas de la matriz no son válidas.');
+                return;
+            }
+
+            try {
+                const matrices = getAllMatrices();
+                config.validate(matrices);
+                const result = calculate(matrices);
+                const processMatrix = generateProcessMatrix(
+                    matrices[0], FIXED_SIZE, FIXED_SIZE,
+                    matrices[1], FIXED_SIZE, FIXED_SIZE
+                );
+
+                renderDetailedSteps(matrices, result);
+                document.getElementById('result-container').hidden = false;
+                displayResult('Multiplication', matrices[0], matrices[1], '×', processMatrix, result);
+                localizeCalculationResults();
+                document.querySelector('#result-history .result-block .toggle-process-btn')?.click();
+                localizeCalculationResults();
+            } catch (error) {
+                showError(error?.message || 'No se pudo calcular la multiplicaci?n de matrices.');
+            }
+        });
+
+        document.querySelectorAll('#matrix-container-a, #matrix-container-b').forEach(container => {
+            container.addEventListener('input', clearResult);
+        });
+
+        document.querySelectorAll('#clear-btn-a, #clear-btn-b, .random-option-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                window.setTimeout(clearResult, 0);
+            });
+        });
+
+        document.getElementById('swap-ab-btn').addEventListener('click', swapFixedThreeByThreeInputs);
+        document.getElementById('clear-all-results').addEventListener('click', clearResult);
+    </script>
 
     <script>
         (function () {
